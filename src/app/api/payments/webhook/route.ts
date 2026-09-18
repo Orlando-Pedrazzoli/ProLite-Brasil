@@ -1,0 +1,213 @@
+// 📄 src/app/api/payments/webhook/route.ts
+// Recebe notificações do MERCADO PAGO (tópico "order" da API de Orders) e
+// atualiza o status do pedido.
+//
+// Segurança: assinatura HMAC do header x-signature (ts + v1) validada em
+// tempo constante com MP_WEBHOOK_SECRET — FAIL-CLOSED em produção
+// (ver validateWebhookSignature em services/mercadopago.ts).
+//
+// Fonte de verdade: a notificação traz apenas o ID do recurso; o status
+// REAL é buscado via GET /v1/orders/{id} — nunca confiamos no corpo da
+// notificação para transições de estado.
+//
+// Idempotente: reenvio de evento de pedido já pago não reenvia e-mail;
+// estoque usa claim atômico (processOrderStock/restoreOrderStock).
+//
+// Herda da versão Pagar.me: transições paid → estoque + e-mail;
+// refund → restaura estoque; failed/expired → marca failed.
+
+import crypto from 'crypto';
+import { NextResponse } from 'next/server';
+import connectDB from '@/lib/db/connect';
+import Order from '@/lib/models/Order';
+import {
+  validateWebhookSignature,
+  parseWebhookEvent,
+  getOrder,
+  isPaidStatus,
+  isFailedStatus,
+  isRefundedStatus,
+  MercadoPagoError,
+} from '@/lib/services/mercadopago';
+import { sendOrderPaidEmails } from '@/lib/services/email';
+import { processOrderStock, restoreOrderStock } from '@/lib/services/inventory';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+// Cold start + conexão fria ao Atlas + GET /v1/orders no MP podem passar o
+// limite padrão da função na Vercel (o MP registava 502 e reenviava).
+// 30s dá folga de sobra; o caminho quente responde em <2s.
+export const maxDuration = 30;
+
+export async function POST(request: Request) {
+  const url = new URL(request.url);
+
+  // 1. Parse do payload (o MP também manda data.id na query string)
+  let payload: Record<string, any> = {};
+  try {
+    payload = await request.json();
+  } catch {
+    // corpo vazio é tolerado — alguns eventos chegam só com query params
+  }
+  const event = parseWebhookEvent(payload, url.searchParams);
+
+  // 2. Autenticação em DUAS vias (qualquer uma basta):
+  //
+  // (a) Assinatura HMAC do header x-signature, conforme a documentação
+  //     (manifest sobre data.id da query string + x-request-id + ts).
+  // (b) TOKEN SECRETO NA URL (?token=...), cadastrado junto com a URL no
+  //     painel do MP e conferido em tempo constante contra MP_WEBHOOK_TOKEN.
+  //
+  // Por que (b) existe: há um bug conhecido do MP em que o v1 das
+  // notificações REAIS não corresponde a nenhum manifest documentado com o
+  // secret do painel (a simulação assina certo; os envios reais, não) —
+  // problema recorrente reportado pela comunidade e admitido pelo suporte.
+  // O token na URL é o contorno padrão. Segurança preservada em camadas:
+  // a URL com o token só é conhecida pelo painel do MP e pelas envs, e o
+  // handler NUNCA confia no payload — o estado real é sempre reconsultado
+  // via GET /v1/orders com o Access Token. Uma notificação forjada, no
+  // pior caso, dispara uma consulta; não muda estado.
+  const sigDataId = url.searchParams.get('data.id') ?? event.dataId ?? null;
+  const hmacOk = validateWebhookSignature({
+    xSignature: request.headers.get('x-signature'),
+    xRequestId: request.headers.get('x-request-id'),
+    dataId: sigDataId,
+  });
+
+  let tokenOk = false;
+  const expectedToken = process.env.MP_WEBHOOK_TOKEN || '';
+  if (expectedToken) {
+    const gotToken = url.searchParams.get('token') || '';
+    const a = Buffer.from(gotToken);
+    const b = Buffer.from(expectedToken);
+    tokenOk = a.length === b.length && crypto.timingSafeEqual(a, b);
+  }
+
+  if (!hmacOk && !tokenOk) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  if (!hmacOk && tokenOk) {
+    // Visibilidade: quando o MP corrigir a assinatura, este log some e
+    // dá para remover o token da URL se quisermos voltar a HMAC puro.
+    console.info(
+      '[MP Webhook] autenticado via token de URL (HMAC divergente — bug conhecido do MP)',
+    );
+  }
+
+  if (!event.dataId) {
+    return NextResponse.json({ received: true, matched: false });
+  }
+
+  try {
+    await connectDB();
+
+    // 3. Busca o estado REAL na API do MP (fonte de verdade)
+    let gw;
+    try {
+      gw = await getOrder(event.dataId);
+    } catch (e) {
+      // 4xx = o recurso não pode ser consultado por razão permanente:
+      // não existe (404), ID malformado (400 — ex.: "Simular notificação"
+      // com ID fictício), ou pertence a outra aplicação (403). Retries não
+      // ajudam: confirma o recebimento e encerra.
+      if (e instanceof MercadoPagoError && e.status >= 400 && e.status < 500) {
+        console.warn(
+          '[MP Webhook] order não consultável (4xx), confirmando recebimento:',
+          event.dataId,
+          e.status,
+        );
+        return NextResponse.json({ received: true, matched: false });
+      }
+      console.error('[MP Webhook] falha ao consultar order:', event.dataId, e);
+      // Erro transitório (rede/5xx do MP) → 500 → o MP reagenda o reenvio
+      return NextResponse.json({ error: 'gateway' }, { status: 500 });
+    }
+
+    // 4. Localiza o pedido local. Vínculo primário: mpOrderId/mpPaymentId.
+    // FALLBACK: external_reference (= orderNumber) — cobre a corrida em que
+    // a notificação chega ANTES de o checkout persistir o mpOrderId no
+    // pedido (sem isto o webhook devolvia 200 matched:false e o MP não
+    // reenviava, perdendo a confirmação).
+    const lookups: Record<string, unknown>[] = [
+      { 'payment.mpOrderId': gw.id },
+      { 'payment.mpPaymentId': gw.payment?.id || '__none__' },
+    ];
+    if (gw.externalReference) {
+      lookups.push({ orderNumber: gw.externalReference });
+    }
+    const order = await Order.findOne({ $or: lookups });
+
+    if (order && !order.payment.mpOrderId) {
+      // Vinculado pelo fallback — persiste o vínculo primário para os
+      // próximos eventos e para o fallback ativo do /payments/status.
+      order.payment.mpOrderId = gw.id;
+      await order.save().catch(() => {});
+    }
+
+    if (!order) {
+      console.warn('[MP Webhook] pedido não encontrado:', {
+        action: event.action,
+        mpOrderId: gw.id,
+      });
+      // Confirma recebimento para não gerar reenvios infinitos
+      return NextResponse.json({ received: true, matched: false });
+    }
+
+    // 5. Aplica a transição (com idempotência)
+    if (isPaidStatus(gw)) {
+      if (order.payment.status === 'paid') {
+        // Já processado (cartão aprovado no checkout, ou reenvio do MP).
+        // E-mail NÃO é reenviado; estoque é reconferido (claim barato).
+        processOrderStock(order._id).catch(() => {});
+        return NextResponse.json({ received: true, idempotent: true });
+      }
+      order.payment.status = 'paid';
+      order.payment.paidAt = new Date();
+      if (order.status === 'pending') order.status = 'confirmed';
+      if (gw.payment?.id) order.payment.mpPaymentId = gw.payment.id;
+
+      await order.save();
+
+      // 6. Estoque: decremento idempotente (claim atômico no inventory.ts)
+      await processOrderStock(order._id);
+
+      // 7. Confirmação por e-mail (CLIENTE + ADMIN) — é AQUI que o PIX pago
+      // é notificado (o checkout só envia para cartão aprovado na hora).
+      // AGUARDADO (await): na Vercel, promises pendentes depois da resposta
+      // são CONGELADAS — o fire-and-forget original fazia os e-mails
+      // morrerem silenciosamente. sendOrderPaidEmails nunca lança.
+      const email = order.customerSnapshot?.email || order.guestEmail;
+      await sendOrderPaidEmails(email, order.orderNumber);
+
+      return NextResponse.json({ received: true });
+    }
+
+    if (isRefundedStatus(gw)) {
+      const wasPaid = order.payment.status === 'paid';
+      order.payment.status = 'refunded';
+      await order.save();
+      if (wasPaid || order.stockProcessed) {
+        await restoreOrderStock(order._id);
+      }
+      return NextResponse.json({ received: true });
+    }
+
+    if (isFailedStatus(gw)) {
+      if (order.payment.status !== 'paid') {
+        order.payment.status = 'failed';
+        if (['canceled', 'cancelled', 'expired'].includes(gw.status)) {
+          order.status = 'cancelled';
+        }
+        await order.save();
+      }
+      return NextResponse.json({ received: true });
+    }
+
+    // created / action_required / processing → apenas confirma recebimento
+    return NextResponse.json({ received: true, ignored: gw.status });
+  } catch (err) {
+    console.error('[MP Webhook] erro:', err);
+    // 500 faz o MP reenviar (eventos transitórios não se perdem)
+    return NextResponse.json({ error: 'internal' }, { status: 500 });
+  }
+}

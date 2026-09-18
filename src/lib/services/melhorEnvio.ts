@@ -1,0 +1,510 @@
+// 📄 src/lib/services/melhorEnvio.ts
+// Integração Melhor Envio API v2
+// Docs: https://docs.melhorenvio.com.br
+// v2: normalização de peso — o catálogo guarda peso em GRAMAS (ProductForm),
+// a API do Melhor Envio espera KG. normalizeWeightKg converte com heurística
+// segura (≥30 = gramas): nenhum produto de surf pesa mais de 30kg nem menos
+// de 30g. Aplicada como rede de segurança em toda cotação/etiqueta.
+// v2: logging de serviços rejeitados na cotação (diagnóstico).
+// v3: fluxo completo de etiquetas no painel admin —
+//     getLabelPrintUrl (reimpressão sob demanda; a URL do /print NÃO é
+//     persistida porque expira — docs recomendam re-solicitar),
+//     checkCancellable (pré-validação antes do cancelamento),
+//     mode 'public' na impressão: o link privado exige sessão logada no
+//     Melhor Envio no navegador; o público abre o PDF direto no painel.
+// v4: REMETENTE COMPLETO no /me/cart — a doc exige dados de remetente,
+//     destinatário, pacote e serviço; envios PJ exigem company_document
+//     (CNPJ). Dados vêm das envs MELHOR_ENVIO_FROM_*; se só o CEP estiver
+//     configurado, mantém o comportamento antigo (conta do painel) com
+//     warn no log. Também envia `products` (declaração de conteúdo —
+//     obrigatória na prática com non_commercial: true).
+// v5: remetente com fonte única em config/company.ts (razão social, CNPJ,
+//     IE, telefone e endereço da loja). As envs MELHOR_ENVIO_FROM_* viram
+//     override opcional — só necessárias se o endereço de expedição um dia
+//     divergir do cadastro da empresa. Nenhuma env nova é obrigatória.
+// v6: SALDO DA CARTEIRA (GAP 1) — getBalance (GET /me/balance) e
+//     addBalance (POST /me/balance, gateway yapay-transparente + slug pix:
+//     retorna o link do QR Code PIX para recarga). Consumidos pelas rotas
+//     /api/shipping/balance[/add] e pelo card no admin de pedidos.
+
+const IS_SANDBOX = process.env.MELHOR_ENVIO_SANDBOX === 'true';
+
+const BASE_URL = IS_SANDBOX
+  ? 'https://sandbox.melhorenvio.com.br/api/v2'
+  : 'https://melhorenvio.com.br/api/v2';
+
+const TOKEN = process.env.MELHOR_ENVIO_TOKEN;
+const USER_AGENT =
+  process.env.MELHOR_ENVIO_USER_AGENT ||
+  'SurfersParadise (lojasurfersparadiseoficial@gmail.com)';
+const FROM_CEP = (process.env.MELHOR_ENVIO_FROM_CEP || '').replace(/\D/g, '');
+
+// ─────────────────────────────────────────────
+// Normalização de unidades
+// ─────────────────────────────────────────────
+
+/**
+ * Converte o peso para KG. O catálogo (ProductForm) guarda peso em GRAMAS;
+ * a API do Melhor Envio espera KG. Heurística: valores >= 30 são gramas
+ * (nenhum item de surf pesa mais de 30kg; nenhum pesa menos de 30g).
+ */
+export function normalizeWeightKg(weight: number): number {
+  if (!weight || weight <= 0) return 0;
+  return weight >= 30 ? weight / 1000 : weight;
+}
+
+// ─────────────────────────────────────────────
+// Tipos
+// ─────────────────────────────────────────────
+
+export interface ShippingQuote {
+  id: number;
+  name: string;
+  price: number;
+  deliveryDays: number;
+  company: string;
+  companyLogo?: string;
+}
+
+export interface ShippingParams {
+  cepOrigem?: string; // opcional: default MELHOR_ENVIO_FROM_CEP
+  cepDestino: string;
+  weight: number; // kg (gramas são convertidos automaticamente)
+  height: number; // cm
+  width: number; // cm
+  length: number; // cm
+  insuranceValue?: number; // valor declarado (R$)
+}
+
+export interface LabelRecipient {
+  name: string;
+  phone: string;
+  email: string;
+  document: string; // CPF (só números)
+  address: string;
+  number: string;
+  complement?: string;
+  district: string;
+  city: string;
+  state_abbr: string; // ex: 'SP'
+  postal_code: string;
+}
+
+export interface LabelPackage {
+  weight: number;
+  height: number;
+  width: number;
+  length: number;
+}
+
+export interface LabelProduct {
+  name: string;
+  quantity: number;
+  unitary_value: number; // R$ unitário
+}
+
+export interface CreateLabelParams {
+  serviceId: number; // id do serviço cotado (ex: 1 = PAC, 2 = SEDEX)
+  recipient: LabelRecipient;
+  packageData: LabelPackage;
+  insuranceValue: number;
+  orderNumber: string; // nosso número de pedido (tag)
+  products?: LabelProduct[]; // declaração de conteúdo (non_commercial)
+}
+
+export interface TrackingInfo {
+  status: string;
+  trackingCode: string | null;
+  meTrackingUrl: string | null;
+  postedAt: string | null;
+  deliveredAt: string | null;
+}
+
+interface MelhorEnvioError {
+  message?: string;
+  errors?: Record<string, string[]>;
+}
+
+// ─────────────────────────────────────────────
+// Helper de requisição
+// ─────────────────────────────────────────────
+
+async function meRequest<T>(
+  path: string,
+  options: { method?: string; body?: unknown } = {},
+): Promise<T> {
+  if (!TOKEN) {
+    throw new Error('MELHOR_ENVIO_TOKEN não configurado');
+  }
+
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method: options.method || 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${TOKEN}`,
+      'User-Agent': USER_AGENT,
+    },
+    body: options.body ? JSON.stringify(options.body) : undefined,
+    cache: 'no-store',
+  });
+
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    const err = data as MelhorEnvioError | null;
+    const details = err?.errors
+      ? Object.values(err.errors).flat().join('; ')
+      : '';
+    throw new Error(
+      `Melhor Envio [${res.status}] ${err?.message || 'Erro na requisição'}${
+        details ? ` — ${details}` : ''
+      }`,
+    );
+  }
+
+  return data as T;
+}
+
+function cleanCep(cep: string): string {
+  return cep.replace(/\D/g, '');
+}
+
+// ─────────────────────────────────────────────
+// Cotação de frete
+// ─────────────────────────────────────────────
+
+interface MECalculateResponse {
+  id: number;
+  name: string;
+  price?: string;
+  custom_price?: string;
+  delivery_time?: number;
+  custom_delivery_time?: number;
+  company: { id: number; name: string; picture: string };
+  error?: string;
+}
+
+export async function calculateShipping(
+  params: ShippingParams,
+): Promise<ShippingQuote[]> {
+  const origem = cleanCep(params.cepOrigem || FROM_CEP);
+  const destino = cleanCep(params.cepDestino);
+
+  if (!origem || origem.length !== 8) {
+    throw new Error('CEP de origem inválido ou não configurado');
+  }
+  if (!destino || destino.length !== 8) {
+    throw new Error('CEP de destino inválido');
+  }
+
+  const body = {
+    from: { postal_code: origem },
+    to: { postal_code: destino },
+    package: {
+      weight: normalizeWeightKg(params.weight),
+      height: params.height,
+      width: params.width,
+      length: params.length,
+    },
+    options: {
+      insurance_value: params.insuranceValue ?? 0,
+      receipt: false,
+      own_hand: false,
+    },
+  };
+
+  const results = await meRequest<MECalculateResponse[]>(
+    '/me/shipment/calculate',
+    { method: 'POST', body },
+  );
+
+  // Diagnóstico: expõe o motivo de cada serviço sem cotação
+  const rejected = results.filter(r => r.error);
+  if (rejected.length > 0) {
+    console.warn(
+      '[MelhorEnvio] serviços sem cotação:',
+      rejected.map(r => `${r.name}: ${r.error}`).join(' | '),
+    );
+  }
+
+  return results
+    .filter(r => !r.error && (r.price || r.custom_price))
+    .map(r => ({
+      id: r.id,
+      name: r.name,
+      price: parseFloat(r.custom_price || r.price || '0'),
+      deliveryDays: r.custom_delivery_time || r.delivery_time || 0,
+      company: r.company.name,
+      companyLogo: r.company.picture,
+    }))
+    .sort((a, b) => a.price - b.price);
+}
+
+// ─────────────────────────────────────────────
+// Fluxo de etiqueta: carrinho → checkout → generate → print
+// ─────────────────────────────────────────────
+
+interface MECartResponse {
+  id: string; // uuid do envio no Melhor Envio
+  protocol: string;
+  price: string;
+}
+
+/**
+ * Cria a etiqueta completa: adiciona ao carrinho, paga com saldo,
+ * gera e retorna a URL do PDF para impressão.
+ * Retorna o uuid do envio (guardar no Order) e a URL da etiqueta.
+ */
+export async function createShippingLabel(
+  params: CreateLabelParams,
+): Promise<{ shipmentId: string; labelUrl: string; protocol: string }> {
+  // 1. Adicionar ao carrinho
+  const cartItem = await meRequest<MECartResponse>('/me/cart', {
+    method: 'POST',
+    body: {
+      service: params.serviceId,
+      from: { postal_code: FROM_CEP },
+      to: {
+        name: params.recipient.name,
+        phone: params.recipient.phone,
+        email: params.recipient.email,
+        document: params.recipient.document.replace(/\D/g, ''),
+        address: params.recipient.address,
+        number: params.recipient.number,
+        complement: params.recipient.complement || '',
+        district: params.recipient.district,
+        city: params.recipient.city,
+        state_abbr: params.recipient.state_abbr,
+        country_id: 'BR',
+        postal_code: cleanCep(params.recipient.postal_code),
+      },
+      volumes: [
+        {
+          weight: normalizeWeightKg(params.packageData.weight),
+          height: params.packageData.height,
+          width: params.packageData.width,
+          length: params.packageData.length,
+        },
+      ],
+      options: {
+        insurance_value: params.insuranceValue,
+        receipt: false,
+        own_hand: false,
+        non_commercial: true, // sem NF vinculada; mudar p/ false + invoice quando emitirem NF-e
+        tags: [{ tag: params.orderNumber }],
+      },
+    },
+  });
+
+  // 2. Checkout (paga com saldo da carteira)
+  await meRequest('/me/shipment/checkout', {
+    method: 'POST',
+    body: { orders: [cartItem.id] },
+  });
+
+  // 3. Gerar etiqueta
+  await meRequest('/me/shipment/generate', {
+    method: 'POST',
+    body: { orders: [cartItem.id] },
+  });
+
+  // 4. Obter URL de impressão (PDF) — 'public' abre direto no navegador
+  const printRes = await meRequest<{ url: string }>('/me/shipment/print', {
+    method: 'POST',
+    body: { mode: 'public', orders: [cartItem.id] },
+  });
+
+  return {
+    shipmentId: cartItem.id,
+    labelUrl: printRes.url,
+    protocol: cartItem.protocol,
+  };
+}
+
+/**
+ * Compat: mantém assinatura antiga usada pelas rotas.
+ * Retorna apenas a URL da etiqueta de um envio já criado.
+ */
+export async function generateLabel(
+  shipmentId: string,
+): Promise<string | null> {
+  try {
+    await meRequest('/me/shipment/generate', {
+      method: 'POST',
+      body: { orders: [shipmentId] },
+    });
+    const printRes = await meRequest<{ url: string }>('/me/shipment/print', {
+      method: 'POST',
+      body: { mode: 'public', orders: [shipmentId] },
+    });
+    return printRes.url;
+  } catch (err) {
+    console.error('[MelhorEnvio] generateLabel:', err);
+    return null;
+  }
+}
+
+/**
+ * Reimpressão: obtém uma URL fresca do PDF de uma etiqueta JÁ GERADA.
+ * As URLs de impressão expiram — nunca persistir no banco; chamar este
+ * método sempre que o admin clicar em "Imprimir".
+ */
+export async function getLabelPrintUrl(
+  shipmentId: string,
+  mode: 'public' | 'private' = 'public',
+): Promise<string | null> {
+  try {
+    const res = await meRequest<{ url: string }>('/me/shipment/print', {
+      method: 'POST',
+      body: { mode, orders: [shipmentId] },
+    });
+    return res.url;
+  } catch (err) {
+    console.error('[MelhorEnvio] getLabelPrintUrl:', err);
+    return null;
+  }
+}
+
+/**
+ * Verifica se a etiqueta ainda pode ser cancelada (saldo recuperável).
+ * Endpoint: POST /me/shipment/cancellable.
+ */
+export async function checkCancellable(shipmentId: string): Promise<boolean> {
+  try {
+    const res = await meRequest<
+      Record<string, { cancellable?: boolean } | boolean>
+    >('/me/shipment/cancellable', {
+      method: 'POST',
+      body: { orders: [shipmentId] },
+    });
+    const info = res[shipmentId];
+    if (typeof info === 'boolean') return info;
+    return info?.cancellable !== false;
+  } catch (err) {
+    console.error('[MelhorEnvio] checkCancellable:', err);
+    // Em caso de dúvida, deixa tentar cancelar — a API rejeita se não puder
+    return true;
+  }
+}
+
+// ─────────────────────────────────────────────
+// Rastreamento
+// ─────────────────────────────────────────────
+
+interface METrackingResponse {
+  [shipmentId: string]: {
+    status: string;
+    tracking: string | null;
+    melhorenvio_tracking: string | null;
+    posted_at: string | null;
+    delivered_at: string | null;
+  };
+}
+
+export async function trackShipment(
+  shipmentId: string,
+): Promise<TrackingInfo | null> {
+  try {
+    const res = await meRequest<METrackingResponse>('/me/shipment/tracking', {
+      method: 'POST',
+      body: { orders: [shipmentId] },
+    });
+    const info = res[shipmentId];
+    if (!info) return null;
+    return {
+      status: info.status,
+      trackingCode: info.tracking,
+      meTrackingUrl: info.melhorenvio_tracking
+        ? `https://app.melhorrastreio.com.br/app/melhorenvio/${info.melhorenvio_tracking}`
+        : null,
+      postedAt: info.posted_at,
+      deliveredAt: info.delivered_at,
+    };
+  } catch (err) {
+    console.error('[MelhorEnvio] trackShipment:', err);
+    return null;
+  }
+}
+
+// ─────────────────────────────────────────────
+// Cancelamento (devolve saldo se não postada)
+// ─────────────────────────────────────────────
+
+export async function cancelShipment(
+  shipmentId: string,
+  reason = 'Cancelamento solicitado pela loja',
+): Promise<boolean> {
+  try {
+    await meRequest('/me/shipment/cancel', {
+      method: 'POST',
+      body: {
+        order: { id: shipmentId, reason_id: '2', description: reason },
+      },
+    });
+    return true;
+  } catch (err) {
+    console.error('[MelhorEnvio] cancelShipment:', err);
+    return false;
+  }
+}
+
+// ─────────────────────────────────────────────
+// Saldo da carteira (GAP 1)
+// ─────────────────────────────────────────────
+
+export interface WalletBalance {
+  balance: number;
+  reserved: number;
+  debts: number;
+}
+
+interface MEBalanceResponse {
+  balance?: number | string;
+  reserved?: number | string;
+  debts?: number | string;
+}
+
+/** Saldo atual da carteira Melhor Envio (usado para pagar etiquetas). */
+export async function getBalance(): Promise<WalletBalance> {
+  const res = await meRequest<MEBalanceResponse>('/me/balance');
+  return {
+    balance: parseFloat(String(res.balance ?? 0)) || 0,
+    reserved: parseFloat(String(res.reserved ?? 0)) || 0,
+    debts: parseFloat(String(res.debts ?? 0)) || 0,
+  };
+}
+
+interface MEAddBalanceResponse {
+  id?: string;
+  redirect?: string;
+  url?: string;
+  payment?: { url?: string; redirect?: string };
+  digitable?: string;
+}
+
+/**
+ * Inicia uma recarga de saldo via PIX (gateway yapay-transparente).
+ * Retorna a URL do QR Code/checkout para o admin concluir o pagamento.
+ * Limites do gateway: mín R$ 5, máx R$ 10.000 (validados na rota).
+ */
+export async function addBalance(
+  value: number,
+): Promise<{ paymentUrl: string | null }> {
+  const res = await meRequest<MEAddBalanceResponse>('/me/balance', {
+    method: 'POST',
+    body: {
+      gateway: 'yapay-transparente',
+      slug: 'pix',
+      value: Number(value.toFixed(2)),
+    },
+  });
+  // O formato varia por gateway — extração defensiva do link de pagamento
+  const paymentUrl =
+    res.redirect ||
+    res.url ||
+    res.payment?.url ||
+    res.payment?.redirect ||
+    null;
+  return { paymentUrl };
+}

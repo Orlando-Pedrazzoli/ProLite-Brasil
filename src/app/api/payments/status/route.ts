@@ -1,0 +1,126 @@
+// 📄 src/app/api/payments/status/route.ts
+// Consulta de status para polling do front (PIX/boleto confirmam via webhook).
+//
+// v2: valida ObjectId antes do findOne (orderId malformado devolvia 500).
+// v3: gateway migrado para o Mercado Pago (getOrder + status normalizados).
+// v2: FALLBACK ATIVO ao gateway com throttle — se o pedido está pending há
+//     mais de 30s desde a última verificação, consulta getOrder() direto no
+//     gateway. Se lá constar paid, aplica a mesma transição do webhook
+//     (status + estoque idempotente + e-mail). Isso garante que o cliente
+//     que pagou o PIX vê a confirmação MESMO se o webhook estiver fora do
+//     ar ou mal configurado. O polling do front (a cada ~5s) continua
+//     barato: o gateway é consultado no máximo a cada 30s por pedido.
+
+import { NextResponse } from 'next/server';
+import mongoose from 'mongoose';
+import connectDB from '@/lib/db/connect';
+import Order from '@/lib/models/Order';
+import {
+  getOrder,
+  isPaidStatus,
+  isFailedStatus,
+} from '@/lib/services/mercadopago';
+import { processOrderStock } from '@/lib/services/inventory';
+import { sendOrderPaidEmails } from '@/lib/services/email';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+// O poll que confirma o pagamento faz: gateway + save + estoque + 2 e-mails
+// (aguardados). 30s dá folga em cold start — mesmo racional do webhook.
+export const maxDuration = 30;
+
+const GATEWAY_CHECK_THROTTLE_MS = 30_000;
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const orderNumber = searchParams.get('orderNumber');
+  const orderId = searchParams.get('orderId');
+
+  if (!orderNumber && !orderId) {
+    return NextResponse.json(
+      { error: 'Informe orderNumber ou orderId.' },
+      { status: 400 },
+    );
+  }
+
+  if (orderId && !mongoose.isValidObjectId(orderId)) {
+    return NextResponse.json({ error: 'orderId inválido.' }, { status: 400 });
+  }
+
+  await connectDB();
+
+  const order = await Order.findOne(
+    orderNumber ? { orderNumber } : { _id: orderId },
+  );
+
+  if (!order) {
+    return NextResponse.json(
+      { error: 'Pedido não encontrado.' },
+      { status: 404 },
+    );
+  }
+
+  // ── Fallback ativo: pending + PIX + throttle vencido → pergunta direto
+  // ao Mercado Pago (rede de segurança para webhook fora do ar)
+  // (const extraída para o narrowing do TS funcionar na chamada do getOrder)
+  const mpOrderId = order.payment.mpOrderId;
+  const isPollable =
+    order.payment.status === 'pending' &&
+    !!mpOrderId &&
+    (order.payment.method === 'pix' || order.payment.method === 'boleto');
+
+  const sinceLastCheck = Date.now() - new Date(order.updatedAt).getTime();
+
+  if (isPollable && mpOrderId && sinceLastCheck > GATEWAY_CHECK_THROTTLE_MS) {
+    try {
+      const pg = await getOrder(mpOrderId);
+
+      if (isPaidStatus(pg)) {
+        // Mesma transição do webhook — se o webhook chegar depois, o branch
+        // idempotente dele não duplica e-mail nem estoque.
+        order.payment.status = 'paid';
+        order.payment.paidAt = new Date();
+        if (order.status === 'pending') order.status = 'confirmed';
+        await order.save();
+
+        await processOrderStock(order._id);
+
+        // AGUARDADO (await): fire-and-forget morre na Vercel após a resposta.
+        // Notifica CLIENTE + ADMIN; nunca lança.
+        const email = order.customerSnapshot?.email || order.guestEmail;
+        await sendOrderPaidEmails(email, order.orderNumber);
+        console.info(
+          '[Payment Status] pedido confirmado via fallback (webhook não chegou):',
+          order.orderNumber,
+        );
+      } else if (isFailedStatus(pg)) {
+        order.payment.status = 'failed';
+        if (['canceled', 'cancelled', 'expired'].includes(pg.status)) {
+          order.status = 'cancelled';
+        }
+        await order.save();
+      } else {
+        // Continua pendente — toca updatedAt para rearmar o throttle
+        await Order.updateOne(
+          { _id: order._id },
+          { $currentDate: { updatedAt: true } },
+        );
+      }
+    } catch (err) {
+      // Gateway indisponível não pode quebrar o polling — segue com o banco
+      console.error(
+        '[Payment Status] fallback Mercado Pago falhou:',
+        order.orderNumber,
+        err,
+      );
+    }
+  }
+
+  return NextResponse.json({
+    orderNumber: order.orderNumber,
+    status: order.status,
+    paymentStatus: order.payment.status,
+    method: order.payment.method,
+    paidAt: order.payment.paidAt ?? null,
+  });
+}
