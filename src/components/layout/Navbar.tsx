@@ -243,13 +243,15 @@ export default function Navbar() {
                   height={56}
                   className='w-12 h-12 md:w-14 md:h-14 object-contain'
                 />
-                <Image
-                  src='/images/logo-surfers-texto.jpeg'
-                  alt='Pro-Lite'
-                  width={200}
-                  height={40}
-                  className='hidden sm:block h-6 md:h-7 w-auto object-contain mix-blend-multiply'
-                />
+                {/* Wordmark provisório em texto, até chegar o logotipo
+                    horizontal oficial da Pro-Lite em SVG/PNG transparente.
+                    Nessa altura, trocar este <span> por um <Image>. */}
+                <span
+                  className='hidden sm:block text-xl md:text-2xl font-black italic uppercase tracking-tight text-chumbo leading-none'
+                  style={{ color: 'var(--color-chumbo)' }}
+                >
+                  Pro-Lite
+                </span>
               </div>
             </Link>
 

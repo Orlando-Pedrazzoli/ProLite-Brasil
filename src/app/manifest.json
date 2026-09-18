@@ -1,6 +1,8 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Pro-Lite Brasil",
+  "short_name": "Pro-Lite",
+  "description": "Equipamento de surf Pro-Lite: capas, leashes, decks e acessórios.",
+  "start_url": "/",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +17,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#2D2F34",
   "background_color": "#ffffff",
   "display": "standalone"
 }

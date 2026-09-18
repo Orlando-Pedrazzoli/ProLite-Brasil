@@ -78,19 +78,20 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
     },
   },
-  // Redundância — a verificação real da propriedade Domínio é via TXT no DNS
-  verification: {
-    google: 'c_t1QPP_mkUI343NkFzPoN4NWSiUuXeH8bUHsbSHAq4',
-  },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: '/apple-touch-icon.png',
-  },
-  manifest: '/site.webmanifest',
+  // Google Search Console: a verificação da propriedade prolite.com.br
+  // deve ser feita por registo TXT no DNS. Se for preciso a meta tag,
+  // acrescentar aqui `verification: { google: '<token da Pro-Lite>' }`.
+  // (O token que existia pertencia à conta do projeto de origem.)
+
+  // ÍCONES E MANIFEST: geridos por convenção de ficheiros do App Router,
+  // NÃO por configuração. O Next gera as tags <link> sozinho a partir de:
+  //   src/app/favicon.ico      -> /favicon.ico
+  //   src/app/icon0.svg        -> <link rel="icon" type="image/svg+xml">
+  //   src/app/icon1.png        -> <link rel="icon" sizes="96x96">
+  //   src/app/apple-icon.png   -> <link rel="apple-touch-icon">
+  //   src/app/manifest.json    -> <link rel="manifest">
+  // Não declarar `icons` nem `manifest` aqui, e não duplicar esses
+  // ficheiros em /public (favicon.ico nos dois sítios dá erro de conflito).
 };
 
 export default function RootLayout({
