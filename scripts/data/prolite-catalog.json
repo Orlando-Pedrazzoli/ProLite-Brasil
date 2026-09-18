@@ -1,0 +1,2413 @@
+{
+  "_comment": "Gerado a partir da Tabela Pro-Lite 2026 (folha Plan1). price = preço de lojista x 2,2 (coluna MARK-UP), sem arredondamento. Não contém preços de atacado nem estoque.",
+  "brand": {
+    "name": "Pro-Lite",
+    "slug": "pro-lite"
+  },
+  "categories": [
+    {
+      "name": "Capas",
+      "slug": "capas",
+      "children": [
+        {
+          "name": "Capas de viagem",
+          "slug": "capas-de-viagem"
+        },
+        {
+          "name": "Capas refletivas",
+          "slug": "capas-refletivas"
+        },
+        {
+          "name": "Capas toalha",
+          "slug": "capas-toalha"
+        }
+      ]
+    },
+    {
+      "name": "Leashes",
+      "slug": "leashes",
+      "children": [
+        {
+          "name": "Leashes Bodyboard",
+          "slug": "leashes-bodyboard"
+        },
+        {
+          "name": "Leashes MDS",
+          "slug": "leashes-mds"
+        },
+        {
+          "name": "Leashes PL",
+          "slug": "leashes-pl"
+        }
+      ]
+    },
+    {
+      "name": "Decks",
+      "slug": "decks",
+      "children": []
+    },
+    {
+      "name": "Quilhas",
+      "slug": "quilhas",
+      "children": [
+        {
+          "name": "Quilhas PL",
+          "slug": "quilhas-pl"
+        },
+        {
+          "name": "Quilhas de fibra",
+          "slug": "quilhas-de-fibra"
+        }
+      ]
+    },
+    {
+      "name": "Parafinas",
+      "slug": "parafinas",
+      "children": []
+    },
+    {
+      "name": "SUP",
+      "slug": "sup",
+      "children": [
+        {
+          "name": "Acessórios para SUP",
+          "slug": "acessorios-para-sup"
+        },
+        {
+          "name": "Capas para SUP",
+          "slug": "capas-para-sup"
+        },
+        {
+          "name": "Leashes para SUP",
+          "slug": "leashes-para-sup"
+        }
+      ]
+    },
+    {
+      "name": "Lifestyle",
+      "slug": "lifestyle",
+      "children": [
+        {
+          "name": "Casa e descanso",
+          "slug": "casa-e-descanso"
+        },
+        {
+          "name": "Mochilas e bolsas",
+          "slug": "mochilas-e-bolsas"
+        },
+        {
+          "name": "Vestuário",
+          "slug": "vestuario"
+        }
+      ]
+    },
+    {
+      "name": "Acessórios",
+      "slug": "acessorios",
+      "children": [
+        {
+          "name": "Diversos",
+          "slug": "acessorios-diversos"
+        },
+        {
+          "name": "Manutenção",
+          "slug": "manutencao"
+        },
+        {
+          "name": "Proteção de prancha",
+          "slug": "protecao-de-prancha"
+        },
+        {
+          "name": "Racks e transporte",
+          "slug": "racks-e-transporte"
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "sku": "17402",
+      "name": "Boné Surf",
+      "slug": "bone-surf",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 98.78,
+      "ncm": "6505.00.19",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "17411",
+      "name": "Boné Surf Extensivo",
+      "slug": "bone-surf-extensivo",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 107.58,
+      "ncm": "6505.00.19",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "17802",
+      "name": "Chaveiro",
+      "slug": "chaveiro",
+      "category": "Acessórios",
+      "subcategory": "Diversos",
+      "price": 9.9,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17601",
+      "name": "Wet Suit Bag",
+      "slug": "wet-suit-bag",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 99.0,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "17602",
+      "name": "Wet Suit Bag Roll",
+      "slug": "wet-suit-bag-roll",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 219.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "14142",
+      "name": "Raspador P",
+      "slug": "raspador-p",
+      "category": "Acessórios",
+      "subcategory": "Manutenção",
+      "price": 8.58,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "14146",
+      "name": "Raspador G",
+      "slug": "raspador-g",
+      "category": "Acessórios",
+      "subcategory": "Manutenção",
+      "price": 12.98,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17207",
+      "name": "Copinho para Bodyboard",
+      "slug": "copinho-para-bodyboard",
+      "category": "Acessórios",
+      "subcategory": "Diversos",
+      "price": 49.94,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "16111",
+      "name": "Necessaire Tube",
+      "slug": "necessaire-tube",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 65.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "14132",
+      "name": "Wax Bag",
+      "slug": "wax-bag",
+      "category": "Acessórios",
+      "subcategory": "Manutenção",
+      "price": 9.9,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "14133",
+      "name": "Quick Vest",
+      "slug": "quick-vest",
+      "category": "Acessórios",
+      "subcategory": "Diversos",
+      "price": 19.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15703",
+      "name": "Capa para Banco Nylon",
+      "slug": "capa-para-banco-nylon",
+      "category": "Acessórios",
+      "subcategory": "Diversos",
+      "price": 87.78,
+      "ncm": "8708.29.99",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17763",
+      "name": "Capa para Mochila",
+      "slug": "capa-para-mochila",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 43.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17415",
+      "name": "Pá de Remo",
+      "slug": "pa-de-remo",
+      "category": "Acessórios",
+      "subcategory": "Diversos",
+      "price": 43.78,
+      "ncm": "3926.90.90",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17762",
+      "name": "Kit Surfista",
+      "slug": "kit-surfista",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 109.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17765",
+      "name": "Porta Ferramentas",
+      "slug": "porta-ferramentas",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 109.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17764",
+      "name": "Sicurezza",
+      "slug": "sicurezza",
+      "category": "Acessórios",
+      "subcategory": "Diversos",
+      "price": 10.78,
+      "ncm": "4007.00.20",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19109",
+      "name": "Rede de Descanso 110 kilos",
+      "slug": "rede-de-descanso-110-kilos",
+      "category": "Lifestyle",
+      "subcategory": "Casa e descanso",
+      "price": 165.0,
+      "ncm": "5608.90.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19117",
+      "name": "Kit para Rede Corda + Gancho",
+      "slug": "kit-para-rede-corda-gancho",
+      "category": "Lifestyle",
+      "subcategory": "Casa e descanso",
+      "price": 99.0,
+      "ncm": "5608.90.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17901",
+      "name": "Leash Nadadeira",
+      "slug": "leash-nadadeira",
+      "category": "Leashes",
+      "subcategory": "Leashes Bodyboard",
+      "price": 21.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "10109",
+      "name": "Leash PL 3 / 4 mm / Supercomp Bodyboard",
+      "slug": "leash-pl-3-4-mm-supercomp-bodyboard",
+      "category": "Leashes",
+      "subcategory": "Leashes Bodyboard",
+      "price": 34.98,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "10100",
+      "name": "Leash PL 5 / 4 mm / Supercomp",
+      "slug": "leash-pl-5-4-mm-supercomp",
+      "category": "Leashes",
+      "subcategory": "Leashes PL",
+      "price": 65.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10102",
+      "name": "Leash PL 6 / 5 mm / Comp",
+      "slug": "leash-pl-6-5-mm-comp",
+      "category": "Leashes",
+      "subcategory": "Leashes PL",
+      "price": 87.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10103",
+      "name": "Leash PL 6 / 6,5 mm / Regular",
+      "slug": "leash-pl-6-6-5-mm-regular",
+      "category": "Leashes",
+      "subcategory": "Leashes PL",
+      "price": 98.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10110",
+      "name": "Leash PL 6 / 6,5 mm / Regular Bodyboard Coil",
+      "slug": "leash-pl-6-6-5-mm-regular-bodyboard-coil",
+      "category": "Leashes",
+      "subcategory": "Leashes Bodyboard",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "10104",
+      "name": "Leash PL 8 / 7,0 mm",
+      "slug": "leash-pl-8-7-0-mm",
+      "category": "Leashes",
+      "subcategory": "Leashes PL",
+      "price": 129.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10105",
+      "name": "Leash PL 9 / 6,5 mm / Long Regular",
+      "slug": "leash-pl-9-6-5-mm-long-regular",
+      "category": "Leashes",
+      "subcategory": "Leashes PL",
+      "price": 175.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10106",
+      "name": "Leash PL 9 / 7 mm / Long Knee",
+      "slug": "leash-pl-9-7-mm-long-knee",
+      "category": "Leashes",
+      "subcategory": "Leashes PL",
+      "price": 175.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10107",
+      "name": "Leash PL 10 / 8,0 mm",
+      "slug": "leash-pl-10-8-0-mm",
+      "category": "Leashes",
+      "subcategory": "Leashes PL",
+      "price": 175.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "12102",
+      "name": "Leash Comp MDS 6' / 5 mm",
+      "slug": "leash-comp-mds-6-5-mm",
+      "category": "Leashes",
+      "subcategory": "Leashes MDS",
+      "price": 195.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Injetado com duplo girador"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "12112",
+      "name": "Leash Freesurf MDS 6' / 7 mm",
+      "slug": "leash-freesurf-mds-6-7-mm",
+      "category": "Leashes",
+      "subcategory": "Leashes MDS",
+      "price": 195.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Injetado com duplo girador"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "12113",
+      "name": "Leash Pro-Long MDS 9' / 7 mm",
+      "slug": "leash-pro-long-mds-9-7-mm",
+      "category": "Leashes",
+      "subcategory": "Leashes MDS",
+      "price": 195.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Injetado com duplo girador"
+        }
+      ],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "12114",
+      "name": "Leash Survivor MDS 8' / 7 mm",
+      "slug": "leash-survivor-mds-8-7-mm",
+      "category": "Leashes",
+      "subcategory": "Leashes MDS",
+      "price": 195.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Injetado com duplo girador"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "12115",
+      "name": "Leash Pro-Long Knee MDS 9' / 7 mm",
+      "slug": "leash-pro-long-knee-mds-9-7-mm",
+      "category": "Leashes",
+      "subcategory": "Leashes MDS",
+      "price": 195.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Injetado com duplo girador"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "12202",
+      "name": "Leash BB Espiral para Braço MDS 6' / 6,5 mm",
+      "slug": "leash-bb-espiral-para-braco-mds-6-6-5-mm",
+      "category": "Leashes",
+      "subcategory": "Leashes Bodyboard",
+      "price": 276.98,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Injetado com duplo girador"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "14101",
+      "name": "Wax Tropical 80 g",
+      "slug": "wax-tropical-80-g",
+      "category": "Parafinas",
+      "subcategory": "",
+      "price": 8.78,
+      "ncm": "2712.20.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "14102",
+      "name": "Wax Warm 80 g",
+      "slug": "wax-warm-80-g",
+      "category": "Parafinas",
+      "subcategory": "",
+      "price": 8.78,
+      "ncm": "2712.20.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "14103",
+      "name": "Wax Cool 80 g",
+      "slug": "wax-cool-80-g",
+      "category": "Parafinas",
+      "subcategory": "",
+      "price": 8.78,
+      "ncm": "2712.20.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "14104",
+      "name": "Wax Cold 80 g",
+      "slug": "wax-cold-80-g",
+      "category": "Parafinas",
+      "subcategory": "",
+      "price": 8.78,
+      "ncm": "2712.20.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "14400",
+      "name": "Wax - 20 g",
+      "slug": "wax-20-g",
+      "category": "Parafinas",
+      "subcategory": "",
+      "price": 1.98,
+      "ncm": "2712.20.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "14105",
+      "name": "Wax Premium 80 g",
+      "slug": "wax-premium-80-g",
+      "category": "Parafinas",
+      "subcategory": "",
+      "price": 14.96,
+      "ncm": "2712.20.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "17101",
+      "name": "Fita Extensora 5,0 m 2 Fitas",
+      "slug": "fita-extensora-5-0-m-2-fitas",
+      "category": "Acessórios",
+      "subcategory": "Racks e transporte",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "17102",
+      "name": "Fita Extensora 3,3 m 2 Fitas",
+      "slug": "fita-extensora-3-3-m-2-fitas",
+      "category": "Acessórios",
+      "subcategory": "Racks e transporte",
+      "price": 109.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17114",
+      "name": "Fita Extensora 7,0 m 1 Fita",
+      "slug": "fita-extensora-7-0-m-1-fita",
+      "category": "Acessórios",
+      "subcategory": "Racks e transporte",
+      "price": 85.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17112",
+      "name": "Soft Pads Estendido",
+      "slug": "soft-pads-estendido",
+      "category": "Acessórios",
+      "subcategory": "Racks e transporte",
+      "price": 129.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "10160",
+      "name": "Rack de Parede 02 Pranchas",
+      "slug": "rack-de-parede-02-pranchas",
+      "category": "Acessórios",
+      "subcategory": "Racks e transporte",
+      "price": 109.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "10161",
+      "name": "Rack de Parede 04 Pranchas",
+      "slug": "rack-de-parede-04-pranchas",
+      "category": "Acessórios",
+      "subcategory": "Racks e transporte",
+      "price": 143.0,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "10162",
+      "name": "Rack de Bicicleta",
+      "slug": "rack-de-bicicleta",
+      "category": "Acessórios",
+      "subcategory": "Racks e transporte",
+      "price": 330.0,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "17201",
+      "name": "Nose/Tail Squash",
+      "slug": "nose-tail-squash",
+      "category": "Acessórios",
+      "subcategory": "Proteção de prancha",
+      "price": 63.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17202",
+      "name": "Nose/Tail Roundpin",
+      "slug": "nose-tail-roundpin",
+      "category": "Acessórios",
+      "subcategory": "Proteção de prancha",
+      "price": 63.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "17203",
+      "name": "Nose/Tail Swallow",
+      "slug": "nose-tail-swallow",
+      "category": "Acessórios",
+      "subcategory": "Proteção de prancha",
+      "price": 63.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "16104",
+      "name": "Mochila Day-Use",
+      "slug": "mochila-day-use",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 87.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "16124",
+      "name": "Mochila Dreams",
+      "slug": "mochila-dreams",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 109.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "16129",
+      "name": "Carteira Pro-Lite",
+      "slug": "carteira-pro-lite",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 34.98,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "16117",
+      "name": "Pochete Neoprene",
+      "slug": "pochete-neoprene",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 109.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "16126",
+      "name": "Pochete Nylon",
+      "slug": "pochete-nylon",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 54.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "16127",
+      "name": "Shoulder Bag",
+      "slug": "shoulder-bag",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 54.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "16128",
+      "name": "Shoulder Bag Back 2 Zíperes",
+      "slug": "shoulder-bag-back-2-ziperes",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 54.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "16130",
+      "name": "Shoulder Bag Back 3 Zíperes",
+      "slug": "shoulder-bag-back-3-ziperes",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 54.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "10169",
+      "name": "Shoulder Bag Bill",
+      "slug": "shoulder-bag-bill",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 54.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "10180",
+      "name": "Shoulder Bag Mond",
+      "slug": "shoulder-bag-mond",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 54.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "10167",
+      "name": "Shoulder Bag Ment",
+      "slug": "shoulder-bag-ment",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 54.78,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "16101",
+      "name": "Mochila Smart Bag",
+      "slug": "mochila-smart-bag",
+      "category": "Lifestyle",
+      "subcategory": "Mochilas e bolsas",
+      "price": 110.0,
+      "ncm": "4202.92.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19110",
+      "name": "Wave Check Jacket P",
+      "slug": "wave-check-jacket-p",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 149.6,
+      "ncm": "6201.93.00",
+      "size": "P",
+      "productFamily": "wave-check-jacket",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19111",
+      "name": "Wave Check Jacket M",
+      "slug": "wave-check-jacket-m",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 149.6,
+      "ncm": "6201.93.00",
+      "size": "M",
+      "productFamily": "wave-check-jacket",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19112",
+      "name": "Wave Check Jacket G",
+      "slug": "wave-check-jacket-g",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 149.6,
+      "ncm": "6201.93.00",
+      "size": "G",
+      "productFamily": "wave-check-jacket",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19113",
+      "name": "Lycra Pro-Lite (cores diversas)",
+      "slug": "lycra-pro-lite-cores-diversas",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 175.78,
+      "ncm": "6109.90.00",
+      "size": "P",
+      "productFamily": "lycra-pro-lite-cores-diversas",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "19114",
+      "name": "Lycra Pro-Lite (cores diversas) M",
+      "slug": "lycra-pro-lite-cores-diversas-m",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 175.78,
+      "ncm": "6109.90.00",
+      "size": "M",
+      "productFamily": "lycra-pro-lite-cores-diversas",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19115",
+      "name": "Lycra Pro-Lite (cores diversas) G",
+      "slug": "lycra-pro-lite-cores-diversas-g",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 175.78,
+      "ncm": "6109.90.00",
+      "size": "G",
+      "productFamily": "lycra-pro-lite-cores-diversas",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19116",
+      "name": "Lycra Pro-Lite (cores diversas) GG",
+      "slug": "lycra-pro-lite-cores-diversas-gg",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 175.78,
+      "ncm": "6109.90.00",
+      "size": "GG",
+      "productFamily": "lycra-pro-lite-cores-diversas",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "10000",
+      "name": "Quilha PL3 P/Copinho",
+      "slug": "quilha-pl3-p-copinho",
+      "category": "Quilhas",
+      "subcategory": "Quilhas PL",
+      "price": 109.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "10101",
+      "name": "Quilha PL5 P/Copinho",
+      "slug": "quilha-pl5-p-copinho",
+      "category": "Quilhas",
+      "subcategory": "Quilhas PL",
+      "price": 109.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10301",
+      "name": "Quilha PL9 P/Caixa de Quilha",
+      "slug": "quilha-pl9-p-caixa-de-quilha",
+      "category": "Quilhas",
+      "subcategory": "Quilhas PL",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10302",
+      "name": "Quilha PL10 Caixa Quilha",
+      "slug": "quilha-pl10-caixa-quilha",
+      "category": "Quilhas",
+      "subcategory": "Quilhas PL",
+      "price": 122.98,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10225",
+      "name": "Quilha compatível com FCS I P",
+      "slug": "quilha-compativel-com-fcs-i-p",
+      "category": "Quilhas",
+      "subcategory": "Quilhas PL",
+      "price": 217.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10228",
+      "name": "Quilha de Fibra compatível com FCS II P",
+      "slug": "quilha-de-fibra-compativel-com-fcs-ii-p",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "P",
+      "productFamily": "quilha-de-fibra-compativel-com-fcs-ii",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10229",
+      "name": "Quilha de Fibra compatível com FCS II M",
+      "slug": "quilha-de-fibra-compativel-com-fcs-ii-m",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "M",
+      "productFamily": "quilha-de-fibra-compativel-com-fcs-ii",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre", "rever-nome"]
+    },
+    {
+      "sku": "10230",
+      "name": "Quilha de Fibra compatível com FCS II G",
+      "slug": "quilha-de-fibra-compativel-com-fcs-ii-g",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "G",
+      "productFamily": "quilha-de-fibra-compativel-com-fcs-ii",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre", "rever-nome"]
+    },
+    {
+      "sku": "10231",
+      "name": "Quilha de Fibra compatível com Futures P",
+      "slug": "quilha-de-fibra-compativel-com-futures-p",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "P",
+      "productFamily": "quilha-de-fibra-compativel-com-futures",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10232",
+      "name": "Quilha de Fibra compatível com Futures M",
+      "slug": "quilha-de-fibra-compativel-com-futures-m",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "M",
+      "productFamily": "quilha-de-fibra-compativel-com-futures",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10233",
+      "name": "Quilha de Fibra compatível com Futures G",
+      "slug": "quilha-de-fibra-compativel-com-futures-g",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "G",
+      "productFamily": "quilha-de-fibra-compativel-com-futures",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10333",
+      "name": "Bi-Quilha compatível com FCS II modelo MR",
+      "slug": "bi-quilha-compativel-com-fcs-ii-modelo-mr",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10241",
+      "name": "Bi-Quilha compatível com FCS II",
+      "slug": "bi-quilha-compativel-com-fcs-ii",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10239",
+      "name": "Bi-Quilha compatível com Futures",
+      "slug": "bi-quilha-compativel-com-futures",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10238",
+      "name": "Quadri-Quilha compatível com FCS II",
+      "slug": "quadri-quilha-compativel-com-fcs-ii",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10242",
+      "name": "Quadri-Quilha compatível com Futures",
+      "slug": "quadri-quilha-compativel-com-futures",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10234",
+      "name": "Quilhão de Fibra para Caixa de Quilha 7'",
+      "slug": "quilhao-de-fibra-para-caixa-de-quilha-7",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "7'",
+      "productFamily": "quilhao-de-fibra-para-caixa-de-quilha",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10235",
+      "name": "Quilhão de Fibra para Caixa de Quilha 8'",
+      "slug": "quilhao-de-fibra-para-caixa-de-quilha-8",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "8'",
+      "productFamily": "quilhao-de-fibra-para-caixa-de-quilha",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10236",
+      "name": "Quilhão de Fibra para Caixa de Quilha 9'",
+      "slug": "quilhao-de-fibra-para-caixa-de-quilha-9",
+      "category": "Quilhas",
+      "subcategory": "Quilhas de fibra",
+      "price": 499.4,
+      "ncm": "9506.29.00",
+      "size": "9'",
+      "productFamily": "quilhao-de-fibra-para-caixa-de-quilha",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "13109",
+      "name": "Deck Armor",
+      "slug": "deck-armor",
+      "category": "Decks",
+      "subcategory": "",
+      "price": 189.2,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Tipo",
+          "value": "Tail pad"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "13111",
+      "name": "Deck Blade",
+      "slug": "deck-blade",
+      "category": "Decks",
+      "subcategory": "",
+      "price": 189.2,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Tipo",
+          "value": "Tail pad"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "13119",
+      "name": "Deck Quad Attack",
+      "slug": "deck-quad-attack",
+      "category": "Decks",
+      "subcategory": "",
+      "price": 189.2,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Tipo",
+          "value": "Tail pad"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "13170",
+      "name": "Deck Combat",
+      "slug": "deck-combat",
+      "category": "Decks",
+      "subcategory": "",
+      "price": 189.2,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Tipo",
+          "value": "Tail pad"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "13180",
+      "name": "Deck Shield",
+      "slug": "deck-shield",
+      "category": "Decks",
+      "subcategory": "",
+      "price": 189.2,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Tipo",
+          "value": "Tail pad"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "13122",
+      "name": "Deck Lombok",
+      "slug": "deck-lombok",
+      "category": "Decks",
+      "subcategory": "",
+      "price": 189.2,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Tipo",
+          "value": "Tail pad"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "13123",
+      "name": "Deck Long",
+      "slug": "deck-long",
+      "category": "Decks",
+      "subcategory": "",
+      "price": 189.2,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Tipo",
+          "value": "Tail pad"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "13124",
+      "name": "Deck Fish",
+      "slug": "deck-fish",
+      "category": "Decks",
+      "subcategory": "",
+      "price": 189.2,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Tipo",
+          "value": "Tail pad"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "13125",
+      "name": "Deck Stand Up",
+      "slug": "deck-stand-up",
+      "category": "Decks",
+      "subcategory": "",
+      "price": 189.2,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Tipo",
+          "value": "Tail pad"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "sku": "15325",
+      "name": "Capa Refletiva Day-Use Short Board 5'11\"",
+      "slug": "capa-refletiva-day-use-short-board-5-11",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 329.78,
+      "ncm": "6304.99.00",
+      "size": "5'11\"",
+      "productFamily": "capa-refletiva-day-use-short-board",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15326",
+      "name": "Capa Refletiva Day-Use Short Board 6'1\"",
+      "slug": "capa-refletiva-day-use-short-board-6-1",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 329.78,
+      "ncm": "6304.99.00",
+      "size": "6'1\"",
+      "productFamily": "capa-refletiva-day-use-short-board",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15327",
+      "name": "Capa Refletiva Day-Use Short Board 6'3\"",
+      "slug": "capa-refletiva-day-use-short-board-6-3",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 329.78,
+      "ncm": "6304.99.00",
+      "size": "6'3\"",
+      "productFamily": "capa-refletiva-day-use-short-board",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15338",
+      "name": "Capa Refletiva Day-Use Fish Tail 5'8\"",
+      "slug": "capa-refletiva-day-use-fish-tail-5-8",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 329.78,
+      "ncm": "6304.99.00",
+      "size": "5'8\"",
+      "productFamily": "capa-refletiva-day-use-fish-tail",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15339",
+      "name": "Capa Refletiva Day-Use Fish Tail 6'0\"",
+      "slug": "capa-refletiva-day-use-fish-tail-6-0",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 329.78,
+      "ncm": "6304.99.00",
+      "size": "6'0\"",
+      "productFamily": "capa-refletiva-day-use-fish-tail",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15340",
+      "name": "Capa Refletiva Day-Use Evolution 6'6\"",
+      "slug": "capa-refletiva-day-use-evolution-6-6",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 329.78,
+      "ncm": "6304.99.00",
+      "size": "6'6\"",
+      "productFamily": "capa-refletiva-day-use-evolution",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15341",
+      "name": "Capa Refletiva Day-Use Evolution 6'10\"",
+      "slug": "capa-refletiva-day-use-evolution-6-10",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 329.78,
+      "ncm": "6304.99.00",
+      "size": "6'10\"",
+      "productFamily": "capa-refletiva-day-use-evolution",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15141",
+      "name": "Capa Refletiva Hardcore Short Board 6'0\"",
+      "slug": "capa-refletiva-hardcore-short-board-6-0",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 659.78,
+      "ncm": "6304.99.00",
+      "size": "6'0\"",
+      "productFamily": "capa-refletiva-hardcore-short-board",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15142",
+      "name": "Capa Refletiva Hardcore Short Board 6'3\"",
+      "slug": "capa-refletiva-hardcore-short-board-6-3",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 659.78,
+      "ncm": "6304.99.00",
+      "size": "6'3\"",
+      "productFamily": "capa-refletiva-hardcore-short-board",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15143",
+      "name": "Capa Refletiva Hardcore Short Board 6'6\"",
+      "slug": "capa-refletiva-hardcore-short-board-6-6",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 659.78,
+      "ncm": "6304.99.00",
+      "size": "6'6\"",
+      "productFamily": "capa-refletiva-hardcore-short-board",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15329",
+      "name": "Capa Refletiva Round Line Fun Board 7'5\"",
+      "slug": "capa-refletiva-round-line-fun-board-7-5",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 877.8,
+      "ncm": "6304.99.00",
+      "size": "7'5\"",
+      "productFamily": "capa-refletiva-round-line-fun-board",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15330",
+      "name": "Capa Refletiva Round Line Fun Board 8'2\"",
+      "slug": "capa-refletiva-round-line-fun-board-8-2",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 877.8,
+      "ncm": "6304.99.00",
+      "size": "8'2\"",
+      "productFamily": "capa-refletiva-round-line-fun-board",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15331",
+      "name": "Capa Refletiva Round Line Long Board 9'3\"",
+      "slug": "capa-refletiva-round-line-long-board-9-3",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 943.8,
+      "ncm": "6304.99.00",
+      "size": "9'3\"",
+      "productFamily": "capa-refletiva-round-line-long-board",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15332",
+      "name": "Capa Refletiva Round Line Long Board 9'8\"",
+      "slug": "capa-refletiva-round-line-long-board-9-8",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 943.8,
+      "ncm": "6304.99.00",
+      "size": "9'8\"",
+      "productFamily": "capa-refletiva-round-line-long-board",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15211",
+      "name": "Capa Refletiva para Bodyboard (até 2 pranchas)",
+      "slug": "capa-refletiva-para-bodyboard-ate-2-pranchas",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 149.6,
+      "ncm": "6304.99.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "15164",
+      "name": "Capa Boardsock 5'7\"/6'0\"",
+      "slug": "capa-boardsock-5-7-6-0",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "5'7\"/6'0\"",
+      "productFamily": "capa-boardsock",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15165",
+      "name": "Capa Boardsock 6'1\"/6'3\"",
+      "slug": "capa-boardsock-6-1-6-3",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "6'1\"/6'3\"",
+      "productFamily": "capa-boardsock",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15166",
+      "name": "Capa Boardsock 6'4\"/6'6\"",
+      "slug": "capa-boardsock-6-4-6-6",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "6'4\"/6'6\"",
+      "productFamily": "capa-boardsock",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15167",
+      "name": "Capa Funsock 7'2\"/7'5\"",
+      "slug": "capa-funsock-7-2-7-5",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 175.78,
+      "ncm": "9506.29.00",
+      "size": "7'2\"/7'5\"",
+      "productFamily": "capa-funsock",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15168",
+      "name": "Capa Funsock 7'6\"/8'0\"",
+      "slug": "capa-funsock-7-6-8-0",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 171.6,
+      "ncm": "9506.29.00",
+      "size": "7'6\"/8'0\"",
+      "productFamily": "capa-funsock",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15169",
+      "name": "Capa Longsock 9'0\"/9'2\"",
+      "slug": "capa-longsock-9-0-9-2",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 193.6,
+      "ncm": "9506.29.00",
+      "size": "9'0\"/9'2\"",
+      "productFamily": "capa-longsock",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15170",
+      "name": "Capa Longsock 9'3\"/9'8\"",
+      "slug": "capa-longsock-9-3-9-8",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 193.6,
+      "ncm": "9506.29.00",
+      "size": "9'3\"/9'8\"",
+      "productFamily": "capa-longsock",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15171",
+      "name": "Capa Toalha Mini Tanque 6'2\"/6'5\"",
+      "slug": "capa-toalha-mini-tanque-6-2-6-5",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "6'2\"/6'5\"",
+      "productFamily": "capa-toalha-mini-tanque",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15172",
+      "name": "Capa Toalha Mini Tanque 6'6\"/6'9\"",
+      "slug": "capa-toalha-mini-tanque-6-6-6-9",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "6'6\"/6'9\"",
+      "productFamily": "capa-toalha-mini-tanque",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15173",
+      "name": "Capa Toalha Micro Tanque 6'0\"/6'3\"",
+      "slug": "capa-toalha-micro-tanque-6-0-6-3",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "6'0\"/6'3\"",
+      "productFamily": "capa-toalha-micro-tanque",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15174",
+      "name": "Capa Toalha Micro Tanque 6'4\"/6'6\"",
+      "slug": "capa-toalha-micro-tanque-6-4-6-6",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "6'4\"/6'6\"",
+      "productFamily": "capa-toalha-micro-tanque",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15175",
+      "name": "Capa Toalha Fish Tail 5'5\"/5'8\"",
+      "slug": "capa-toalha-fish-tail-5-5-5-8",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "5'5\"/5'8\"",
+      "productFamily": "capa-toalha-fish-tail",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15176",
+      "name": "Capa Toalha Fish Tail 6'0\"/6'2\"",
+      "slug": "capa-toalha-fish-tail-6-0-6-2",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 153.78,
+      "ncm": "9506.29.00",
+      "size": "6'0\"/6'2\"",
+      "productFamily": "capa-toalha-fish-tail",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15177",
+      "name": "Capa Toalha Evolution 6'6\"/6'9\"",
+      "slug": "capa-toalha-evolution-6-6-6-9",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 164.78,
+      "ncm": "9506.29.00",
+      "size": "6'6\"/6'9\"",
+      "productFamily": "capa-toalha-evolution",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15178",
+      "name": "Capa Toalha Evolution 6'10\"/7'0\"",
+      "slug": "capa-toalha-evolution-6-10-7-0",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 164.78,
+      "ncm": "9506.29.00",
+      "size": "6'10\"/7'0\"",
+      "productFamily": "capa-toalha-evolution",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15231",
+      "name": "Capa Bodysock para Bodyboard",
+      "slug": "capa-bodysock-para-bodyboard",
+      "category": "Capas",
+      "subcategory": "Capas toalha",
+      "price": 109.78,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["rever-nome"]
+    },
+    {
+      "sku": "10108",
+      "name": "Leash PL 12 / 8,0 mm / SUP 12'",
+      "slug": "leash-pl-12-8-0-mm-sup-12",
+      "category": "SUP",
+      "subcategory": "Leashes para SUP",
+      "price": 176.0,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10112",
+      "name": "Leash SUP Mola Race 12'",
+      "slug": "leash-sup-mola-race-12",
+      "category": "SUP",
+      "subcategory": "Leashes para SUP",
+      "price": 198.0,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "12117",
+      "name": "Leash SUP Mola Race MDS 12'",
+      "slug": "leash-sup-mola-race-mds-12",
+      "category": "SUP",
+      "subcategory": "Leashes para SUP",
+      "price": 198.0,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15353",
+      "name": "Alça para SUP - Sling",
+      "slug": "alca-para-sup-sling",
+      "category": "SUP",
+      "subcategory": "Acessórios para SUP",
+      "price": 55.0,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": ["ja-no-mercado-livre"]
+    },
+    {
+      "sku": "10164",
+      "name": "Rack de Parede Sup",
+      "slug": "rack-de-parede-sup",
+      "category": "SUP",
+      "subcategory": "Acessórios para SUP",
+      "price": 217.8,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15311",
+      "name": "Capa Refletiva SUP Round 10'",
+      "slug": "capa-refletiva-sup-round-10",
+      "category": "SUP",
+      "subcategory": "Capas para SUP",
+      "price": 655.6,
+      "ncm": "6304.99.00",
+      "size": "10'",
+      "productFamily": "capa-refletiva-sup-round",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15317",
+      "name": "Capa Refletiva SUP Round 10'6\"",
+      "slug": "capa-refletiva-sup-round-10-6",
+      "category": "SUP",
+      "subcategory": "Capas para SUP",
+      "price": 655.6,
+      "ncm": "6304.99.00",
+      "size": "10'6\"",
+      "productFamily": "capa-refletiva-sup-round",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15312",
+      "name": "Capa Refletiva SUP Round 11'",
+      "slug": "capa-refletiva-sup-round-11",
+      "category": "SUP",
+      "subcategory": "Capas para SUP",
+      "price": 655.6,
+      "ncm": "6304.99.00",
+      "size": "11'",
+      "productFamily": "capa-refletiva-sup-round",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15700",
+      "name": "Capa Refletiva Simple Short Board 6'0\"",
+      "slug": "capa-refletiva-simple-short-board-6-0",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 187.0,
+      "ncm": "6304.99.00",
+      "size": "6'0\"",
+      "productFamily": "capa-refletiva-simple-short-board",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15701",
+      "name": "Capa Refletiva Simple Short Board 6'3\"",
+      "slug": "capa-refletiva-simple-short-board-6-3",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 187.0,
+      "ncm": "6304.99.00",
+      "size": "6'3\"",
+      "productFamily": "capa-refletiva-simple-short-board",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15702",
+      "name": "Capa Refletiva Simple Short Board 6'6\"",
+      "slug": "capa-refletiva-simple-short-board-6-6",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 187.0,
+      "ncm": "6304.99.00",
+      "size": "6'6\"",
+      "productFamily": "capa-refletiva-simple-short-board",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15705",
+      "name": "Capa Refletiva Simple Short Board Fun 7'5\"",
+      "slug": "capa-refletiva-simple-short-board-fun-7-5",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 198.0,
+      "ncm": "6304.99.00",
+      "size": "7'5\"",
+      "productFamily": "capa-refletiva-simple-short-board-fun",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15708",
+      "name": "Capa Refletiva Simple Short Board Fun 8'0\"",
+      "slug": "capa-refletiva-simple-short-board-fun-8-0",
+      "category": "Capas",
+      "subcategory": "Capas refletivas",
+      "price": 198.0,
+      "ncm": "6304.99.00",
+      "size": "8'0\"",
+      "productFamily": "capa-refletiva-simple-short-board-fun",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "15149",
+      "name": "Capa Refletiva Dupla Simples 6'6\"",
+      "slug": "capa-refletiva-dupla-simples-6-6",
+      "category": "Capas",
+      "subcategory": "Capas de viagem",
+      "price": 737.0,
+      "ncm": "6304.99.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19200",
+      "name": "Sarcófago para até 3 pranchas 6'6\" HiProt",
+      "slug": "sarcofago-para-ate-3-pranchas-6-6-hiprot",
+      "category": "Capas",
+      "subcategory": "Capas de viagem",
+      "price": 2970.0,
+      "ncm": "6304.99.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19210",
+      "name": "Capa Dupla com Rodas 6'6\"",
+      "slug": "capa-dupla-com-rodas-6-6",
+      "category": "Capas",
+      "subcategory": "Capas de viagem",
+      "price": 1537.8,
+      "ncm": "6304.99.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "19220",
+      "name": "Capa Tripla com Rodas 7'0\"",
+      "slug": "capa-tripla-com-rodas-7-0",
+      "category": "Capas",
+      "subcategory": "Capas de viagem",
+      "price": 1757.8,
+      "ncm": "6304.99.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "20102",
+      "name": "Reparo para Prancha Poliéster",
+      "slug": "reparo-para-prancha-poliester",
+      "category": "Acessórios",
+      "subcategory": "Manutenção",
+      "price": 33.0,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    },
+    {
+      "sku": "20103",
+      "name": "Reparo para Prancha Epoxy",
+      "slug": "reparo-para-prancha-epoxy",
+      "category": "Acessórios",
+      "subcategory": "Manutenção",
+      "price": 33.0,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": []
+    }
+  ],
+  "skipped": [
+    {
+      "sku": "15149/2",
+      "name": "Capa Refletiva Dupla",
+      "model": "6'6\"",
+      "reason": "código não numérico: definir SKU próprio"
+    },
+    {
+      "sku": "15333",
+      "name": "(sem descrição)",
+      "model": "6'5\"",
+      "reason": "sem descrição na tabela"
+    },
+    {
+      "sku": "15335",
+      "name": "(sem descrição)",
+      "model": "6'9\"",
+      "reason": "sem descrição na tabela"
+    },
+    {
+      "sku": "15336",
+      "name": "(sem descrição)",
+      "model": "6'3\"",
+      "reason": "sem descrição na tabela"
+    },
+    {
+      "sku": "15337",
+      "name": "(sem descrição)",
+      "model": "6'6\"",
+      "reason": "sem descrição na tabela"
+    },
+    {
+      "sku": "15704",
+      "name": "Capa Refletiva Simple Bodyboard",
+      "model": "",
+      "reason": "sem preço"
+    },
+    {
+      "sku": "15706",
+      "name": "Capa Refletiva Simple Short Board Long",
+      "model": "9'3\"",
+      "reason": "sem preço"
+    },
+    {
+      "sku": "15139",
+      "name": "(sem descrição)",
+      "model": "10'/11'",
+      "reason": "sem descrição e sem preço"
+    },
+    {
+      "sku": "15707",
+      "name": "Capa Refletiva Simple SUP",
+      "model": "10'6",
+      "reason": "sem preço"
+    },
+    {
+      "sku": "15709",
+      "name": "Capa Refletiva Simple SUP",
+      "model": "11'6",
+      "reason": "sem preço"
+    },
+    {
+      "sku": "16131",
+      "name": "Sacola Branca PL para Premiação",
+      "model": "",
+      "reason": "item de premiação, sem preço"
+    },
+    {
+      "sku": "19167",
+      "name": "Lycra Pro-Lite Infantil (cores diversas)",
+      "model": "TAM P",
+      "reason": "linha inconsistente (sem preço)"
+    },
+    {
+      "sku": "19168",
+      "name": "Lycra Pro-Lite Infantil (cores diversas)",
+      "model": "TAM M",
+      "reason": "linha inconsistente (preço 50,00 diverge dos outros tamanhos)"
+    },
+    {
+      "sku": "19169",
+      "name": "Lycra Pro-Lite Infantil (cores diversas)",
+      "model": "TAM G",
+      "reason": "linha inconsistente (colunas trocadas)"
+    },
+    {
+      "sku": "14135",
+      "name": "Wax bag Modelo Antigo",
+      "model": "",
+      "reason": "modelo antigo, sem preço"
+    }
+  ]
+}
