@@ -251,7 +251,7 @@ export default function WetsuitsFilters({
       {hasActiveFilters && (
         <button
           onClick={onClearFilters}
-          className='flex items-center gap-1 text-sm text-[#FF6600] hover:text-[#e55b00] mb-4 font-medium'
+          className='flex items-center gap-1 text-sm text-brand hover:text-brand-dark mb-4 font-medium'
         >
           <X size={14} />
           Limpar filtros
@@ -355,7 +355,7 @@ export default function WetsuitsFilters({
           {facets.wetsuitTypes.length > WETSUIT_TYPE_INITIAL_LIMIT && (
             <button
               onClick={() => setShowAllTypes(!showAllTypes)}
-              className='text-xs text-[#FF6600] hover:text-[#e55b00] mt-1 font-medium'
+              className='text-xs text-brand hover:text-brand-dark mt-1 font-medium'
             >
               {showAllTypes
                 ? '— Mostrar menos'
@@ -384,7 +384,7 @@ export default function WetsuitsFilters({
                 }
                 className={`px-2.5 py-1 rounded-md text-xs font-medium border transition-colors ${
                   selectedThickness === t.value
-                    ? 'bg-orange-50 text-[#FF6600] border-[#FF6600]'
+                    ? 'bg-brand-50 text-brand border-brand'
                     : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
                 }`}
               >
@@ -423,7 +423,7 @@ export default function WetsuitsFilters({
           {facets.wetsuitLines.length > WETSUIT_LINE_INITIAL_LIMIT && (
             <button
               onClick={() => setShowAllLines(!showAllLines)}
-              className='text-xs text-[#FF6600] hover:text-[#e55b00] mt-1 font-medium'
+              className='text-xs text-brand hover:text-brand-dark mt-1 font-medium'
             >
               {showAllLines
                 ? '— Mostrar menos'
@@ -475,7 +475,7 @@ export default function WetsuitsFilters({
                 }
                 className={`px-2.5 py-1 rounded-md text-xs font-medium border transition-colors ${
                   selectedSize === s.value
-                    ? 'bg-orange-50 text-[#FF6600] border-[#FF6600]'
+                    ? 'bg-brand-50 text-brand border-brand'
                     : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
                 }`}
               >
@@ -507,7 +507,7 @@ export default function WetsuitsFilters({
                 onClick={() => handlePriceRange(range)}
                 className={`w-full text-left text-xs px-2 py-1.5 rounded transition-colors ${
                   isPriceRangeActive(range)
-                    ? 'bg-orange-50 text-[#FF6600] font-semibold'
+                    ? 'bg-brand-50 text-brand font-semibold'
                     : 'text-gray-600 hover:bg-gray-50'
                 }`}
               >
@@ -525,7 +525,7 @@ export default function WetsuitsFilters({
                 placeholder='Min'
                 value={localMin}
                 onChange={e => setLocalMin(e.target.value)}
-                className='w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-brand'
               />
               <span className='text-gray-400 text-xs'>—</span>
               <input
@@ -533,12 +533,12 @@ export default function WetsuitsFilters({
                 placeholder='Max'
                 value={localMax}
                 onChange={e => setLocalMax(e.target.value)}
-                className='w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <button
               onClick={handlePriceApply}
-              className='w-full py-1.5 bg-gray-900 text-white text-xs font-medium rounded hover:bg-gray-800 transition-colors'
+              className='w-full py-1.5 bg-chumbo text-white text-xs font-medium rounded hover:bg-chumbo-light transition-colors'
             >
               Filtrar
             </button>
@@ -596,17 +596,17 @@ function CheckboxOption({
   return (
     <label
       className={`flex items-center gap-2 py-1 px-1 rounded cursor-pointer transition-colors ${
-        checked ? 'bg-orange-50' : 'hover:bg-gray-50'
+        checked ? 'bg-brand-50' : 'hover:bg-gray-50'
       }`}
     >
       <input
         type='checkbox'
         checked={checked}
         onChange={onChange}
-        className='w-3.5 h-3.5 text-[#FF6600] border-gray-300 rounded focus:ring-[#FF6600] cursor-pointer'
+        className='w-3.5 h-3.5 text-brand border-gray-300 rounded focus:ring-brand cursor-pointer'
       />
       <span
-        className={`flex-1 text-sm ${checked ? 'text-[#FF6600] font-semibold' : 'text-gray-700'}`}
+        className={`flex-1 text-sm ${checked ? 'text-brand font-semibold' : 'text-gray-700'}`}
       >
         {label}
       </span>

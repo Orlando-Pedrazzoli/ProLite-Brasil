@@ -6,9 +6,9 @@ export default function Footer() {
   const fullAddress = `${company.address.street}, ${company.address.number} - ${company.address.neighborhood}, ${company.address.city} - ${company.address.state}, CEP: ${company.address.cep}`;
 
   return (
-    <footer className='bg-gray-900 text-gray-300'>
+    <footer className='bg-chumbo text-gray-300'>
       {/* Newsletter */}
-      <div className='bg-[#FF6600]'>
+      <div className='bg-brand'>
         <div className='max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6'>
           <p className='text-white font-bold text-sm md:text-base text-center whitespace-nowrap'>
             CADASTRE-SE EM NOSSA NEWSLETTER E RECEBA NOVIDADES EXCLUSIVAS!
@@ -19,7 +19,7 @@ export default function Footer() {
               placeholder='Insira seu e-mail aqui'
               className='flex-1 px-5 py-3 text-sm text-gray-900 bg-white rounded-l-md focus:outline-none min-w-0'
             />
-            <button className='px-8 py-3 bg-gray-900 text-white text-sm font-bold rounded-r-md hover:bg-gray-800 transition-colors whitespace-nowrap'>
+            <button className='px-8 py-3 bg-chumbo text-white text-sm font-bold rounded-r-md hover:bg-chumbo-light transition-colors whitespace-nowrap'>
               CADASTRAR
             </button>
           </div>
@@ -38,7 +38,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/a-empresa'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   A Empresa
                 </Link>
@@ -46,7 +46,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/politica-privacidade'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Política de Privacidade
                 </Link>
@@ -54,7 +54,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/termos'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Termos de Uso
                 </Link>
@@ -63,7 +63,7 @@ export default function Footer() {
                 <button
                   type='button'
                   data-cookie-preferences
-                  className='text-sm text-left hover:text-[#FF6600] transition-colors'
+                  className='text-sm text-left hover:text-brand transition-colors'
                 >
                   Preferências de Cookies
                 </button>
@@ -71,7 +71,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/contato'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Fale Conosco
                 </Link>
@@ -88,7 +88,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/prazos-entrega'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Prazos de Entrega
                 </Link>
@@ -96,7 +96,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/formas-pagamento'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Formas de Pagamento
                 </Link>
@@ -104,7 +104,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/trocas-devolucoes'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Garantia, Trocas e Devoluções
                 </Link>
@@ -112,7 +112,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/faq'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   FAQ
                 </Link>
@@ -129,7 +129,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/login'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Entrar
                 </Link>
@@ -137,7 +137,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/cadastro'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Cadastre-se
                 </Link>
@@ -145,7 +145,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/meus-pedidos'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Meus Pedidos
                 </Link>
@@ -153,7 +153,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/enderecos'
-                  className='text-sm hover:text-[#FF6600] transition-colors'
+                  className='text-sm hover:text-brand transition-colors'
                 >
                   Meus Endereços
                 </Link>
@@ -171,7 +171,7 @@ export default function Footer() {
                 <span>✉</span>
                 <a
                   href={`mailto:${company.email}`}
-                  className='hover:text-[#FF6600] transition-colors'
+                  className='hover:text-brand transition-colors'
                 >
                   {company.email}
                 </a>
@@ -182,7 +182,7 @@ export default function Footer() {
                   href={`https://wa.me/${company.whatsapp}`}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='hover:text-[#FF6600] transition-colors'
+                  className='hover:text-brand transition-colors'
                 >
                   {company.phone}
                 </a>
@@ -206,7 +206,7 @@ export default function Footer() {
                     href={company.social.instagram}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF6600] hover:scale-110 transition-all duration-300 group'
+                    className='w-9 h-9 rounded-full bg-chumbo-light flex items-center justify-center hover:bg-brand hover:scale-110 transition-all duration-300 group'
                     aria-label='Instagram'
                   >
                     <svg
@@ -239,7 +239,7 @@ export default function Footer() {
                     href={company.social.facebook}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF6600] hover:scale-110 transition-all duration-300 group'
+                    className='w-9 h-9 rounded-full bg-chumbo-light flex items-center justify-center hover:bg-brand hover:scale-110 transition-all duration-300 group'
                     aria-label='Facebook'
                   >
                     <svg
@@ -256,7 +256,7 @@ export default function Footer() {
                     href={`https://wa.me/${company.whatsapp}`}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#25D366] hover:scale-110 transition-all duration-300 group'
+                    className='w-9 h-9 rounded-full bg-chumbo-light flex items-center justify-center hover:bg-[#25D366] hover:scale-110 transition-all duration-300 group'
                     aria-label='WhatsApp'
                   >
                     <svg
@@ -325,13 +325,13 @@ export default function Footer() {
                 href='https://pedrazzolidigital.com'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-sm font-bold text-[#FF6600] hover:underline'
+                className='text-sm font-bold text-brand hover:underline'
               >
                 Pedrazzoli Digital
               </a>
               <Link
                 href='/admin-login'
-                className='text-gray-300 hover:text-[#FF6600] transition-colors'
+                className='text-gray-300 hover:text-brand transition-colors'
                 title='Painel Administrativo'
               >
                 <svg

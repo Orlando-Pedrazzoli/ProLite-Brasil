@@ -16,7 +16,7 @@ export default function ShareProduct({ url, title }: ShareProductProps) {
   };
 
   return (
-    <button onClick={share} className="text-sm text-gray-500 hover:text-[#FF6600] transition-colors">
+    <button onClick={share} className="text-sm text-gray-500 hover:text-brand transition-colors">
       Compartilhar
     </button>
   );

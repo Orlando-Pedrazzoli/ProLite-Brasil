@@ -284,7 +284,7 @@ export default function ProductDetailPage({
     <div className='max-w-7xl mx-auto px-4 py-4'>
       {/* Breadcrumb */}
       <nav className='text-sm text-gray-500 mb-6'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         {product.category && (
@@ -292,7 +292,7 @@ export default function ProductDetailPage({
             <span className='mx-2'>/</span>
             <Link
               href={`/categoria/${product.category.slug}`}
-              className='hover:text-[#FF6600]'
+              className='hover:text-brand'
             >
               {product.category.name}
             </Link>
@@ -313,7 +313,7 @@ export default function ProductDetailPage({
           {showBadges && (
             <div className='flex flex-wrap items-center gap-2'>
               {product.isNewArrival && (
-                <span className='bg-[#FF6600] text-white font-bold rounded text-xs px-2.5 py-1'>
+                <span className='bg-brand text-white font-bold rounded text-xs px-2.5 py-1'>
                   NOVIDADE
                 </span>
               )}
@@ -330,7 +330,7 @@ export default function ProductDetailPage({
             </div>
           )}
 
-          <h1 className='text-xl md:text-2xl font-bold text-[#FF6600] leading-tight'>
+          <h1 className='text-xl md:text-2xl font-bold text-brand leading-tight'>
             {product.name}
           </h1>
           <p className='text-xs text-gray-400'>(Cód. {product.sku})</p>
@@ -348,7 +348,7 @@ export default function ProductDetailPage({
           {product.brand && (
             <Link
               href={`/marca/${product.brand.slug}`}
-              className='text-sm text-gray-600 hover:text-[#FF6600] transition-colors inline-block'
+              className='text-sm text-gray-600 hover:text-brand transition-colors inline-block'
             >
               {product.brand.name}
             </Link>
@@ -384,7 +384,7 @@ export default function ProductDetailPage({
               <button
                 onClick={handleAddToCart}
                 disabled={product.stock <= 0}
-                className='px-8 py-3 bg-[#FF6600] text-white font-bold text-lg rounded-md hover:bg-[#e55b00] disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors'
+                className='px-8 py-3 bg-brand text-white font-bold text-lg rounded-md hover:bg-brand-dark disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors'
               >
                 COMPRAR
               </button>
@@ -423,7 +423,7 @@ export default function ProductDetailPage({
           {colorFamilyProducts.length > 1 && (
             <div>
               <p className='text-sm font-medium text-gray-700 mb-2'>
-                Cor: <span className='text-[#FF6600]'>{product.color}</span>
+                Cor: <span className='text-brand'>{product.color}</span>
               </p>
               <div className='flex flex-wrap gap-2'>
                 {colorFamilyProducts.map(fp => {
@@ -434,7 +434,7 @@ export default function ProductDetailPage({
                     <Link
                       key={fp._id}
                       href={`/produtos/${fp.slug}`}
-                      className={`w-10 h-10 rounded-full transition-all hover:scale-110 ${isActive ? 'ring-2 ring-[#FF6600] ring-offset-2' : 'border-2 border-gray-300 hover:border-gray-500'} ${fp.stock <= 0 ? 'opacity-40' : ''}`}
+                      className={`w-10 h-10 rounded-full transition-all hover:scale-110 ${isActive ? 'ring-2 ring-brand ring-offset-2' : 'border-2 border-gray-300 hover:border-gray-500'} ${fp.stock <= 0 ? 'opacity-40' : ''}`}
                       title={fp.color}
                     >
                       {isDual ? (
@@ -470,7 +470,7 @@ export default function ProductDetailPage({
           {sizeFamilyProducts.length > 1 && (
             <div>
               <p className='text-sm font-medium text-gray-700 mb-2'>
-                Tamanho: <span className='text-[#FF6600]'>{product.size}</span>
+                Tamanho: <span className='text-brand'>{product.size}</span>
               </p>
               <div className='flex flex-wrap gap-2'>
                 {sizeFamilyProducts.map(fp => {
@@ -479,7 +479,7 @@ export default function ProductDetailPage({
                     <Link
                       key={fp._id}
                       href={`/produtos/${fp.slug}`}
-                      className={`px-3 py-1.5 border rounded-md text-sm font-medium transition-colors ${isActive ? 'border-[#FF6600] bg-[#FF6600]/10 text-[#FF6600]' : 'border-gray-300 text-gray-600 hover:border-gray-500'} ${fp.stock <= 0 ? 'opacity-40 pointer-events-none' : ''}`}
+                      className={`px-3 py-1.5 border rounded-md text-sm font-medium transition-colors ${isActive ? 'border-brand bg-brand/10 text-brand' : 'border-gray-300 text-gray-600 hover:border-gray-500'} ${fp.stock <= 0 ? 'opacity-40 pointer-events-none' : ''}`}
                     >
                       {fp.size}
                     </Link>
@@ -505,7 +505,7 @@ export default function ProductDetailPage({
                         [variant.name]: opt.value,
                       }))
                     }
-                    className={`px-3 py-1.5 border rounded-md text-sm transition-colors ${selectedVariants[variant.name] === opt.value ? 'border-[#FF6600] bg-[#FF6600]/10 text-[#FF6600] font-medium' : 'border-gray-300 text-gray-600 hover:border-gray-500'} ${opt.stock <= 0 ? 'opacity-40 cursor-not-allowed' : ''}`}
+                    className={`px-3 py-1.5 border rounded-md text-sm transition-colors ${selectedVariants[variant.name] === opt.value ? 'border-brand bg-brand/10 text-brand font-medium' : 'border-gray-300 text-gray-600 hover:border-gray-500'} ${opt.stock <= 0 ? 'opacity-40 cursor-not-allowed' : ''}`}
                     disabled={opt.stock <= 0}
                   >
                     {opt.label}
@@ -558,7 +558,7 @@ export default function ProductDetailPage({
                 maxLength={9}
                 value={cepFrete}
                 onChange={e => setCepFrete(maskCep(e.target.value))}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
               />
               {freteLoading && (
                 <Loader2
@@ -571,7 +571,7 @@ export default function ProductDetailPage({
               href='https://buscacepinter.correios.com.br/app/endereco/index.php'
               target='_blank'
               rel='noopener noreferrer'
-              className='text-xs text-gray-400 hover:text-[#FF6600] mt-1 inline-block'
+              className='text-xs text-gray-400 hover:text-brand mt-1 inline-block'
             >
               Não sei meu CEP
             </a>
@@ -643,7 +643,7 @@ export default function ProductDetailPage({
               </p>
               <button
                 onClick={handleShare}
-                className='flex items-center gap-2 text-sm text-gray-600 hover:text-[#FF6600] transition-colors'
+                className='flex items-center gap-2 text-sm text-gray-600 hover:text-brand transition-colors'
               >
                 <Share2 size={18} /> Compartilhar
               </button>
@@ -654,11 +654,11 @@ export default function ProductDetailPage({
               </p>
               <button
                 onClick={() => toggleWishlist(product._id, product.name)}
-                className={`flex items-center gap-2 text-sm border rounded-md px-4 py-2 transition-colors ${isFavorite ? 'border-[#FF6600] text-[#FF6600]' : 'border-gray-300 text-gray-600 hover:border-[#FF6600] hover:text-[#FF6600]'}`}
+                className={`flex items-center gap-2 text-sm border rounded-md px-4 py-2 transition-colors ${isFavorite ? 'border-brand text-brand' : 'border-gray-300 text-gray-600 hover:border-brand hover:text-brand'}`}
               >
                 <Heart
                   size={16}
-                  className={isFavorite ? 'fill-[#FF6600]' : ''}
+                  className={isFavorite ? 'fill-brand' : ''}
                 />{' '}
                 {isFavorite ? 'Adicionado' : 'Adicionar'}
               </button>
@@ -670,7 +670,7 @@ export default function ProductDetailPage({
       {/* Description */}
       <div className='mb-12'>
         <div className='mb-6'>
-          <span className='bg-[#FF6600] text-white px-6 py-3 font-bold text-sm uppercase inline-block'>
+          <span className='bg-brand text-white px-6 py-3 font-bold text-sm uppercase inline-block'>
             Informações do Produto
           </span>
         </div>
@@ -713,7 +713,7 @@ export default function ProductDetailPage({
       {/* Reviews */}
       <div className='mb-12 text-center'>
         <div className='mb-6'>
-          <ShoppingCart size={40} className='mx-auto text-[#FF6600] mb-2' />
+          <ShoppingCart size={40} className='mx-auto text-brand mb-2' />
           <h2 className='text-xl font-bold text-gray-900 uppercase'>
             Opinião dos Clientes
           </h2>
@@ -732,7 +732,7 @@ export default function ProductDetailPage({
             </p>
           )}
         </div>
-        <button className='px-6 py-2.5 bg-[#FF6600] text-white font-medium rounded-md hover:bg-[#e55b00] transition-colors inline-flex items-center gap-2'>
+        <button className='px-6 py-2.5 bg-brand text-white font-medium rounded-md hover:bg-brand-dark transition-colors inline-flex items-center gap-2'>
           <Star size={16} /> Avaliar este produto
         </button>
       </div>

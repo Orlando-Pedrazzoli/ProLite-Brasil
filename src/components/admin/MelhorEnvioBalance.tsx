@@ -118,12 +118,12 @@ export default function MelhorEnvioBalance() {
       >
         <div
           className={`w-9 h-9 rounded-lg flex items-center justify-center ${
-            isLow ? 'bg-red-100' : 'bg-orange-50'
+            isLow ? 'bg-red-100' : 'bg-brand-50'
           }`}
         >
           <Wallet
             size={18}
-            className={isLow ? 'text-red-600' : 'text-[#FF6600]'}
+            className={isLow ? 'text-red-600' : 'text-brand'}
           />
         </div>
         <div className='flex-1 min-w-0'>
@@ -166,7 +166,7 @@ export default function MelhorEnvioBalance() {
         </button>
         <button
           onClick={() => setModalOpen(true)}
-          className='px-3 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] flex items-center gap-1.5 text-sm'
+          className='px-3 py-2 bg-brand text-white rounded-md hover:bg-brand-dark flex items-center gap-1.5 text-sm'
         >
           <Plus size={14} />
           Adicionar saldo
@@ -199,7 +199,7 @@ export default function MelhorEnvioBalance() {
                   }}
                   className={`py-2 rounded-md text-sm font-medium border transition-colors ${
                     !customValue && value === v
-                      ? 'bg-[#FF6600] text-white border-[#FF6600]'
+                      ? 'bg-brand text-white border-brand'
                       : 'border-gray-300 text-gray-700 hover:bg-gray-50'
                   }`}
                 >
@@ -216,14 +216,14 @@ export default function MelhorEnvioBalance() {
               value={customValue}
               onChange={e => setCustomValue(e.target.value)}
               placeholder='Outro valor (R$ 5 a R$ 10.000)'
-              className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] mb-4'
+              className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand mb-4'
             />
 
             {!awaitingPayment ? (
               <button
                 onClick={handleAdd}
                 disabled={working}
-                className='w-full py-2.5 bg-[#FF6600] text-white font-bold text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 flex items-center justify-center gap-2'
+                className='w-full py-2.5 bg-brand text-white font-bold text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 flex items-center justify-center gap-2'
               >
                 {working ? (
                   <Loader2 size={14} className='animate-spin' />
@@ -253,7 +253,7 @@ export default function MelhorEnvioBalance() {
                 <button
                   onClick={handleAdd}
                   disabled={working}
-                  className='w-full py-2 text-xs text-gray-500 hover:text-[#FF6600]'
+                  className='w-full py-2 text-xs text-gray-500 hover:text-brand'
                 >
                   Gerar novo QR Code
                 </button>

@@ -54,7 +54,7 @@ import type { PaymentItem } from '@/lib/types/payment';
 
 const onlyDigits = (s: string) => s.replace(/\D/g, '');
 const inputCls =
-  'w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#FF6600]';
+  'w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-brand';
 
 const maskCpf = (v: string) =>
   onlyDigits(v)
@@ -285,7 +285,7 @@ export default function CheckoutPage() {
         </p>
         <Link
           href='/produtos'
-          className='inline-block px-8 py-3 bg-[#FF6600] text-white font-bold rounded-md hover:bg-[#e55b00] transition-colors'
+          className='inline-block px-8 py-3 bg-brand text-white font-bold rounded-md hover:bg-brand-dark transition-colors'
         >
           Explorar Produtos
         </Link>
@@ -307,11 +307,11 @@ export default function CheckoutPage() {
   return (
     <div className='max-w-7xl mx-auto px-4 py-6'>
       <nav className='text-sm text-gray-500 mb-6'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
-        <Link href='/carrinho' className='hover:text-[#FF6600]'>
+        <Link href='/carrinho' className='hover:text-brand'>
           Carrinho
         </Link>
         <span className='mx-2'>/</span>
@@ -341,7 +341,7 @@ export default function CheckoutPage() {
               {addressDone && (
                 <button
                   onClick={() => setAddressDone(false)}
-                  className='flex items-center gap-1 text-sm text-[#FF6600] hover:underline'
+                  className='flex items-center gap-1 text-sm text-brand hover:underline'
                 >
                   <Pencil size={14} /> Editar
                 </button>
@@ -357,7 +357,7 @@ export default function CheckoutPage() {
                   <p className='flex items-start gap-1.5'>
                     <Store
                       size={14}
-                      className='mt-0.5 shrink-0 text-[#FF6600]'
+                      className='mt-0.5 shrink-0 text-brand'
                     />
                     <span>
                       <span className='font-medium'>{PICKUP_METHOD}</span>
@@ -382,7 +382,7 @@ export default function CheckoutPage() {
                 </p>
                 {!isPickup && selectedShipping && (
                   <p className='mt-2 flex items-center gap-1.5 text-gray-700'>
-                    <Package size={14} className='text-[#FF6600]' />
+                    <Package size={14} className='text-brand' />
                     {selectedShipping.company} — {selectedShipping.name} · até{' '}
                     {selectedShipping.deliveryDays} dias úteis ·{' '}
                     {selectedShipping.isFree ? (
@@ -412,13 +412,13 @@ export default function CheckoutPage() {
                     onClick={() => setDeliveryMethod('delivery')}
                     className={`flex items-center justify-center gap-2 rounded-lg border p-3 text-sm font-medium transition ${
                       !isPickup
-                        ? 'border-[#FF6600] bg-orange-50 text-gray-900 ring-1 ring-[#FF6600]'
+                        ? 'border-brand bg-brand-50 text-gray-900 ring-1 ring-brand'
                         : 'border-gray-200 text-gray-600 hover:border-gray-400'
                     }`}
                   >
                     <Truck
                       size={16}
-                      className={!isPickup ? 'text-[#FF6600]' : 'text-gray-400'}
+                      className={!isPickup ? 'text-brand' : 'text-gray-400'}
                     />
                     Receber em casa
                   </button>
@@ -429,13 +429,13 @@ export default function CheckoutPage() {
                     onClick={() => setDeliveryMethod('pickup')}
                     className={`flex items-center justify-center gap-2 rounded-lg border p-3 text-sm font-medium transition ${
                       isPickup
-                        ? 'border-[#FF6600] bg-orange-50 text-gray-900 ring-1 ring-[#FF6600]'
+                        ? 'border-brand bg-brand-50 text-gray-900 ring-1 ring-brand'
                         : 'border-gray-200 text-gray-600 hover:border-gray-400'
                     }`}
                   >
                     <Store
                       size={16}
-                      className={isPickup ? 'text-[#FF6600]' : 'text-gray-400'}
+                      className={isPickup ? 'text-brand' : 'text-gray-400'}
                     />
                     Retirar na loja
                   </button>
@@ -539,7 +539,7 @@ export default function CheckoutPage() {
                 {isPickup && (
                   <div className='rounded-lg border border-gray-200 bg-gray-50 p-4'>
                     <h3 className='mb-2 flex items-center gap-2 text-sm font-semibold text-gray-900'>
-                      <Store size={16} className='text-[#FF6600]' />
+                      <Store size={16} className='text-brand' />
                       Retirada na Loja Física
                       <span className='rounded bg-green-100 px-1.5 py-0.5 text-[10px] font-semibold text-green-700'>
                         Sem custo de frete
@@ -568,7 +568,7 @@ export default function CheckoutPage() {
                     className='rounded-lg border border-gray-200 bg-gray-50 p-4'
                   >
                     <h3 className='mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900'>
-                      <Package size={16} className='text-[#FF6600]' />
+                      <Package size={16} className='text-brand' />
                       Método de Envio
                       {selectedShipping && (
                         <span className='rounded bg-green-100 px-1.5 py-0.5 text-[10px] font-semibold text-green-700'>
@@ -594,7 +594,7 @@ export default function CheckoutPage() {
 
                 <button
                   onClick={handleContinue}
-                  className='w-full rounded-md bg-[#FF6600] px-4 py-3 font-bold text-white transition-colors hover:bg-[#e55b00]'
+                  className='w-full rounded-md bg-brand px-4 py-3 font-bold text-white transition-colors hover:bg-brand-dark'
                 >
                   Continuar para pagamento
                 </button>
@@ -719,7 +719,7 @@ export default function CheckoutPage() {
             {/* v7: card de retirada na sidebar */}
             {isPickup && (
               <div className='flex items-start gap-2 rounded-lg border border-gray-200 bg-white p-3'>
-                <Store size={16} className='mt-0.5 shrink-0 text-[#FF6600]' />
+                <Store size={16} className='mt-0.5 shrink-0 text-brand' />
                 <div className='min-w-0 text-sm'>
                   <p className='font-medium text-gray-900'>{PICKUP_METHOD}</p>
                   <p className='text-xs text-gray-500'>
@@ -732,7 +732,7 @@ export default function CheckoutPage() {
             {/* v5: a sidebar só EXIBE o envio escolhido (seleção no fluxo principal) */}
             {!isPickup && selectedShipping && (
               <div className='flex items-start gap-2 rounded-lg border border-gray-200 bg-white p-3'>
-                <Package size={16} className='mt-0.5 shrink-0 text-[#FF6600]' />
+                <Package size={16} className='mt-0.5 shrink-0 text-brand' />
                 <div className='min-w-0 text-sm'>
                   <p className='font-medium text-gray-900'>
                     {selectedShipping.company} — {selectedShipping.name}
@@ -754,7 +754,7 @@ export default function CheckoutPage() {
               <button
                 type='button'
                 onClick={() => setShowCoupon(true)}
-                className='flex items-center gap-1.5 text-sm text-[#FF6600] hover:underline'
+                className='flex items-center gap-1.5 text-sm text-brand hover:underline'
               >
                 <Tag size={14} />
                 Tem um cupom de desconto?
@@ -808,10 +808,10 @@ export default function CheckoutPage() {
                 </span>
               </div>
               <div className='flex justify-between items-center mt-1'>
-                <span className='text-sm text-[#FF6600] font-medium'>
+                <span className='text-sm text-brand font-medium'>
                   No PIX / Boleto
                 </span>
-                <span className='text-lg font-black text-[#FF6600]'>
+                <span className='text-lg font-black text-brand'>
                   {formatCurrency(pixTotal + shippingCost)}
                 </span>
               </div>

@@ -34,7 +34,7 @@ export default function PosShortcutsHelp({ onClose }: PosShortcutsHelpProps) {
       <div className='bg-white rounded-lg shadow-2xl max-w-md w-full'>
         <div className='flex items-center justify-between p-4 border-b'>
           <div className='flex items-center gap-2'>
-            <Keyboard size={20} className='text-[#FF6600]' />
+            <Keyboard size={20} className='text-brand' />
             <h2 className='text-lg font-bold'>Atalhos do POS</h2>
           </div>
           <button

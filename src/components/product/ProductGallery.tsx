@@ -72,7 +72,7 @@ export default function ProductGallery({
                 onMouseEnter={() => setCurrentImage(realIndex)}
                 className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
                   isActive
-                    ? 'border-[#FF6600] ring-2 ring-[#FF6600]/20'
+                    ? 'border-brand ring-2 ring-brand/20'
                     : 'border-gray-200 hover:border-gray-400'
                 }`}
                 aria-label={`Ver imagem ${realIndex + 1}`}
@@ -149,7 +149,7 @@ export default function ProductGallery({
                     setCurrentImage(i);
                   }}
                   className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                    i === currentImage ? 'bg-[#FF6600]' : 'bg-gray-300'
+                    i === currentImage ? 'bg-brand' : 'bg-gray-300'
                   }`}
                   aria-label={`Ir para imagem ${i + 1}`}
                 />
@@ -168,7 +168,7 @@ export default function ProductGallery({
               onClick={() => setCurrentImage(i)}
               className={`relative w-16 h-16 shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
                 i === currentImage
-                  ? 'border-[#FF6600]'
+                  ? 'border-brand'
                   : 'border-gray-200 hover:border-gray-400'
               }`}
               aria-label={`Ver imagem ${i + 1}`}

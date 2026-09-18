@@ -92,7 +92,7 @@ export default function AdminCuponsPage() {
       {/* Header */}
       <div className='mb-6 flex items-center justify-between'>
         <div className='flex items-center gap-2'>
-          <Ticket className='text-[#FF6600]' size={24} />
+          <Ticket className='text-brand' size={24} />
           <h1 className='text-2xl font-bold'>Cupons</h1>
         </div>
         <Button onClick={openCreate}>
@@ -181,7 +181,7 @@ export default function AdminCuponsPage() {
                       <div className='flex justify-end gap-2'>
                         <button
                           onClick={() => openEdit(c)}
-                          className='p-1.5 text-gray-400 hover:text-[#FF6600]'
+                          className='p-1.5 text-gray-400 hover:text-brand'
                           title='Editar'
                         >
                           <Pencil size={16} />

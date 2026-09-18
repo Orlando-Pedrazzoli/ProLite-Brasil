@@ -127,7 +127,7 @@ export default function OrderDetailPage() {
   if (loading)
     return (
       <div className='flex justify-center py-12'>
-        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-[#FF6600]' />
+        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-brand' />
       </div>
     );
 
@@ -140,7 +140,7 @@ export default function OrderDetailPage() {
         </p>
         <Link
           href='/meus-pedidos'
-          className='text-sm font-medium text-[#FF6600] hover:underline'
+          className='text-sm font-medium text-brand hover:underline'
         >
           ← Voltar para Meus Pedidos
         </Link>
@@ -160,7 +160,7 @@ export default function OrderDetailPage() {
     <div className='space-y-4'>
       <Link
         href='/meus-pedidos'
-        className='inline-flex items-center gap-1 text-sm text-gray-500 hover:text-[#FF6600]'
+        className='inline-flex items-center gap-1 text-sm text-gray-500 hover:text-brand'
       >
         <ArrowLeft size={14} /> Meus Pedidos
       </Link>
@@ -206,7 +206,7 @@ export default function OrderDetailPage() {
                 {item.slug ? (
                   <Link
                     href={`/produtos/${item.slug}`}
-                    className='text-sm text-gray-900 hover:text-[#FF6600] line-clamp-2'
+                    className='text-sm text-gray-900 hover:text-brand line-clamp-2'
                   >
                     {item.name}
                   </Link>
@@ -293,7 +293,7 @@ export default function OrderDetailPage() {
             (pixStillValid ? (
               <Link
                 href={`/pagamento/pix?orderId=${order._id}`}
-                className='mt-3 inline-flex items-center gap-1.5 rounded-lg bg-[#FF6600] px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-[#e55b00]'
+                className='mt-3 inline-flex items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-brand-dark'
               >
                 <QrCode size={14} />
                 Pagar com PIX
@@ -312,7 +312,7 @@ export default function OrderDetailPage() {
                 href={order.payment.boletoUrl}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='mt-3 inline-block text-sm font-medium text-[#FF6600] hover:underline'
+                className='mt-3 inline-block text-sm font-medium text-brand hover:underline'
               >
                 Abrir boleto para pagamento →
               </a>

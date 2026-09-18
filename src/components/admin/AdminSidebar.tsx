@@ -35,7 +35,7 @@ const menuItems = [
 export default function AdminSidebar() {
   const pathname = usePathname();
   return (
-    <aside className='w-64 min-h-screen bg-[#1A1A1A] text-white flex flex-col'>
+    <aside className='w-64 min-h-screen bg-chumbo text-white flex flex-col'>
       <div className='px-5 py-5 border-b border-white/10'>
         <Link href='/admin' className='flex items-center gap-3'>
           <Image
@@ -67,7 +67,7 @@ export default function AdminSidebar() {
               className={cn(
                 'flex items-center gap-3 px-5 py-2.5 text-sm transition-all mx-2 rounded-lg mb-0.5',
                 isActive
-                  ? 'bg-[#FF6600] text-white font-medium shadow-lg shadow-[#FF6600]/20'
+                  ? 'bg-brand text-white font-medium shadow-lg shadow-brand/20'
                   : 'text-gray-400 hover:bg-white/5 hover:text-white',
               )}
             >

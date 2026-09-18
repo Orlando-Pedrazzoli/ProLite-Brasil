@@ -114,7 +114,7 @@ export default function QuickBrandModal({
         {/* HEADER */}
         <div className='flex items-center justify-between p-4 border-b'>
           <div className='flex items-center gap-2'>
-            <Tag size={20} className='text-[#FF6600]' />
+            <Tag size={20} className='text-brand' />
             <div>
               <h2 className='text-lg font-bold'>Nova Marca</h2>
               <p className='text-xs text-gray-500'>
@@ -144,7 +144,7 @@ export default function QuickBrandModal({
               onChange={e => setName(e.target.value)}
               autoFocus
               placeholder='Ex: Captain Fin'
-              className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#FF6600]'
+              className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-brand'
             />
             {name.trim().length > 0 && (
               <p className='text-xs text-gray-400 mt-1'>
@@ -162,7 +162,7 @@ export default function QuickBrandModal({
                 (opcional, podes adicionar depois)
               </span>
             </label>
-            <label className='flex items-center justify-center gap-2 px-4 py-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#FF6600] hover:bg-orange-50 transition-colors'>
+            <label className='flex items-center justify-center gap-2 px-4 py-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-brand hover:bg-brand-50 transition-colors'>
               <Upload size={18} className='text-gray-400' />
               <span className='text-sm text-gray-500'>
                 {uploading ? 'Enviando...' : 'Escolher arquivo'}
@@ -217,7 +217,7 @@ export default function QuickBrandModal({
             <button
               type='submit'
               disabled={!canSubmit || loading || uploading}
-              className='flex-1 px-4 py-2.5 bg-[#FF6600] text-white font-bold rounded-md hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
+              className='flex-1 px-4 py-2.5 bg-brand text-white font-bold rounded-md hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
             >
               {loading ? (
                 <>

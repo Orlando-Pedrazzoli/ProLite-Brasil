@@ -156,7 +156,7 @@ export default function CaixaPage() {
           <p className='text-sm text-gray-500 mt-1 capitalize'>
             {formatDateLong(selectedDate)}
             {isToday && (
-              <span className='ml-2 inline-block text-xs bg-[#FF6600] text-white px-2 py-0.5 rounded font-bold'>
+              <span className='ml-2 inline-block text-xs bg-brand text-white px-2 py-0.5 rounded font-bold'>
                 HOJE
               </span>
             )}
@@ -170,7 +170,7 @@ export default function CaixaPage() {
             onChange={e =>
               setChannel(e.target.value as 'all' | 'pos' | 'online')
             }
-            className='text-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+            className='text-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
           >
             <option value='all'>Todos os canais</option>
             <option value='pos'>🏪 Balcão</option>
@@ -207,7 +207,7 @@ export default function CaixaPage() {
           {!isToday && (
             <button
               onClick={goToToday}
-              className='text-sm px-3 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] transition-colors'
+              className='text-sm px-3 py-2 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors'
             >
               Voltar para hoje
             </button>
@@ -217,7 +217,7 @@ export default function CaixaPage() {
 
       {loading ? (
         <div className='flex items-center justify-center h-64'>
-          <Loader2 size={32} className='animate-spin text-[#FF6600]' />
+          <Loader2 size={32} className='animate-spin text-brand' />
         </div>
       ) : !report ? (
         <div className='p-12 text-center text-gray-500'>
@@ -243,9 +243,9 @@ export default function CaixaPage() {
         <>
           {/* KPIs PRINCIPAIS */}
           <div className='grid grid-cols-1 md:grid-cols-4 gap-3 mb-6'>
-            <div className='bg-white rounded-lg shadow-sm p-4 border-l-4 border-[#FF6600]'>
+            <div className='bg-white rounded-lg shadow-sm p-4 border-l-4 border-brand'>
               <div className='flex items-center gap-2 mb-1'>
-                <DollarSign size={14} className='text-[#FF6600]' />
+                <DollarSign size={14} className='text-brand' />
                 <p className='text-xs uppercase font-semibold text-gray-500 tracking-wide'>
                   Vendas
                 </p>
@@ -313,9 +313,9 @@ export default function CaixaPage() {
                     Por Canal
                   </h2>
                   <div className='space-y-2'>
-                    <div className='flex items-center justify-between p-3 bg-orange-50 rounded-md border border-orange-100'>
+                    <div className='flex items-center justify-between p-3 bg-brand-50 rounded-md border border-brand-100'>
                       <div className='flex items-center gap-2'>
-                        <Store size={16} className='text-orange-600' />
+                        <Store size={16} className='text-brand-dark' />
                         <div>
                           <p className='text-sm font-medium text-gray-900'>
                             Balcão (POS)

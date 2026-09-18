@@ -83,7 +83,7 @@ export default function PosPaymentModal({
             <h2 className='text-lg font-bold'>Finalizar Venda</h2>
             <p className='text-sm text-gray-500'>
               Total a pagar:{' '}
-              <span className='font-bold text-[#FF6600] text-xl'>
+              <span className='font-bold text-brand text-xl'>
                 {formatPrice(total)}
               </span>
             </p>
@@ -100,7 +100,7 @@ export default function PosPaymentModal({
         {/* Detalhamento quando há desconto */}
         {hasDiscount && (
           <div className='px-4 pt-3'>
-            <div className='bg-orange-50 border border-orange-200 rounded-lg p-3 text-sm space-y-1'>
+            <div className='bg-brand-50 border border-brand-200 rounded-lg p-3 text-sm space-y-1'>
               <div className='flex justify-between text-gray-600'>
                 <span>Subtotal</span>
                 <span>{formatPrice(subtotal!)}</span>
@@ -109,9 +109,9 @@ export default function PosPaymentModal({
                 <span>Desconto</span>
                 <span>-{formatPrice(discount)}</span>
               </div>
-              <div className='flex justify-between font-bold text-gray-900 pt-1 border-t border-orange-200'>
+              <div className='flex justify-between font-bold text-gray-900 pt-1 border-t border-brand-200'>
                 <span>Total</span>
-                <span className='text-[#FF6600]'>{formatPrice(total)}</span>
+                <span className='text-brand'>{formatPrice(total)}</span>
               </div>
             </div>
           </div>
@@ -163,7 +163,7 @@ export default function PosPaymentModal({
                 }
                 placeholder='0,00'
                 autoFocus
-                className='w-full px-3 py-3 text-xl font-bold border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#FF6600] font-mono'
+                className='w-full px-3 py-3 text-xl font-bold border-2 border-gray-300 rounded-md focus:outline-none focus:border-brand font-mono'
               />
               <div className='flex gap-2 mt-2 flex-wrap'>
                 {cashSuggestions.map(value => (
@@ -173,7 +173,7 @@ export default function PosPaymentModal({
                     onClick={() =>
                       setCashReceived(value.toFixed(2).replace('.', ','))
                     }
-                    className='px-3 py-1 text-xs bg-white border border-gray-300 rounded hover:border-[#FF6600] hover:text-[#FF6600] transition-colors'
+                    className='px-3 py-1 text-xs bg-white border border-gray-300 rounded hover:border-brand hover:text-brand transition-colors'
                   >
                     {formatPrice(value)}
                   </button>
@@ -205,7 +205,7 @@ export default function PosPaymentModal({
               <select
                 value={installments}
                 onChange={e => setInstallments(parseInt(e.target.value))}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               >
                 {Array.from({ length: 12 }, (_, i) => i + 1).map(n => (
                   <option key={n} value={n}>
@@ -245,14 +245,14 @@ export default function PosPaymentModal({
                 value={customerName}
                 onChange={e => setCustomerName(e.target.value)}
                 placeholder='Nome do cliente'
-                className='px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] text-sm'
+                className='px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand text-sm'
               />
               <input
                 type='text'
                 value={customerCpf}
                 onChange={e => setCustomerCpf(e.target.value)}
                 placeholder='CPF (para nota)'
-                className='px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] text-sm font-mono'
+                className='px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand text-sm font-mono'
               />
             </div>
           </div>
@@ -269,7 +269,7 @@ export default function PosPaymentModal({
             <button
               type='submit'
               disabled={!canConfirm || saving}
-              className='flex-1 px-6 py-3 bg-[#FF6600] text-white font-bold rounded-md hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg'
+              className='flex-1 px-6 py-3 bg-brand text-white font-bold rounded-md hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg'
             >
               {saving ? (
                 <>
@@ -304,7 +304,7 @@ function PaymentOption({
       onClick={onClick}
       className={`flex flex-col items-center gap-1.5 p-3 rounded-lg border-2 transition-all ${
         active
-          ? 'border-[#FF6600] bg-orange-50 text-[#FF6600]'
+          ? 'border-brand bg-brand-50 text-brand'
           : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
       }`}
     >

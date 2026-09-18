@@ -244,7 +244,7 @@ export default function CreditCardForm({
           value={number}
           onChange={e => handleNumber(e.target.value)}
           placeholder='0000 0000 0000 0000'
-          className='w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-gray-900'
+          className='w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-chumbo'
         />
       </div>
 
@@ -256,7 +256,7 @@ export default function CreditCardForm({
           value={name}
           onChange={e => setName(e.target.value.toUpperCase())}
           placeholder='COMO ESTÁ NO CARTÃO'
-          className='w-full rounded-lg border border-gray-300 px-3 py-2 uppercase outline-none focus:border-gray-900'
+          className='w-full rounded-lg border border-gray-300 px-3 py-2 uppercase outline-none focus:border-chumbo'
         />
       </div>
 
@@ -270,7 +270,7 @@ export default function CreditCardForm({
             value={validade}
             onChange={e => handleValidade(e.target.value)}
             placeholder='MM/AA'
-            className='w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-gray-900'
+            className='w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-chumbo'
           />
         </div>
         <div>
@@ -282,7 +282,7 @@ export default function CreditCardForm({
             value={cvv}
             onChange={e => setCvv(onlyDigits(e.target.value).slice(0, 4))}
             placeholder='000'
-            className='w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-gray-900'
+            className='w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-chumbo'
           />
         </div>
       </div>
@@ -294,7 +294,7 @@ export default function CreditCardForm({
         <select
           value={installments}
           onChange={e => setInstallments(Number(e.target.value))}
-          className='w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-gray-900'
+          className='w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-chumbo'
         >
           {installmentOptions.map(({ n, per }) => (
             <option key={n} value={n}>
@@ -314,7 +314,7 @@ export default function CreditCardForm({
         type='button'
         onClick={handlePay}
         disabled={busy}
-        className='flex w-full items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 py-3 font-semibold text-white transition hover:bg-gray-800 disabled:opacity-60'
+        className='flex w-full items-center justify-center gap-2 rounded-lg bg-chumbo px-4 py-3 font-semibold text-white transition hover:bg-chumbo-light disabled:opacity-60'
       >
         {busy ? (
           <>

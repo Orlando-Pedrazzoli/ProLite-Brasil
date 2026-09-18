@@ -198,7 +198,7 @@ export default function CadastroPage() {
                   onChange={e => setForm({ ...form, name: e.target.value })}
                   required
                   placeholder='Seu nome completo'
-                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                 />
               </div>
             </div>
@@ -218,7 +218,7 @@ export default function CadastroPage() {
                   onChange={e => setForm({ ...form, email: e.target.value })}
                   required
                   placeholder='seu@email.com'
-                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                 />
               </div>
             </div>
@@ -241,7 +241,7 @@ export default function CadastroPage() {
                     }
                     placeholder='000.000.000-00'
                     maxLength={14}
-                    className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                    className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                   />
                 </div>
               </div>
@@ -262,7 +262,7 @@ export default function CadastroPage() {
                     }
                     placeholder='(11) 99999-9999'
                     maxLength={15}
-                    className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                    className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                   />
                 </div>
               </div>
@@ -284,7 +284,7 @@ export default function CadastroPage() {
                   required
                   minLength={6}
                   placeholder='Mínimo 6 caracteres'
-                  className='w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                  className='w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                 />
                 <button
                   type='button'
@@ -314,7 +314,7 @@ export default function CadastroPage() {
                   required
                   minLength={6}
                   placeholder='Repita a senha'
-                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                 />
               </div>
             </div>
@@ -322,7 +322,7 @@ export default function CadastroPage() {
             <button
               type='submit'
               disabled={loading}
-              className='w-full py-3 bg-[#FF6600] text-white font-bold text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+              className='w-full py-3 bg-brand text-white font-bold text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
             >
               {loading ? 'Criando conta...' : 'Criar Conta'}
             </button>
@@ -330,13 +330,13 @@ export default function CadastroPage() {
 
           <p className='text-[10px] text-gray-400 text-center mt-4'>
             Ao criar sua conta, você concorda com nossos{' '}
-            <Link href='/termos' className='text-[#FF6600] hover:underline'>
+            <Link href='/termos' className='text-brand hover:underline'>
               Termos de Uso
             </Link>{' '}
             e{' '}
             <Link
               href='/politica-privacidade'
-              className='text-[#FF6600] hover:underline'
+              className='text-brand hover:underline'
             >
               Política de Privacidade
             </Link>
@@ -348,7 +348,7 @@ export default function CadastroPage() {
               Já tem conta?{' '}
               <Link
                 href='/login'
-                className='text-[#FF6600] font-medium hover:underline'
+                className='text-brand font-medium hover:underline'
               >
                 Entrar
               </Link>
@@ -359,7 +359,7 @@ export default function CadastroPage() {
         <div className='text-center mt-6'>
           <Link
             href='/'
-            className='text-sm text-gray-500 hover:text-[#FF6600] transition-colors'
+            className='text-sm text-gray-500 hover:text-brand transition-colors'
           >
             ← Voltar para a loja
           </Link>

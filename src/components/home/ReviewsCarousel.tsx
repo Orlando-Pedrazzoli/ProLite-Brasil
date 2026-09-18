@@ -130,7 +130,7 @@ export default function ReviewsCarousel() {
           <h2 className='text-lg font-bold text-gray-900 uppercase tracking-wide'>
             O que estão falando da Pro-Lite
           </h2>
-          <div className='w-full h-0.5 bg-gray-800 mt-2' />
+          <div className='w-full h-0.5 bg-chumbo-light mt-2' />
         </div>
 
         <div className='relative'>

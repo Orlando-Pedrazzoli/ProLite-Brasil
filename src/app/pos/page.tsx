@@ -443,9 +443,9 @@ export default function PosPage() {
   return (
     <div className='h-screen bg-gray-100 flex flex-col overflow-hidden'>
       {/* HEADER */}
-      <header className='bg-[#1A1A1A] text-white px-4 py-3 flex items-center justify-between flex-shrink-0'>
+      <header className='bg-chumbo text-white px-4 py-3 flex items-center justify-between flex-shrink-0'>
         <div className='flex items-center gap-3'>
-          <ShoppingCart size={20} className='text-[#FF6600]' />
+          <ShoppingCart size={20} className='text-brand' />
           <span className='font-black text-lg tracking-wide'>POS — BALCÃO</span>
         </div>
         <div className='flex items-center gap-4 text-sm'>
@@ -482,7 +482,7 @@ export default function PosPage() {
               onClick={() => setSelected(null)}
               className={`w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-left transition-colors ${
                 selected === null
-                  ? 'bg-[#FF6600] text-white font-medium'
+                  ? 'bg-brand text-white font-medium'
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -502,7 +502,7 @@ export default function PosPage() {
                     }
                     className={`w-full px-3 py-2 rounded-md text-sm text-left transition-colors ${
                       catActive
-                        ? 'bg-[#FF6600] text-white font-medium'
+                        ? 'bg-brand text-white font-medium'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >
@@ -522,7 +522,7 @@ export default function PosPage() {
                             }
                             className={`w-full px-3 py-1.5 rounded-md text-xs text-left transition-colors ${
                               subActive
-                                ? 'bg-orange-100 text-[#FF6600] font-medium'
+                                ? 'bg-brand-100 text-brand font-medium'
                                 : 'text-gray-500 hover:bg-gray-100'
                             }`}
                           >
@@ -553,7 +553,7 @@ export default function PosPage() {
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder='Buscar por nome, SKU ou código de barras... (F2)'
-                className='w-full pl-11 pr-12 py-3 text-base border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#FF6600]'
+                className='w-full pl-11 pr-12 py-3 text-base border-2 border-gray-200 rounded-lg focus:outline-none focus:border-brand'
               />
               {search && (
                 <button
@@ -569,7 +569,7 @@ export default function PosPage() {
             </div>
             <button
               onClick={() => setShowQuickAdd(true)}
-              className='flex items-center gap-2 px-4 py-3 bg-[#FF6600] text-white font-bold rounded-lg hover:bg-[#e55b00] transition-colors whitespace-nowrap shadow-md'
+              className='flex items-center gap-2 px-4 py-3 bg-brand text-white font-bold rounded-lg hover:bg-brand-dark transition-colors whitespace-nowrap shadow-md'
               title='Cadastro rápido (F7)'
             >
               <Zap size={18} />
@@ -584,7 +584,7 @@ export default function PosPage() {
           <div className='flex-1 overflow-y-auto p-4'>
             {loading ? (
               <div className='flex items-center justify-center h-full'>
-                <Loader2 size={32} className='animate-spin text-[#FF6600]' />
+                <Loader2 size={32} className='animate-spin text-brand' />
               </div>
             ) : products.length === 0 ? (
               <div className='flex flex-col items-center justify-center h-full text-gray-400'>
@@ -596,7 +596,7 @@ export default function PosPage() {
                       setSearch('');
                       setSelected(null);
                     }}
-                    className='mt-3 text-[#FF6600] hover:underline text-sm'
+                    className='mt-3 text-brand hover:underline text-sm'
                   >
                     Limpar filtros
                   </button>
@@ -614,7 +614,7 @@ export default function PosPage() {
                       className={`bg-white rounded-lg border-2 p-2 text-left transition-all hover:shadow-md ${
                         outOfStock
                           ? 'opacity-40 cursor-not-allowed border-gray-200'
-                          : 'border-gray-200 hover:border-[#FF6600] active:scale-95'
+                          : 'border-gray-200 hover:border-brand active:scale-95'
                       }`}
                     >
                       <div className='aspect-square bg-gray-100 rounded mb-2 flex items-center justify-center overflow-hidden'>
@@ -645,7 +645,7 @@ export default function PosPage() {
                             p.stock === 0
                               ? 'bg-red-100 text-red-600'
                               : p.stock <= 3
-                                ? 'bg-orange-100 text-orange-600'
+                                ? 'bg-brand-100 text-brand-dark'
                                 : 'bg-green-100 text-green-700'
                           }`}
                         >
@@ -664,10 +664,10 @@ export default function PosPage() {
         <aside className='w-[360px] bg-white border-l flex flex-col flex-shrink-0'>
           <div className='px-4 py-3 border-b flex items-center justify-between'>
             <div className='flex items-center gap-2'>
-              <ShoppingCart size={18} className='text-[#FF6600]' />
+              <ShoppingCart size={18} className='text-brand' />
               <h2 className='font-bold'>Carrinho</h2>
               {cart.length > 0 && (
-                <span className='text-xs bg-[#FF6600] text-white px-2 py-0.5 rounded-full font-bold'>
+                <span className='text-xs bg-brand text-white px-2 py-0.5 rounded-full font-bold'>
                   {totalItems}
                 </span>
               )}
@@ -766,8 +766,8 @@ export default function PosPage() {
                             onClick={() => setItemDiscount(item.productId, p)}
                             className={`text-[10px] px-1.5 py-0.5 rounded border transition-colors ${
                               item.discountPercent === p
-                                ? 'bg-[#FF6600] text-white border-[#FF6600]'
-                                : 'border-gray-200 text-gray-500 hover:border-[#FF6600]'
+                                ? 'bg-brand text-white border-brand'
+                                : 'border-gray-200 text-gray-500 hover:border-brand'
                             }`}
                           >
                             {p}%
@@ -785,7 +785,7 @@ export default function PosPage() {
                             )
                           }
                           placeholder='%'
-                          className='w-12 text-[10px] px-1 py-0.5 border border-gray-200 rounded text-center focus:outline-none focus:border-[#FF6600]'
+                          className='w-12 text-[10px] px-1 py-0.5 border border-gray-200 rounded text-center focus:outline-none focus:border-brand'
                         />
                         {item.discountPercent > 0 && (
                           <button
@@ -808,7 +808,7 @@ export default function PosPage() {
             {/* Desconto geral do carrinho */}
             {cart.length > 0 && (
               <div className='flex items-center gap-1.5 bg-white rounded-md border border-gray-200 px-2 py-1.5'>
-                <Tag size={13} className='text-[#FF6600]' />
+                <Tag size={13} className='text-brand' />
                 <span className='text-xs text-gray-600'>Desc. geral</span>
                 {QUICK_DISCOUNTS.map(p => (
                   <button
@@ -816,8 +816,8 @@ export default function PosPage() {
                     onClick={() => setCartDiscountPercent(p)}
                     className={`text-[10px] px-1.5 py-0.5 rounded border transition-colors ${
                       cartDiscountPercent === p
-                        ? 'bg-[#FF6600] text-white border-[#FF6600]'
-                        : 'border-gray-200 text-gray-500 hover:border-[#FF6600]'
+                        ? 'bg-brand text-white border-brand'
+                        : 'border-gray-200 text-gray-500 hover:border-brand'
                     }`}
                   >
                     {p}%
@@ -835,7 +835,7 @@ export default function PosPage() {
                     )
                   }
                   placeholder='%'
-                  className='w-12 text-[10px] px-1 py-0.5 border border-gray-200 rounded text-center focus:outline-none focus:border-[#FF6600] ml-auto'
+                  className='w-12 text-[10px] px-1 py-0.5 border border-gray-200 rounded text-center focus:outline-none focus:border-brand ml-auto'
                 />
                 <kbd className='text-[9px] text-gray-400 bg-gray-100 px-1 py-0.5 rounded'>
                   F6
@@ -855,14 +855,14 @@ export default function PosPage() {
             )}
             <div className='flex justify-between items-end'>
               <span className='text-sm font-medium text-gray-700'>Total</span>
-              <span className='text-2xl font-black text-[#FF6600]'>
+              <span className='text-2xl font-black text-brand'>
                 {formatPrice(total)}
               </span>
             </div>
             <button
               onClick={() => setShowPayment(true)}
               disabled={cart.length === 0}
-              className='w-full py-4 bg-[#FF6600] text-white font-bold rounded-lg hover:bg-[#e55b00] disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 text-lg shadow-lg'
+              className='w-full py-4 bg-brand text-white font-bold rounded-lg hover:bg-brand-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 text-lg shadow-lg'
             >
               Finalizar Venda
               <kbd className='text-[10px] bg-white/20 px-1.5 py-0.5 rounded'>
@@ -906,7 +906,7 @@ export default function PosPage() {
               Venda Concluída!
             </h2>
             <p className='text-sm text-gray-500 mb-1'>Pedido</p>
-            <p className='font-mono text-lg font-bold text-[#FF6600] mb-4'>
+            <p className='font-mono text-lg font-bold text-brand mb-4'>
               {successMessage.orderNumber}
             </p>
             {successMessage.change !== undefined &&
@@ -927,7 +927,7 @@ export default function PosPage() {
                   '_blank',
                 );
               }}
-              className='w-full mb-3 px-4 py-3 bg-gray-900 text-white rounded-md hover:bg-gray-800 font-bold flex items-center justify-center gap-2'
+              className='w-full mb-3 px-4 py-3 bg-chumbo text-white rounded-md hover:bg-chumbo-light font-bold flex items-center justify-center gap-2'
             >
               🖨️ Imprimir Cupom 80mm
             </button>
@@ -945,7 +945,7 @@ export default function PosPage() {
                   setSuccessMessage(null);
                   searchInputRef.current?.focus();
                 }}
-                className='flex-1 px-4 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] font-medium'
+                className='flex-1 px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark font-medium'
               >
                 Nova Venda
               </button>

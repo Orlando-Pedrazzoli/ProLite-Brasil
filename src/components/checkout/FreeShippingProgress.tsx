@@ -51,7 +51,7 @@ export default function FreeShippingProgress({
       <div className='h-2 w-full overflow-hidden rounded-full bg-white'>
         <div
           className={`h-full rounded-full transition-all duration-500 ${
-            achieved ? 'bg-green-500' : 'bg-[#FF6600]'
+            achieved ? 'bg-green-500' : 'bg-brand'
           }`}
           style={{ width: `${percent}%` }}
         />

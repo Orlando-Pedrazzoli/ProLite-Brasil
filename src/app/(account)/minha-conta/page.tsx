@@ -133,7 +133,7 @@ export default function MinhaContaPage() {
   if (loading)
     return (
       <div className='flex justify-center py-12'>
-        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-[#FF6600]' />
+        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-brand' />
       </div>
     );
 
@@ -162,7 +162,7 @@ export default function MinhaContaPage() {
                   value={form.name}
                   onChange={e => setForm({ ...form, name: e.target.value })}
                   required
-                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
             </div>
@@ -203,7 +203,7 @@ export default function MinhaContaPage() {
                   }
                   placeholder='000.000.000-00'
                   maxLength={14}
-                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
             </div>
@@ -224,7 +224,7 @@ export default function MinhaContaPage() {
                   }
                   placeholder='(11) 99999-9999'
                   maxLength={15}
-                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
             </div>
@@ -233,7 +233,7 @@ export default function MinhaContaPage() {
           <button
             type='submit'
             disabled={saving}
-            className='px-6 py-2.5 bg-[#FF6600] text-white font-medium text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 transition-colors inline-flex items-center gap-2'
+            className='px-6 py-2.5 bg-brand text-white font-medium text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 transition-colors inline-flex items-center gap-2'
           >
             <Save size={16} />
             {saving ? 'Salvando...' : 'Salvar Alterações'}
@@ -277,7 +277,7 @@ export default function MinhaContaPage() {
                   required
                   autoComplete='current-password'
                   placeholder='••••••••'
-                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                 />
               </div>
             </div>
@@ -306,7 +306,7 @@ export default function MinhaContaPage() {
                 minLength={6}
                 autoComplete='new-password'
                 placeholder='Mínimo 6 caracteres'
-                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
               />
             </div>
           </div>
@@ -334,7 +334,7 @@ export default function MinhaContaPage() {
                 minLength={6}
                 autoComplete='new-password'
                 placeholder='Repita a nova senha'
-                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
               />
             </div>
           </div>
@@ -342,7 +342,7 @@ export default function MinhaContaPage() {
           <button
             type='submit'
             disabled={savingPwd}
-            className='px-6 py-2.5 bg-[#FF6600] text-white font-medium text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 transition-colors inline-flex items-center gap-2'
+            className='px-6 py-2.5 bg-brand text-white font-medium text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 transition-colors inline-flex items-center gap-2'
           >
             <Save size={16} />
             {savingPwd

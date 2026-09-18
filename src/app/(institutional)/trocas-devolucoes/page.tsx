@@ -21,7 +21,7 @@ export default function TrocasDevolucoesPAge() {
   return (
     <div className='max-w-4xl mx-auto px-4 py-10'>
       <nav className='text-sm text-gray-500 mb-8'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -38,13 +38,13 @@ export default function TrocasDevolucoesPAge() {
         como base o <strong>Código de Defesa do Consumidor</strong>.
       </p>
 
-      <div className='bg-[#FF6600]/10 border border-[#FF6600]/20 rounded-lg p-4 mb-8'>
+      <div className='bg-brand/10 border border-brand/20 rounded-lg p-4 mb-8'>
         <p className='text-sm text-gray-700'>
           As ocorrências que envolvam troca ou devolução devem ser comunicadas à
           nossa Central de Atendimento:{' '}
           <a
             href='mailto:contato@surfersparadise.com.br'
-            className='text-[#FF6600] hover:underline font-medium'
+            className='text-brand hover:underline font-medium'
           >
             contato@surfersparadise.com.br
           </a>{' '}
@@ -53,7 +53,7 @@ export default function TrocasDevolucoesPAge() {
             href='https://wa.me/5511947169003'
             target='_blank'
             rel='noopener noreferrer'
-            className='text-[#FF6600] hover:underline font-medium'
+            className='text-brand hover:underline font-medium'
           >
             (11) 94716-9003
           </a>
@@ -139,8 +139,8 @@ export default function TrocasDevolucoesPAge() {
         {/* Produto avariado */}
         <div className='bg-white rounded-lg shadow-sm p-6'>
           <div className='flex items-center gap-3 mb-4'>
-            <div className='w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center'>
-              <PackageX size={20} className='text-orange-500' />
+            <div className='w-10 h-10 bg-brand-50 rounded-lg flex items-center justify-center'>
+              <PackageX size={20} className='text-brand' />
             </div>
             <h2 className='text-lg font-bold text-gray-900'>
               Produto Avariado e Embalagem Violada
@@ -256,7 +256,7 @@ export default function TrocasDevolucoesPAge() {
 
           <div className='space-y-4 text-gray-700 leading-relaxed text-sm'>
             <div className='flex gap-3'>
-              <span className='text-[#FF6600] font-bold mt-0.5'>I.</span>
+              <span className='text-brand font-bold mt-0.5'>I.</span>
               <p>
                 <strong>Estorno em cartão de crédito:</strong> O prazo do
                 estorno seguirá as regras da administradora do cartão e
@@ -265,7 +265,7 @@ export default function TrocasDevolucoesPAge() {
             </div>
 
             <div className='flex gap-3'>
-              <span className='text-[#FF6600] font-bold mt-0.5'>II.</span>
+              <span className='text-brand font-bold mt-0.5'>II.</span>
               <p>
                 <strong>Reembolso via PIX ou conta corrente:</strong> Para
                 pedidos pagos via boleto ou PIX, o valor da compra será
@@ -302,14 +302,14 @@ export default function TrocasDevolucoesPAge() {
               href='https://wa.me/5511947169003'
               target='_blank'
               rel='noopener noreferrer'
-              className='text-[#FF6600] hover:underline font-medium'
+              className='text-brand hover:underline font-medium'
             >
               (11) 94716-9003
             </a>{' '}
             ou pelo e-mail{' '}
             <a
               href='mailto:contato@surfersparadise.com.br'
-              className='text-[#FF6600] hover:underline font-medium'
+              className='text-brand hover:underline font-medium'
             >
               contato@surfersparadise.com.br
             </a>

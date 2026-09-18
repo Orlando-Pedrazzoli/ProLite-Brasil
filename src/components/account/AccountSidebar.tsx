@@ -20,9 +20,9 @@ export default function AccountSidebar() {
     <div className='w-full md:w-64 flex-shrink-0'>
       <div className='bg-white rounded-lg shadow-sm overflow-hidden'>
         {/* User Info */}
-        <div className='p-4 bg-[#1A1A1A]'>
+        <div className='p-4 bg-chumbo'>
           <div className='flex items-center gap-3'>
-            <div className='w-10 h-10 bg-[#FF6600] text-white rounded-full flex items-center justify-center font-bold text-sm'>
+            <div className='w-10 h-10 bg-brand text-white rounded-full flex items-center justify-center font-bold text-sm'>
               {session?.user?.name?.charAt(0).toUpperCase() || 'U'}
             </div>
             <div>
@@ -47,8 +47,8 @@ export default function AccountSidebar() {
                 className={cn(
                   'flex items-center gap-3 px-4 py-3 text-sm transition-colors',
                   isActive
-                    ? 'text-[#FF6600] font-medium bg-orange-50 border-l-3 border-[#FF6600]'
-                    : 'text-gray-600 hover:text-[#FF6600] hover:bg-gray-50',
+                    ? 'text-brand font-medium bg-brand-50 border-l-3 border-brand'
+                    : 'text-gray-600 hover:text-brand hover:bg-gray-50',
                 )}
               >
                 <item.icon size={18} />

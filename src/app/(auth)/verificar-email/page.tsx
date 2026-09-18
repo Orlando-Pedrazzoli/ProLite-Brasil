@@ -112,7 +112,7 @@ function VerificarEmailContent() {
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 px-4'>
       <div className='max-w-md w-full bg-white rounded-2xl shadow-lg p-8'>
-        <MailCheck className='mx-auto mb-4 h-12 w-12 text-[#FF6600]' />
+        <MailCheck className='mx-auto mb-4 h-12 w-12 text-brand' />
         <h1 className='text-2xl font-bold text-gray-900 text-center mb-1'>
           Verifique seu e-mail
         </h1>
@@ -129,7 +129,7 @@ function VerificarEmailContent() {
               onChange={e => setEmail(e.target.value)}
               placeholder='seu@email.com'
               required
-              className='w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+              className='w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
             />
           )}
 
@@ -141,13 +141,13 @@ function VerificarEmailContent() {
               setCode(e.target.value.replace(/\D/g, '').slice(0, 6))
             }
             placeholder='000000'
-            className='w-full px-4 py-3 border border-gray-300 rounded-lg text-center text-2xl font-bold tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+            className='w-full px-4 py-3 border border-gray-300 rounded-lg text-center text-2xl font-bold tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
           />
 
           <button
             type='submit'
             disabled={verifying || code.length !== 6 || !email}
-            className='w-full py-3 bg-[#FF6600] text-white font-bold text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 transition-colors flex items-center justify-center gap-2'
+            className='w-full py-3 bg-brand text-white font-bold text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 transition-colors flex items-center justify-center gap-2'
           >
             {verifying && <Loader2 className='h-4 w-4 animate-spin' />}
             {verifying ? 'Verificando...' : 'Verificar'}
@@ -159,7 +159,7 @@ function VerificarEmailContent() {
             type='button'
             onClick={handleResend}
             disabled={sending || cooldown > 0 || !email}
-            className='text-sm text-[#FF6600] font-medium hover:underline disabled:text-gray-400 disabled:no-underline'
+            className='text-sm text-brand font-medium hover:underline disabled:text-gray-400 disabled:no-underline'
           >
             {cooldown > 0
               ? `Reenviar código em ${cooldown}s`

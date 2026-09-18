@@ -122,7 +122,7 @@ export default function ProdutosPage() {
   return (
     <div className='max-w-7xl mx-auto px-4 py-6'>
       <nav className='text-sm text-gray-500 mb-6'>
-        <a href='/' className='hover:text-[#FF6600]'>
+        <a href='/' className='hover:text-brand'>
           Início
         </a>
         <span className='mx-2'>/</span>

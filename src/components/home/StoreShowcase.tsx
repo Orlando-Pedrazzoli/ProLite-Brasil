@@ -84,7 +84,7 @@ export default function StoreShowcase() {
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center'>
           {/* ═══ CONTEÚDO ═══ */}
           <div>
-            <p className='text-[11px] font-bold text-[#FF6600] uppercase tracking-widest mb-2'>
+            <p className='text-[11px] font-bold text-brand uppercase tracking-widest mb-2'>
               <Store size={12} className='inline -mt-0.5 mr-1.5' />
               Loja física em {company.address.city} - {company.address.state}
             </p>
@@ -112,7 +112,7 @@ export default function StoreShowcase() {
               <div className='flex items-start gap-3'>
                 <MapPin
                   size={18}
-                  className='text-[#FF6600] mt-0.5 flex-shrink-0'
+                  className='text-brand mt-0.5 flex-shrink-0'
                 />
                 <p className='text-sm text-gray-700'>
                   {company.address.street}, {company.address.number} —{' '}
@@ -123,20 +123,20 @@ export default function StoreShowcase() {
               <div className='flex items-start gap-3'>
                 <Clock
                   size={18}
-                  className='text-[#FF6600] mt-0.5 flex-shrink-0'
+                  className='text-brand mt-0.5 flex-shrink-0'
                 />
                 <p className='text-sm text-gray-700'>{company.businessHours}</p>
               </div>
               <div className='flex items-start gap-3'>
                 <Phone
                   size={18}
-                  className='text-[#FF6600] mt-0.5 flex-shrink-0'
+                  className='text-brand mt-0.5 flex-shrink-0'
                 />
                 <a
                   href={`https://wa.me/${company.whatsapp}`}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='text-sm text-gray-700 hover:text-[#FF6600] transition-colors'
+                  className='text-sm text-gray-700 hover:text-brand transition-colors'
                 >
                   {company.phone} (WhatsApp)
                 </a>
@@ -155,14 +155,14 @@ export default function StoreShowcase() {
                 href={DIRECTIONS_URL}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#FF6600] text-white text-sm font-bold rounded-md hover:bg-[#e55b00] transition-colors'
+                className='inline-flex items-center justify-center gap-2 px-6 py-3 bg-brand text-white text-sm font-bold rounded-md hover:bg-brand-dark transition-colors'
               >
                 <ExternalLink size={16} />
                 Como Chegar
               </a>
               <Link
                 href='/contato'
-                className='inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-gray-900 text-gray-900 text-sm font-bold rounded-md hover:bg-gray-900 hover:text-white transition-colors'
+                className='inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-chumbo text-gray-900 text-sm font-bold rounded-md hover:bg-chumbo hover:text-white transition-colors'
               >
                 <MessageCircle size={16} />
                 Fale Conosco
@@ -203,7 +203,7 @@ export default function StoreShowcase() {
               type='button'
               onClick={prev}
               aria-label='Foto anterior'
-              className='absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/85 text-gray-800 flex items-center justify-center shadow hover:bg-[#FF6600] hover:text-white transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100'
+              className='absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/85 text-gray-800 flex items-center justify-center shadow hover:bg-brand hover:text-white transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100'
             >
               <ChevronLeft size={18} />
             </button>
@@ -211,7 +211,7 @@ export default function StoreShowcase() {
               type='button'
               onClick={next}
               aria-label='Próxima foto'
-              className='absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/85 text-gray-800 flex items-center justify-center shadow hover:bg-[#FF6600] hover:text-white transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100'
+              className='absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/85 text-gray-800 flex items-center justify-center shadow hover:bg-brand hover:text-white transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100'
             >
               <ChevronRight size={18} />
             </button>
@@ -232,7 +232,7 @@ export default function StoreShowcase() {
                   aria-current={i === current}
                   className={`h-1.5 rounded-full transition-all ${
                     i === current
-                      ? 'w-5 bg-[#FF6600]'
+                      ? 'w-5 bg-brand'
                       : 'w-1.5 bg-white/70 hover:bg-white'
                   }`}
                 />

@@ -6,7 +6,7 @@ export default function NotFound() {
       <h2 className='text-2xl font-bold mb-4'>Página não encontrada</h2>
       <Link
         href='/'
-        className='px-4 py-2 bg-black text-white rounded hover:bg-gray-800'
+        className='px-4 py-2 bg-chumbo text-white rounded hover:bg-chumbo-light'
       >
         Voltar ao início
       </Link>

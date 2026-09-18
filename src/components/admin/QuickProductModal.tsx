@@ -182,7 +182,7 @@ export default function QuickProductModal({
         {/* HEADER */}
         <div className='flex items-center justify-between p-4 border-b'>
           <div className='flex items-center gap-2'>
-            <Zap size={20} className='text-[#FF6600]' />
+            <Zap size={20} className='text-brand' />
             <div>
               <h2 className='text-lg font-bold'>Cadastro Rápido</h2>
               <p className='text-xs text-gray-500'>
@@ -201,7 +201,7 @@ export default function QuickProductModal({
 
         {loadingOptions ? (
           <div className='p-12 flex items-center justify-center'>
-            <Loader2 size={28} className='animate-spin text-[#FF6600]' />
+            <Loader2 size={28} className='animate-spin text-brand' />
           </div>
         ) : (
           <form onSubmit={handleSubmit} className='p-4 space-y-3'>
@@ -216,7 +216,7 @@ export default function QuickProductModal({
                 onChange={e => setName(e.target.value)}
                 autoFocus
                 placeholder='Ex: Quilha Futures Mayhem M'
-                className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#FF6600]'
+                className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-brand'
               />
             </div>
 
@@ -231,7 +231,7 @@ export default function QuickProductModal({
                   value={sku}
                   onChange={e => setSku(e.target.value)}
                   placeholder='Ex: 1234'
-                  className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#FF6600] font-mono text-sm'
+                  className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-brand font-mono text-sm'
                 />
               </div>
               <div>
@@ -245,7 +245,7 @@ export default function QuickProductModal({
                     setPrice(e.target.value.replace(/[^\d,.]/g, ''))
                   }
                   placeholder='0,00'
-                  className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#FF6600] font-mono text-sm'
+                  className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-brand font-mono text-sm'
                 />
               </div>
               <div>
@@ -257,7 +257,7 @@ export default function QuickProductModal({
                   min='0'
                   value={stock}
                   onChange={e => setStock(e.target.value)}
-                  className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#FF6600] font-mono text-sm'
+                  className='w-full px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-brand font-mono text-sm'
                 />
               </div>
             </div>
@@ -272,7 +272,7 @@ export default function QuickProductModal({
                   <select
                     value={brand}
                     onChange={e => setBrand(e.target.value)}
-                    className='flex-1 min-w-0 px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#FF6600] text-sm'
+                    className='flex-1 min-w-0 px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-brand text-sm'
                   >
                     <option value=''>Selecionar...</option>
                     {brands.map(b => (
@@ -285,7 +285,7 @@ export default function QuickProductModal({
                     type='button'
                     onClick={() => setShowBrandModal(true)}
                     title='Criar nova marca'
-                    className='shrink-0 px-2.5 py-2.5 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] transition-colors'
+                    className='shrink-0 px-2.5 py-2.5 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors'
                   >
                     <Plus size={16} />
                   </button>
@@ -299,7 +299,7 @@ export default function QuickProductModal({
                   <select
                     value={category}
                     onChange={e => setCategory(e.target.value)}
-                    className='flex-1 min-w-0 px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#FF6600] text-sm'
+                    className='flex-1 min-w-0 px-3 py-2.5 border-2 border-gray-300 rounded-md focus:outline-none focus:border-brand text-sm'
                   >
                     <option value=''>Selecionar...</option>
                     {categories.map(c => (
@@ -312,7 +312,7 @@ export default function QuickProductModal({
                     type='button'
                     onClick={() => setShowCategoryModal(true)}
                     title='Criar nova categoria'
-                    className='shrink-0 px-2.5 py-2.5 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] transition-colors'
+                    className='shrink-0 px-2.5 py-2.5 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors'
                   >
                     <Plus size={16} />
                   </button>
@@ -342,7 +342,7 @@ export default function QuickProductModal({
               <button
                 type='submit'
                 disabled={!canSubmit || loading}
-                className='flex-1 px-4 py-2.5 bg-[#FF6600] text-white font-bold rounded-md hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
+                className='flex-1 px-4 py-2.5 bg-brand text-white font-bold rounded-md hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
               >
                 {loading ? (
                   <>

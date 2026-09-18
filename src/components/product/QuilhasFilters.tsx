@@ -197,7 +197,7 @@ export default function QuilhasFilters({
       {hasActiveFilters && (
         <button
           onClick={onClearFilters}
-          className='flex items-center gap-1 text-sm text-[#FF6600] hover:text-[#e55b00] mb-4 font-medium'
+          className='flex items-center gap-1 text-sm text-brand hover:text-brand-dark mb-4 font-medium'
         >
           <X size={14} />
           Limpar filtros
@@ -292,7 +292,7 @@ export default function QuilhasFilters({
                 }
                 className={`px-2.5 py-1 rounded-md text-xs font-medium border transition-colors ${
                   selectedSize === s.value
-                    ? 'bg-orange-50 text-[#FF6600] border-[#FF6600]'
+                    ? 'bg-brand-50 text-brand border-brand'
                     : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
                 }`}
               >
@@ -331,7 +331,7 @@ export default function QuilhasFilters({
           {facets.constructions.length > CONSTRUCTION_INITIAL_LIMIT && (
             <button
               onClick={() => setShowAllConstructions(!showAllConstructions)}
-              className='text-xs text-[#FF6600] hover:text-[#e55b00] mt-1 font-medium'
+              className='text-xs text-brand hover:text-brand-dark mt-1 font-medium'
             >
               {showAllConstructions
                 ? '— Mostrar menos'
@@ -367,7 +367,7 @@ export default function QuilhasFilters({
           {facets.templates.length > TEMPLATE_INITIAL_LIMIT && (
             <button
               onClick={() => setShowAllTemplates(!showAllTemplates)}
-              className='text-xs text-[#FF6600] hover:text-[#e55b00] mt-1 font-medium'
+              className='text-xs text-brand hover:text-brand-dark mt-1 font-medium'
             >
               {showAllTemplates
                 ? '— Mostrar menos'
@@ -394,7 +394,7 @@ export default function QuilhasFilters({
               placeholder='Min'
               value={localMin}
               onChange={e => setLocalMin(e.target.value)}
-              className='w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+              className='w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-brand'
             />
             <span className='text-gray-400 text-xs'>—</span>
             <input
@@ -402,12 +402,12 @@ export default function QuilhasFilters({
               placeholder='Max'
               value={localMax}
               onChange={e => setLocalMax(e.target.value)}
-              className='w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+              className='w-full px-2 py-1.5 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-brand'
             />
           </div>
           <button
             onClick={handlePriceApply}
-            className='w-full py-1.5 bg-gray-900 text-white text-xs font-medium rounded hover:bg-gray-800 transition-colors'
+            className='w-full py-1.5 bg-chumbo text-white text-xs font-medium rounded hover:bg-chumbo-light transition-colors'
           >
             Filtrar
           </button>
@@ -464,17 +464,17 @@ function CheckboxOption({
   return (
     <label
       className={`flex items-center gap-2 py-1 px-1 rounded cursor-pointer transition-colors ${
-        checked ? 'bg-orange-50' : 'hover:bg-gray-50'
+        checked ? 'bg-brand-50' : 'hover:bg-gray-50'
       }`}
     >
       <input
         type='checkbox'
         checked={checked}
         onChange={onChange}
-        className='w-3.5 h-3.5 text-[#FF6600] border-gray-300 rounded focus:ring-[#FF6600] cursor-pointer'
+        className='w-3.5 h-3.5 text-brand border-gray-300 rounded focus:ring-brand cursor-pointer'
       />
       <span
-        className={`flex-1 text-sm ${checked ? 'text-[#FF6600] font-semibold' : 'text-gray-700'}`}
+        className={`flex-1 text-sm ${checked ? 'text-brand font-semibold' : 'text-gray-700'}`}
       >
         {label}
       </span>

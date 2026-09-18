@@ -19,7 +19,7 @@ export default function AppProvider({
             position='top-right'
             toastOptions={{
               duration: 3000,
-              style: { background: '#1a1a1a', color: '#fff', fontSize: '14px' },
+              style: { background: '#2D2F34', color: '#fff', fontSize: '14px' },
             }}
           />
         </WishlistProvider>

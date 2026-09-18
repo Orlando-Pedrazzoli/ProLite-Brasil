@@ -38,7 +38,7 @@ function ConfirmadoContent() {
         <div className='space-y-3'>
           <Link
             href='/meus-pedidos'
-            className='flex w-full items-center justify-center gap-2 rounded-lg bg-[#FF6600] px-6 py-3 font-semibold text-white transition hover:bg-[#e55b00]'
+            className='flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-6 py-3 font-semibold text-white transition hover:bg-brand-dark'
           >
             <Package className='h-5 w-5' /> Acompanhar meu pedido
           </Link>
@@ -55,7 +55,7 @@ function ConfirmadoContent() {
         <div className='space-y-4'>
           <div className='rounded-lg bg-gray-50 p-5 text-left'>
             <p className='flex items-center gap-2 font-semibold text-gray-900'>
-              <UserPlus className='h-5 w-5 text-[#FF6600]' /> Acompanhe seu
+              <UserPlus className='h-5 w-5 text-brand' /> Acompanhe seu
               pedido
             </p>
             <p className='mt-1 text-sm text-gray-600'>
@@ -65,7 +65,7 @@ function ConfirmadoContent() {
             </p>
             <Link
               href='/cadastro'
-              className='mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-[#FF6600] px-6 py-3 font-semibold text-white transition hover:bg-[#e55b00]'
+              className='mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-brand px-6 py-3 font-semibold text-white transition hover:bg-brand-dark'
             >
               Criar minha conta
             </Link>

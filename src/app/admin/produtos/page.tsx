@@ -392,7 +392,7 @@ export default function AdminProdutosPage() {
         </div>
         <Link
           href='/admin/produtos/novo'
-          className='flex items-center gap-2 px-4 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] transition-colors'
+          className='flex items-center gap-2 px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors'
         >
           <Plus size={18} />
           Novo Produto
@@ -412,12 +412,12 @@ export default function AdminProdutosPage() {
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
               placeholder='Buscar por nome, SKU, GTIN ou tag...'
-              className='w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+              className='w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
             />
           </div>
           <button
             type='submit'
-            className='px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition-colors'
+            className='px-4 py-2 bg-chumbo-light text-white rounded-md hover:bg-chumbo transition-colors'
           >
             Buscar
           </button>
@@ -432,7 +432,7 @@ export default function AdminProdutosPage() {
             </span>
             <button
               onClick={clearAllFilters}
-              className='text-[#FF6600] hover:underline'
+              className='text-brand hover:underline'
             >
               Limpar tudo
             </button>
@@ -594,7 +594,7 @@ export default function AdminProdutosPage() {
         <div className='bg-white rounded-lg shadow-sm overflow-hidden'>
           {loading ? (
             <div className='p-12 flex items-center justify-center'>
-              <Loader2 size={32} className='animate-spin text-[#FF6600]' />
+              <Loader2 size={32} className='animate-spin text-brand' />
             </div>
           ) : products.length === 0 ? (
             <div className='p-12 text-center text-gray-500'>
@@ -603,7 +603,7 @@ export default function AdminProdutosPage() {
               {activeFiltersCount > 0 && (
                 <button
                   onClick={clearAllFilters}
-                  className='mt-3 text-[#FF6600] hover:underline text-sm'
+                  className='mt-3 text-brand hover:underline text-sm'
                 >
                   Limpar filtros para ver todos
                 </button>
@@ -613,7 +613,7 @@ export default function AdminProdutosPage() {
             <>
               {/* BULK ACTIONS BAR */}
               {selected.size > 0 && (
-                <div className='bg-gray-900 text-white p-3 flex items-center gap-3 flex-wrap'>
+                <div className='bg-chumbo text-white p-3 flex items-center gap-3 flex-wrap'>
                   <span className='text-sm font-medium'>
                     {selected.size} selecionado{selected.size !== 1 && 's'}
                   </span>
@@ -703,7 +703,7 @@ export default function AdminProdutosPage() {
                         p.stock === 0
                           ? 'text-red-600 bg-red-50'
                           : p.stock <= 3
-                            ? 'text-orange-600 bg-orange-50'
+                            ? 'text-brand-dark bg-brand-50'
                             : 'text-green-700 bg-green-50';
 
                       return (
@@ -801,7 +801,7 @@ export default function AdminProdutosPage() {
                               <div className='flex gap-1'>
                                 {p.isAvailableInStore && (
                                   <span
-                                    className='inline-flex items-center gap-0.5 text-[10px] bg-orange-50 text-orange-700 px-1.5 py-0.5 rounded'
+                                    className='inline-flex items-center gap-0.5 text-[10px] bg-brand-50 text-brand-darker px-1.5 py-0.5 rounded'
                                     title='Disponível no balcão'
                                   >
                                     <Store size={10} />
@@ -832,7 +832,7 @@ export default function AdminProdutosPage() {
                             <div className='flex items-center justify-end gap-1'>
                               <Link
                                 href={`/admin/produtos/${p._id}`}
-                                className='p-2 text-gray-400 hover:text-[#FF6600] transition-colors'
+                                className='p-2 text-gray-400 hover:text-brand transition-colors'
                                 title='Editar'
                               >
                                 <Pencil size={16} />

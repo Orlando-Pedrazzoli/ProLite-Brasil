@@ -41,7 +41,7 @@ export default function CategoryBanners() {
               className='group block overflow-hidden rounded-lg'
             >
               {/* Orange Title Bar */}
-              <div className='bg-[#FF6600] py-2.5 text-center'>
+              <div className='bg-brand py-2.5 text-center'>
                 <h3 className='text-white font-black text-lg uppercase tracking-wider'>
                   {cat.title}
                 </h3>
@@ -58,7 +58,7 @@ export default function CategoryBanners() {
                 />
                 <div className='absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors' />
                 <div className='absolute bottom-6 left-1/2 -translate-x-1/2'>
-                  <span className='bg-[#FF6600] text-white font-bold text-sm px-6 py-2.5 uppercase tracking-wide'>
+                  <span className='bg-brand text-white font-bold text-sm px-6 py-2.5 uppercase tracking-wide'>
                     Ver Produtos
                   </span>
                 </div>

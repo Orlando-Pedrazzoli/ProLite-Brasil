@@ -173,7 +173,7 @@ export default function FeaturedWetsuits({
                   onClick={() => setActiveTab(g)}
                   className={`px-6 py-2 text-sm font-bold uppercase rounded-full transition-colors ${
                     activeTab === g
-                      ? 'bg-[#FF6600] text-white shadow'
+                      ? 'bg-brand text-white shadow'
                       : 'text-gray-500 hover:text-gray-800'
                   }`}
                 >
@@ -244,7 +244,7 @@ export default function FeaturedWetsuits({
                 aria-label={`Página ${i + 1}`}
                 className={`h-2 rounded-full transition-all ${
                   i === activePage
-                    ? 'w-6 bg-[#FF6600]'
+                    ? 'w-6 bg-brand'
                     : 'w-2 bg-gray-300 hover:bg-gray-400'
                 }`}
               />
@@ -257,7 +257,7 @@ export default function FeaturedWetsuits({
           <div className='mt-6 flex justify-center'>
             <Link
               href={`/categoria/${categorySlug}?gender=${activeTab}`}
-              className='inline-flex items-center gap-2 rounded-full border-2 border-[#FF6600] px-8 py-2.5 text-sm font-bold uppercase tracking-wide text-[#FF6600] transition-colors hover:bg-[#FF6600] hover:text-white'
+              className='inline-flex items-center gap-2 rounded-full border-2 border-brand px-8 py-2.5 text-sm font-bold uppercase tracking-wide text-brand transition-colors hover:bg-brand hover:text-white'
             >
               Ver todos
               <ChevronRight size={16} />

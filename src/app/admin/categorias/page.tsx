@@ -275,7 +275,7 @@ export default function AdminCategoriasPage() {
             resetForm();
             setShowForm(!showForm);
           }}
-          className='flex items-center gap-2 px-4 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] transition-colors'
+          className='flex items-center gap-2 px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors'
         >
           <Plus size={18} />
           Nova Categoria
@@ -362,7 +362,7 @@ export default function AdminCategoriasPage() {
               </p>
               <div className='flex items-center gap-4'>
                 {form.image ? (
-                  <div className='relative w-24 h-24 rounded-full overflow-hidden border-2 border-[#FF6600] shrink-0'>
+                  <div className='relative w-24 h-24 rounded-full overflow-hidden border-2 border-brand shrink-0'>
                     <Image
                       src={form.image}
                       alt='Pré-visualização'
@@ -378,7 +378,7 @@ export default function AdminCategoriasPage() {
                 )}
 
                 <div className='flex flex-col gap-2'>
-                  <label className='inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#FF6600] hover:bg-orange-50 transition-colors text-sm text-gray-600'>
+                  <label className='inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-brand hover:bg-brand-50 transition-colors text-sm text-gray-600'>
                     <Upload size={16} />
                     {uploading
                       ? 'Enviando...'
@@ -422,7 +422,7 @@ export default function AdminCategoriasPage() {
                 </p>
                 <div className='flex items-center gap-4'>
                   {form.megaImage ? (
-                    <div className='relative w-40 h-28 rounded-lg overflow-hidden border-2 border-[#FF6600] shrink-0'>
+                    <div className='relative w-40 h-28 rounded-lg overflow-hidden border-2 border-brand shrink-0'>
                       <Image
                         src={form.megaImage}
                         alt='Pré-visualização do mega-menu'
@@ -438,7 +438,7 @@ export default function AdminCategoriasPage() {
                   )}
 
                   <div className='flex flex-col gap-2'>
-                    <label className='inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#FF6600] hover:bg-orange-50 transition-colors text-sm text-gray-600'>
+                    <label className='inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-brand hover:bg-brand-50 transition-colors text-sm text-gray-600'>
                       <Upload size={16} />
                       {uploadingMega
                         ? 'Enviando...'
@@ -484,7 +484,7 @@ export default function AdminCategoriasPage() {
               <button
                 type='submit'
                 disabled={uploading || uploadingMega}
-                className='px-4 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                className='px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
               >
                 {editingId ? 'Atualizar' : 'Criar'}
               </button>

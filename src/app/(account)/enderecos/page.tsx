@@ -211,7 +211,7 @@ export default function EnderecosPage() {
   if (loading)
     return (
       <div className='flex justify-center py-12'>
-        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-[#FF6600]' />
+        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-brand' />
       </div>
     );
 
@@ -222,7 +222,7 @@ export default function EnderecosPage() {
         {!showForm && (
           <button
             onClick={handleNew}
-            className='px-4 py-2 bg-[#FF6600] text-white font-medium text-sm rounded-lg hover:bg-[#e55b00] transition-colors inline-flex items-center gap-2'
+            className='px-4 py-2 bg-brand text-white font-medium text-sm rounded-lg hover:bg-brand-dark transition-colors inline-flex items-center gap-2'
           >
             <Plus size={16} /> Novo Endereço
           </button>
@@ -256,7 +256,7 @@ export default function EnderecosPage() {
                   onChange={e => setForm({ ...form, name: e.target.value })}
                   required
                   placeholder='Ex: Casa, Trabalho'
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <div>
@@ -274,7 +274,7 @@ export default function EnderecosPage() {
                   required
                   placeholder='00000-000'
                   maxLength={9}
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <div>
@@ -286,7 +286,7 @@ export default function EnderecosPage() {
                   value={form.phone}
                   onChange={e => setForm({ ...form, phone: e.target.value })}
                   placeholder='(11) 99999-9999'
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <div className='md:col-span-2'>
@@ -298,7 +298,7 @@ export default function EnderecosPage() {
                   value={form.street}
                   onChange={e => setForm({ ...form, street: e.target.value })}
                   required
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <div>
@@ -310,7 +310,7 @@ export default function EnderecosPage() {
                   value={form.number}
                   onChange={e => setForm({ ...form, number: e.target.value })}
                   required
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <div>
@@ -324,7 +324,7 @@ export default function EnderecosPage() {
                     setForm({ ...form, complement: e.target.value })
                   }
                   placeholder='Apto, Bloco'
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <div>
@@ -338,7 +338,7 @@ export default function EnderecosPage() {
                     setForm({ ...form, neighborhood: e.target.value })
                   }
                   required
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <div>
@@ -350,7 +350,7 @@ export default function EnderecosPage() {
                   value={form.city}
                   onChange={e => setForm({ ...form, city: e.target.value })}
                   required
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <div>
@@ -361,7 +361,7 @@ export default function EnderecosPage() {
                   value={form.state}
                   onChange={e => setForm({ ...form, state: e.target.value })}
                   required
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 >
                   <option value=''>Selecionar</option>
                   {STATES.map(s => (
@@ -376,7 +376,7 @@ export default function EnderecosPage() {
               <button
                 type='submit'
                 disabled={saving}
-                className='px-6 py-2.5 bg-[#FF6600] text-white font-medium text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 transition-colors'
+                className='px-6 py-2.5 bg-brand text-white font-medium text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 transition-colors'
               >
                 {saving ? 'Salvando...' : 'Salvar'}
               </button>
@@ -404,7 +404,7 @@ export default function EnderecosPage() {
           </p>
           <button
             onClick={handleNew}
-            className='px-6 py-2.5 bg-[#FF6600] text-white font-medium text-sm rounded-lg hover:bg-[#e55b00] transition-colors inline-flex items-center gap-2'
+            className='px-6 py-2.5 bg-brand text-white font-medium text-sm rounded-lg hover:bg-brand-dark transition-colors inline-flex items-center gap-2'
           >
             <Plus size={16} /> Adicionar Endereço
           </button>
@@ -414,7 +414,7 @@ export default function EnderecosPage() {
           {addresses.map(addr => (
             <div
               key={addr._id}
-              className={`bg-white rounded-lg shadow-sm p-4 flex flex-col sm:flex-row gap-4 ${addr.isDefault ? 'ring-2 ring-[#FF6600]' : ''}`}
+              className={`bg-white rounded-lg shadow-sm p-4 flex flex-col sm:flex-row gap-4 ${addr.isDefault ? 'ring-2 ring-brand' : ''}`}
             >
               <div className='flex-1'>
                 <div className='flex items-center gap-2 mb-1'>
@@ -422,7 +422,7 @@ export default function EnderecosPage() {
                     {addr.name}
                   </p>
                   {addr.isDefault && (
-                    <span className='text-[10px] bg-[#FF6600] text-white px-2 py-0.5 rounded-full font-medium'>
+                    <span className='text-[10px] bg-brand text-white px-2 py-0.5 rounded-full font-medium'>
                       Padrão
                     </span>
                   )}
@@ -443,7 +443,7 @@ export default function EnderecosPage() {
                 {!addr.isDefault && (
                   <button
                     onClick={() => handleSetDefault(addr._id)}
-                    className='p-2 text-gray-400 hover:text-[#FF6600] transition-colors'
+                    className='p-2 text-gray-400 hover:text-brand transition-colors'
                     title='Definir como padrão'
                   >
                     <Star size={16} />

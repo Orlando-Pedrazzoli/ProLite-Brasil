@@ -86,7 +86,7 @@ export default function WishlistPageClient() {
   return (
     <main className='max-w-7xl mx-auto px-4 py-8 min-h-[60vh]'>
       <nav className='text-sm text-gray-500 mb-6'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -94,7 +94,7 @@ export default function WishlistPageClient() {
       </nav>
 
       <div className='flex items-center gap-3 mb-1'>
-        <Heart size={26} className='fill-[#FF6600] text-[#FF6600]' />
+        <Heart size={26} className='fill-brand text-brand' />
         <h1 className='text-2xl md:text-3xl font-black text-gray-900'>
           Lista de Desejos
         </h1>
@@ -109,12 +109,12 @@ export default function WishlistPageClient() {
 
       {/* Guest: incentivo suave a logar (sem gatear a funcionalidade) */}
       {hydrated && status === 'unauthenticated' && visible.length > 0 && (
-        <div className='flex items-center gap-3 bg-orange-50 border border-orange-200 rounded-lg px-4 py-3 mb-6'>
-          <LogIn size={18} className='text-[#FF6600] flex-shrink-0' />
+        <div className='flex items-center gap-3 bg-brand-50 border border-brand-200 rounded-lg px-4 py-3 mb-6'>
+          <LogIn size={18} className='text-brand flex-shrink-0' />
           <p className='text-sm text-gray-700'>
             <Link
               href='/login'
-              className='font-semibold text-[#FF6600] hover:underline'
+              className='font-semibold text-brand hover:underline'
             >
               Entre na sua conta
             </Link>{' '}
@@ -144,7 +144,7 @@ export default function WishlistPageClient() {
           </p>
           <Link
             href='/produtos'
-            className='inline-flex items-center gap-2 px-8 py-3 bg-[#FF6600] text-white text-sm font-bold rounded-md hover:bg-[#e55b00] transition-colors'
+            className='inline-flex items-center gap-2 px-8 py-3 bg-brand text-white text-sm font-bold rounded-md hover:bg-brand-dark transition-colors'
           >
             Explorar Produtos
             <ArrowRight size={16} />

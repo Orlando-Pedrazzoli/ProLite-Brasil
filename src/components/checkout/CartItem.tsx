@@ -14,7 +14,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
       </div>
       <div className="flex-1 min-w-0">
         <h4 className="text-sm font-medium truncate">{item.name}</h4>
-        <p className="text-sm font-bold text-[#FF6600] mt-1">R$ {item.price.toFixed(2)}</p>
+        <p className="text-sm font-bold text-brand mt-1">R$ {item.price.toFixed(2)}</p>
         <div className="flex items-center gap-2 mt-2">
           <button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} className="w-7 h-7 border rounded text-sm">-</button>
           <span className="text-sm w-8 text-center">{item.quantity}</span>

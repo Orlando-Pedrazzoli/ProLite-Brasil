@@ -124,7 +124,7 @@ function PixPageInner() {
   if (loading) {
     return (
       <div className='flex justify-center py-16'>
-        <Loader2 size={32} className='animate-spin text-[#FF6600]' />
+        <Loader2 size={32} className='animate-spin text-brand' />
       </div>
     );
   }
@@ -143,7 +143,7 @@ function PixPageInner() {
           </p>
           <Link
             href='/login'
-            className='inline-block rounded-lg bg-[#FF6600] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#e55b00]'
+            className='inline-block rounded-lg bg-brand px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-dark'
           >
             Fazer login
           </Link>
@@ -162,7 +162,7 @@ function PixPageInner() {
           </p>
           <Link
             href='/meus-pedidos'
-            className='text-sm font-medium text-[#FF6600] hover:underline'
+            className='text-sm font-medium text-brand hover:underline'
           >
             ← Voltar para Meus Pedidos
           </Link>
@@ -185,7 +185,7 @@ function PixPageInner() {
           </p>
           <Link
             href={`/meus-pedidos/${order._id}`}
-            className='inline-block rounded-lg bg-[#FF6600] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#e55b00]'
+            className='inline-block rounded-lg bg-brand px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-dark'
           >
             Acompanhar pedido
           </Link>
@@ -209,7 +209,7 @@ function PixPageInner() {
           </p>
           <Link
             href='/produtos'
-            className='inline-block rounded-lg bg-[#FF6600] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#e55b00]'
+            className='inline-block rounded-lg bg-brand px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-dark'
           >
             Voltar à loja
           </Link>
@@ -229,7 +229,7 @@ function PixPageInner() {
           </p>
           <Link
             href={`/meus-pedidos/${order._id}`}
-            className='text-sm font-medium text-[#FF6600] hover:underline'
+            className='text-sm font-medium text-brand hover:underline'
           >
             Ver detalhes do pedido →
           </Link>
@@ -255,7 +255,7 @@ function PixPageInner() {
           <div className='flex flex-wrap justify-center gap-3'>
             <Link
               href='/produtos'
-              className='inline-block rounded-lg bg-[#FF6600] px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#e55b00]'
+              className='inline-block rounded-lg bg-brand px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-dark'
             >
               Fazer novo pedido
             </Link>
@@ -282,7 +282,7 @@ function PixPageInner() {
           </p>
           <Link
             href={`/meus-pedidos/${order._id}`}
-            className='text-sm font-medium text-[#FF6600] hover:underline'
+            className='text-sm font-medium text-brand hover:underline'
           >
             Ver detalhes do pedido →
           </Link>
@@ -318,7 +318,7 @@ function PixPageInner() {
         <div className='mt-6 text-center'>
           <Link
             href={`/meus-pedidos/${order._id}`}
-            className='text-sm text-gray-500 transition-colors hover:text-[#FF6600]'
+            className='text-sm text-gray-500 transition-colors hover:text-brand'
           >
             ← Voltar para o pedido
           </Link>
@@ -334,7 +334,7 @@ export default function PixPage() {
     <Suspense
       fallback={
         <div className='flex justify-center py-16'>
-          <Loader2 size={32} className='animate-spin text-[#FF6600]' />
+          <Loader2 size={32} className='animate-spin text-brand' />
         </div>
       }
     >

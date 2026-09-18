@@ -11,7 +11,7 @@ export default function TermosPage() {
   return (
     <div className='max-w-4xl mx-auto px-4 py-10'>
       <nav className='text-sm text-gray-500 mb-8'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -110,7 +110,7 @@ export default function TermosPage() {
           Para mais detalhes, consulte nossa página de{' '}
           <Link
             href='/trocas-devolucoes'
-            className='text-[#FF6600] hover:underline'
+            className='text-brand hover:underline'
           >
             Garantia, Trocas e Devoluções
           </Link>
@@ -175,7 +175,7 @@ export default function TermosPage() {
           utilizamos e protegemos seus dados, consulte nossa{' '}
           <Link
             href='/politica-privacidade'
-            className='text-[#FF6600] hover:underline'
+            className='text-brand hover:underline'
           >
             Política de Privacidade
           </Link>

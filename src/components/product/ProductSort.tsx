@@ -35,7 +35,7 @@ export default function ProductSort({
         <select
           value={value}
           onChange={e => onChange(e.target.value)}
-          className='px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] bg-white'
+          className='px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand bg-white'
         >
           {sortOptions.map(opt => (
             <option key={opt.value} value={opt.value}>

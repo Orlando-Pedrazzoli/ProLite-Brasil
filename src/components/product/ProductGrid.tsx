@@ -155,7 +155,7 @@ export default function ProductGrid({
               onClick={() => setMobileView('1')}
               className={`w-10 h-9 flex items-center justify-center transition-colors ${
                 mobileView === '1'
-                  ? 'bg-gray-900 text-white'
+                  ? 'bg-chumbo text-white'
                   : 'bg-white text-gray-500 hover:bg-gray-50'
               }`}
               aria-label='Ver 1 produto por linha'
@@ -167,7 +167,7 @@ export default function ProductGrid({
               onClick={() => setMobileView('2')}
               className={`w-10 h-9 flex items-center justify-center transition-colors border-l border-gray-300 ${
                 mobileView === '2'
-                  ? 'bg-gray-900 text-white'
+                  ? 'bg-chumbo text-white'
                   : 'bg-white text-gray-500 hover:bg-gray-50'
               }`}
               aria-label='Ver 2 produtos por linha'
@@ -220,7 +220,7 @@ export default function ProductGrid({
                     onClick={() => onPageChange(p)}
                     className={`w-9 h-9 rounded-md text-sm font-medium transition-colors ${
                       p === pagination.page
-                        ? 'bg-[#FF6600] text-white'
+                        ? 'bg-brand text-white'
                         : 'border border-gray-300 text-gray-600 hover:bg-gray-50'
                     }`}
                     aria-label={`Página ${p}`}

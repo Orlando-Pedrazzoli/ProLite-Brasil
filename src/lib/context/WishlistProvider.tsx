@@ -162,7 +162,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
                     }).catch(() => {});
                   }
                 }}
-                className='font-bold text-[#FF6600] hover:underline whitespace-nowrap'
+                className='font-bold text-brand hover:underline whitespace-nowrap'
               >
                 Desfazer
               </button>

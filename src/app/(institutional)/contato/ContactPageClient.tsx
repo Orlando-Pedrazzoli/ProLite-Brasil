@@ -66,7 +66,7 @@ const MAP_EMBED_URL = `https://maps.google.com/maps?q=${mapsQuery}&z=16&hl=pt-BR
 const MAP_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
 
 const inputCls =
-  'w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent';
+  'w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent';
 
 export default function ContatoPage() {
   const [form, setForm] = useState(emptyForm);
@@ -122,7 +122,7 @@ export default function ContatoPage() {
   return (
     <div className='max-w-6xl mx-auto px-4 py-10'>
       <nav className='text-sm text-gray-500 mb-8'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -172,7 +172,7 @@ export default function ContatoPage() {
                     setForm(emptyForm);
                     setSent(false);
                   }}
-                  className='inline-flex items-center gap-2 px-6 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:border-[#FF6600] hover:text-[#FF6600] transition-colors'
+                  className='inline-flex items-center gap-2 px-6 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:border-brand hover:text-brand transition-colors'
                 >
                   Enviar outra mensagem
                 </button>
@@ -336,7 +336,7 @@ export default function ContatoPage() {
                 <button
                   type='submit'
                   disabled={sending}
-                  className='w-full sm:w-auto px-8 py-3 bg-[#FF6600] text-white font-bold text-sm rounded-md hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2'
+                  className='w-full sm:w-auto px-8 py-3 bg-brand text-white font-bold text-sm rounded-md hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2'
                 >
                   <Send size={16} />
                   {sending ? 'Enviando...' : 'Enviar Mensagem'}
@@ -371,7 +371,7 @@ export default function ContatoPage() {
             <div className='flex items-start gap-3'>
               <MapPin
                 size={18}
-                className='text-[#FF6600] mt-0.5 flex-shrink-0'
+                className='text-brand mt-0.5 flex-shrink-0'
               />
               <div>
                 <p className='text-sm font-medium text-gray-900'>Loja Física</p>
@@ -391,7 +391,7 @@ export default function ContatoPage() {
             <div className='flex items-start gap-3'>
               <Phone
                 size={18}
-                className='text-[#FF6600] mt-0.5 flex-shrink-0'
+                className='text-brand mt-0.5 flex-shrink-0'
               />
               <div>
                 <p className='text-sm font-medium text-gray-900'>
@@ -401,7 +401,7 @@ export default function ContatoPage() {
                   href={`https://wa.me/${company.whatsapp}`}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='text-sm text-gray-600 hover:text-[#FF6600] transition-colors'
+                  className='text-sm text-gray-600 hover:text-brand transition-colors'
                 >
                   {company.phone}
                 </a>
@@ -409,12 +409,12 @@ export default function ContatoPage() {
             </div>
 
             <div className='flex items-start gap-3'>
-              <Mail size={18} className='text-[#FF6600] mt-0.5 flex-shrink-0' />
+              <Mail size={18} className='text-brand mt-0.5 flex-shrink-0' />
               <div>
                 <p className='text-sm font-medium text-gray-900'>E-mail</p>
                 <a
                   href={`mailto:${company.email}`}
-                  className='text-sm text-gray-600 hover:text-[#FF6600] transition-colors break-all'
+                  className='text-sm text-gray-600 hover:text-brand transition-colors break-all'
                 >
                   {company.email}
                 </a>
@@ -424,7 +424,7 @@ export default function ContatoPage() {
             <div className='flex items-start gap-3'>
               <Clock
                 size={18}
-                className='text-[#FF6600] mt-0.5 flex-shrink-0'
+                className='text-brand mt-0.5 flex-shrink-0'
               />
               <div>
                 <p className='text-sm font-medium text-gray-900'>
@@ -448,7 +448,7 @@ export default function ContatoPage() {
                   href={company.social.instagram}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#FF6600] hover:scale-110 transition-all duration-300 group'
+                  className='w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand hover:scale-110 transition-all duration-300 group'
                   aria-label='Instagram'
                 >
                   <svg
@@ -481,7 +481,7 @@ export default function ContatoPage() {
                   href={company.social.facebook}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#FF6600] hover:scale-110 transition-all duration-300 group'
+                  className='w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand hover:scale-110 transition-all duration-300 group'
                   aria-label='Facebook'
                 >
                   <svg
@@ -515,7 +515,7 @@ export default function ContatoPage() {
               href={MAP_DIRECTIONS_URL}
               target='_blank'
               rel='noopener noreferrer'
-              className='flex items-center justify-center gap-2 py-3 text-sm font-medium text-[#FF6600] hover:bg-orange-50 transition-colors border-t border-gray-100'
+              className='flex items-center justify-center gap-2 py-3 text-sm font-medium text-brand hover:bg-brand-50 transition-colors border-t border-gray-100'
             >
               <ExternalLink size={14} />
               Como chegar (Google Maps)

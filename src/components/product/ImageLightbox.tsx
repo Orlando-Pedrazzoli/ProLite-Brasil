@@ -431,7 +431,7 @@ export default function ImageLightbox({
                     onClick={() => goToIndex(i)}
                     className={`relative w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-lg overflow-hidden border-2 transition-all ${
                       i === currentIndex
-                        ? 'border-[#FF6600] opacity-100 scale-105'
+                        ? 'border-brand opacity-100 scale-105'
                         : 'border-white/20 opacity-60 hover:opacity-100'
                     }`}
                     aria-label={`Ver imagem ${i + 1}`}

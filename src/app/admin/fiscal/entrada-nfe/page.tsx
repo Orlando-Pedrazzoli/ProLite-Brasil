@@ -280,8 +280,8 @@ export default function EntradaNfePage() {
           importing
             ? 'border-gray-200 bg-gray-50'
             : dragActive
-              ? 'border-[#FF6600] bg-orange-100'
-              : 'border-gray-300 hover:border-[#FF6600] hover:bg-orange-50'
+              ? 'border-brand bg-brand-100'
+              : 'border-gray-300 hover:border-brand hover:bg-brand-50'
         }`}
       >
         <input
@@ -296,12 +296,12 @@ export default function EntradaNfePage() {
         />
         {importing ? (
           <div className='flex flex-col items-center text-gray-500'>
-            <Loader2 size={32} className='animate-spin mb-2 text-[#FF6600]' />
+            <Loader2 size={32} className='animate-spin mb-2 text-brand' />
             <p>Lendo a nota...</p>
           </div>
         ) : (
           <div className='flex flex-col items-center text-gray-500 pointer-events-none'>
-            <Upload size={32} className='mb-2 text-[#FF6600]' />
+            <Upload size={32} className='mb-2 text-brand' />
             <p className='font-medium text-gray-700'>
               {dragActive
                 ? 'Solte o XML aqui'
@@ -321,7 +321,7 @@ export default function EntradaNfePage() {
             <div className='flex items-start justify-between gap-4 flex-wrap'>
               <div>
                 <div className='flex items-center gap-2'>
-                  <FileText size={18} className='text-[#FF6600]' />
+                  <FileText size={18} className='text-brand' />
                   <span className='font-bold text-gray-900'>
                     {invoice.issuer.name || 'Fornecedor'}
                   </span>
@@ -425,7 +425,7 @@ export default function EntradaNfePage() {
                             onChange={e =>
                               updateForm(i, { sku: e.target.value })
                             }
-                            className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] font-mono'
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand font-mono'
                           />
                         </div>
                         <div>
@@ -441,7 +441,7 @@ export default function EntradaNfePage() {
                               })
                             }
                             placeholder='0,00'
-                            className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] font-mono'
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand font-mono'
                           />
                         </div>
                         <div>
@@ -453,7 +453,7 @@ export default function EntradaNfePage() {
                             onChange={e =>
                               updateForm(i, { brandId: e.target.value })
                             }
-                            className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                           >
                             <option value=''>Selecione…</option>
                             {brands.map(b => (
@@ -475,7 +475,7 @@ export default function EntradaNfePage() {
                                 subcategoryId: '',
                               })
                             }
-                            className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                           >
                             <option value=''>Selecione…</option>
                             {rootCategories.map(c => (
@@ -495,7 +495,7 @@ export default function EntradaNfePage() {
                               onChange={e =>
                                 updateForm(i, { subcategoryId: e.target.value })
                               }
-                              className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                              className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                             >
                               <option value=''>—</option>
                               {subs.map(s => (
@@ -510,7 +510,7 @@ export default function EntradaNfePage() {
                           <button
                             onClick={() => handleCreate(i)}
                             disabled={processing === i}
-                            className='w-full px-4 py-2 bg-[#FF6600] text-white font-bold rounded-md hover:bg-[#e55b00] disabled:opacity-50 flex items-center justify-center gap-2 text-sm'
+                            className='w-full px-4 py-2 bg-brand text-white font-bold rounded-md hover:bg-brand-dark disabled:opacity-50 flex items-center justify-center gap-2 text-sm'
                           >
                             {processing === i ? (
                               <Loader2 size={16} className='animate-spin' />

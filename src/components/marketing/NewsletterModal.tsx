@@ -125,7 +125,7 @@ export default function NewsletterModal({
 
         <div className='px-6 pt-8 pb-6'>
           {/* Logo / marca */}
-          <p className='mb-4 text-center text-lg font-black tracking-wide text-[#1A1A1A]'>
+          <p className='mb-4 text-center text-lg font-black tracking-wide text-chumbo'>
             PRO-LITE
           </p>
 
@@ -140,18 +140,18 @@ export default function NewsletterModal({
               </h2>
               <p className='mb-5 text-sm text-gray-500'>
                 Use o cupom abaixo no carrinho e ganhe{' '}
-                <strong className='text-[#FF6600]'>10% OFF</strong> na sua
+                <strong className='text-brand'>10% OFF</strong> na sua
                 primeira compra.
               </p>
 
               <button
                 onClick={handleCopy}
-                className='mx-auto mb-5 flex items-center gap-3 rounded-xl border-2 border-dashed border-[#FF6600] bg-[#FFF7F0] px-6 py-3 transition-colors hover:bg-[#ffeede]'
+                className='mx-auto mb-5 flex items-center gap-3 rounded-xl border-2 border-dashed border-brand bg-brand-50 px-6 py-3 transition-colors hover:bg-brand-100'
               >
-                <span className='text-2xl font-black tracking-[0.2em] text-[#FF6600]'>
+                <span className='text-2xl font-black tracking-[0.2em] text-brand'>
                   {couponCode}
                 </span>
-                <Copy size={18} className='text-[#FF6600]' />
+                <Copy size={18} className='text-brand' />
               </button>
 
               <p className='mb-5 text-xs text-gray-400'>
@@ -173,7 +173,7 @@ export default function NewsletterModal({
                 Assine nossa newsletter e ganhe
               </h2>
               <p className='mb-5 text-center text-sm text-gray-600'>
-                <strong className='text-[#FF6600]'>10% OFF</strong> na sua
+                <strong className='text-brand'>10% OFF</strong> na sua
                 primeira compra
               </p>
 
@@ -211,7 +211,7 @@ export default function NewsletterModal({
                     type='checkbox'
                     checked={consent}
                     onChange={e => setConsent(e.target.checked)}
-                    className='mt-0.5 h-4 w-4 flex-shrink-0 accent-[#FF6600]'
+                    className='mt-0.5 h-4 w-4 flex-shrink-0 accent-brand'
                   />
                   <span className='text-xs leading-snug text-gray-500'>
                     Aceito receber emails com novidades e promoções e concordo
@@ -219,7 +219,7 @@ export default function NewsletterModal({
                     <Link
                       href='/termos'
                       target='_blank'
-                      className='text-[#FF6600] underline'
+                      className='text-brand underline'
                     >
                       termos
                     </Link>{' '}
@@ -227,7 +227,7 @@ export default function NewsletterModal({
                     <Link
                       href='/politica-privacidade'
                       target='_blank'
-                      className='text-[#FF6600] underline'
+                      className='text-brand underline'
                     >
                       política de privacidade
                     </Link>
@@ -249,7 +249,7 @@ export default function NewsletterModal({
         </div>
 
         {/* Imagem inferior (com fallback em degradê se o arquivo não existir) */}
-        <div className='relative h-40 w-full bg-gradient-to-br from-[#FF6600] to-[#1A1A1A]'>
+        <div className='relative h-40 w-full bg-gradient-to-br from-brand to-chumbo'>
           <Image
             src={imageSrc}
             alt=''

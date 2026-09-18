@@ -54,7 +54,7 @@ export default function BoletoPayment({
           />
           <button
             onClick={copy}
-            className='flex shrink-0 items-center gap-1 rounded-lg bg-gray-900 px-3 py-2 text-sm text-white'
+            className='flex shrink-0 items-center gap-1 rounded-lg bg-chumbo px-3 py-2 text-sm text-white'
           >
             {copied ? (
               <Check className='h-4 w-4' />
@@ -70,7 +70,7 @@ export default function BoletoPayment({
         href={url}
         target='_blank'
         rel='noopener noreferrer'
-        className='flex w-full items-center justify-center gap-2 rounded-lg border border-gray-900 px-4 py-3 font-semibold transition hover:bg-gray-900 hover:text-white'
+        className='flex w-full items-center justify-center gap-2 rounded-lg border border-chumbo px-4 py-3 font-semibold transition hover:bg-chumbo hover:text-white'
       >
         <ExternalLink className='h-4 w-4' /> Abrir / imprimir boleto
       </a>

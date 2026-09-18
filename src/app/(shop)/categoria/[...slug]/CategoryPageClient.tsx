@@ -311,7 +311,7 @@ export default function CategoriaPage({
   return (
     <div className='max-w-7xl mx-auto px-4 py-6'>
       <nav className='text-sm text-gray-500 mb-6'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         {breadcrumbs.map((crumb, i) => (
@@ -322,7 +322,7 @@ export default function CategoriaPage({
             ) : (
               <Link
                 href={`/categoria/${crumb.slug}`}
-                className='hover:text-[#FF6600]'
+                className='hover:text-brand'
               >
                 {crumb.name}
               </Link>

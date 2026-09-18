@@ -27,7 +27,7 @@ interface FAQCategory {
 const faqData: FAQCategory[] = [
   {
     title: 'Compras e Pedidos',
-    icon: <ShoppingCart size={20} className='text-[#FF6600]' />,
+    icon: <ShoppingCart size={20} className='text-brand' />,
     items: [
       {
         question: 'Como faço para comprar na Pro-Lite?',
@@ -63,7 +63,7 @@ const faqData: FAQCategory[] = [
   },
   {
     title: 'Entregas e Frete',
-    icon: <Truck size={20} className='text-[#FF6600]' />,
+    icon: <Truck size={20} className='text-brand' />,
     items: [
       {
         question: 'Vocês entregam em todo o Brasil?',
@@ -99,7 +99,7 @@ const faqData: FAQCategory[] = [
   },
   {
     title: 'Pagamento',
-    icon: <CreditCard size={20} className='text-[#FF6600]' />,
+    icon: <CreditCard size={20} className='text-brand' />,
     items: [
       {
         question: 'Quais formas de pagamento vocês aceitam?',
@@ -130,7 +130,7 @@ const faqData: FAQCategory[] = [
   },
   {
     title: 'Trocas e Devoluções',
-    icon: <RotateCcw size={20} className='text-[#FF6600]' />,
+    icon: <RotateCcw size={20} className='text-brand' />,
     items: [
       {
         question: 'Posso trocar ou devolver um produto?',
@@ -161,7 +161,7 @@ const faqData: FAQCategory[] = [
   },
   {
     title: 'Segurança e Privacidade',
-    icon: <Shield size={20} className='text-[#FF6600]' />,
+    icon: <Shield size={20} className='text-brand' />,
     items: [
       {
         question: 'Meus dados estão seguros?',
@@ -182,7 +182,7 @@ const faqData: FAQCategory[] = [
   },
   {
     title: 'Sobre a Loja',
-    icon: <HelpCircle size={20} className='text-[#FF6600]' />,
+    icon: <HelpCircle size={20} className='text-brand' />,
     items: [
       {
         question: 'A Pro-Lite tem loja física?',
@@ -218,13 +218,13 @@ function FAQAccordion({ item }: { item: FAQItem }) {
         className='flex items-center justify-between w-full py-4 text-left gap-4 group'
       >
         <span
-          className={`text-sm font-medium transition-colors ${isOpen ? 'text-[#FF6600]' : 'text-gray-900 group-hover:text-[#FF6600]'}`}
+          className={`text-sm font-medium transition-colors ${isOpen ? 'text-brand' : 'text-gray-900 group-hover:text-brand'}`}
         >
           {item.question}
         </span>
         <ChevronDown
           size={16}
-          className={`flex-shrink-0 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#FF6600]' : ''}`}
+          className={`flex-shrink-0 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-brand' : ''}`}
         />
       </button>
       {isOpen && (
@@ -240,7 +240,7 @@ export default function FAQPage() {
   return (
     <div className='max-w-4xl mx-auto px-4 py-10'>
       <nav className='text-sm text-gray-500 mb-8'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -295,7 +295,7 @@ export default function FAQPage() {
           </a>
           <a
             href='mailto:contato@surfersparadise.com.br'
-            className='px-6 py-2.5 bg-[#FF6600] text-white font-bold text-sm rounded-md hover:bg-[#e55b00] transition-colors inline-flex items-center gap-2'
+            className='px-6 py-2.5 bg-brand text-white font-bold text-sm rounded-md hover:bg-brand-dark transition-colors inline-flex items-center gap-2'
           >
             ✉ Enviar E-mail
           </a>

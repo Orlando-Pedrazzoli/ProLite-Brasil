@@ -52,7 +52,7 @@ function CategoryCircle({ category }: { category: Category }) {
       href={`/categoria/${category.slug}`}
       className='group flex-shrink-0 w-24 sm:w-28 md:w-32 snap-start flex flex-col items-center gap-3'
     >
-      <div className='relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-gray-100 ring-1 ring-black/5 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg group-hover:ring-[#FF6600]/30'>
+      <div className='relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-gray-100 ring-1 ring-black/5 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg group-hover:ring-brand/30'>
         {hasImage ? (
           <Image
             src={category.image as string}
@@ -64,13 +64,13 @@ function CategoryCircle({ category }: { category: Category }) {
           />
         ) : (
           <div className='flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200'>
-            <span className='text-2xl font-bold text-[#FF6600]'>
+            <span className='text-2xl font-bold text-brand'>
               {category.name.charAt(0).toUpperCase()}
             </span>
           </div>
         )}
       </div>
-      <span className='text-center text-xs sm:text-sm font-medium text-gray-700 transition-colors group-hover:text-[#FF6600]'>
+      <span className='text-center text-xs sm:text-sm font-medium text-gray-700 transition-colors group-hover:text-brand'>
         {category.name}
       </span>
     </Link>
@@ -240,7 +240,7 @@ export default function ShopByCategory({
                     onClick={() => setActiveTab(tab._id)}
                     className={`shrink-0 whitespace-nowrap px-5 py-2 text-sm font-bold uppercase rounded-full transition-colors ${
                       activeTab === tab._id
-                        ? 'bg-[#FF6600] text-white shadow'
+                        ? 'bg-brand text-white shadow'
                         : 'text-gray-500 hover:text-gray-800'
                     }`}
                   >
@@ -310,7 +310,7 @@ export default function ShopByCategory({
                 aria-label={`Página ${i + 1}`}
                 className={`h-2 rounded-full transition-all ${
                   i === activePage
-                    ? 'w-6 bg-[#FF6600]'
+                    ? 'w-6 bg-brand'
                     : 'w-2 bg-gray-300 hover:bg-gray-400'
                 }`}
               />
@@ -323,7 +323,7 @@ export default function ShopByCategory({
           <div className='mt-6 flex justify-center'>
             <Link
               href={`/categoria/${activeRoot.slug}`}
-              className='inline-flex items-center gap-2 rounded-full border-2 border-[#FF6600] px-8 py-2.5 text-sm font-bold uppercase tracking-wide text-[#FF6600] transition-colors hover:bg-[#FF6600] hover:text-white'
+              className='inline-flex items-center gap-2 rounded-full border-2 border-brand px-8 py-2.5 text-sm font-bold uppercase tracking-wide text-brand transition-colors hover:bg-brand hover:text-white'
             >
               Ver tudo em {activeRoot.name}
               <ChevronRight size={16} />

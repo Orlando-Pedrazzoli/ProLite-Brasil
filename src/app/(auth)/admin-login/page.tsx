@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-[#1A1A1A] relative overflow-hidden'>
+    <div className='min-h-screen flex items-center justify-center bg-chumbo relative overflow-hidden'>
       {/* Background Pattern */}
       <div className='absolute inset-0 opacity-5'>
         <div
@@ -79,8 +79,8 @@ export default function AdminLoginPage() {
         <div className='bg-white rounded-2xl shadow-2xl p-8'>
           {/* Header */}
           <div className='text-center mb-6'>
-            <div className='w-12 h-12 bg-[#FF6600]/10 rounded-full flex items-center justify-center mx-auto mb-3'>
-              <Lock size={22} className='text-[#FF6600]' />
+            <div className='w-12 h-12 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-3'>
+              <Lock size={22} className='text-brand' />
             </div>
             <h1 className='text-xl font-bold text-gray-900'>
               Painel Administrativo
@@ -110,7 +110,7 @@ export default function AdminLoginPage() {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required
-                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent transition-shadow'
+                  className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-shadow'
                   placeholder='admin@surfersparadise.com.br'
                 />
               </div>
@@ -134,7 +134,7 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   required
-                  className='w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent transition-shadow'
+                  className='w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-shadow'
                   placeholder='••••••••'
                 />
                 <button
@@ -150,7 +150,7 @@ export default function AdminLoginPage() {
             <button
               type='submit'
               disabled={loading}
-              className='w-full py-3 bg-[#FF6600] text-white font-bold text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+              className='w-full py-3 bg-brand text-white font-bold text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
             >
               {loading ? 'Entrando...' : 'Entrar'}
             </button>
@@ -161,7 +161,7 @@ export default function AdminLoginPage() {
         <div className='text-center mt-6'>
           <Link
             href='/'
-            className='text-sm text-gray-500 hover:text-[#FF6600] transition-colors'
+            className='text-sm text-gray-500 hover:text-brand transition-colors'
           >
             ← Voltar para a loja
           </Link>

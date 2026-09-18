@@ -103,7 +103,7 @@ export default function CarrinhoPage() {
         </p>
         <Link
           href='/produtos'
-          className='inline-block px-8 py-3 bg-[#FF6600] text-white font-bold rounded-md hover:bg-[#e55b00] transition-colors'
+          className='inline-block px-8 py-3 bg-brand text-white font-bold rounded-md hover:bg-brand-dark transition-colors'
         >
           Explorar Produtos
         </Link>
@@ -115,7 +115,7 @@ export default function CarrinhoPage() {
     <div className='max-w-7xl mx-auto px-4 py-6'>
       {/* Breadcrumb */}
       <nav className='text-sm text-gray-500 mb-6'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -172,7 +172,7 @@ export default function CarrinhoPage() {
                     <div>
                       <Link
                         href={`/produtos/${item.slug}`}
-                        className='text-sm font-medium text-gray-900 hover:text-[#FF6600] line-clamp-2'
+                        className='text-sm font-medium text-gray-900 hover:text-brand line-clamp-2'
                       >
                         {item.name}
                       </Link>
@@ -263,7 +263,7 @@ export default function CarrinhoPage() {
                     >
                       {item.name}
                     </Link>
-                    <p className='text-sm font-bold text-[#FF6600] mt-1'>
+                    <p className='text-sm font-bold text-brand mt-1'>
                       {formatCurrency(item.price * item.quantity)}
                     </p>
                     <div className='flex items-center justify-between mt-2'>
@@ -306,7 +306,7 @@ export default function CarrinhoPage() {
           <div className='mt-6'>
             <Link
               href='/produtos'
-              className='text-sm text-gray-500 hover:text-[#FF6600] transition-colors'
+              className='text-sm text-gray-500 hover:text-brand transition-colors'
             >
               ← Continuar comprando
             </Link>
@@ -368,12 +368,12 @@ export default function CarrinhoPage() {
                       }}
                       onKeyDown={e => e.key === 'Enter' && handleCouponApply()}
                       placeholder='CÓDIGO'
-                      className='flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm uppercase focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                      className='flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm uppercase focus:outline-none focus:ring-2 focus:ring-brand'
                     />
                     <button
                       onClick={handleCouponApply}
                       disabled={couponLoading}
-                      className='px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-md hover:bg-gray-800 transition-colors disabled:opacity-50'
+                      className='px-4 py-2 bg-chumbo text-white text-sm font-medium rounded-md hover:bg-chumbo-light transition-colors disabled:opacity-50'
                     >
                       {couponLoading ? '...' : 'Aplicar'}
                     </button>
@@ -406,11 +406,11 @@ export default function CarrinhoPage() {
                   }
                   placeholder='CEP'
                   maxLength={8}
-                  className='flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
                 <button
                   onClick={handleShippingCalc}
-                  className='px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-md hover:bg-gray-800 transition-colors'
+                  className='px-4 py-2 bg-chumbo text-white text-sm font-medium rounded-md hover:bg-chumbo-light transition-colors'
                 >
                   Calcular
                 </button>
@@ -419,7 +419,7 @@ export default function CarrinhoPage() {
                 href='https://buscacepinter.correios.com.br/app/endereco/index.php'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='text-[10px] text-gray-400 hover:text-[#FF6600] mt-1 inline-block'
+                className='text-[10px] text-gray-400 hover:text-brand mt-1 inline-block'
               >
                 Não sei meu CEP
               </a>
@@ -458,10 +458,10 @@ export default function CarrinhoPage() {
                 </span>
               </div>
               <div className='flex justify-between items-center mb-1'>
-                <span className='text-sm text-[#FF6600] font-medium'>
+                <span className='text-sm text-brand font-medium'>
                   No PIX / Boleto
                 </span>
-                <span className='text-lg font-black text-[#FF6600]'>
+                <span className='text-lg font-black text-brand'>
                   {formatCurrency(pixTotal)}
                 </span>
               </div>
@@ -474,7 +474,7 @@ export default function CarrinhoPage() {
             {/* Checkout Button */}
             <Link
               href='/checkout'
-              className='block w-full py-3.5 bg-[#FF6600] text-white text-center font-bold text-base rounded-md hover:bg-[#e55b00] transition-colors'
+              className='block w-full py-3.5 bg-brand text-white text-center font-bold text-base rounded-md hover:bg-brand-dark transition-colors'
             >
               FINALIZAR COMPRA
             </Link>

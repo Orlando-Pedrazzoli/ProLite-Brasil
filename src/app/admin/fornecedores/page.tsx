@@ -128,7 +128,7 @@ export default function AdminFornecedoresPage() {
         <h1 className='text-2xl font-bold'>Fornecedores</h1>
         <button
           onClick={openCreate}
-          className='flex items-center gap-2 px-4 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] transition-colors'
+          className='flex items-center gap-2 px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors'
         >
           <Plus size={18} />
           Novo Fornecedor
@@ -146,7 +146,7 @@ export default function AdminFornecedoresPage() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder='Buscar por nome ou CNPJ...'
-            className='w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+            className='w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
           />
         </div>
       </div>
@@ -154,7 +154,7 @@ export default function AdminFornecedoresPage() {
       <div className='bg-white rounded-lg shadow-sm'>
         {loading ? (
           <div className='p-12 flex items-center justify-center'>
-            <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-[#FF6600]' />
+            <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-brand' />
           </div>
         ) : suppliers.length === 0 ? (
           <div className='p-12 text-center text-gray-500'>
@@ -216,7 +216,7 @@ export default function AdminFornecedoresPage() {
                       <div className='flex items-center justify-end gap-2'>
                         <button
                           onClick={() => openEdit(s)}
-                          className='p-2 text-gray-400 hover:text-[#FF6600] transition-colors'
+                          className='p-2 text-gray-400 hover:text-brand transition-colors'
                         >
                           <Pencil size={16} />
                         </button>
@@ -261,7 +261,7 @@ export default function AdminFornecedoresPage() {
                   value={form.name}
                   onChange={e => setForm({ ...form, name: e.target.value })}
                   required
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
@@ -274,7 +274,7 @@ export default function AdminFornecedoresPage() {
                     value={form.cnpj}
                     onChange={e => setForm({ ...form, cnpj: e.target.value })}
                     placeholder='00.000.000/0000-00'
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                   />
                 </div>
                 <div>
@@ -287,7 +287,7 @@ export default function AdminFornecedoresPage() {
                     onChange={e =>
                       setForm({ ...form, contactPerson: e.target.value })
                     }
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                   />
                 </div>
                 <div>
@@ -299,7 +299,7 @@ export default function AdminFornecedoresPage() {
                     value={form.phone}
                     onChange={e => setForm({ ...form, phone: e.target.value })}
                     placeholder='(11) 99999-9999'
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                   />
                 </div>
                 <div>
@@ -310,7 +310,7 @@ export default function AdminFornecedoresPage() {
                     type='email'
                     value={form.email}
                     onChange={e => setForm({ ...form, email: e.target.value })}
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                   />
                 </div>
               </div>
@@ -322,7 +322,7 @@ export default function AdminFornecedoresPage() {
                   value={form.notes}
                   onChange={e => setForm({ ...form, notes: e.target.value })}
                   rows={3}
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <label className='flex items-center gap-2'>
@@ -339,7 +339,7 @@ export default function AdminFornecedoresPage() {
                 <button
                   type='submit'
                   disabled={saving}
-                  className='flex items-center gap-2 px-4 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] disabled:opacity-50 transition-colors'
+                  className='flex items-center gap-2 px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark disabled:opacity-50 transition-colors'
                 >
                   <Save size={16} />
                   {saving ? 'Salvando...' : 'Salvar'}

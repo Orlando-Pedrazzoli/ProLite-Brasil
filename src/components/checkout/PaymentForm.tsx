@@ -250,7 +250,7 @@ export default function PaymentForm({
             }}
             className={`flex flex-col items-center gap-1 rounded-lg border px-3 py-3 text-sm font-medium transition ${
               method === t.id
-                ? 'border-[#FF6600] bg-[#FF6600] text-white'
+                ? 'border-brand bg-brand text-white'
                 : 'border-gray-300 text-gray-600 hover:border-gray-400'
             }`}
           >
@@ -292,7 +292,7 @@ export default function PaymentForm({
             type='button'
             onClick={handleBoleto}
             disabled={submitting}
-            className='w-full rounded-lg bg-[#FF6600] px-4 py-3 font-semibold text-white transition hover:bg-[#e55b00] disabled:opacity-60'
+            className='w-full rounded-lg bg-brand px-4 py-3 font-semibold text-white transition hover:bg-brand-dark disabled:opacity-60'
           >
             {submitting
               ? 'Gerando boleto...'
@@ -314,7 +314,7 @@ export default function PaymentForm({
             type='button'
             onClick={handlePix}
             disabled={submitting}
-            className='w-full rounded-lg bg-[#FF6600] px-4 py-3 font-semibold text-white transition hover:bg-[#e55b00] disabled:opacity-60'
+            className='w-full rounded-lg bg-brand px-4 py-3 font-semibold text-white transition hover:bg-brand-dark disabled:opacity-60'
           >
             {submitting ? 'Gerando PIX...' : `Gerar PIX de ${brl(totals.pix)}`}
           </button>

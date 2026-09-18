@@ -11,7 +11,7 @@ export default function AddressSelector({ addresses, selectedId, onSelect }: Add
   return (
     <div className="space-y-3">
       {addresses.map((addr) => (
-        <button key={addr._id} onClick={() => onSelect(addr._id)} className={`w-full text-left p-4 border rounded-lg ${addr._id === selectedId ? 'border-[#FF6600] bg-orange-50' : 'border-gray-200'}`}>
+        <button key={addr._id} onClick={() => onSelect(addr._id)} className={`w-full text-left p-4 border rounded-lg ${addr._id === selectedId ? 'border-brand bg-brand-50' : 'border-gray-200'}`}>
           <p className="font-medium">{addr.street}, {addr.number}</p>
           <p className="text-sm text-gray-500">{addr.city} - {addr.state} | CEP {addr.cep}</p>
         </button>

@@ -11,7 +11,7 @@ export default function PoliticaPrivacidadePage() {
   return (
     <div className='max-w-4xl mx-auto px-4 py-10'>
       <nav className='text-sm text-gray-500 mb-8'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -128,7 +128,7 @@ export default function PoliticaPrivacidadePage() {
           pelo e-mail{' '}
           <a
             href='mailto:contato@surfersparadise.com.br'
-            className='text-[#FF6600] hover:underline'
+            className='text-brand hover:underline'
           >
             contato@surfersparadise.com.br
           </a>{' '}
@@ -137,7 +137,7 @@ export default function PoliticaPrivacidadePage() {
             href='https://wa.me/5511947169003'
             target='_blank'
             rel='noopener noreferrer'
-            className='text-[#FF6600] hover:underline'
+            className='text-brand hover:underline'
           >
             (11) 94716-9003
           </a>

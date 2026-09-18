@@ -164,7 +164,7 @@ export default function MarcaPage({
   return (
     <div className='max-w-7xl mx-auto px-4 py-6'>
       <nav className='text-sm text-gray-500 mb-6'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Inicio
         </Link>
         <span className='mx-2'>/</span>
@@ -295,7 +295,7 @@ function BrandFilters({
       {hasActiveFilters && (
         <button
           onClick={onClearFilters}
-          className='flex items-center gap-1 text-sm text-[#FF6600] hover:text-[#e55b00] mb-4 font-medium'
+          className='flex items-center gap-1 text-sm text-brand hover:text-brand-dark mb-4 font-medium'
         >
           <X size={14} />
           Limpar filtros
@@ -322,7 +322,7 @@ function BrandFilters({
                 }
                 className={`block w-full text-left text-sm py-1.5 px-2 rounded transition-colors ${
                   selectedCategory === cat._id
-                    ? 'text-[#FF6600] font-semibold bg-orange-50'
+                    ? 'text-brand font-semibold bg-brand-50'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                 }`}
               >
@@ -349,7 +349,7 @@ function BrandFilters({
                 placeholder='Min'
                 value={localMin}
                 onChange={e => setLocalMin(e.target.value)}
-                className='w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-brand'
               />
               <span className='text-gray-400 text-sm'>—</span>
               <input
@@ -357,12 +357,12 @@ function BrandFilters({
                 placeholder='Max'
                 value={localMax}
                 onChange={e => setLocalMax(e.target.value)}
-                className='w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-2 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <button
               onClick={() => onPriceChange(localMin, localMax)}
-              className='w-full py-1.5 bg-gray-900 text-white text-sm font-medium rounded hover:bg-gray-800 transition-colors'
+              className='w-full py-1.5 bg-chumbo text-white text-sm font-medium rounded hover:bg-chumbo-light transition-colors'
             >
               Filtrar
             </button>

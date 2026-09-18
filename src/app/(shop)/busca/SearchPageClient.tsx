@@ -117,7 +117,7 @@ export default function BuscaPage() {
   return (
     <div className='max-w-7xl mx-auto px-4 py-6'>
       <nav className='text-sm text-gray-500 mb-6'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -136,12 +136,12 @@ export default function BuscaPage() {
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
               placeholder='O que você está procurando?'
-              className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] text-sm'
+              className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand text-sm'
             />
           </div>
           <button
             type='submit'
-            className='px-6 py-2.5 bg-[#FF6600] text-white font-medium rounded-md hover:bg-[#e55b00] transition-colors text-sm'
+            className='px-6 py-2.5 bg-brand text-white font-medium rounded-md hover:bg-brand-dark transition-colors text-sm'
           >
             Buscar
           </button>
@@ -151,7 +151,7 @@ export default function BuscaPage() {
       {q && (
         <h1 className='text-xl font-bold text-gray-900 mb-6'>
           Resultados para:{' '}
-          <span className='text-[#FF6600]'>&quot;{q}&quot;</span>
+          <span className='text-brand'>&quot;{q}&quot;</span>
         </h1>
       )}
 

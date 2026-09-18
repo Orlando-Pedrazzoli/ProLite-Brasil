@@ -169,7 +169,7 @@ export default function RelatoriosPage() {
         <select
           value={channel}
           onChange={e => setChannel(e.target.value as 'all' | 'pos' | 'online')}
-          className='text-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+          className='text-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
         >
           <option value='all'>Todos os canais</option>
           <option value='pos'>🏪 Balcão</option>
@@ -182,25 +182,25 @@ export default function RelatoriosPage() {
         <Calendar size={14} className='text-gray-400 ml-1' />
         <button
           onClick={() => handlePresetChange('today')}
-          className={`text-sm px-3 py-1.5 rounded-md transition-colors ${preset === 'today' ? 'bg-[#FF6600] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+          className={`text-sm px-3 py-1.5 rounded-md transition-colors ${preset === 'today' ? 'bg-brand text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
         >
           Hoje
         </button>
         <button
           onClick={() => handlePresetChange('week')}
-          className={`text-sm px-3 py-1.5 rounded-md transition-colors ${preset === 'week' ? 'bg-[#FF6600] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+          className={`text-sm px-3 py-1.5 rounded-md transition-colors ${preset === 'week' ? 'bg-brand text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
         >
           Últimos 7 dias
         </button>
         <button
           onClick={() => handlePresetChange('month')}
-          className={`text-sm px-3 py-1.5 rounded-md transition-colors ${preset === 'month' ? 'bg-[#FF6600] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+          className={`text-sm px-3 py-1.5 rounded-md transition-colors ${preset === 'month' ? 'bg-brand text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
         >
           Mês atual
         </button>
         <button
           onClick={() => handlePresetChange('custom')}
-          className={`text-sm px-3 py-1.5 rounded-md transition-colors ${preset === 'custom' ? 'bg-[#FF6600] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+          className={`text-sm px-3 py-1.5 rounded-md transition-colors ${preset === 'custom' ? 'bg-brand text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
         >
           Personalizado
         </button>
@@ -214,7 +214,7 @@ export default function RelatoriosPage() {
                 const [y, m, d] = e.target.value.split('-').map(Number);
                 setFromDate(new Date(y, m - 1, d));
               }}
-              className='text-sm px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+              className='text-sm px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
             />
             <span className='text-sm text-gray-400'>até</span>
             <input
@@ -224,7 +224,7 @@ export default function RelatoriosPage() {
                 const [y, m, d] = e.target.value.split('-').map(Number);
                 setToDate(new Date(y, m - 1, d));
               }}
-              className='text-sm px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+              className='text-sm px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
             />
           </div>
         )}
@@ -236,7 +236,7 @@ export default function RelatoriosPage() {
 
       {loading ? (
         <div className='flex items-center justify-center h-64'>
-          <Loader2 size={32} className='animate-spin text-[#FF6600]' />
+          <Loader2 size={32} className='animate-spin text-brand' />
         </div>
       ) : !report ? (
         <div className='p-12 text-center text-gray-500'>
@@ -256,9 +256,9 @@ export default function RelatoriosPage() {
         <>
           {/* KPIs */}
           <div className='grid grid-cols-1 md:grid-cols-4 gap-3 mb-4'>
-            <div className='bg-white rounded-lg shadow-sm p-4 border-l-4 border-[#FF6600]'>
+            <div className='bg-white rounded-lg shadow-sm p-4 border-l-4 border-brand'>
               <div className='flex items-center gap-2 mb-1'>
-                <DollarSign size={14} className='text-[#FF6600]' />
+                <DollarSign size={14} className='text-brand' />
                 <p className='text-xs uppercase font-semibold text-gray-500 tracking-wide'>
                   Receita Total
                 </p>
@@ -334,7 +334,7 @@ export default function RelatoriosPage() {
                     >
                       <div className='w-full bg-gray-100 rounded-t flex items-end overflow-hidden h-full'>
                         <div
-                          className='w-full bg-gradient-to-t from-[#FF6600] to-[#ff8533] rounded-t transition-all hover:opacity-80'
+                          className='w-full bg-gradient-to-t from-brand to-brand-300 rounded-t transition-all hover:opacity-80'
                           style={{
                             height: `${heightPct}%`,
                             minHeight: d.revenue > 0 ? '2px' : '0',
@@ -346,7 +346,7 @@ export default function RelatoriosPage() {
                       </p>
 
                       {/* Tooltip on hover */}
-                      <div className='hidden group-hover:block absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-10'>
+                      <div className='hidden group-hover:block absolute -top-12 left-1/2 -translate-x-1/2 bg-chumbo text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-10'>
                         {formatPrice(d.revenue)} · {d.count}{' '}
                         {d.count === 1 ? 'venda' : 'vendas'}
                       </div>
@@ -365,9 +365,9 @@ export default function RelatoriosPage() {
                   Por Canal
                 </h2>
                 <div className='space-y-2'>
-                  <div className='flex items-center justify-between p-3 bg-orange-50 rounded-md border border-orange-100'>
+                  <div className='flex items-center justify-between p-3 bg-brand-50 rounded-md border border-brand-100'>
                     <div className='flex items-center gap-2'>
-                      <Store size={16} className='text-orange-600' />
+                      <Store size={16} className='text-brand-dark' />
                       <div>
                         <p className='text-sm font-medium text-gray-900'>
                           Balcão (POS)

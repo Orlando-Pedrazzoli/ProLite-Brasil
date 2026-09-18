@@ -215,7 +215,7 @@ export default function LoginPage() {
   };
 
   const inputClass =
-    'w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent';
+    'w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent';
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4'>
@@ -306,7 +306,7 @@ export default function LoginPage() {
                     <button
                       type='button'
                       onClick={() => setMode('forgot-email')}
-                      className='text-xs text-[#FF6600] font-medium hover:underline'
+                      className='text-xs text-brand font-medium hover:underline'
                     >
                       Esqueci minha senha
                     </button>
@@ -323,7 +323,7 @@ export default function LoginPage() {
                       onChange={e => setPassword(e.target.value)}
                       required
                       placeholder='••••••••'
-                      className='w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                      className='w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                     />
                     <button
                       type='button'
@@ -338,7 +338,7 @@ export default function LoginPage() {
                 <button
                   type='submit'
                   disabled={loading}
-                  className='w-full py-3 bg-[#FF6600] text-white font-bold text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                  className='w-full py-3 bg-brand text-white font-bold text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
                 >
                   {loading ? 'Entrando...' : 'Entrar'}
                 </button>
@@ -349,7 +349,7 @@ export default function LoginPage() {
                   Ainda não tem conta?{' '}
                   <Link
                     href='/cadastro'
-                    className='text-[#FF6600] font-medium hover:underline'
+                    className='text-brand font-medium hover:underline'
                   >
                     Cadastre-se
                   </Link>
@@ -398,7 +398,7 @@ export default function LoginPage() {
                 <button
                   type='submit'
                   disabled={loading}
-                  className='w-full py-3 bg-[#FF6600] text-white font-bold text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                  className='w-full py-3 bg-brand text-white font-bold text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
                 >
                   {loading ? 'Enviando...' : 'Enviar código'}
                 </button>
@@ -407,7 +407,7 @@ export default function LoginPage() {
               <button
                 type='button'
                 onClick={backToLogin}
-                className='mt-6 mx-auto flex items-center gap-1 text-sm text-gray-500 hover:text-[#FF6600] transition-colors'
+                className='mt-6 mx-auto flex items-center gap-1 text-sm text-gray-500 hover:text-brand transition-colors'
               >
                 <ArrowLeft size={14} /> Voltar ao login
               </button>
@@ -450,14 +450,14 @@ export default function LoginPage() {
                       required
                       autoFocus
                       placeholder='000000'
-                      className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm tracking-[0.4em] font-mono focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                      className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm tracking-[0.4em] font-mono focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                     />
                   </div>
                   <button
                     type='button'
                     onClick={handleResend}
                     disabled={loading || resendCooldown > 0}
-                    className='mt-1.5 text-xs text-[#FF6600] font-medium hover:underline disabled:text-gray-400 disabled:no-underline disabled:cursor-not-allowed'
+                    className='mt-1.5 text-xs text-brand font-medium hover:underline disabled:text-gray-400 disabled:no-underline disabled:cursor-not-allowed'
                   >
                     {resendCooldown > 0
                       ? `Reenviar código em ${resendCooldown}s`
@@ -485,7 +485,7 @@ export default function LoginPage() {
                       required
                       minLength={6}
                       placeholder='Mínimo 6 caracteres'
-                      className='w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent'
+                      className='w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent'
                     />
                     <button
                       type='button'
@@ -529,7 +529,7 @@ export default function LoginPage() {
                 <button
                   type='submit'
                   disabled={loading || otp.length !== 6}
-                  className='w-full py-3 bg-[#FF6600] text-white font-bold text-sm rounded-lg hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                  className='w-full py-3 bg-brand text-white font-bold text-sm rounded-lg hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
                 >
                   {loading ? 'Salvando...' : 'Redefinir senha e entrar'}
                 </button>
@@ -538,7 +538,7 @@ export default function LoginPage() {
               <button
                 type='button'
                 onClick={backToLogin}
-                className='mt-6 mx-auto flex items-center gap-1 text-sm text-gray-500 hover:text-[#FF6600] transition-colors'
+                className='mt-6 mx-auto flex items-center gap-1 text-sm text-gray-500 hover:text-brand transition-colors'
               >
                 <ArrowLeft size={14} /> Voltar ao login
               </button>
@@ -549,7 +549,7 @@ export default function LoginPage() {
         <div className='text-center mt-6'>
           <Link
             href='/'
-            className='text-sm text-gray-500 hover:text-[#FF6600] transition-colors'
+            className='text-sm text-gray-500 hover:text-brand transition-colors'
           >
             ← Voltar para a loja
           </Link>

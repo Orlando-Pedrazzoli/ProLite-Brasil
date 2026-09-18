@@ -70,14 +70,14 @@ export default function ShippingOptions({
             onClick={() => onSelect(opt)}
             className={`flex w-full items-center justify-between gap-3 rounded-lg border p-3 text-left transition ${
               selected
-                ? 'border-[#FF6600] bg-orange-50 ring-1 ring-[#FF6600]'
+                ? 'border-brand bg-brand-50 ring-1 ring-brand'
                 : 'border-gray-200 hover:border-gray-400'
             }`}
           >
             <div className='flex items-center gap-3'>
               <div
                 className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
-                  selected ? 'border-[#FF6600] bg-[#FF6600]' : 'border-gray-300'
+                  selected ? 'border-brand bg-brand' : 'border-gray-300'
                 }`}
               >
                 {selected && <CheckCircle2 className='h-4 w-4 text-white' />}

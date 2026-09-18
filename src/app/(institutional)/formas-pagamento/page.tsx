@@ -19,7 +19,7 @@ export default function FormasPagamentoPage() {
   return (
     <div className='max-w-4xl mx-auto px-4 py-10'>
       <nav className='text-sm text-gray-500 mb-8'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -34,14 +34,14 @@ export default function FormasPagamentoPage() {
         {/* Cartão de Crédito */}
         <div className='bg-white rounded-lg shadow-sm p-6'>
           <div className='flex items-center gap-3 mb-4'>
-            <div className='w-12 h-12 bg-[#FF6600]/10 rounded-lg flex items-center justify-center'>
-              <CreditCard size={24} className='text-[#FF6600]' />
+            <div className='w-12 h-12 bg-brand/10 rounded-lg flex items-center justify-center'>
+              <CreditCard size={24} className='text-brand' />
             </div>
             <div>
               <h2 className='text-xl font-bold text-gray-900'>
                 Cartão de Crédito
               </h2>
-              <p className='text-sm text-[#FF6600] font-medium'>
+              <p className='text-sm text-brand font-medium'>
                 Parcele em até 10x sem juros
               </p>
             </div>
@@ -82,10 +82,10 @@ export default function FormasPagamentoPage() {
               </p>
             </div>
 
-            <div className='bg-[#FF6600]/5 border border-[#FF6600]/20 rounded-lg p-4'>
+            <div className='bg-brand/5 border border-brand/20 rounded-lg p-4'>
               <div className='flex items-center gap-2 mb-1'>
-                <Percent size={16} className='text-[#FF6600]' />
-                <span className='text-sm font-bold text-[#FF6600]'>
+                <Percent size={16} className='text-brand' />
+                <span className='text-sm font-bold text-brand'>
                   Parcelamento
                 </span>
               </div>
@@ -235,14 +235,14 @@ export default function FormasPagamentoPage() {
               href='https://wa.me/5511947169003'
               target='_blank'
               rel='noopener noreferrer'
-              className='text-[#FF6600] hover:underline font-medium'
+              className='text-brand hover:underline font-medium'
             >
               (11) 94716-9003
             </a>{' '}
             ou pelo e-mail{' '}
             <a
               href='mailto:contato@surfersparadise.com.br'
-              className='text-[#FF6600] hover:underline font-medium'
+              className='text-brand hover:underline font-medium'
             >
               contato@surfersparadise.com.br
             </a>

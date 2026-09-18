@@ -15,7 +15,7 @@ export default function ScrollToTop() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-20 right-4 z-40 bg-[#FF6600] text-white p-3 rounded-full shadow-lg hover:bg-[#e55b00] transition-colors"
+      className="fixed bottom-20 right-4 z-40 bg-brand text-white p-3 rounded-full shadow-lg hover:bg-brand-dark transition-colors"
       aria-label="Voltar ao topo"
     >
       &uarr;

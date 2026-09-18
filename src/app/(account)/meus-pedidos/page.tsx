@@ -77,7 +77,7 @@ export default function MeusPedidosPage() {
   if (loading)
     return (
       <div className='flex justify-center py-12'>
-        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-[#FF6600]' />
+        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-brand' />
       </div>
     );
 
@@ -96,7 +96,7 @@ export default function MeusPedidosPage() {
             Comprou sem estar logado? Verifique seu e-mail em{' '}
             <Link
               href='/verificar-email'
-              className='text-[#FF6600] hover:underline'
+              className='text-brand hover:underline'
             >
               verificar e-mail
             </Link>{' '}
@@ -104,7 +104,7 @@ export default function MeusPedidosPage() {
           </p>
           <Link
             href='/produtos'
-            className='inline-block px-6 py-2.5 bg-[#FF6600] text-white font-medium text-sm rounded-lg hover:bg-[#e55b00] transition-colors'
+            className='inline-block px-6 py-2.5 bg-brand text-white font-medium text-sm rounded-lg hover:bg-brand-dark transition-colors'
           >
             Explorar Produtos
           </Link>
@@ -180,7 +180,7 @@ export default function MeusPedidosPage() {
                           e.stopPropagation();
                           router.push(`/pagamento/pix?orderId=${order._id}`);
                         }}
-                        className='inline-flex items-center gap-1.5 rounded-lg bg-[#FF6600] px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-[#e55b00]'
+                        className='inline-flex items-center gap-1.5 rounded-lg bg-brand px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-brand-dark'
                       >
                         <QrCode size={14} />
                         Pagar com PIX
@@ -193,7 +193,7 @@ export default function MeusPedidosPage() {
                           e.stopPropagation();
                           router.push(`/meus-pedidos/${order._id}`);
                         }}
-                        className='inline-flex items-center gap-1.5 rounded-lg bg-gray-900 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-gray-800'
+                        className='inline-flex items-center gap-1.5 rounded-lg bg-chumbo px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-chumbo-light'
                       >
                         <FileText size={14} />
                         Ver Boleto

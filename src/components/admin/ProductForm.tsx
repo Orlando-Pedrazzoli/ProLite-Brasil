@@ -248,7 +248,7 @@ function ColorBall({
     <button
       type='button'
       onClick={onClick}
-      className={`rounded-full transition-all hover:scale-110 ${selected ? 'ring-2 ring-[#FF6600] ring-offset-2' : 'border-2 border-gray-300'}`}
+      className={`rounded-full transition-all hover:scale-110 ${selected ? 'ring-2 ring-brand ring-offset-2' : 'border-2 border-gray-300'}`}
       style={{ width: size, height: size }}
       title={title}
     >
@@ -917,7 +917,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
             <label
               className={`flex items-start gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all ${
                 form.isAvailableInStore
-                  ? 'bg-orange-50 border-[#FF6600]'
+                  ? 'bg-brand-50 border-brand'
                   : 'bg-gray-50 border-gray-200 hover:border-gray-300'
               }`}
             >
@@ -927,11 +927,11 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 onChange={e =>
                   setForm({ ...form, isAvailableInStore: e.target.checked })
                 }
-                className='w-5 h-5 mt-0.5 text-[#FF6600] rounded border-gray-300 focus:ring-[#FF6600] cursor-pointer'
+                className='w-5 h-5 mt-0.5 text-brand rounded border-gray-300 focus:ring-brand cursor-pointer'
               />
               <div className='flex-1'>
                 <div className='flex items-center gap-2 mb-1'>
-                  <Store size={18} className='text-[#FF6600]' />
+                  <Store size={18} className='text-brand' />
                   <span className='font-medium text-gray-900'>
                     Disponível no balcão
                   </span>
@@ -998,7 +998,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 value={form.name}
                 onChange={e => handleNameChange(e.target.value)}
                 required
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <div>
@@ -1009,7 +1009,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 type='text'
                 value={form.slug}
                 onChange={e => setForm({ ...form, slug: e.target.value })}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <div>
@@ -1021,7 +1021,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 value={form.sku}
                 onChange={e => setForm({ ...form, sku: e.target.value })}
                 required
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <div className='md:col-span-2'>
@@ -1041,7 +1041,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 placeholder={
                   'Escreva a descrição do produto.\nCada linha nova (Enter) será respeitada na página do produto.'
                 }
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] font-mono text-sm leading-relaxed'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand font-mono text-sm leading-relaxed'
               />
               <p className='text-xs text-gray-400 mt-1'>
                 💡 Use Enter para quebrar linhas. Cada Enter cria um novo
@@ -1087,7 +1087,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   required
                   readOnly={form.isOnSale}
                   placeholder='0,00'
-                  className={`w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] ${
+                  className={`w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand ${
                     form.isOnSale ? 'bg-gray-100 cursor-not-allowed' : ''
                   }`}
                 />
@@ -1115,7 +1115,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     handleCompareAtPrice(parseFloat(e.target.value) || 0)
                   }
                   placeholder='0,00'
-                  className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <p className='text-xs text-gray-400 mt-1'>
@@ -1144,7 +1144,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     })
                   }
                   placeholder='0,00'
-                  className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
               <p className='text-xs text-gray-400 mt-1'>
@@ -1174,7 +1174,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   </p>
                 </div>
                 <div className='border-l pl-6'>
-                  <p className='text-sm text-[#FF6600] font-bold'>
+                  <p className='text-sm text-brand font-bold'>
                     PIX / Boleto: R${' '}
                     {(form.price * 0.9).toFixed(2).replace('.', ',')}
                   </p>
@@ -1251,7 +1251,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     handleSalePercentage(parseInt(e.target.value) || 0)
                   }
                   placeholder='0'
-                  className='w-24 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-24 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
                 {form.compareAtPrice > 0 && form.salePercentage > 0 && (
                   <div className='flex items-center gap-2 text-sm'>
@@ -1301,7 +1301,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     })
                   }
                   required
-                  className='flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 >
                   <option value=''>Selecionar categoria</option>
                   {categories
@@ -1316,7 +1316,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   type='button'
                   onClick={() => setShowCategoryModal(true)}
                   title='Criar nova categoria'
-                  className='shrink-0 px-3 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] transition-colors flex items-center gap-1'
+                  className='shrink-0 px-3 py-2 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors flex items-center gap-1'
                 >
                   <Plus size={16} />
                   <span className='hidden sm:inline text-sm font-medium'>
@@ -1337,7 +1337,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     setForm({ ...form, subcategory: e.target.value })
                   }
                   disabled={!form.category}
-                  className='flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] disabled:bg-gray-100 disabled:cursor-not-allowed'
+                  className='flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand disabled:bg-gray-100 disabled:cursor-not-allowed'
                 >
                   <option value=''>Selecionar subcategoria</option>
                   {categories
@@ -1357,7 +1357,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                       ? 'Criar nova subcategoria'
                       : 'Selecione uma categoria primeiro'
                   }
-                  className='shrink-0 px-3 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] transition-colors flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed'
+                  className='shrink-0 px-3 py-2 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed'
                 >
                   <Plus size={16} />
                   <span className='hidden sm:inline text-sm font-medium'>
@@ -1385,7 +1385,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   value={form.brand}
                   onChange={e => setForm({ ...form, brand: e.target.value })}
                   required
-                  className='flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 >
                   <option value=''>Selecionar marca</option>
                   {brands.map(brand => (
@@ -1398,7 +1398,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   type='button'
                   onClick={() => setShowBrandModal(true)}
                   title='Criar nova marca'
-                  className='shrink-0 px-3 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] transition-colors flex items-center gap-1'
+                  className='shrink-0 px-3 py-2 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors flex items-center gap-1'
                 >
                   <Plus size={16} />
                   <span className='hidden sm:inline text-sm font-medium'>
@@ -1417,7 +1417,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 value={form.tags}
                 onChange={e => setForm({ ...form, tags: e.target.value })}
                 placeholder='surf, quilha, fcs'
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
           </div>
@@ -1427,7 +1427,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
             ATRIBUTOS DE QUILHA (condicional)
             ═══════════════════════════════════════════════════════ */}
         {isQuilha && (
-          <div className='bg-white rounded-lg shadow-sm p-6 border-l-4 border-[#FF6600]'>
+          <div className='bg-white rounded-lg shadow-sm p-6 border-l-4 border-brand'>
             <h2 className='text-lg font-semibold mb-1'>
               Atributos de Quilha 🏄
             </h2>
@@ -1443,7 +1443,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 <select
                   value={form.setup}
                   onChange={e => setForm({ ...form, setup: e.target.value })}
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 >
                   {SETUP_OPTIONS.map(opt => (
                     <option key={opt.value} value={opt.value}>
@@ -1468,7 +1468,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     setForm({ ...form, construction: e.target.value })
                   }
                   placeholder='Ex: Performance Core'
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 />
                 <datalist id='construction-presets'>
                   {CONSTRUCTION_PRESETS.map(c => (
@@ -1490,7 +1490,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   value={form.template}
                   onChange={e => setForm({ ...form, template: e.target.value })}
                   placeholder='Ex: Performer'
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 />
                 <datalist id='template-presets'>
                   {TEMPLATE_PRESETS.map(t => (
@@ -1515,7 +1515,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
             ATRIBUTOS DE WETSUIT (condicional)
             ═══════════════════════════════════════════════════════ */}
         {isWetsuit && (
-          <div className='bg-white rounded-lg shadow-sm p-6 border-l-4 border-[#FF6600]'>
+          <div className='bg-white rounded-lg shadow-sm p-6 border-l-4 border-brand'>
             <h2 className='text-lg font-semibold mb-1'>
               Atributos de Wetsuit 🌊
             </h2>
@@ -1533,7 +1533,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   onChange={e =>
                     setForm({ ...form, wetsuitType: e.target.value })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 >
                   {WETSUIT_TYPE_OPTIONS.map(opt => (
                     <option key={opt.value} value={opt.value}>
@@ -1558,7 +1558,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     setForm({ ...form, thickness: e.target.value })
                   }
                   placeholder='Ex: 3/2'
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 />
                 <datalist id='thickness-presets'>
                   {THICKNESS_PRESETS.map(t => (
@@ -1577,7 +1577,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 <select
                   value={form.gender}
                   onChange={e => setForm({ ...form, gender: e.target.value })}
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 >
                   {GENDER_OPTIONS.map(opt => (
                     <option key={opt.value} value={opt.value}>
@@ -1602,7 +1602,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     setForm({ ...form, wetsuitLine: e.target.value })
                   }
                   placeholder='Ex: E-Bomb E7'
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 />
                 <datalist id='wetsuit-line-presets'>
                   {WETSUIT_LINE_PRESETS.map(l => (
@@ -1623,7 +1623,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   onChange={e =>
                     setForm({ ...form, zipperType: e.target.value })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 >
                   {ZIPPER_OPTIONS.map(opt => (
                     <option key={opt.value} value={opt.value}>
@@ -1653,7 +1653,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
             Arraste para reordenar. A primeira imagem será a thumbnail.
           </p>
           <div className='mb-4'>
-            <label className='flex items-center justify-center gap-2 px-4 py-8 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#FF6600] hover:bg-orange-50 transition-colors'>
+            <label className='flex items-center justify-center gap-2 px-4 py-8 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-brand hover:bg-brand-50 transition-colors'>
               <Upload size={20} className='text-gray-400' />
               <span className='text-sm text-gray-500'>
                 {uploading ? 'Enviando...' : 'Clique para enviar imagens'}
@@ -1685,7 +1685,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 <Reorder.Item
                   key={url}
                   value={url}
-                  className={`relative group rounded-lg overflow-hidden border-2 cursor-grab active:cursor-grabbing ${index === 0 ? 'border-[#FF6600]' : 'border-gray-200'}`}
+                  className={`relative group rounded-lg overflow-hidden border-2 cursor-grab active:cursor-grabbing ${index === 0 ? 'border-brand' : 'border-gray-200'}`}
                   style={{ width: 150, height: 150 }}
                   whileDrag={{
                     scale: 1.05,
@@ -1711,7 +1711,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     </button>
                   </div>
                   {index === 0 && (
-                    <span className='absolute top-1 left-1 text-[10px] bg-[#FF6600] text-white px-1.5 py-0.5 rounded'>
+                    <span className='absolute top-1 left-1 text-[10px] bg-brand text-white px-1.5 py-0.5 rounded'>
                       Principal
                     </span>
                   )}
@@ -1740,7 +1740,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                   setForm({ ...form, stock: parseInt(e.target.value) || 0 })
                 }
                 required
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <div>
@@ -1754,7 +1754,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 onChange={e =>
                   setForm({ ...form, weight: parseInt(e.target.value) || 0 })
                 }
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <div>
@@ -1774,7 +1774,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     },
                   })
                 }
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <div>
@@ -1794,7 +1794,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     },
                   })
                 }
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <div>
@@ -1814,7 +1814,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     },
                   })
                 }
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
           </div>
@@ -1839,7 +1839,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
               value={productFamily}
               onChange={e => setProductFamily(e.target.value)}
               placeholder='Ex: Prancha Xanadu (deixe em branco para gerar automaticamente)'
-              className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+              className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
             />
             <p className='text-xs text-gray-400 mt-1'>
               Produtos com o mesmo nome de família serão agrupados
@@ -1854,7 +1854,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 id='hasColor'
                 checked={hasColor}
                 onChange={e => setHasColor(e.target.checked)}
-                className='w-5 h-5 text-[#FF6600] rounded border-gray-300 focus:ring-[#FF6600] cursor-pointer'
+                className='w-5 h-5 text-brand rounded border-gray-300 focus:ring-brand cursor-pointer'
               />
               <label
                 htmlFor='hasColor'
@@ -1872,10 +1872,10 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                       name='colorType'
                       checked={!isDualColor}
                       onChange={() => setIsDualColor(false)}
-                      className='w-4 h-4 text-[#FF6600] focus:ring-[#FF6600]'
+                      className='w-4 h-4 text-brand focus:ring-brand'
                     />
                     <span className='text-sm font-medium'>Cor Única</span>
-                    <div className='w-5 h-5 rounded-full bg-[#FF6600]' />
+                    <div className='w-5 h-5 rounded-full bg-brand' />
                   </label>
                   <label className='flex items-center gap-2 cursor-pointer'>
                     <input
@@ -1883,7 +1883,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                       name='colorType'
                       checked={isDualColor}
                       onChange={() => setIsDualColor(true)}
-                      className='w-4 h-4 text-[#FF6600] focus:ring-[#FF6600]'
+                      className='w-4 h-4 text-brand focus:ring-brand'
                     />
                     <span className='text-sm font-medium'>Duas Cores</span>
                     <div
@@ -1904,7 +1904,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     value={color}
                     onChange={e => setColor(e.target.value)}
                     placeholder={isDualColor ? 'Ex: Preto/Azul' : 'Ex: Preto'}
-                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                   />
                 </div>
                 {!isDualColor ? (
@@ -1925,7 +1925,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                           value={colorCode}
                           onChange={e => setColorCode(e.target.value)}
                           placeholder='#000000'
-                          className='flex-1 px-3 py-2 border border-gray-300 rounded-md font-mono focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                          className='flex-1 px-3 py-2 border border-gray-300 rounded-md font-mono focus:outline-none focus:ring-2 focus:ring-brand'
                         />
                       </div>
                     </div>
@@ -1963,7 +1963,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                             type='text'
                             value={colorCode}
                             onChange={e => setColorCode(e.target.value)}
-                            className='flex-1 px-3 py-2 border border-gray-300 rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                            className='flex-1 px-3 py-2 border border-gray-300 rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                           />
                         </div>
                       </div>
@@ -1982,7 +1982,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                             type='text'
                             value={colorCode2}
                             onChange={e => setColorCode2(e.target.value)}
-                            className='flex-1 px-3 py-2 border border-gray-300 rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                            className='flex-1 px-3 py-2 border border-gray-300 rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                           />
                         </div>
                       </div>
@@ -2040,7 +2040,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 id='hasSize'
                 checked={hasSize}
                 onChange={e => setHasSize(e.target.checked)}
-                className='w-5 h-5 text-[#FF6600] rounded border-gray-300 focus:ring-[#FF6600] cursor-pointer'
+                className='w-5 h-5 text-brand rounded border-gray-300 focus:ring-brand cursor-pointer'
               />
               <label
                 htmlFor='hasSize'
@@ -2060,7 +2060,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     value={sizeValue}
                     onChange={e => setSizeValue(e.target.value)}
                     placeholder={sizePlaceholder}
-                    className='w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                    className='w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                   />
                 </div>
                 <div>
@@ -2071,7 +2071,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                         key={preset}
                         type='button'
                         onClick={() => setSizeValue(preset)}
-                        className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${sizeValue === preset ? 'bg-[#FF6600] text-white ring-2 ring-[#FF6600] ring-offset-1' : 'bg-gray-100 text-gray-700 border border-gray-300 hover:border-gray-400'}`}
+                        className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${sizeValue === preset ? 'bg-brand text-white ring-2 ring-brand ring-offset-1' : 'bg-gray-100 text-gray-700 border border-gray-300 hover:border-gray-400'}`}
                       >
                         {preset}
                       </button>
@@ -2080,7 +2080,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 </div>
                 {sizeValue && (
                   <div className='flex items-center gap-3 p-3 bg-white rounded-lg border border-gray-200'>
-                    <span className='bg-[#FF6600] text-white text-sm font-semibold px-3 py-1.5 rounded-lg'>
+                    <span className='bg-brand text-white text-sm font-semibold px-3 py-1.5 rounded-lg'>
                       {sizeValue}
                     </span>
                     <p className='font-medium'>Tamanho: {sizeValue}</p>
@@ -2097,7 +2097,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
               id='isMainVariant'
               checked={isMainVariant}
               onChange={e => setIsMainVariant(e.target.checked)}
-              className='w-5 h-5 text-[#FF6600] rounded border-gray-300 focus:ring-[#FF6600] cursor-pointer'
+              className='w-5 h-5 text-brand rounded border-gray-300 focus:ring-brand cursor-pointer'
             />
             <div>
               <label
@@ -2131,7 +2131,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 value={form.gtin}
                 onChange={e => setForm({ ...form, gtin: e.target.value })}
                 placeholder='7908782962338'
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] font-mono text-sm'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand font-mono text-sm'
               />
             </div>
             <div>
@@ -2143,7 +2143,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 value={form.ncm}
                 onChange={e => setForm({ ...form, ncm: e.target.value })}
                 placeholder='6203.43.00'
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] font-mono text-sm'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand font-mono text-sm'
               />
             </div>
             <div>
@@ -2153,7 +2153,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
               <select
                 value={form.origin}
                 onChange={e => setForm({ ...form, origin: e.target.value })}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               >
                 <option value='0'>0 — Nacional</option>
                 <option value='1'>1 — Importação direta</option>
@@ -2175,7 +2175,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 value={form.cest}
                 onChange={e => setForm({ ...form, cest: e.target.value })}
                 placeholder='00.000.00'
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] font-mono text-sm'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand font-mono text-sm'
               />
             </div>
           </div>
@@ -2189,7 +2189,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 <select
                   value={form.supplier}
                   onChange={e => setForm({ ...form, supplier: e.target.value })}
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 >
                   <option value=''>Sem fornecedor</option>
                   {suppliers.map(s => (
@@ -2205,7 +2205,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                       href='/admin/fornecedores'
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='text-[#FF6600] hover:underline'
+                      className='text-brand hover:underline'
                     >
                       Cadastrar fornecedor
                     </a>
@@ -2223,7 +2223,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                     setForm({ ...form, supplierProductCode: e.target.value })
                   }
                   placeholder='Ex: 08IMFL9090M'
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
             </div>
@@ -2243,7 +2243,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 value={form.seoTitle}
                 onChange={e => setForm({ ...form, seoTitle: e.target.value })}
                 placeholder='Deixe vazio para usar o nome do produto'
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
             <div>
@@ -2257,7 +2257,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
                 }
                 rows={2}
                 placeholder='Deixe vazio para usar a descrição'
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
               />
             </div>
           </div>
@@ -2268,7 +2268,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
           <button
             type='submit'
             disabled={saving}
-            className='px-6 py-2.5 bg-[#FF6600] text-white font-medium rounded-md hover:bg-[#e55b00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+            className='px-6 py-2.5 bg-brand text-white font-medium rounded-md hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
           >
             {saving
               ? 'Salvando...'

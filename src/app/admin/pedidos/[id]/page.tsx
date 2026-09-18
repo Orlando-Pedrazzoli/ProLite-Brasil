@@ -281,7 +281,7 @@ export default function AdminOrderDetailPage({
   if (loading) {
     return (
       <div className='flex items-center justify-center h-64'>
-        <Loader2 size={32} className='animate-spin text-[#FF6600]' />
+        <Loader2 size={32} className='animate-spin text-brand' />
       </div>
     );
   }
@@ -327,7 +327,7 @@ export default function AdminOrderDetailPage({
                 {order.orderNumber}
               </h1>
               {order.channel === 'pos' ? (
-                <span className='inline-flex items-center gap-1 text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded'>
+                <span className='inline-flex items-center gap-1 text-xs bg-brand-50 text-brand-darker px-2 py-1 rounded'>
                   <Store size={12} />
                   Balcão (POS)
                 </span>
@@ -452,12 +452,12 @@ export default function AdminOrderDetailPage({
                     value={trackingCode}
                     onChange={e => setTrackingCode(e.target.value)}
                     placeholder='Código de rastreio'
-                    className='flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] font-mono text-sm'
+                    className='flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand font-mono text-sm'
                   />
                   <button
                     onClick={handleSaveTracking}
                     disabled={saving}
-                    className='px-4 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] disabled:opacity-50 flex items-center gap-1.5 text-sm'
+                    className='px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark disabled:opacity-50 flex items-center gap-1.5 text-sm'
                   >
                     <Save size={14} />
                     Salvar
@@ -479,12 +479,12 @@ export default function AdminOrderDetailPage({
               onChange={e => setNotes(e.target.value)}
               rows={3}
               placeholder='Notas visíveis apenas para o admin...'
-              className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] text-sm'
+              className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand text-sm'
             />
             <button
               onClick={handleSaveNotes}
               disabled={saving}
-              className='mt-2 px-3 py-1.5 bg-gray-700 text-white rounded-md hover:bg-gray-800 disabled:opacity-50 flex items-center gap-1.5 text-sm'
+              className='mt-2 px-3 py-1.5 bg-gray-700 text-white rounded-md hover:bg-chumbo-light disabled:opacity-50 flex items-center gap-1.5 text-sm'
             >
               <Save size={14} />
               Salvar observação
@@ -522,7 +522,7 @@ export default function AdminOrderDetailPage({
                 value={order.status}
                 onChange={e => handleStatusChange(e.target.value)}
                 disabled={saving}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600] text-sm'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand text-sm'
               >
                 {order.channel === 'online' && (
                   <>
@@ -629,7 +629,7 @@ export default function AdminOrderDetailPage({
                   </div>
                   <div className='flex justify-between'>
                     <span className='text-gray-500'>Troco:</span>
-                    <span className='font-mono font-bold text-[#FF6600]'>
+                    <span className='font-mono font-bold text-brand'>
                       {formatPrice(order.payment.cashChange)}
                     </span>
                   </div>
@@ -679,7 +679,7 @@ export default function AdminOrderDetailPage({
             <Link
               href={`/admin/pedidos/${id}/cupom?format=80mm`}
               target='_blank'
-              className='w-full bg-gray-900 text-white py-2 rounded-md flex items-center justify-center gap-2 text-sm hover:bg-gray-800 transition-colors'
+              className='w-full bg-chumbo text-white py-2 rounded-md flex items-center justify-center gap-2 text-sm hover:bg-chumbo-light transition-colors'
             >
               <Receipt size={16} />
               Cupom 80mm (Térmica)

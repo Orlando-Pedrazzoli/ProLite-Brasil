@@ -262,8 +262,8 @@ export default function ProductCard({
               size={expanded ? 24 : 20}
               className={
                 isFavorite
-                  ? 'fill-[#FF6600] text-[#FF6600]'
-                  : 'text-gray-400 hover:text-[#FF6600] transition-colors'
+                  ? 'fill-brand text-brand'
+                  : 'text-gray-400 hover:text-brand transition-colors'
               }
             />
           )}
@@ -279,7 +279,7 @@ export default function ProductCard({
         >
           {product.isNewArrival && (
             <span
-              className={`bg-[#FF6600] text-white font-bold rounded ${expanded ? 'text-xs px-2.5 py-1' : 'text-[10px] px-2 py-0.5'}`}
+              className={`bg-brand text-white font-bold rounded ${expanded ? 'text-xs px-2.5 py-1' : 'text-[10px] px-2 py-0.5'}`}
             >
               NOVIDADE
             </span>
@@ -307,7 +307,7 @@ export default function ProductCard({
             {images.map((_, i) => (
               <span
                 key={i}
-                className={`${expanded ? 'w-2 h-2' : 'w-1.5 h-1.5'} rounded-full ${i === currentImage ? 'bg-[#FF6600]' : 'bg-gray-300'}`}
+                className={`${expanded ? 'w-2 h-2' : 'w-1.5 h-1.5'} rounded-full ${i === currentImage ? 'bg-brand' : 'bg-gray-300'}`}
               />
             ))}
           </div>
@@ -334,7 +334,7 @@ export default function ProductCard({
                 <button
                   key={sibling._id}
                   onClick={e => handleVariantClick(e, sibling)}
-                  className={`${expanded ? 'w-6 h-6' : 'w-4 h-4'} rounded-full inline-block cursor-pointer transition-all hover:scale-125 ${isActive ? 'ring-2 ring-[#FF6600] ring-offset-1' : 'border border-gray-300'}`}
+                  className={`${expanded ? 'w-6 h-6' : 'w-4 h-4'} rounded-full inline-block cursor-pointer transition-all hover:scale-125 ${isActive ? 'ring-2 ring-brand ring-offset-1' : 'border border-gray-300'}`}
                   style={
                     isDual
                       ? {
@@ -371,7 +371,7 @@ export default function ProductCard({
                 <button
                   key={sibling._id}
                   onClick={e => handleVariantClick(e, sibling)}
-                  className={`rounded font-medium cursor-pointer transition-all hover:scale-110 ${expanded ? 'px-2.5 py-1 text-xs' : 'px-1.5 py-0.5 text-[10px]'} ${isActive ? 'bg-[#FF6600] text-white' : 'bg-gray-100 text-gray-600 border border-gray-300'} ${sibling.stock <= 0 ? 'opacity-40' : ''}`}
+                  className={`rounded font-medium cursor-pointer transition-all hover:scale-110 ${expanded ? 'px-2.5 py-1 text-xs' : 'px-1.5 py-0.5 text-[10px]'} ${isActive ? 'bg-brand text-white' : 'bg-gray-100 text-gray-600 border border-gray-300'} ${sibling.stock <= 0 ? 'opacity-40' : ''}`}
                   title={sibling.size}
                   aria-label={`Tamanho: ${sibling.size}`}
                 >
@@ -384,11 +384,11 @@ export default function ProductCard({
 
         {/* Prices */}
         <p
-          className={`text-[#FF6600] font-bold leading-tight ${expanded ? 'text-3xl' : 'text-xl'}`}
+          className={`text-brand font-bold leading-tight ${expanded ? 'text-3xl' : 'text-xl'}`}
         >
           {formatCurrency(pixPrice)}
         </p>
-        <p className={`text-[#FF6600] ${expanded ? 'text-sm' : 'text-xs'}`}>
+        <p className={`text-brand ${expanded ? 'text-sm' : 'text-xs'}`}>
           10% de desconto
         </p>
         <p className={`text-gray-400 ${expanded ? 'text-xs' : 'text-[11px]'}`}>
@@ -417,7 +417,7 @@ export default function ProductCard({
           <button
             onClick={handleQuickAdd}
             disabled={displayed.stock <= 0}
-            className='mt-4 w-full flex items-center justify-center gap-2 bg-[#FF6600] hover:bg-[#e55b00] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-md transition-colors'
+            className='mt-4 w-full flex items-center justify-center gap-2 bg-brand hover:bg-brand-dark disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-md transition-colors'
           >
             <ShoppingCart size={18} />
             {displayed.stock > 0 ? 'COMPRAR' : 'INDISPONÍVEL'}

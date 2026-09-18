@@ -305,7 +305,7 @@ export default function ShippingLabel({
           </div>
           <button
             onClick={() => load()}
-            className='text-sm text-[#FF6600] hover:underline flex items-center gap-1'
+            className='text-sm text-brand hover:underline flex items-center gap-1'
           >
             <RefreshCw size={14} /> Tentar novamente
           </button>
@@ -364,7 +364,7 @@ export default function ShippingLabel({
               href={state.tracking.meTrackingUrl}
               target='_blank'
               rel='noopener noreferrer'
-              className='inline-flex items-center gap-1 text-[#FF6600] hover:underline text-xs'
+              className='inline-flex items-center gap-1 text-brand hover:underline text-xs'
             >
               Acompanhar no Melhor Rastreio <ExternalLink size={12} />
             </a>
@@ -376,7 +376,7 @@ export default function ShippingLabel({
             <button
               onClick={openPdf}
               disabled={working || pdfLoading}
-              className='px-4 py-2 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] disabled:opacity-50 flex items-center gap-1.5 text-sm'
+              className='px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark disabled:opacity-50 flex items-center gap-1.5 text-sm'
             >
               {working || pdfLoading ? (
                 <Loader2 size={14} className='animate-spin' />
@@ -418,7 +418,7 @@ export default function ShippingLabel({
                 <div className='flex items-center gap-2'>
                   <button
                     onClick={printPdf}
-                    className='px-3 py-1.5 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] flex items-center gap-1.5 text-sm'
+                    className='px-3 py-1.5 bg-brand text-white rounded-md hover:bg-brand-dark flex items-center gap-1.5 text-sm'
                   >
                     <Printer size={14} />
                     Imprimir
@@ -493,7 +493,7 @@ export default function ShippingLabel({
                   step={step}
                   value={pkg[field]}
                   onChange={e => updatePkg(field, e.target.value)}
-                  className='w-full px-2 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+                  className='w-full px-2 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand'
                 />
               </div>
             ))}
@@ -501,7 +501,7 @@ export default function ShippingLabel({
           <button
             onClick={() => load(pkg)}
             disabled={loading}
-            className='mt-2 text-xs text-[#FF6600] hover:underline flex items-center gap-1'
+            className='mt-2 text-xs text-brand hover:underline flex items-center gap-1'
           >
             <RefreshCw size={12} className={loading ? 'animate-spin' : ''} />
             Recotar com este volume
@@ -527,7 +527,7 @@ export default function ShippingLabel({
               key={q.id}
               className={`flex items-center gap-3 p-2.5 border rounded-md cursor-pointer transition-colors ${
                 serviceId === q.id
-                  ? 'border-[#FF6600] bg-orange-50'
+                  ? 'border-brand bg-brand-50'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
@@ -536,7 +536,7 @@ export default function ShippingLabel({
                 name='me-service'
                 checked={serviceId === q.id}
                 onChange={() => setServiceId(q.id)}
-                className='accent-[#FF6600]'
+                className='accent-brand'
               />
               <div className='flex-1 min-w-0'>
                 <p className='text-sm font-medium truncate'>
@@ -567,7 +567,7 @@ export default function ShippingLabel({
       <button
         onClick={handleGenerate}
         disabled={working || !serviceId || state.paid === false}
-        className='w-full px-4 py-2.5 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] disabled:opacity-50 flex items-center justify-center gap-2 text-sm font-medium'
+        className='w-full px-4 py-2.5 bg-brand text-white rounded-md hover:bg-brand-dark disabled:opacity-50 flex items-center justify-center gap-2 text-sm font-medium'
       >
         {working ? (
           <Loader2 size={16} className='animate-spin' />

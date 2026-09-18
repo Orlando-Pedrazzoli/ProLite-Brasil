@@ -17,7 +17,7 @@ export default function ProductTabs({ tabs }: ProductTabsProps) {
     <div>
       <div className="flex border-b">
         {tabs.map((tab, i) => (
-          <button key={i} onClick={() => setActive(i)} className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${i === active ? 'border-[#FF6600] text-[#FF6600]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}>
+          <button key={i} onClick={() => setActive(i)} className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${i === active ? 'border-brand text-brand' : 'border-transparent text-gray-500 hover:text-gray-700'}`}>
             {tab.label}
           </button>
         ))}

@@ -129,11 +129,11 @@ export default function CookieConsent() {
       {/* ───── Banner 1º nível ───── */}
       {showBanner && !showPrefs && (
         <div className='fixed bottom-0 left-0 right-0 z-[90] p-3 sm:p-4'>
-          <div className='mx-auto max-w-5xl rounded-xl bg-[#1A1A1A] text-white shadow-2xl ring-1 ring-white/10'>
+          <div className='mx-auto max-w-5xl rounded-xl bg-chumbo text-white shadow-2xl ring-1 ring-white/10'>
             <div className='flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between'>
               <div className='flex items-start gap-3'>
                 <Cookie
-                  className='mt-0.5 flex-shrink-0 text-[#FF6600]'
+                  className='mt-0.5 flex-shrink-0 text-brand'
                   size={22}
                 />
                 <p className='text-sm leading-relaxed text-gray-200'>
@@ -143,7 +143,7 @@ export default function CookieConsent() {
                   Saiba mais na nossa{' '}
                   <Link
                     href='/politica-privacidade'
-                    className='text-[#FF6600] underline'
+                    className='text-brand underline'
                   >
                     Política de Privacidade
                   </Link>
@@ -165,7 +165,7 @@ export default function CookieConsent() {
                 </button>
                 <button
                   onClick={acceptAll}
-                  className='whitespace-nowrap rounded-lg bg-[#FF6600] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e55b00]'
+                  className='whitespace-nowrap rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark'
                 >
                   Aceitar todos
                 </button>
@@ -227,7 +227,7 @@ export default function CookieConsent() {
             </button>
             <button
               onClick={acceptAll}
-              className='rounded-lg bg-[#FF6600] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e55b00]'
+              className='rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark'
             >
               Aceitar todos
             </button>
@@ -235,7 +235,7 @@ export default function CookieConsent() {
 
           <p className='text-center text-xs text-gray-400'>
             Veja também os{' '}
-            <Link href='/termos' className='underline hover:text-[#FF6600]'>
+            <Link href='/termos' className='underline hover:text-brand'>
               Termos de Uso
             </Link>
             .
@@ -276,8 +276,8 @@ function CategoryRow({
         <div
           className={`h-6 w-11 rounded-full transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-5 ${
             disabled
-              ? 'bg-[#FF6600]/40'
-              : 'bg-gray-300 peer-checked:bg-[#FF6600]'
+              ? 'bg-brand/40'
+              : 'bg-gray-300 peer-checked:bg-brand'
           }`}
         />
       </label>

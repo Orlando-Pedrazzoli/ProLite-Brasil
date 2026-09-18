@@ -99,7 +99,7 @@ export default function DashboardClient() {
   if (loading) {
     return (
       <div className='flex items-center justify-center h-64'>
-        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-[#FF6600]' />
+        <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-brand' />
       </div>
     );
   }
@@ -137,7 +137,7 @@ export default function DashboardClient() {
       {hasAlerts ? (
         <div className='bg-white rounded-lg border border-gray-200 shadow-sm p-5'>
           <div className='flex items-center gap-2 mb-3'>
-            <AlertCircle size={18} className='text-orange-600' />
+            <AlertCircle size={18} className='text-brand-dark' />
             <h2 className='font-semibold text-gray-900'>Precisam de atenção</h2>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3'>
@@ -158,17 +158,17 @@ export default function DashboardClient() {
             {stats.alerts.lowStock > 0 && (
               <Link
                 href='/admin/produtos?context=admin&lowStock=true'
-                className='flex items-center gap-3 p-3 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 transition-colors'
+                className='flex items-center gap-3 p-3 bg-brand-50 border border-brand-200 rounded-lg hover:bg-brand-100 transition-colors'
               >
                 <AlertCircle
                   size={24}
-                  className='text-orange-600 flex-shrink-0'
+                  className='text-brand-dark flex-shrink-0'
                 />
                 <div>
-                  <p className='text-2xl font-bold text-orange-700'>
+                  <p className='text-2xl font-bold text-brand-darker'>
                     {stats.alerts.lowStock}
                   </p>
-                  <p className='text-xs text-orange-700'>Estoque baixo (≤3)</p>
+                  <p className='text-xs text-brand-darker'>Estoque baixo (≤3)</p>
                 </div>
               </Link>
             )}
@@ -220,7 +220,7 @@ export default function DashboardClient() {
           {/* Abrir POS — placeholder que vai para /produtos por enquanto */}
           <Link
             href='/pos'
-            className='group bg-gradient-to-br from-[#FF6600] to-[#e55b00] text-white rounded-lg p-5 shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5'
+            className='group bg-gradient-to-br from-brand to-brand-dark text-white rounded-lg p-5 shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5'
           >
             <ShoppingCart size={28} className='mb-2' />
             <p className='font-bold text-base'>Abrir POS</p>
@@ -348,7 +348,7 @@ export default function DashboardClient() {
                     {formatCurrency(d.total)}
                   </div>
                   <div
-                    className='w-full bg-gradient-to-t from-[#FF6600] to-[#FF884D] rounded-t hover:opacity-80 transition-opacity min-h-[2px]'
+                    className='w-full bg-gradient-to-t from-brand to-brand-300 rounded-t hover:opacity-80 transition-opacity min-h-[2px]'
                     style={{ height: `${Math.max(heightPercent, 2)}%` }}
                   />
                   <div className='text-[10px] text-gray-500 capitalize'>

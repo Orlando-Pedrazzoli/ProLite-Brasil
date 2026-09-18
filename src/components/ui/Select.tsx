@@ -15,7 +15,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         <select
           ref={ref}
           id={id}
-          className={cn('w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]/50', error ? 'border-red-500' : 'border-gray-300', className)}
+          className={cn('w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/50', error ? 'border-red-500' : 'border-gray-300', className)}
           {...props}
         >
           {options.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}

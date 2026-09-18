@@ -57,7 +57,7 @@ export default function PromocaoPage() {
   return (
     <div className='min-h-[60vh]'>
       {/* Hero */}
-      <div className='bg-[#FF6600] text-white'>
+      <div className='bg-brand text-white'>
         <div className='max-w-7xl mx-auto px-4 py-10 text-center'>
           <div className='inline-flex items-center gap-2 mb-2'>
             <Tag size={22} />
@@ -89,7 +89,7 @@ export default function PromocaoPage() {
         ) : products.length === 0 ? (
           // Estado vazio
           <div className='py-20 text-center'>
-            <div className='inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-50 text-[#FF6600] mb-4'>
+            <div className='inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-50 text-brand mb-4'>
               <Tag size={28} />
             </div>
             <p className='text-lg font-medium text-gray-700'>

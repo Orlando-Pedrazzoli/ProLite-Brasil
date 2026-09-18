@@ -187,12 +187,12 @@ export default function AdminPedidosPage() {
             value={searchInput}
             onChange={e => setSearchInput(e.target.value)}
             placeholder='Buscar por número do pedido, nome, CPF ou e-mail...'
-            className='w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+            className='w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand'
           />
         </div>
         <button
           type='submit'
-          className='px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition-colors'
+          className='px-4 py-2 bg-chumbo-light text-white rounded-md hover:bg-chumbo transition-colors'
         >
           Buscar
         </button>
@@ -207,7 +207,7 @@ export default function AdminPedidosPage() {
           onChange={e =>
             updateURL({ channel: e.target.value || null, page: null })
           }
-          className='text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+          className='text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand'
         >
           <option value=''>Todos os canais</option>
           <option value='pos'>🏪 Balcão (POS)</option>
@@ -219,7 +219,7 @@ export default function AdminPedidosPage() {
           onChange={e =>
             updateURL({ status: e.target.value || null, page: null })
           }
-          className='text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#FF6600]'
+          className='text-sm border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand'
         >
           <option value=''>Todos os status</option>
           <option value='pending'>Aguardando</option>
@@ -233,7 +233,7 @@ export default function AdminPedidosPage() {
         {activeFiltersCount > 0 && (
           <button
             onClick={clearFilters}
-            className='text-xs text-[#FF6600] hover:underline flex items-center gap-1'
+            className='text-xs text-brand hover:underline flex items-center gap-1'
           >
             <X size={12} />
             Limpar filtros
@@ -245,7 +245,7 @@ export default function AdminPedidosPage() {
       <div className='bg-white rounded-lg shadow-sm overflow-hidden'>
         {loading ? (
           <div className='p-12 flex items-center justify-center'>
-            <Loader2 size={32} className='animate-spin text-[#FF6600]' />
+            <Loader2 size={32} className='animate-spin text-brand' />
           </div>
         ) : orders.length === 0 ? (
           <div className='p-12 text-center text-gray-500'>
@@ -254,7 +254,7 @@ export default function AdminPedidosPage() {
             {activeFiltersCount > 0 && (
               <button
                 onClick={clearFilters}
-                className='mt-3 text-[#FF6600] hover:underline text-sm'
+                className='mt-3 text-brand hover:underline text-sm'
               >
                 Limpar filtros
               </button>
@@ -308,7 +308,7 @@ export default function AdminPedidosPage() {
                         <td className='p-3'>
                           <Link
                             href={`/admin/pedidos/${o._id}`}
-                            className='font-mono text-xs font-semibold text-[#FF6600] hover:underline'
+                            className='font-mono text-xs font-semibold text-brand hover:underline'
                             onClick={e => e.stopPropagation()}
                           >
                             {o.orderNumber}
@@ -319,7 +319,7 @@ export default function AdminPedidosPage() {
                         </td>
                         <td className='p-3'>
                           {o.channel === 'pos' ? (
-                            <span className='inline-flex items-center gap-1 text-xs bg-orange-50 text-orange-700 px-2 py-0.5 rounded'>
+                            <span className='inline-flex items-center gap-1 text-xs bg-brand-50 text-brand-darker px-2 py-0.5 rounded'>
                               <Store size={10} />
                               Balcão
                             </span>

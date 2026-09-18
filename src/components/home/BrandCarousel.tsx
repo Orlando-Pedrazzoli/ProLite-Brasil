@@ -130,7 +130,7 @@ export default function BrandCarousel() {
                   onClick={() => scrollMobileTo(i)}
                   className={`h-2 rounded-full transition-all ${
                     i === mobileActiveIndex
-                      ? 'bg-gray-800 w-2'
+                      ? 'bg-chumbo-light w-2'
                       : 'bg-gray-300 hover:bg-gray-400 w-2'
                   }`}
                   aria-label={`Ir para marca ${i + 1}`}
@@ -177,7 +177,7 @@ export default function BrandCarousel() {
                     onClick={() => setCurrentPage(i)}
                     className={`w-2 h-2 rounded-full transition-colors ${
                       i === currentPage
-                        ? 'bg-gray-800'
+                        ? 'bg-chumbo-light'
                         : 'bg-gray-300 hover:bg-gray-400'
                     }`}
                     aria-label={`Página ${i + 1}`}

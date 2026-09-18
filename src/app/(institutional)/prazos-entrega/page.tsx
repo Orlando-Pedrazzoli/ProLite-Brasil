@@ -12,7 +12,7 @@ export default function PrazosEntregaPage() {
   return (
     <div className='max-w-4xl mx-auto px-4 py-10'>
       <nav className='text-sm text-gray-500 mb-8'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -27,7 +27,7 @@ export default function PrazosEntregaPage() {
         {/* Serviço de Entrega */}
         <div className='bg-white rounded-lg shadow-sm p-6'>
           <div className='flex items-center gap-3 mb-4'>
-            <Truck size={24} className='text-[#FF6600]' />
+            <Truck size={24} className='text-brand' />
             <h2 className='text-xl font-bold text-gray-900'>
               Serviço de Entrega
             </h2>
@@ -35,7 +35,7 @@ export default function PrazosEntregaPage() {
 
           <div className='space-y-4 text-gray-700 leading-relaxed'>
             <div className='flex gap-3'>
-              <span className='text-[#FF6600] font-bold text-sm mt-0.5'>
+              <span className='text-brand font-bold text-sm mt-0.5'>
                 I.
               </span>
               <p>
@@ -45,14 +45,14 @@ export default function PrazosEntregaPage() {
             </div>
 
             <div className='flex gap-3'>
-              <span className='text-[#FF6600] font-bold text-sm mt-0.5'>
+              <span className='text-brand font-bold text-sm mt-0.5'>
                 II.
               </span>
               <p>Não é possível agendar data e horário para entregas.</p>
             </div>
 
             <div className='flex gap-3'>
-              <span className='text-[#FF6600] font-bold text-sm mt-0.5'>
+              <span className='text-brand font-bold text-sm mt-0.5'>
                 III.
               </span>
               <p>
@@ -63,7 +63,7 @@ export default function PrazosEntregaPage() {
             </div>
 
             <div className='flex gap-3'>
-              <span className='text-[#FF6600] font-bold text-sm mt-0.5'>
+              <span className='text-brand font-bold text-sm mt-0.5'>
                 IV.
               </span>
               <p>
@@ -76,7 +76,7 @@ export default function PrazosEntregaPage() {
             </div>
 
             <div className='flex gap-3'>
-              <span className='text-[#FF6600] font-bold text-sm mt-0.5'>
+              <span className='text-brand font-bold text-sm mt-0.5'>
                 V.
               </span>
               <p>
@@ -85,8 +85,8 @@ export default function PrazosEntregaPage() {
             </div>
           </div>
 
-          <div className='bg-[#FF6600]/10 border border-[#FF6600]/20 rounded-lg p-4 mt-6'>
-            <p className='text-sm font-bold text-[#FF6600]'>
+          <div className='bg-brand/10 border border-brand/20 rounded-lg p-4 mt-6'>
+            <p className='text-sm font-bold text-brand'>
               <Clock size={16} className='inline mr-2' />
               ATENÇÃO: As entregas são realizadas de segunda a sexta-feira em
               horário comercial, entre 8h e 18h.
@@ -97,7 +97,7 @@ export default function PrazosEntregaPage() {
         {/* Frete Grátis */}
         <div className='bg-white rounded-lg shadow-sm p-6'>
           <div className='flex items-center gap-3 mb-4'>
-            <Package size={24} className='text-[#FF6600]' />
+            <Package size={24} className='text-brand' />
             <h2 className='text-xl font-bold text-gray-900'>Frete Grátis*</h2>
           </div>
 
@@ -122,7 +122,7 @@ export default function PrazosEntregaPage() {
           <div className='space-y-6'>
             <div>
               <h3 className='text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2'>
-                <MapPin size={18} className='text-[#FF6600]' />
+                <MapPin size={18} className='text-brand' />
                 I. Frete Grátis — Como Funciona
               </h3>
               <p className='text-gray-700 leading-relaxed'>
@@ -137,7 +137,7 @@ export default function PrazosEntregaPage() {
 
             <div>
               <h3 className='text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2'>
-                <Mail size={18} className='text-[#FF6600]' />
+                <Mail size={18} className='text-brand' />
                 II. Como Fico Sabendo que o Meu Pedido Foi Aprovado?
               </h3>
               <p className='text-gray-700 leading-relaxed'>
@@ -147,7 +147,7 @@ export default function PrazosEntregaPage() {
                 status do seu pedido a qualquer momento acessando{' '}
                 <Link
                   href='/meus-pedidos'
-                  className='text-[#FF6600] hover:underline font-medium'
+                  className='text-brand hover:underline font-medium'
                 >
                   Meus Pedidos
                 </Link>{' '}
@@ -170,7 +170,7 @@ export default function PrazosEntregaPage() {
           <div className='overflow-x-auto'>
             <table className='w-full text-sm'>
               <thead>
-                <tr className='bg-gray-900 text-white'>
+                <tr className='bg-chumbo text-white'>
                   <th className='text-left px-4 py-3 font-medium'>Região</th>
                   <th className='text-left px-4 py-3 font-medium'>
                     Prazo Estimado
@@ -186,7 +186,7 @@ export default function PrazosEntregaPage() {
                     São Paulo (Capital e Grande SP)
                   </td>
                   <td className='px-4 py-3 text-gray-700'>1 a 3 dias úteis</td>
-                  <td className='px-4 py-3 text-[#FF6600] font-medium'>
+                  <td className='px-4 py-3 text-brand font-medium'>
                     R$ 200,00
                   </td>
                 </tr>
@@ -195,35 +195,35 @@ export default function PrazosEntregaPage() {
                     Sudeste (RJ, MG, ES)
                   </td>
                   <td className='px-4 py-3 text-gray-700'>3 a 6 dias úteis</td>
-                  <td className='px-4 py-3 text-[#FF6600] font-medium'>
+                  <td className='px-4 py-3 text-brand font-medium'>
                     R$ 200,00
                   </td>
                 </tr>
                 <tr className='hover:bg-gray-50'>
                   <td className='px-4 py-3 text-gray-700'>Sul (PR, SC, RS)</td>
                   <td className='px-4 py-3 text-gray-700'>3 a 7 dias úteis</td>
-                  <td className='px-4 py-3 text-[#FF6600] font-medium'>
+                  <td className='px-4 py-3 text-brand font-medium'>
                     R$ 200,00
                   </td>
                 </tr>
                 <tr className='hover:bg-gray-50'>
                   <td className='px-4 py-3 text-gray-700'>Nordeste</td>
                   <td className='px-4 py-3 text-gray-700'>5 a 10 dias úteis</td>
-                  <td className='px-4 py-3 text-[#FF6600] font-medium'>
+                  <td className='px-4 py-3 text-brand font-medium'>
                     R$ 300,00
                   </td>
                 </tr>
                 <tr className='hover:bg-gray-50'>
                   <td className='px-4 py-3 text-gray-700'>Centro-Oeste</td>
                   <td className='px-4 py-3 text-gray-700'>5 a 10 dias úteis</td>
-                  <td className='px-4 py-3 text-[#FF6600] font-medium'>
+                  <td className='px-4 py-3 text-brand font-medium'>
                     R$ 300,00
                   </td>
                 </tr>
                 <tr className='hover:bg-gray-50'>
                   <td className='px-4 py-3 text-gray-700'>Norte</td>
                   <td className='px-4 py-3 text-gray-700'>7 a 15 dias úteis</td>
-                  <td className='px-4 py-3 text-[#FF6600] font-medium'>
+                  <td className='px-4 py-3 text-brand font-medium'>
                     R$ 300,00
                   </td>
                 </tr>
@@ -247,14 +247,14 @@ export default function PrazosEntregaPage() {
               href='https://wa.me/5511947169003'
               target='_blank'
               rel='noopener noreferrer'
-              className='text-[#FF6600] hover:underline font-medium'
+              className='text-brand hover:underline font-medium'
             >
               (11) 94716-9003
             </a>{' '}
             ou pelo e-mail{' '}
             <a
               href='mailto:contato@surfersparadise.com.br'
-              className='text-[#FF6600] hover:underline font-medium'
+              className='text-brand hover:underline font-medium'
             >
               contato@surfersparadise.com.br
             </a>

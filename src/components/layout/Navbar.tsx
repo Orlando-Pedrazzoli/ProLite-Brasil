@@ -263,11 +263,11 @@ export default function Navbar() {
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   placeholder='O que você procura?'
-                  className='w-full pl-4 pr-12 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#FF6600] transition-colors'
+                  className='w-full pl-4 pr-12 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-brand transition-colors'
                 />
                 <button
                   type='submit'
-                  className='absolute right-0 top-0 h-full px-4 bg-[#FF6600] text-white rounded-r-lg hover:bg-[#e55b00] transition-colors'
+                  className='absolute right-0 top-0 h-full px-4 bg-brand text-white rounded-r-lg hover:bg-brand-dark transition-colors'
                   aria-label='Buscar'
                 >
                   <Search size={18} />
@@ -279,9 +279,9 @@ export default function Navbar() {
               {isLoggedIn ? (
                 <Link
                   href='/minha-conta'
-                  className='hidden sm:flex items-center gap-2 text-sm text-gray-600 hover:text-[#FF6600] transition-colors'
+                  className='hidden sm:flex items-center gap-2 text-sm text-gray-600 hover:text-brand transition-colors'
                 >
-                  <div className='w-8 h-8 bg-[#FF6600] text-white rounded-full flex items-center justify-center text-xs font-bold'>
+                  <div className='w-8 h-8 bg-brand text-white rounded-full flex items-center justify-center text-xs font-bold'>
                     {firstName.charAt(0).toUpperCase()}
                   </div>
                   <div className='hidden lg:block'>
@@ -292,7 +292,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href='/login'
-                  className='hidden sm:flex items-center gap-2 text-sm text-gray-600 hover:text-[#FF6600] transition-colors'
+                  className='hidden sm:flex items-center gap-2 text-sm text-gray-600 hover:text-brand transition-colors'
                 >
                   <User size={20} />
                   <div className='hidden lg:block'>
@@ -315,11 +315,11 @@ export default function Navbar() {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder='O que você procura?'
-                className='w-full pl-4 pr-12 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#FF6600] text-sm'
+                className='w-full pl-4 pr-12 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-brand text-sm'
               />
               <button
                 type='submit'
-                className='absolute right-0 top-0 h-full px-3 bg-[#FF6600] text-white rounded-r-lg'
+                className='absolute right-0 top-0 h-full px-3 bg-brand text-white rounded-r-lg'
                 aria-label='Buscar'
               >
                 <Search size={16} />
@@ -329,7 +329,7 @@ export default function Navbar() {
         </div>
 
         {/* ═══ CATEGORY NAV BAR WITH MEGA-MENU ═══ */}
-        <nav className='bg-gray-900 hidden md:block relative'>
+        <nav className='bg-chumbo hidden md:block relative'>
           <div className='max-w-7xl mx-auto px-4'>
             <div className='flex items-center'>
               {/* Espaçador espelhando o CTA — mantém as categorias
@@ -365,10 +365,10 @@ export default function Navbar() {
                         href={cat.href}
                         className={`flex items-center gap-1 px-4 py-3 text-sm font-medium transition-colors ${
                           cat.highlight
-                            ? 'text-[#FF6600] hover:text-white'
+                            ? 'text-brand hover:text-white'
                             : isActive
-                              ? 'text-white bg-gray-800'
-                              : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                              ? 'text-white bg-chumbo-light'
+                              : 'text-gray-300 hover:text-white hover:bg-chumbo-light'
                         }`}
                       >
                         {cat.label}
@@ -383,7 +383,7 @@ export default function Navbar() {
                       {/* Dropdown ancorado ao botão */}
                       {showDropdown && (
                         <div
-                          className={`absolute top-full bg-white border-t-2 border-[#FF6600] shadow-2xl rounded-b-lg overflow-hidden ${
+                          className={`absolute top-full bg-white border-t-2 border-brand shadow-2xl rounded-b-lg overflow-hidden ${
                             alignRight ? 'right-0' : 'left-0'
                           }`}
                           style={{ width: `${menuWidth}px` }}
@@ -407,7 +407,7 @@ export default function Navbar() {
                   links de navegação, no extremo direito (caminho do olhar) */}
               <Link
                 href='/contato'
-                className='shrink-0 inline-flex items-center gap-1.5 bg-[#FF6600] text-white text-xs font-bold uppercase tracking-wide px-3.5 py-2 my-1 rounded-md hover:bg-[#e55b00] transition-colors'
+                className='shrink-0 inline-flex items-center gap-1.5 bg-brand text-white text-xs font-bold uppercase tracking-wide px-3.5 py-2 my-1 rounded-md hover:bg-brand-dark transition-colors'
               >
                 <MessageCircle size={14} />
                 <span className='hidden lg:inline'>Fale Conosco</span>
@@ -426,7 +426,7 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
           />
           <div className='absolute left-0 top-0 bottom-0 w-72 bg-white shadow-xl overflow-y-auto'>
-            <div className='p-4 border-b bg-gray-900'>
+            <div className='p-4 border-b bg-chumbo'>
               <p className='text-white font-bold font-[family-name:var(--font-original-surfer)]'>
                 PRO-LITE
               </p>
@@ -434,20 +434,20 @@ export default function Navbar() {
             </div>
 
             {isLoggedIn && (
-              <div className='p-4 border-b border-gray-100 bg-orange-50'>
+              <div className='p-4 border-b border-gray-100 bg-brand-50'>
                 <Link
                   href='/minha-conta'
                   onClick={() => setMobileMenuOpen(false)}
                   className='flex items-center gap-3'
                 >
-                  <div className='w-9 h-9 bg-[#FF6600] text-white rounded-full flex items-center justify-center text-sm font-bold'>
+                  <div className='w-9 h-9 bg-brand text-white rounded-full flex items-center justify-center text-sm font-bold'>
                     {firstName.charAt(0).toUpperCase()}
                   </div>
                   <div>
                     <p className='text-sm font-medium text-gray-900'>
                       Olá, {firstName}!
                     </p>
-                    <p className='text-xs text-[#FF6600]'>Minha Conta</p>
+                    <p className='text-xs text-brand'>Minha Conta</p>
                   </div>
                 </Link>
               </div>
@@ -468,8 +468,8 @@ export default function Navbar() {
                         onClick={() => setMobileMenuOpen(false)}
                         className={`flex-1 px-4 py-3 text-sm font-medium ${
                           cat.highlight
-                            ? 'text-[#FF6600]'
-                            : 'text-gray-700 hover:text-[#FF6600]'
+                            ? 'text-brand'
+                            : 'text-gray-700 hover:text-brand'
                         } hover:bg-gray-50`}
                       >
                         {cat.label}
@@ -496,7 +496,7 @@ export default function Navbar() {
                             key={sub._id}
                             href={`/categoria/${sub.slug}`}
                             onClick={() => setMobileMenuOpen(false)}
-                            className='block pl-8 pr-4 py-2.5 text-sm text-gray-500 hover:text-[#FF6600] border-b border-gray-100'
+                            className='block pl-8 pr-4 py-2.5 text-sm text-gray-500 hover:text-brand border-b border-gray-100'
                           >
                             {sub.name}
                           </Link>
@@ -511,7 +511,7 @@ export default function Navbar() {
                 <Link
                   href='/contato'
                   onClick={() => setMobileMenuOpen(false)}
-                  className='flex items-center gap-2 mx-4 my-2 px-4 py-3 text-sm font-bold text-white bg-[#FF6600] rounded-md hover:bg-[#e55b00] transition-colors'
+                  className='flex items-center gap-2 mx-4 my-2 px-4 py-3 text-sm font-bold text-white bg-brand rounded-md hover:bg-brand-dark transition-colors'
                 >
                   <MessageCircle size={16} />
                   Fale Conosco
@@ -623,14 +623,14 @@ function MegaMenuContent({
                   <Link
                     href={`/categoria/${sub.slug}`}
                     onClick={onLinkClick}
-                    className='group flex items-center justify-between py-1.5 text-sm text-gray-700 hover:text-[#FF6600] transition-colors'
+                    className='group flex items-center justify-between py-1.5 text-sm text-gray-700 hover:text-brand transition-colors'
                   >
-                    <span className='border-b border-transparent group-hover:border-[#FF6600] transition-colors'>
+                    <span className='border-b border-transparent group-hover:border-brand transition-colors'>
                       {sub.name}
                     </span>
                     <ArrowRight
                       size={12}
-                      className='opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#FF6600] flex-shrink-0 ml-2'
+                      className='opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-brand flex-shrink-0 ml-2'
                     />
                   </Link>
                 </li>
@@ -641,7 +641,7 @@ function MegaMenuContent({
               <Link
                 href={`/categoria/${categorySlug}`}
                 onClick={onLinkClick}
-                className='inline-flex items-center gap-1.5 mt-3 pt-3 border-t border-gray-100 text-[11px] font-bold text-[#FF6600] hover:text-[#e55b00] uppercase tracking-wide transition-colors'
+                className='inline-flex items-center gap-1.5 mt-3 pt-3 border-t border-gray-100 text-[11px] font-bold text-brand hover:text-brand-dark uppercase tracking-wide transition-colors'
               >
                 Ver todos
                 <ArrowRight size={12} />
@@ -676,7 +676,7 @@ function MegaMenuContent({
               <h4 className='text-base font-bold mb-2.5 leading-tight'>
                 {promo.title}
               </h4>
-              <span className='inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide bg-[#FF6600] text-white px-2.5 py-1.5 rounded group-hover:bg-white group-hover:text-[#FF6600] transition-colors'>
+              <span className='inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide bg-brand text-white px-2.5 py-1.5 rounded group-hover:bg-white group-hover:text-brand transition-colors'>
                 {promo.cta}
                 <ArrowRight size={11} />
               </span>

@@ -149,13 +149,13 @@ export default function CouponInput() {
           }}
           onKeyDown={e => e.key === 'Enter' && handleApply()}
           placeholder='Cupom de desconto'
-          className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#FF6600]'
+          className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-brand'
         />
         <button
           type='button'
           onClick={handleApply}
           disabled={loading || !code.trim()}
-          className='flex items-center gap-1.5 rounded-lg bg-[#1A1A1A] px-4 py-2 text-sm text-white transition hover:bg-black disabled:opacity-50'
+          className='flex items-center gap-1.5 rounded-lg bg-chumbo px-4 py-2 text-sm text-white transition hover:bg-chumbo-dark disabled:opacity-50'
         >
           {loading && <Loader2 className='h-3.5 w-3.5 animate-spin' />}
           {loading ? 'Validando...' : 'Aplicar'}

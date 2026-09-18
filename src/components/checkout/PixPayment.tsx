@@ -99,7 +99,7 @@ export default function PixPayment({
         <button
           type='button'
           onClick={onExpired}
-          className='w-full rounded-lg bg-[#FF6600] px-4 py-3 font-semibold text-white transition hover:bg-[#e55b00]'
+          className='w-full rounded-lg bg-brand px-4 py-3 font-semibold text-white transition hover:bg-brand-dark'
         >
           Gerar novo PIX
         </button>
@@ -132,7 +132,7 @@ export default function PixPayment({
           />
           <button
             onClick={copy}
-            className='flex shrink-0 items-center gap-1 rounded-lg bg-gray-900 px-3 py-2 text-sm text-white'
+            className='flex shrink-0 items-center gap-1 rounded-lg bg-chumbo px-3 py-2 text-sm text-white'
           >
             {copied ? (
               <Check className='h-4 w-4' />

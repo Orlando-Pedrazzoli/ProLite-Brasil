@@ -13,7 +13,7 @@ export default function AEmpresaPage() {
     <div className='max-w-4xl mx-auto px-4 py-10'>
       {/* Breadcrumb */}
       <nav className='text-sm text-gray-500 mb-8'>
-        <Link href='/' className='hover:text-[#FF6600]'>
+        <Link href='/' className='hover:text-brand'>
           Início
         </Link>
         <span className='mx-2'>/</span>
@@ -114,7 +114,7 @@ export default function AEmpresaPage() {
             href='https://www.instagram.com/lojasurfersparadiseoficial/'
             target='_blank'
             rel='noopener noreferrer'
-            className='text-[#FF6600] hover:underline'
+            className='text-brand hover:underline'
           >
             Instagram @lojasurfersparadiseoficial
           </a>{' '}
@@ -123,14 +123,14 @@ export default function AEmpresaPage() {
             href='https://web.facebook.com/lojasurfersparadise/'
             target='_blank'
             rel='noopener noreferrer'
-            className='text-[#FF6600] hover:underline'
+            className='text-brand hover:underline'
           >
             Facebook /lojasurfersparadise
           </a>
           .
         </p>
 
-        <p className='text-xl font-bold text-[#FF6600] mt-8'>
+        <p className='text-xl font-bold text-brand mt-8'>
           Bem-vindo ao mundo Pro-Lite! 🏄
         </p>
       </div>

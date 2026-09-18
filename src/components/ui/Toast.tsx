@@ -11,7 +11,7 @@ interface ToastProps {
 const colors = {
   success: 'bg-green-600',
   error: 'bg-red-600',
-  info: 'bg-[#FF6600]',
+  info: 'bg-brand',
 };
 
 export default function Toast({ message, type = 'info', isVisible, onClose }: ToastProps) {

@@ -22,7 +22,7 @@ export default function AdminHeader() {
         <Link
           href='/'
           target='_blank'
-          className='hidden sm:flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#FF6600] transition-colors'
+          className='hidden sm:flex items-center gap-1.5 text-xs text-gray-500 hover:text-brand transition-colors'
         >
           <ExternalLink size={14} />
           Ver Loja
@@ -44,7 +44,7 @@ export default function AdminHeader() {
             </p>
             <p className='text-[10px] text-gray-400'>{userEmail}</p>
           </div>
-          <div className='w-9 h-9 bg-[#FF6600] text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md shadow-[#FF6600]/20'>
+          <div className='w-9 h-9 bg-brand text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md shadow-brand/20'>
             {initial}
           </div>
         </div>

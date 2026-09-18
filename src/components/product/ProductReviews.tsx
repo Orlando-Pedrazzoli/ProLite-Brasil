@@ -160,7 +160,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
         <div className='rounded-lg bg-gray-50 p-4 text-sm text-gray-600'>
           <Link
             href='/login'
-            className='font-medium text-[#FF6600] hover:underline'
+            className='font-medium text-brand hover:underline'
           >
             Entre na sua conta
           </Link>{' '}
@@ -185,7 +185,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
             onChange={e => setTitle(e.target.value)}
             maxLength={120}
             placeholder='Título (opcional)'
-            className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#FF6600]'
+            className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-brand'
           />
           <textarea
             value={comment}
@@ -193,12 +193,12 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
             maxLength={2000}
             rows={3}
             placeholder='Como foi sua experiência com o produto?'
-            className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#FF6600]'
+            className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-brand'
           />
           <button
             type='submit'
             disabled={submitting}
-            className='rounded-lg bg-[#FF6600] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#e55b00] disabled:opacity-50 inline-flex items-center gap-2'
+            className='rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark disabled:opacity-50 inline-flex items-center gap-2'
           >
             {submitting && <Loader2 className='h-4 w-4 animate-spin' />}
             {submitting ? 'Enviando...' : 'Enviar avaliação'}

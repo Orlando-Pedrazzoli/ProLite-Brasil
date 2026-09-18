@@ -102,7 +102,7 @@ export default function ReviewTable() {
             onClick={() => setTab(t.id)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
               tab === t.id
-                ? 'bg-gray-900 text-white'
+                ? 'bg-chumbo text-white'
                 : 'bg-white text-gray-600 hover:bg-gray-100'
             }`}
           >

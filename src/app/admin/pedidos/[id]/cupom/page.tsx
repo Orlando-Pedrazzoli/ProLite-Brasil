@@ -119,7 +119,7 @@ export default function CupomPage({
   if (loading) {
     return (
       <div className='min-h-screen flex items-center justify-center bg-gray-100'>
-        <Loader2 size={32} className='animate-spin text-[#FF6600]' />
+        <Loader2 size={32} className='animate-spin text-brand' />
       </div>
     );
   }
@@ -131,7 +131,7 @@ export default function CupomPage({
           <p className='text-red-600 mb-4'>{error}</p>
           <Link
             href={`/admin/pedidos/${id}`}
-            className='text-[#FF6600] hover:underline'
+            className='text-brand hover:underline'
           >
             Voltar
           </Link>
@@ -193,7 +193,7 @@ export default function CupomPage({
               href={`/admin/pedidos/${id}/cupom?format=80mm`}
               className={`px-3 py-1.5 text-sm rounded-md border transition-colors ${
                 format === '80mm'
-                  ? 'bg-[#FF6600] text-white border-[#FF6600]'
+                  ? 'bg-brand text-white border-brand'
                   : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
               }`}
             >
@@ -203,7 +203,7 @@ export default function CupomPage({
               href={`/admin/pedidos/${id}/cupom?format=a4`}
               className={`px-3 py-1.5 text-sm rounded-md border transition-colors ${
                 format === 'a4'
-                  ? 'bg-[#FF6600] text-white border-[#FF6600]'
+                  ? 'bg-brand text-white border-brand'
                   : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
               }`}
             >
@@ -211,7 +211,7 @@ export default function CupomPage({
             </Link>
             <button
               onClick={handlePrint}
-              className='inline-flex items-center gap-2 px-4 py-1.5 bg-[#FF6600] text-white rounded-md hover:bg-[#e55b00] text-sm font-medium'
+              className='inline-flex items-center gap-2 px-4 py-1.5 bg-brand text-white rounded-md hover:bg-brand-dark text-sm font-medium'
             >
               <Printer size={14} />
               Imprimir
@@ -400,9 +400,9 @@ function CupomA4({ order }: { order: OrderCupom }) {
       style={{ width: '210mm', minHeight: '297mm' }}
     >
       {/* HEADER */}
-      <div className='flex items-start justify-between pb-6 border-b-2 border-[#FF6600] mb-6'>
+      <div className='flex items-start justify-between pb-6 border-b-2 border-brand mb-6'>
         <div>
-          <h1 className='text-2xl font-black text-[#1A1A1A]'>
+          <h1 className='text-2xl font-black text-chumbo'>
             {company.name.toUpperCase()}
           </h1>
           {company.legalName && (
@@ -428,7 +428,7 @@ function CupomA4({ order }: { order: OrderCupom }) {
               ? 'Cupom de Venda'
               : 'Comprovante de Pedido'}
           </p>
-          <p className='font-mono text-lg font-bold text-[#FF6600] mt-1'>
+          <p className='font-mono text-lg font-bold text-brand mt-1'>
             {order.orderNumber}
           </p>
           <p className='text-xs text-gray-500 mt-1'>
@@ -487,7 +487,7 @@ function CupomA4({ order }: { order: OrderCupom }) {
                 <p className='text-sm text-gray-600'>
                   Recebido: {formatPrice(order.payment.cashReceived)}
                 </p>
-                <p className='text-sm font-bold text-[#FF6600]'>
+                <p className='text-sm font-bold text-brand'>
                   Troco: {formatPrice(order.payment.cashChange)}
                 </p>
               </div>

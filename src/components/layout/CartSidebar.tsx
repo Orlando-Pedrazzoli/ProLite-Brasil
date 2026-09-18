@@ -33,7 +33,7 @@ export default function CartSidebar() {
         {/* Header */}
         <div className='flex items-center justify-between px-4 py-4 border-b border-gray-200'>
           <div className='flex items-center gap-2'>
-            <ShoppingCart size={20} className='text-[#FF6600]' />
+            <ShoppingCart size={20} className='text-brand' />
             <h2 className='text-lg font-bold text-gray-900'>
               Meu Carrinho
               {itemCount > 0 && (
@@ -63,7 +63,7 @@ export default function CartSidebar() {
             </p>
             <button
               onClick={closeCart}
-              className='px-6 py-2.5 bg-[#FF6600] text-white font-medium rounded-md hover:bg-[#e55b00] transition-colors'
+              className='px-6 py-2.5 bg-brand text-white font-medium rounded-md hover:bg-brand-dark transition-colors'
             >
               Continuar Comprando
             </button>
@@ -97,7 +97,7 @@ export default function CartSidebar() {
                     <Link
                       href={`/produtos/${item.slug}`}
                       onClick={closeCart}
-                      className='text-sm font-medium text-gray-900 hover:text-[#FF6600] transition-colors line-clamp-2'
+                      className='text-sm font-medium text-gray-900 hover:text-brand transition-colors line-clamp-2'
                     >
                       {item.name}
                     </Link>
@@ -123,7 +123,7 @@ export default function CartSidebar() {
                     </p>
 
                     {/* Price */}
-                    <p className='text-sm font-bold text-[#FF6600] mt-1'>
+                    <p className='text-sm font-bold text-brand mt-1'>
                       {formatCurrency(item.price * item.quantity)}
                     </p>
                     {item.quantity > 1 && (
@@ -180,15 +180,15 @@ export default function CartSidebar() {
               </div>
 
               {/* PIX Price */}
-              <div className='flex items-center justify-between bg-orange-50 -mx-4 px-4 py-2'>
-                <span className='text-sm text-[#FF6600] font-medium'>
+              <div className='flex items-center justify-between bg-brand-50 -mx-4 px-4 py-2'>
+                <span className='text-sm text-brand font-medium'>
                   No PIX / Boleto
                 </span>
                 <div className='text-right'>
-                  <span className='text-lg font-black text-[#FF6600]'>
+                  <span className='text-lg font-black text-brand'>
                     {formatCurrency(pixTotal)}
                   </span>
-                  <span className='text-xs text-[#FF6600] ml-1'>(10% off)</span>
+                  <span className='text-xs text-brand ml-1'>(10% off)</span>
                 </div>
               </div>
 
@@ -200,20 +200,20 @@ export default function CartSidebar() {
               <Link
                 href='/carrinho'
                 onClick={closeCart}
-                className='block w-full py-3 bg-gray-900 text-white text-center font-bold text-sm rounded-md hover:bg-gray-800 transition-colors'
+                className='block w-full py-3 bg-chumbo text-white text-center font-bold text-sm rounded-md hover:bg-chumbo-light transition-colors'
               >
                 VER CARRINHO
               </Link>
               <Link
                 href='/checkout'
                 onClick={closeCart}
-                className='block w-full py-3 bg-[#FF6600] text-white text-center font-bold text-sm rounded-md hover:bg-[#e55b00] transition-colors'
+                className='block w-full py-3 bg-brand text-white text-center font-bold text-sm rounded-md hover:bg-brand-dark transition-colors'
               >
                 FINALIZAR COMPRA
               </Link>
               <button
                 onClick={closeCart}
-                className='block w-full text-center text-sm text-gray-500 hover:text-[#FF6600] transition-colors py-1'
+                className='block w-full text-center text-sm text-gray-500 hover:text-brand transition-colors py-1'
               >
                 Continuar comprando
               </button>

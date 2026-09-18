@@ -248,7 +248,7 @@ export default function CouponForm({
   };
 
   const selectClass =
-    'w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6600]/50';
+    'w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/50';
 
   const hasRestriction =
     selectedCategories.length > 0 || selectedBrands.length > 0;
@@ -362,7 +362,7 @@ export default function CouponForm({
                       type='checkbox'
                       checked={selectedCategories.includes(cat._id)}
                       onChange={() => toggleCategory(cat._id)}
-                      className='h-4 w-4 accent-[#FF6600]'
+                      className='h-4 w-4 accent-brand'
                     />
                     <span
                       className={
@@ -395,7 +395,7 @@ export default function CouponForm({
                       type='checkbox'
                       checked={selectedBrands.includes(brand._id)}
                       onChange={() => toggleBrand(brand._id)}
-                      className='h-4 w-4 accent-[#FF6600]'
+                      className='h-4 w-4 accent-brand'
                     />
                     {brand.name}
                   </label>
@@ -423,7 +423,7 @@ export default function CouponForm({
           type='checkbox'
           checked={isActive}
           onChange={e => setIsActive(e.target.checked)}
-          className='h-4 w-4 accent-[#FF6600]'
+          className='h-4 w-4 accent-brand'
         />
         <span className='text-sm text-gray-700'>Cupom ativo</span>
       </label>
