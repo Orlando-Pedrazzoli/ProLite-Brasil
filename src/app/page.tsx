@@ -21,6 +21,8 @@ import PromoBanners from '@/components/home/PromoBanners';
 import CategoryBanners from '@/components/home/CategoryBanners';
 import ReviewsCarousel from '@/components/home/ReviewsCarousel';
 import StoreShowcase from '@/components/home/StoreShowcase';
+import CapasRefletivasBanner from '@/components/home/CapasRefletivasBanner';
+import LeashesBanner from '@/components/home/LeashesBanner';
 
 export default function Home() {
   return (
@@ -35,10 +37,8 @@ export default function Home() {
           title='Novidades'
           fetchUrl='/api/products?limit=8&sort=-createdAt&isActive=true&isNewArrival=true'
         />
-        <FeaturedProducts
-          title='Encontre sua Prancha'
-          fetchUrl='/api/products?limit=8&sort=-createdAt&isActive=true&categorySlug=pranchas'
-        />
+        <CapasRefletivasBanner />
+        <LeashesBanner />
         <ImageBanner alt='Rip Curl — Pro-Lite' />
         <FeaturedWetsuits title='Wetsuits' />
         <PromoBanners />
