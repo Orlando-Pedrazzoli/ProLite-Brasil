@@ -1,30 +1,53 @@
 // 📄 src/lib/config/company.ts
+// Fonte única dos dados da empresa. A marca Pro-Lite pertence à
+// MAOS Confecção, Comércio, Importação e Exportação de Acessórios Ltda.
+// (Mãos Acessórios). Tudo o que é dado de empresa no site (footer,
+// contato, páginas institucionais, checkout, cupom, e-mails) lê daqui.
 export const company = {
   name: 'Pro-Lite',
-  legalName: 'OMBAK BARU COMERCIO DE ARTIGOS ESPORTIVOS LTDA',
-  slogan: '20 anos no mercado de acessórios e equipamentos para o Surf',
-  cnpj: '58.212.091/0001-09',
-  ie: '151.695.586.118',
-  email: 'lojasurfersparadiseoficial@gmail.com',
-  phone: '(11) 94716-9003',
-  whatsapp: '5511947169003',
+  tradeName: 'Mãos Acessórios',
+  legalName:
+    'MAOS Confecção, Comércio, Importação e Exportação de Acessórios Ltda.',
+  slogan: '40 anos projetando e construindo os melhores equipamentos de surf',
+  cnpj: '03.611.941/0001-50',
+  ie: '115.626.480.115',
+  email: 'atendimento@maosacessorios.com.br',
+  // ⚠️ CONFIRMAR COM O MAURÍCIO: telefone fixo do cadastro da Receita e
+  // celular/WhatsApp listado no Reclame Aqui da Mãos Acessórios.
+  phone: '(11) 2294-6300',
+  whatsappDisplay: '(11) 96243-5701',
+  whatsapp: '5511962435701',
   address: {
-    street: 'Alameda dos Maracatins',
-    number: '1317',
+    street: 'Rua Dom Andrés Lamas',
+    number: '57',
     complement: '',
-    neighborhood: 'Indianópolis',
+    neighborhood: 'Tatuapé',
     city: 'São Paulo',
     state: 'SP',
-    cep: '04089-014',
+    cep: '03084-020',
   },
+  // Deixar vazio enquanto não houver perfil oficial confirmado:
+  // os componentes escondem o ícone quando a URL está vazia.
   social: {
-    instagram: 'https://www.instagram.com/lojasurfersparadiseoficial/',
-    facebook: 'https://web.facebook.com/lojasurfersparadise/',
+    instagram: '',
+    facebook: '',
     youtube: '',
   },
-  businessHours: 'Seg a Sex: 10h às 20h | Sáb: 10h às 19h | Dom: Fechado',
-  url: 'https://surfersparadise.com.br',
-  orderPrefix: 'SP',
+  // ⚠️ CONFIRMAR COM O MAURÍCIO o horário de atendimento/retirada.
+  businessHours: 'Seg a Sex: 9h às 18h | Sáb e Dom: Fechado',
+  url: 'https://prolite.com.br',
+  orderPrefix: 'PL',
+  // Selo de qualidade — Programa ABVTEX (auditoria independente de
+  // conformidade social, ambiental e trabalhista na cadeia de moda).
+  certification: {
+    abvtex: {
+      level: 'Ouro',
+      label: 'Selo Ouro ABVTEX',
+      program: 'Programa ABVTEX',
+      memberSince: 2020,
+      url: 'https://www.abvtex.org.br',
+    },
+  },
   payment: {
     maxInstallments: 10,
     minInstallmentValue: 30,
@@ -33,12 +56,22 @@ export const company = {
   },
   shipping: {
     freeShippingMinValue: 399,
-    originCep: '04089-014',
+    originCep: '03084-020',
   },
 } as const;
+
+/** Número de WhatsApp formatado para exibição. */
+export const whatsappDisplay = company.whatsappDisplay;
+
+/** Link do WhatsApp com mensagem opcional. */
+export function getWhatsAppUrl(message?: string): string {
+  const base = `https://wa.me/${company.whatsapp}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
+
 /**
  * Endereço formatado em linha única
- * Ex: "Alameda dos Maracatins, 1317 · Indianópolis · São Paulo - SP · CEP 04089-014"
+ * Ex: "Rua Dom Andrés Lamas, 57 · Tatuapé · São Paulo - SP · CEP 03084-020"
  */
 export function getFormattedAddress(): string {
   const a = company.address;
@@ -55,7 +88,7 @@ export function getFormattedAddress(): string {
 }
 /**
  * Endereço curto (para cupom térmica 80mm)
- * Ex: "Indianópolis · São Paulo - SP"
+ * Ex: "Tatuapé · São Paulo - SP"
  */
 export function getShortAddress(): string {
   const a = company.address;

@@ -3,44 +3,38 @@
 // descrições e imagens padrão. Usado por layout, sitemap, robots e JSON-LD.
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://www.surfersparadise.com.br';
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://prolite.com.br';
 
 export const SITE_NAME = 'Pro-Lite';
 
 export const SITE_TITLE =
-  'Pro-Lite — Pranchas, Quilhas, Leashes, Decks e Wetsuits';
+  'Pro-Lite — Capas, Leashes, Decks e Acessórios de Surf';
 
 export const SITE_DESCRIPTION =
-  'Surf Shop Online com 20 anos de mercado. Quilhas FCS II e Futures, leashes, decks, wetsuits Rip Curl, O\u2019Neill, Hurley e Vissla, pranchas e acessórios de surf em até 10x sem juros.';
+  'Pro-Lite: 40 anos projetando e construindo equipamentos de surf. Capas, leashes, decks, quilhas, parafinas e acessórios com fabricação própria em São Paulo. Até 10x sem juros.';
 
 export const SITE_KEYWORDS = [
-  'surf shop',
-  'loja de surf',
-  'quilhas fcs',
-  'quilhas fcs 2',
-  'quilhas futures',
+  'pro-lite',
+  'pro-lite brasil',
+  'capa de prancha',
+  'capa de prancha de surf',
   'leash de surf',
   'cordinha de prancha',
   'deck de surf',
-  'wetsuit',
-  'long john',
-  'roupa de borracha',
-  'prancha de surf',
+  'quilhas',
   'parafina',
   'acessórios de surf',
-  'rip curl',
-  'oneill',
-  'hurley',
-  'vissla',
+  'equipamentos de surf',
+  'capa de sup',
 ];
 
 // Imagem OG padrão (1200x630) — colocar em /public/images/og-default.jpg
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-default.jpg`;
 
 export const CONTACT = {
-  // Atualizar com os dados reais da loja (Adriana / OMBAK BARU)
-  email: 'contato@surfersparadise.com.br',
-  phone: '+55-11-00000-0000',
+  // Mãos Acessórios (dona da marca Pro-Lite) — ver src/lib/config/company.ts
+  email: 'atendimento@maosacessorios.com.br',
+  phone: '+55-11-2294-6300',
   addressLocality: 'São Paulo',
   addressRegion: 'SP',
   addressCountry: 'BR',
@@ -48,8 +42,7 @@ export const CONTACT = {
 
 export const SOCIAL_LINKS: string[] = [
   // Adicionar quando existirem:
-  // 'https://www.instagram.com/surfersparadise',
-  // 'https://www.facebook.com/surfersparadise',
+  // 'https://www.instagram.com/<perfil-oficial-pro-lite>',
 ];
 
 /** Junta caminho relativo ao domínio canónico, sem barras duplicadas. */

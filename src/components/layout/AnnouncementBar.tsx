@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { company } from '@/lib/config/company';
 
 const messages = [
   'Descontos de até 10% no PIX ou Boleto*',
@@ -40,56 +41,60 @@ export default function AnnouncementBar() {
 
         {/* Social Icons */}
         <div className='flex items-center gap-2 ml-3 flex-shrink-0'>
-          <Link
-            href='https://www.instagram.com/lojasurfersparadiseoficial/'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='w-7 h-7 rounded-full bg-white/15 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 group'
-            aria-label='Instagram'
-          >
-            <svg
-              width='14'
-              height='14'
-              viewBox='0 0 24 24'
-              fill='none'
-              className='text-white group-hover:text-brand transition-colors duration-300'
+          {company.social.instagram && (
+            <Link
+              href={company.social.instagram}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='w-7 h-7 rounded-full bg-white/15 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 group'
+              aria-label='Instagram'
             >
-              <rect
-                x='2'
-                y='2'
-                width='20'
-                height='20'
-                rx='5'
-                stroke='currentColor'
-                strokeWidth='2'
-              />
-              <circle
-                cx='12'
-                cy='12'
-                r='5'
-                stroke='currentColor'
-                strokeWidth='2'
-              />
-              <circle cx='18' cy='6' r='1.5' fill='currentColor' />
-            </svg>
-          </Link>
-          <Link
-            href='https://web.facebook.com/lojasurfersparadise/'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='w-7 h-7 rounded-full bg-white/15 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 group'
-            aria-label='Facebook'
-          >
-            <svg
-              width='14'
-              height='14'
-              viewBox='0 0 24 24'
-              fill='currentColor'
-              className='text-white group-hover:text-brand transition-colors duration-300'
+              <svg
+                width='14'
+                height='14'
+                viewBox='0 0 24 24'
+                fill='none'
+                className='text-white group-hover:text-brand transition-colors duration-300'
+              >
+                <rect
+                  x='2'
+                  y='2'
+                  width='20'
+                  height='20'
+                  rx='5'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                />
+                <circle
+                  cx='12'
+                  cy='12'
+                  r='5'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                />
+                <circle cx='18' cy='6' r='1.5' fill='currentColor' />
+              </svg>
+            </Link>
+          )}
+          {company.social.facebook && (
+            <Link
+              href={company.social.facebook}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='w-7 h-7 rounded-full bg-white/15 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 group'
+              aria-label='Facebook'
             >
-              <path d='M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z' />
-            </svg>
-          </Link>
+              <svg
+                width='14'
+                height='14'
+                viewBox='0 0 24 24'
+                fill='currentColor'
+                className='text-white group-hover:text-brand transition-colors duration-300'
+              >
+                <path d='M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z' />
+              </svg>
+            </Link>
+          )}
         </div>
       </div>
     </div>

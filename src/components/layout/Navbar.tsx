@@ -427,7 +427,9 @@ export default function Navbar() {
               <p className='text-white font-bold font-[family-name:var(--font-original-surfer)]'>
                 PRO-LITE
               </p>
-              <p className='text-gray-400 text-xs'>Authentic Board Shop</p>
+              <p className='text-gray-400 text-xs'>
+                Equipamentos de Surf desde 1984
+              </p>
             </div>
 
             {isLoggedIn && (

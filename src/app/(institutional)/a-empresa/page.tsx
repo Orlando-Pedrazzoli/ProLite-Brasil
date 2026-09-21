@@ -1,11 +1,17 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
+import {
+  company,
+  getFormattedAddress,
+  getWhatsAppUrl,
+} from '@/lib/config/company';
+
+const abvtex = company.certification.abvtex;
 
 export const metadata: Metadata = {
   title: 'A Empresa',
   description:
-    'Conheça a Pro-Lite — conceituada Board Shop há mais de 28 anos em Moema, São Paulo. Pranchas de surf, quilhas, acessórios e muito mais.',
+    'Conheça a Pro-Lite: marca brasileira registrada em 1984, hoje da Mãos Acessórios, com fabricação própria em São Paulo e Selo Ouro ABVTEX.',
 };
 
 export default function AEmpresaPage() {
@@ -26,27 +32,57 @@ export default function AEmpresaPage() {
       {/* Content */}
       <div className='prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed'>
         <p className='text-lg font-medium text-gray-900'>
-          A Pro-Lite é uma conceituada Board Shop, referência no mercado de surf
-          há mais de 28 anos, localizada no coração de Moema, em São Paulo.
+          Há 40 anos a Pro-Lite projeta e constrói equipamentos de surf no
+          Brasil. Registrada em 1984, é uma marca 100% brasileira e
+          independente, com produtos desenvolvidos e fabricados aqui.
         </p>
 
         <p>
-          Nascida da paixão pelo surf e pelo estilo de vida que ele representa,
-          a Pro-Lite se consolidou como uma das lojas mais tradicionais e
-          respeitadas do cenário do surf brasileiro. Mantemos em nosso estoque
-          centenas de pranchas de surf das melhores marcas do Brasil e do mundo,
-          além de uma grande variedade de acessórios, quilhas, leashes, decks,
-          wetsuits, capas e tudo o que o surfista precisa para suas sessões.
+          Hoje a Pro-Lite pertence à <strong>{company.tradeName}</strong>,
+          empresa paulistana fundada em 2000 que une confecção, fabricação e
+          comércio de acessórios. É na sede da empresa, no Tatuapé, em São
+          Paulo, que os produtos ganham forma — com mão de obra especializada em
+          costura de capas, mochilas e artigos esportivos em nylon e outros
+          materiais técnicos.
         </p>
+
+        <p>
+          Capas e leashes são os pilares da marca, ao lado de decks, quilhas,
+          parafinas e acessórios pensados para o dia a dia de quem surfa.
+        </p>
+
+        {/* Selo ABVTEX em destaque */}
+        <div className='not-prose rounded-xl border border-[#D4A72C]/40 bg-gradient-to-br from-[#FFF8E1] to-white p-6 my-8'>
+          <p className='text-[11px] font-bold uppercase tracking-[0.2em] text-[#A87C12] mb-1'>
+            Selo de Qualidade
+          </p>
+          <h2 className='text-2xl font-black text-gray-900 mb-3'>
+            {abvtex.label}
+          </h2>
+          <p className='text-sm text-gray-700 leading-relaxed'>
+            A {company.tradeName} é aprovada com <strong>Selo Ouro</strong>, o
+            nível máximo do {abvtex.program}, e consta na relação de
+            fornecedores aprovados desde {abvtex.memberSince}. O programa usa
+            auditorias independentes para avaliar aspectos sociais, ambientais,
+            legais e trabalhistas de quem fornece para o varejo de moda
+            brasileiro.
+          </p>
+          <a
+            href={abvtex.url}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='inline-block mt-4 text-sm font-bold text-[#A87C12] hover:underline'
+          >
+            Conheça o programa ABVTEX →
+          </a>
+        </div>
 
         <h2 className='text-xl font-bold text-gray-900 mt-8'>Nossa Missão</h2>
 
         <p>
-          Oferecer aos surfistas de todo o Brasil os melhores equipamentos do
-          mundo do surf, com transparência, credibilidade e total apoio aos
-          nossos clientes. Queremos que cada compra seja uma experiência
-          agradável, segura e que você se sinta confortável e confiante em
-          encontrar exactamente o que procura.
+          Levar aos surfistas de todo o Brasil equipamentos resistentes, bem
+          acabados e feitos para durar, com transparência, credibilidade e apoio
+          próximo a cada cliente.
         </p>
 
         <h2 className='text-xl font-bold text-gray-900 mt-8'>
@@ -54,81 +90,70 @@ export default function AEmpresaPage() {
         </h2>
 
         <p>
-          Trabalhamos sempre respeitando o Código de Defesa do Consumidor,
-          cumprindo todos os nossos deveres — e muitas vezes indo além. O nosso
-          objectivo maior é a satisfação de cada cliente que confia em nós.
-        </p>
-
-        <p>
-          Todos os nossos produtos são de procedência legal, 100% originais, e
-          estão no nosso estoque físico para pronta entrega. Compramos e
-          revendemos com nota fiscal e garantia. Prezamos para que os seus
-          produtos cheguem o mais rápido possível, com máxima agilidade e
-          transparência.
+          Trabalhamos respeitando o Código de Defesa do Consumidor e vendemos
+          sempre com nota fiscal e garantia. Nosso objetivo é que cada compra
+          seja simples, segura e que o produto chegue até você o mais rápido
+          possível.
         </p>
 
         <h2 className='text-xl font-bold text-gray-900 mt-8'>Entrega Segura</h2>
 
         <p>
-          Nossos fretes são segurados pelas transportadoras, oferecendo garantia
-          em todo o processo de entrega. Enviamos para todo o Brasil através das
-          melhores e mais seguras transportadoras do mercado. Todos os produtos
-          disponíveis no site encontram-se no nosso estoque físico e podem ser
-          despachados imediatamente após a confirmação de pagamento.
+          Enviamos para todo o Brasil pelas principais transportadoras, com
+          frete segurado e código de rastreio. Os pedidos são despachados após a
+          confirmação do pagamento.
         </p>
 
-        <h2 className='text-xl font-bold text-gray-900 mt-8'>Atendimento</h2>
+        <h2 className='text-xl font-bold text-gray-900 mt-8'>
+          Atendimento e Retirada
+        </h2>
 
         <p>
-          Zelamos pelo melhor atendimento aos nossos clientes. Nossa equipe é
-          treinada e apaixonada por surf, pronta para oferecer o maior conforto
-          e as melhores orientações possíveis. Desejamos que todo o processo de
-          compra seja fácil, rápido e seguro.
-        </p>
-
-        <h2 className='text-xl font-bold text-gray-900 mt-8'>Onde Estamos</h2>
-
-        <p>
-          Estamos localizados na{' '}
-          <strong>
-            Alameda dos Maracatins, 1317 — Indianópolis, São Paulo - SP, CEP
-            04089-014
-          </strong>
-          . Venha nos visitar e conhecer de perto o nosso estoque completo!
+          Fale com a gente pelo e-mail{' '}
+          <a
+            href={`mailto:${company.email}`}
+            className='text-brand hover:underline'
+          >
+            {company.email}
+          </a>
+          , pelo WhatsApp{' '}
+          <a
+            href={getWhatsAppUrl()}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-brand hover:underline'
+          >
+            {company.whatsappDisplay}
+          </a>{' '}
+          ou pelo telefone {company.phone}. Se preferir, escolha a retirada no
+          checkout e busque seu pedido sem custo de frete em{' '}
+          <strong>{getFormattedAddress()}</strong>.
         </p>
 
         <div className='bg-gray-50 rounded-lg p-6 mt-6'>
           <p className='text-sm text-gray-600 mb-2'>
-            <strong>Horário de Funcionamento:</strong>
+            <strong>Horário de Atendimento:</strong>
           </p>
-          <p className='text-sm text-gray-600'>Segunda a Sexta: 10h às 20h</p>
-          <p className='text-sm text-gray-600'>Sábado: 10h às 19h</p>
-          <p className='text-sm text-gray-600'>Domingo: Fechado</p>
+          {company.businessHours.split('|').map(line => (
+            <p key={line} className='text-sm text-gray-600'>
+              {line.trim()}
+            </p>
+          ))}
         </div>
 
-        <p>
-          Caso tenha alguma dúvida em relação à confiabilidade da nossa empresa,
-          fique à vontade para conferir o que nossos clientes contam sobre nós
-          através dos depoimentos nas nossas redes sociais:{' '}
-          <a
-            href='https://www.instagram.com/lojasurfersparadiseoficial/'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='text-brand hover:underline'
-          >
-            Instagram @lojasurfersparadiseoficial
-          </a>{' '}
-          e{' '}
-          <a
-            href='https://web.facebook.com/lojasurfersparadise/'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='text-brand hover:underline'
-          >
-            Facebook /lojasurfersparadise
-          </a>
-          .
-        </p>
+        <div className='bg-gray-50 rounded-lg p-6'>
+          <p className='text-sm text-gray-600'>
+            <strong>Dados da empresa</strong>
+            <br />
+            {company.legalName}
+            <br />
+            Nome fantasia: {company.tradeName}
+            <br />
+            CNPJ {company.cnpj} · IE {company.ie}
+            <br />
+            {getFormattedAddress()}
+          </p>
+        </div>
 
         <p className='text-xl font-bold text-brand mt-8'>
           Bem-vindo ao mundo Pro-Lite! 🏄

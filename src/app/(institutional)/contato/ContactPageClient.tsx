@@ -359,7 +359,7 @@ export default function ContatoPage() {
             <div>
               <p className='font-bold text-sm'>Atendimento por WhatsApp</p>
               <p className='text-xs opacity-90'>
-                {company.phone} — Resposta rápida!
+                {company.whatsappDisplay} — Resposta rápida!
               </p>
             </div>
           </a>
@@ -369,10 +369,7 @@ export default function ContatoPage() {
             <h3 className='font-bold text-gray-900'>Informações de Contato</h3>
 
             <div className='flex items-start gap-3'>
-              <MapPin
-                size={18}
-                className='text-brand mt-0.5 flex-shrink-0'
-              />
+              <MapPin size={18} className='text-brand mt-0.5 flex-shrink-0' />
               <div>
                 <p className='text-sm font-medium text-gray-900'>Loja Física</p>
                 <p className='text-sm text-gray-600'>
@@ -389,10 +386,7 @@ export default function ContatoPage() {
             </div>
 
             <div className='flex items-start gap-3'>
-              <Phone
-                size={18}
-                className='text-brand mt-0.5 flex-shrink-0'
-              />
+              <Phone size={18} className='text-brand mt-0.5 flex-shrink-0' />
               <div>
                 <p className='text-sm font-medium text-gray-900'>
                   Telefone / WhatsApp
@@ -403,7 +397,13 @@ export default function ContatoPage() {
                   rel='noopener noreferrer'
                   className='text-sm text-gray-600 hover:text-brand transition-colors'
                 >
-                  {company.phone}
+                  {company.whatsappDisplay} (WhatsApp)
+                </a>
+                <a
+                  href={`tel:+55${company.phone.replace(/\D/g, '')}`}
+                  className='block text-sm text-gray-600 hover:text-brand transition-colors'
+                >
+                  {company.phone} (Fixo)
                 </a>
               </div>
             </div>
@@ -422,10 +422,7 @@ export default function ContatoPage() {
             </div>
 
             <div className='flex items-start gap-3'>
-              <Clock
-                size={18}
-                className='text-brand mt-0.5 flex-shrink-0'
-              />
+              <Clock size={18} className='text-brand mt-0.5 flex-shrink-0' />
               <div>
                 <p className='text-sm font-medium text-gray-900'>
                   Horário de Atendimento
@@ -438,64 +435,70 @@ export default function ContatoPage() {
               </div>
             </div>
 
-            {/* Redes sociais */}
-            <div className='pt-3 border-t border-gray-100'>
-              <p className='text-sm font-medium text-gray-900 mb-3'>
-                Redes Sociais
-              </p>
-              <div className='flex items-center gap-3'>
-                <a
-                  href={company.social.instagram}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand hover:scale-110 transition-all duration-300 group'
-                  aria-label='Instagram'
-                >
-                  <svg
-                    width='16'
-                    height='16'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    className='text-gray-500 group-hover:text-white transition-colors duration-300'
-                  >
-                    <rect
-                      x='2'
-                      y='2'
-                      width='20'
-                      height='20'
-                      rx='5'
-                      stroke='currentColor'
-                      strokeWidth='2'
-                    />
-                    <circle
-                      cx='12'
-                      cy='12'
-                      r='5'
-                      stroke='currentColor'
-                      strokeWidth='2'
-                    />
-                    <circle cx='18' cy='6' r='1.5' fill='currentColor' />
-                  </svg>
-                </a>
-                <a
-                  href={company.social.facebook}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand hover:scale-110 transition-all duration-300 group'
-                  aria-label='Facebook'
-                >
-                  <svg
-                    width='16'
-                    height='16'
-                    viewBox='0 0 24 24'
-                    fill='currentColor'
-                    className='text-gray-500 group-hover:text-white transition-colors duration-300'
-                  >
-                    <path d='M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z' />
-                  </svg>
-                </a>
+            {/* Redes sociais (só aparece se houver perfil configurado) */}
+            {(company.social.instagram || company.social.facebook) && (
+              <div className='pt-3 border-t border-gray-100'>
+                <p className='text-sm font-medium text-gray-900 mb-3'>
+                  Redes Sociais
+                </p>
+                <div className='flex items-center gap-3'>
+                  {company.social.instagram && (
+                    <a
+                      href={company.social.instagram}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand hover:scale-110 transition-all duration-300 group'
+                      aria-label='Instagram'
+                    >
+                      <svg
+                        width='16'
+                        height='16'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        className='text-gray-500 group-hover:text-white transition-colors duration-300'
+                      >
+                        <rect
+                          x='2'
+                          y='2'
+                          width='20'
+                          height='20'
+                          rx='5'
+                          stroke='currentColor'
+                          strokeWidth='2'
+                        />
+                        <circle
+                          cx='12'
+                          cy='12'
+                          r='5'
+                          stroke='currentColor'
+                          strokeWidth='2'
+                        />
+                        <circle cx='18' cy='6' r='1.5' fill='currentColor' />
+                      </svg>
+                    </a>
+                  )}
+                  {company.social.facebook && (
+                    <a
+                      href={company.social.facebook}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand hover:scale-110 transition-all duration-300 group'
+                      aria-label='Facebook'
+                    >
+                      <svg
+                        width='16'
+                        height='16'
+                        viewBox='0 0 24 24'
+                        fill='currentColor'
+                        className='text-gray-500 group-hover:text-white transition-colors duration-300'
+                      >
+                        <path d='M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z' />
+                      </svg>
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Mapa da loja (embed padrão do Google por endereço — sem API key) */}

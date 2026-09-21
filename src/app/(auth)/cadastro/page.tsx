@@ -150,7 +150,7 @@ export default function CadastroPage() {
                 PRO-LITE
               </p>
               <p className='text-[9px] text-gray-500 uppercase tracking-widest'>
-                Authentic Board Shop
+                Equipamentos de Surf desde 1984
               </p>
             </div>
           </Link>

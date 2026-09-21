@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Truck, Clock, Package, MapPin, Mail } from 'lucide-react';
+import { company } from '@/lib/config/company';
 
 export const metadata: Metadata = {
   title: 'Prazos de Entrega',
@@ -35,9 +36,7 @@ export default function PrazosEntregaPage() {
 
           <div className='space-y-4 text-gray-700 leading-relaxed'>
             <div className='flex gap-3'>
-              <span className='text-brand font-bold text-sm mt-0.5'>
-                I.
-              </span>
+              <span className='text-brand font-bold text-sm mt-0.5'>I.</span>
               <p>
                 Após a confirmação do pagamento, o prazo para expedir os
                 produtos é de até <strong>24 horas úteis</strong>.
@@ -45,16 +44,12 @@ export default function PrazosEntregaPage() {
             </div>
 
             <div className='flex gap-3'>
-              <span className='text-brand font-bold text-sm mt-0.5'>
-                II.
-              </span>
+              <span className='text-brand font-bold text-sm mt-0.5'>II.</span>
               <p>Não é possível agendar data e horário para entregas.</p>
             </div>
 
             <div className='flex gap-3'>
-              <span className='text-brand font-bold text-sm mt-0.5'>
-                III.
-              </span>
+              <span className='text-brand font-bold text-sm mt-0.5'>III.</span>
               <p>
                 O recebimento da mercadoria pode ser realizado por terceiros,
                 como porteiros de condomínios e familiares, desde que assinem o
@@ -63,9 +58,7 @@ export default function PrazosEntregaPage() {
             </div>
 
             <div className='flex gap-3'>
-              <span className='text-brand font-bold text-sm mt-0.5'>
-                IV.
-              </span>
+              <span className='text-brand font-bold text-sm mt-0.5'>IV.</span>
               <p>
                 As transportadoras normalmente realizam até{' '}
                 <strong>três tentativas de entrega</strong> em dias úteis. Após
@@ -76,9 +69,7 @@ export default function PrazosEntregaPage() {
             </div>
 
             <div className='flex gap-3'>
-              <span className='text-brand font-bold text-sm mt-0.5'>
-                V.
-              </span>
+              <span className='text-brand font-bold text-sm mt-0.5'>V.</span>
               <p>
                 Entregamos em <strong>todo o território nacional</strong>.
               </p>
@@ -113,9 +104,8 @@ export default function PrazosEntregaPage() {
               <strong>Exceção — Pranchas de Surf:</strong> Por tratar-se de
               grandes volumes, as pranchas possuem um custo de frete
               diferenciado. Estas terão um valor fixo por região como frete mais
-              acessível, sendo que parte do mesmo será subsidiado pela Surfers
-              Paradise, além de outras opções de transportadoras à escolha do
-              cliente.
+              acessível, sendo que parte do mesmo será subsidiado pela Pro-Lite,
+              além de outras opções de transportadoras à escolha do cliente.
             </p>
           </div>
 
@@ -244,19 +234,19 @@ export default function PrazosEntregaPage() {
           <p className='text-sm text-gray-500'>
             Entre em contato pelo WhatsApp{' '}
             <a
-              href='https://wa.me/5511947169003'
+              href={`https://wa.me/${company.whatsapp}`}
               target='_blank'
               rel='noopener noreferrer'
               className='text-brand hover:underline font-medium'
             >
-              (11) 94716-9003
+              {company.whatsappDisplay}
             </a>{' '}
             ou pelo e-mail{' '}
             <a
-              href='mailto:contato@surfersparadise.com.br'
+              href={`mailto:${company.email}`}
               className='text-brand hover:underline font-medium'
             >
-              contato@surfersparadise.com.br
+              {company.email}
             </a>
           </p>
         </div>

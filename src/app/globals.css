@@ -23,14 +23,14 @@
    hex literal, porque clientes de e-mail não suportam CSS variables.
    ============================================================ */
 @theme {
-  /* Azul Pro-Lite (primária) — amostrado do logo: #0F89F5 */
-  --color-brand: #0f89f5;
-  --color-brand-dark: #0b6fcc; /* hover de botões; texto AA sobre branco (5.0:1) */
-  --color-brand-darker: #08508f; /* texto sobre fundos brand-50/100 */
+  /* Azul Pro-Lite (primária): #1E90FF */
+  --color-brand: #1e90ff;
+  --color-brand-dark: #1570cf; /* hover de botões; texto AA sobre branco (4.9:1) */
+  --color-brand-darker: #0c4f94; /* texto sobre fundos brand-50/100 */
   --color-brand-50: #eff7ff;
-  --color-brand-100: #dbedfe;
-  --color-brand-200: #b9dcfd;
-  --color-brand-300: #6bb6f9;
+  --color-brand-100: #e0efff;
+  --color-brand-200: #c0e0ff;
+  --color-brand-300: #78bcff;
 
   /* Chumbo (secundária) — substitui o preto #1A1A1A / gray-900 */
   --color-chumbo: #2d2f34;

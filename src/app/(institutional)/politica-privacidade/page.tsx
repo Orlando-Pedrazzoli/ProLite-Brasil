@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { company, getFormattedAddress } from '@/lib/config/company';
 
 export const metadata: Metadata = {
   title: 'Política de Privacidade',
@@ -84,10 +85,9 @@ export default function PoliticaPrivacidadePage() {
         <p>
           Os números de cartões de crédito fornecidos durante o processo de
           compra são registrados diretamente no banco de dados das
-          administradoras de cartão (Pagar.me),{' '}
+          administradoras de cartão (Mercado Pago),{' '}
           <strong>
-            não permitindo o acesso a essas informações por parte da Surfers
-            Paradise
+            não permitindo o acesso a essas informações por parte da Pro-Lite
           </strong>
           .
         </p>
@@ -127,19 +127,19 @@ export default function PoliticaPrivacidadePage() {
           Para exercer qualquer um desses direitos, entre em contato conosco
           pelo e-mail{' '}
           <a
-            href='mailto:contato@surfersparadise.com.br'
+            href={`mailto:${company.email}`}
             className='text-brand hover:underline'
           >
-            contato@surfersparadise.com.br
+            {company.email}
           </a>{' '}
           ou pelo WhatsApp{' '}
           <a
-            href='https://wa.me/5511947169003'
+            href={`https://wa.me/${company.whatsapp}`}
             target='_blank'
             rel='noopener noreferrer'
             className='text-brand hover:underline'
           >
-            (11) 94716-9003
+            {company.whatsappDisplay}
           </a>
           .
         </p>
@@ -157,13 +157,15 @@ export default function PoliticaPrivacidadePage() {
 
         <div className='bg-gray-50 rounded-lg p-6 mt-8'>
           <p className='text-sm text-gray-600'>
-            <strong>Pro-Lite</strong>
+            <strong>{company.name}</strong> — marca da {company.tradeName}
             <br />
-            Alameda dos Maracatins, 1317 — Indianópolis, São Paulo - SP
+            {company.legalName} · CNPJ {company.cnpj}
             <br />
-            contato@surfersparadise.com.br | (11) 94716-9003
+            {getFormattedAddress()}
             <br />
-            Última atualização: Abril de 2026
+            {company.email} | {company.whatsappDisplay}
+            <br />
+            Última atualização: Setembro de 2026
           </p>
         </div>
       </div>

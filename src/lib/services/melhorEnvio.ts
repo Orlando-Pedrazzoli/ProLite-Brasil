@@ -36,7 +36,7 @@ const BASE_URL = IS_SANDBOX
 const TOKEN = process.env.MELHOR_ENVIO_TOKEN;
 const USER_AGENT =
   process.env.MELHOR_ENVIO_USER_AGENT ||
-  'SurfersParadise (lojasurfersparadiseoficial@gmail.com)';
+  'Pro-Lite (atendimento@maosacessorios.com.br)';
 const FROM_CEP = (process.env.MELHOR_ENVIO_FROM_CEP || '').replace(/\D/g, '');
 
 // ─────────────────────────────────────────────

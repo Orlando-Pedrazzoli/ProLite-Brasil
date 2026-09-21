@@ -1,6 +1,6 @@
 // 📄 src/app/admin/pedidos/page.tsx
 // v2 (GAP 1): card <MelhorEnvioBalance /> no topo — saldo da carteira com
-//     alerta abaixo de R$ 20 e recarga via PIX (operação da Adriana).
+//     alerta abaixo de R$ 20 e recarga via PIX (operação da loja).
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';

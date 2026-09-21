@@ -1,6 +1,6 @@
 // 📄 src/lib/services/email.ts
 // Envio de e-mails transacionais via Resend.
-// Env: RESEND_API_KEY, EMAIL_FROM (ex: "Pro-Lite <noreply@send.surfersparadise.com.br>")
+// Env: RESEND_API_KEY, EMAIL_FROM (ex: "Pro-Lite <noreply@maosacessorios.com.br>")
 // Mesmas exports da versão nodemailer — nenhum consumidor precisa mudar.
 //
 // v2: sendOrderConfirmation enriquecido — busca o pedido pelo orderNumber e
@@ -111,7 +111,7 @@ function shell(content: string, width = 600): string {
       ${content}
       <div style="background:#fafafa;padding:18px 24px;border-top:1px solid #eee;text-align:center;">
         <p style="margin:0;color:#9ca3af;font-size:11px;">
-          ${company.name} · ${company.email} · ${company.whatsapp}
+          ${company.name} · ${company.email} · WhatsApp ${company.whatsappDisplay}
         </p>
       </div>
     </div>
@@ -128,8 +128,8 @@ export async function sendOtpEmail(to: string, code: string): Promise<boolean> {
       `
       <div style="padding:32px 28px;text-align:center;">
         <p style="margin:0 0 16px;color:#4b5563;font-size:15px;">Seu código de verificação:</p>
-        <div style="display:inline-block;background:#EFF7FF;border:2px dashed #0F89F5;border-radius:12px;padding:16px 32px;">
-          <span style="font-size:32px;font-weight:800;color:#0F89F5;letter-spacing:8px;">${code}</span>
+        <div style="display:inline-block;background:#EFF7FF;border:2px dashed #1E90FF;border-radius:12px;padding:16px 32px;">
+          <span style="font-size:32px;font-weight:800;color:#1E90FF;letter-spacing:8px;">${code}</span>
         </div>
         <p style="margin:20px 0 0;color:#9ca3af;font-size:12px;">
           O código expira em alguns minutos. Se você não solicitou, ignore este e-mail.
@@ -243,7 +243,7 @@ function customerConfirmationEmail(
         </p>
         ${detailsHtml}
         <div style="text-align:center;margin:28px 0 0;">
-          <a href="${orderUrl}" style="display:inline-block;background:#0F89F5;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
+          <a href="${orderUrl}" style="display:inline-block;background:#1E90FF;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
             Acompanhar pedido
           </a>
         </div>
@@ -420,8 +420,8 @@ export async function sendOrderStatusUpdate(
       ? `
       <div style="text-align:center;margin:20px 0;">
         <p style="margin:0 0 6px;color:#6b7280;font-size:13px;">Código de rastreio:</p>
-        <div style="display:inline-block;background:#EFF7FF;border:2px dashed #0F89F5;border-radius:10px;padding:12px 24px;">
-          <span style="font-size:18px;font-weight:800;color:#0F89F5;letter-spacing:2px;">${trackingCode}</span>
+        <div style="display:inline-block;background:#EFF7FF;border:2px dashed #1E90FF;border-radius:10px;padding:12px 24px;">
+          <span style="font-size:18px;font-weight:800;color:#1E90FF;letter-spacing:2px;">${trackingCode}</span>
         </div>
       </div>`
       : '';
@@ -437,7 +437,7 @@ export async function sendOrderStatusUpdate(
         </p>
         ${trackingHtml}
         <div style="text-align:center;margin:24px 0 0;">
-          <a href="${company.url}/meus-pedidos" style="display:inline-block;background:#0F89F5;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
+          <a href="${company.url}/meus-pedidos" style="display:inline-block;background:#1E90FF;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
             Ver meu pedido
           </a>
         </div>
@@ -531,7 +531,7 @@ export async function sendContactAutoReply(
         </p>
         <div style="text-align:center;">
           <a href="https://wa.me/${company.whatsapp}" style="display:inline-block;background:#25D366;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
-            WhatsApp ${company.phone}
+            WhatsApp ${company.whatsappDisplay}
           </a>
         </div>
       </div>`),
@@ -563,15 +563,15 @@ export async function sendNewsletterWelcome(
           <strong>${discountPercent}% de desconto</strong> na primeira compra:
         </p>
         <div style="text-align:center;margin:24px 0;">
-          <div style="display:inline-block;border:2px dashed #0F89F5;border-radius:12px;padding:18px 32px;background:#EFF7FF;">
-            <span style="font-size:28px;font-weight:800;color:#0F89F5;letter-spacing:3px;">${couponCode}</span>
+          <div style="display:inline-block;border:2px dashed #1E90FF;border-radius:12px;padding:18px 32px;background:#EFF7FF;">
+            <span style="font-size:28px;font-weight:800;color:#1E90FF;letter-spacing:3px;">${couponCode}</span>
           </div>
         </div>
         <p style="margin:0 0 24px;color:#6b7280;font-size:13px;text-align:center;">
           Válido até <strong>${validUntilStr}</strong> · uso único · aplique no carrinho
         </p>
         <div style="text-align:center;">
-          <a href="${shopUrl}" style="display:inline-block;background:#0F89F5;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
+          <a href="${shopUrl}" style="display:inline-block;background:#1E90FF;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
             Comprar agora
           </a>
         </div>

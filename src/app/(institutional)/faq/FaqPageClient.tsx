@@ -12,6 +12,7 @@ import {
   Shield,
   HelpCircle,
 } from 'lucide-react';
+import { company, getFormattedAddress } from '@/lib/config/company';
 
 interface FAQItem {
   question: string;
@@ -47,17 +48,16 @@ const faqData: FAQCategory[] = [
       {
         question: 'Os produtos são originais?',
         answer:
-          'Sim! Todos os nossos produtos são 100% originais, de procedência legal, adquiridos diretamente dos fabricantes e distribuidores oficiais. Vendemos com nota fiscal e garantia.',
+          'Sim! Os produtos Pro-Lite são desenvolvidos e fabricados pela Mãos Acessórios em São Paulo, com procedência garantida. Vendemos sempre com nota fiscal e garantia.',
       },
       {
         question: 'Posso alterar ou cancelar um pedido depois de feito?',
-        answer:
-          'Se o pedido ainda não foi expedido, entre em contato conosco pelo WhatsApp (11) 94716-9003 o mais rápido possível e faremos o possível para atender sua solicitação. Após a expedição, será necessário seguir o processo de troca ou devolução.',
+        answer: `Se o pedido ainda não foi expedido, entre em contato conosco pelo WhatsApp ${company.whatsappDisplay} o mais rápido possível e faremos o possível para atender sua solicitação. Após a expedição, será necessário seguir o processo de troca ou devolução.`,
       },
       {
         question: 'Os produtos do site estão em estoque?',
         answer:
-          'Sim! Todos os produtos disponíveis no site encontram-se em nosso estoque físico na loja em Moema, São Paulo, e podem ser despachados imediatamente após a confirmação do pagamento.',
+          'Sim! Os produtos disponíveis para compra no site estão em nosso estoque em São Paulo e são despachados após a confirmação do pagamento.',
       },
     ],
   },
@@ -185,24 +185,21 @@ const faqData: FAQCategory[] = [
     icon: <HelpCircle size={20} className='text-brand' />,
     items: [
       {
-        question: 'A Pro-Lite tem loja física?',
-        answer:
-          'Sim! Estamos localizados na Alameda dos Maracatins, 1317 — Indianópolis, São Paulo - SP. Venha nos visitar!',
+        question: 'Posso retirar meu pedido pessoalmente?',
+        answer: `Sim! No checkout, escolha a opção de retirada e busque seu pedido sem custo de frete na nossa sede: ${getFormattedAddress()}.`,
       },
       {
         question: 'Qual o horário de funcionamento?',
-        answer:
-          'Segunda a Sexta: 10h às 20h | Sábado: 10h às 19h | Domingo: Fechado.',
+        answer: `${company.businessHours}.`,
       },
       {
         question: 'Como entro em contato com vocês?',
-        answer:
-          'Você pode nos contatar pelo WhatsApp (11) 94716-9003, e-mail contato@surfersparadise.com.br, ou visitar nossa loja física em Moema, São Paulo.',
+        answer: `Você pode nos contatar pelo WhatsApp ${company.whatsappDisplay}, pelo e-mail ${company.email} ou pelo formulário da página Fale Conosco.`,
       },
       {
         question: 'Há quanto tempo a Pro-Lite existe?',
         answer:
-          'Somos uma conceituada Board Shop com mais de 28 anos de tradição no mercado de surf, referência em Moema, São Paulo.',
+          'A marca Pro-Lite foi registrada no Brasil em 1984 e há 40 anos projeta e constrói equipamentos de surf. Hoje pertence à Mãos Acessórios, empresa paulistana fundada em 2000 e aprovada com Selo Ouro no Programa ABVTEX.',
       },
     ],
   },
@@ -251,8 +248,7 @@ export default function FAQPage() {
         Perguntas Frequentes
       </h1>
       <p className='text-gray-500 mb-8'>
-        Encontre respostas rápidas para as dúvidas mais comuns sobre a Surfers
-        Paradise.
+        Encontre respostas rápidas para as dúvidas mais comuns sobre a Pro-Lite.
       </p>
 
       <div className='space-y-6'>
@@ -286,7 +282,7 @@ export default function FAQPage() {
         </p>
         <div className='flex flex-col sm:flex-row items-center justify-center gap-3'>
           <a
-            href='https://wa.me/5511947169003'
+            href={`https://wa.me/${company.whatsapp}`}
             target='_blank'
             rel='noopener noreferrer'
             className='px-6 py-2.5 bg-[#25D366] text-white font-bold text-sm rounded-md hover:bg-[#20bd5a] transition-colors inline-flex items-center gap-2'
@@ -294,7 +290,7 @@ export default function FAQPage() {
             💬 WhatsApp
           </a>
           <a
-            href='mailto:contato@surfersparadise.com.br'
+            href={`mailto:${company.email}`}
             className='px-6 py-2.5 bg-brand text-white font-bold text-sm rounded-md hover:bg-brand-dark transition-colors inline-flex items-center gap-2'
           >
             ✉ Enviar E-mail

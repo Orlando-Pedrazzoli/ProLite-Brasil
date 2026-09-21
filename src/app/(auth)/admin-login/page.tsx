@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
                 PRO-LITE
               </p>
               <p className='text-[10px] text-gray-400 uppercase tracking-widest'>
-                Authentic Board Shop
+                Equipamentos de Surf desde 1984
               </p>
             </div>
           </Link>
@@ -111,7 +111,7 @@ export default function AdminLoginPage() {
                   onChange={e => setEmail(e.target.value)}
                   required
                   className='w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-shadow'
-                  placeholder='admin@surfersparadise.com.br'
+                  placeholder='admin@maosacessorios.com.br'
                 />
               </div>
             </div>

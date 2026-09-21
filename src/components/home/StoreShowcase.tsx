@@ -86,34 +86,29 @@ export default function StoreShowcase() {
           <div>
             <p className='text-[11px] font-bold text-brand uppercase tracking-widest mb-2'>
               <Store size={12} className='inline -mt-0.5 mr-1.5' />
-              Loja física em {company.address.city} - {company.address.state}
+              Fabricação própria em {company.address.city} -{' '}
+              {company.address.state}
             </p>
             <h2 className='text-3xl md:text-4xl font-black text-gray-900 mb-4'>
               Nós somos a Pro-Lite
             </h2>
             <p className='text-gray-600 leading-relaxed mb-3'>
-              Há mais de <strong>20 anos</strong> no mercado de acessórios e
-              equipamentos para o surf, a Pro-Lite nasceu da paixão de quem vive
-              o esporte dentro e fora d&apos;água. Mais do que uma loja, somos
-              um ponto de encontro de surfistas — do iniciante escolhendo a
-              primeira prancha ao atleta em busca do quilhame perfeito.
+              Há <strong>40 anos</strong> a Pro-Lite projeta e constrói
+              equipamentos de surf no Brasil. Registrada em 1984, a marca é hoje
+              da <strong>{company.tradeName}</strong>, empresa paulistana
+              fundada em 2000 que desenvolve e fabrica os produtos em São Paulo.
             </p>
             <p className='text-gray-600 leading-relaxed mb-6'>
-              Aqui você encontra as melhores marcas do surf mundial —{' '}
-              <strong>
-                FCS, Futures, Rip Curl, O&apos;Neill, Hurley, Vissla
-              </strong>{' '}
-              e muito mais — em quilhas, wetsuits, decks, leashes, capas e
-              acessórios, com atendimento de quem realmente surfa.
+              Capas e leashes são os pilares da marca, ao lado de decks,
+              quilhas, parafinas e acessórios — com produção aprovada com{' '}
+              <strong>{company.certification.abvtex.label}</strong>, programa de
+              auditoria independente da cadeia de moda brasileira.
             </p>
 
             {/* Info da loja (fonte única: company.ts) */}
             <div className='space-y-3 mb-6'>
               <div className='flex items-start gap-3'>
-                <MapPin
-                  size={18}
-                  className='text-brand mt-0.5 flex-shrink-0'
-                />
+                <MapPin size={18} className='text-brand mt-0.5 flex-shrink-0' />
                 <p className='text-sm text-gray-700'>
                   {company.address.street}, {company.address.number} —{' '}
                   {company.address.neighborhood}, {company.address.city} -{' '}
@@ -121,24 +116,18 @@ export default function StoreShowcase() {
                 </p>
               </div>
               <div className='flex items-start gap-3'>
-                <Clock
-                  size={18}
-                  className='text-brand mt-0.5 flex-shrink-0'
-                />
+                <Clock size={18} className='text-brand mt-0.5 flex-shrink-0' />
                 <p className='text-sm text-gray-700'>{company.businessHours}</p>
               </div>
               <div className='flex items-start gap-3'>
-                <Phone
-                  size={18}
-                  className='text-brand mt-0.5 flex-shrink-0'
-                />
+                <Phone size={18} className='text-brand mt-0.5 flex-shrink-0' />
                 <a
                   href={`https://wa.me/${company.whatsapp}`}
                   target='_blank'
                   rel='noopener noreferrer'
                   className='text-sm text-gray-700 hover:text-brand transition-colors'
                 >
-                  {company.phone} (WhatsApp)
+                  {company.whatsappDisplay} (WhatsApp)
                 </a>
               </div>
             </div>
@@ -146,7 +135,7 @@ export default function StoreShowcase() {
             {/* Badge retirada na loja — integra com o checkout */}
             <p className='inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-800 text-xs font-semibold px-3 py-2 rounded-md mb-6'>
               <Store size={14} />
-              Compre no site e retire na loja sem pagar frete!
+              Compre no site e retire na nossa sede sem pagar frete!
             </p>
 
             {/* CTAs */}

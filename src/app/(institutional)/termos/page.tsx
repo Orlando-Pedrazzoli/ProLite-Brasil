@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { company, getFormattedAddress } from '@/lib/config/company';
 
 export const metadata: Metadata = {
   title: 'Termos de Uso',
@@ -22,8 +23,8 @@ export default function TermosPage() {
 
       <div className='prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed'>
         <p className='text-lg font-medium text-gray-900'>
-          Ao navegar e utilizar o site surfersparadise.com.br, você concorda com
-          os Termos de Uso descritos abaixo. Leia atentamente antes de realizar
+          Ao navegar e utilizar o site prolite.com.br, você concorda com os
+          Termos de Uso descritos abaixo. Leia atentamente antes de realizar
           qualquer compra.
         </p>
 
@@ -48,8 +49,8 @@ export default function TermosPage() {
           Para realizar compras em nosso site, pode ser necessário criar uma
           conta fornecendo informações pessoais verdadeiras, completas e
           atualizadas. O usuário é responsável por manter a confidencialidade da
-          sua senha e por todas as atividades realizadas em sua conta. A Surfers
-          Paradise não se responsabiliza por acessos não autorizados decorrentes
+          sua senha e por todas as atividades realizadas em sua conta. A
+          Pro-Lite não se responsabiliza por acessos não autorizados decorrentes
           do compartilhamento de credenciais por parte do usuário.
         </p>
 
@@ -122,8 +123,8 @@ export default function TermosPage() {
         </h2>
 
         <p>
-          Todo o conteúdo do site surfersparadise.com.br, incluindo textos,
-          imagens, logotipos, ícones, fotografias, vídeos, layout e design, é de
+          Todo o conteúdo do site prolite.com.br, incluindo textos, imagens,
+          logotipos, ícones, fotografias, vídeos, layout e design, é de
           propriedade da Pro-Lite ou de seus fornecedores e está protegido pelas
           leis brasileiras de direitos autorais (Lei nº 9.610/98) e de
           propriedade industrial. É proibida a reprodução, distribuição ou
@@ -216,13 +217,15 @@ export default function TermosPage() {
 
         <div className='bg-gray-50 rounded-lg p-6 mt-8'>
           <p className='text-sm text-gray-600'>
-            <strong>Pro-Lite</strong>
+            <strong>{company.name}</strong> — marca da {company.tradeName}
             <br />
-            Alameda dos Maracatins, 1317 — Indianópolis, São Paulo - SP
+            {company.legalName} · CNPJ {company.cnpj}
             <br />
-            contato@surfersparadise.com.br | (11) 94716-9003
+            {getFormattedAddress()}
             <br />
-            Última atualização: Abril de 2026
+            {company.email} | {company.whatsappDisplay}
+            <br />
+            Última atualização: Setembro de 2026
           </p>
         </div>
       </div>

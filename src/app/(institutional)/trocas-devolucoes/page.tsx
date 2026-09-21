@@ -10,6 +10,7 @@ import {
   WrenchIcon,
   Banknote,
 } from 'lucide-react';
+import { company } from '@/lib/config/company';
 
 export const metadata: Metadata = {
   title: 'Garantia, Trocas e Devoluções',
@@ -43,19 +44,19 @@ export default function TrocasDevolucoesPAge() {
           As ocorrências que envolvam troca ou devolução devem ser comunicadas à
           nossa Central de Atendimento:{' '}
           <a
-            href='mailto:contato@surfersparadise.com.br'
+            href={`mailto:${company.email}`}
             className='text-brand hover:underline font-medium'
           >
-            contato@surfersparadise.com.br
+            {company.email}
           </a>{' '}
           ou WhatsApp{' '}
           <a
-            href='https://wa.me/5511947169003'
+            href={`https://wa.me/${company.whatsapp}`}
             target='_blank'
             rel='noopener noreferrer'
             className='text-brand hover:underline font-medium'
           >
-            (11) 94716-9003
+            {company.whatsappDisplay}
           </a>
           .
         </p>
@@ -299,19 +300,19 @@ export default function TrocasDevolucoesPAge() {
           <p className='text-sm text-gray-500'>
             Entre em contato pelo WhatsApp{' '}
             <a
-              href='https://wa.me/5511947169003'
+              href={`https://wa.me/${company.whatsapp}`}
               target='_blank'
               rel='noopener noreferrer'
               className='text-brand hover:underline font-medium'
             >
-              (11) 94716-9003
+              {company.whatsappDisplay}
             </a>{' '}
             ou pelo e-mail{' '}
             <a
-              href='mailto:contato@surfersparadise.com.br'
+              href={`mailto:${company.email}`}
               className='text-brand hover:underline font-medium'
             >
-              contato@surfersparadise.com.br
+              {company.email}
             </a>
           </p>
         </div>
