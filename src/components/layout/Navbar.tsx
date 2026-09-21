@@ -234,25 +234,20 @@ export default function Navbar() {
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
-            <Link href='/' className='flex-shrink-0'>
-              <div className='flex items-center gap-2'>
-                <Image
-                  src='/images/logo-navbar.png'
-                  alt='Pro-Lite'
-                  width={56}
-                  height={56}
-                  className='w-12 h-12 md:w-14 md:h-14 object-contain'
-                />
-                {/* Wordmark provisório em texto, até chegar o logotipo
-                    horizontal oficial da Pro-Lite em SVG/PNG transparente.
-                    Nessa altura, trocar este <span> por um <Image>. */}
-                <span
-                  className='hidden sm:block text-xl md:text-2xl font-black italic uppercase tracking-tight text-chumbo leading-none'
-                  style={{ color: 'var(--color-chumbo)' }}
-                >
-                  Pro-Lite
-                </span>
-              </div>
+            <Link
+              href='/'
+              className='flex-shrink-0'
+              aria-label='Pro-Lite — página inicial'
+            >
+              <Image
+                src='/images/logo_nav_origin.png'
+                alt='Pro-Lite'
+                width={5246}
+                height={1094}
+                priority
+                sizes='(min-width: 768px) 212px, 154px'
+                className='h-8 md:h-11 w-auto object-contain'
+              />
             </Link>
 
             <form

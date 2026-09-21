@@ -20,7 +20,7 @@ export default function AnnouncementBar() {
   }, []);
 
   return (
-    <div className='bg-brand text-white py-2 px-4 text-xs sm:text-sm font-medium'>
+    <div className='bg-chumbo text-white py-2 px-4 text-xs sm:text-sm font-medium'>
       <div className='max-w-7xl mx-auto flex items-center justify-between'>
         {/* Spacer for centering on desktop */}
         <div className='hidden md:block w-16' />
