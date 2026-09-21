@@ -5,7 +5,7 @@
 // contato, páginas institucionais, checkout, cupom, e-mails) lê daqui.
 export const company = {
   name: 'Pro-Lite',
-  tradeName: 'Mãos Acessórios',
+  tradeName: 'Maos Acessórios',
   legalName:
     'MAOS Confecção, Comércio, Importação e Exportação de Acessórios Ltda.',
   slogan: '40 anos projetando e construindo os melhores equipamentos de surf',
