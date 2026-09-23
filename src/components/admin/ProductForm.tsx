@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import QuickBrandModal from './QuickBrandModal';
 import QuickCategoryModal from './QuickCategoryModal';
+import { prepareImageUpload } from '@/lib/utils/prepareImageUpload';
 
 // ═══════════════════════════════════════════════════════════════
 // CONSTANTES GERAIS
@@ -647,23 +648,39 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+    const input = e.target;
+    const files = input.files;
+    if (!files || files.length === 0) return;
     setUploading(true);
     const newImages: string[] = [];
-    for (const file of Array.from(files)) {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('folder', 'prolite-brasil/products');
+    for (const original of Array.from(files)) {
       try {
+        const file = await prepareImageUpload(original);
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('folder', 'prolite-brasil/products');
         const res = await fetch('/api/upload', {
           method: 'POST',
           body: formData,
         });
-        const data = await res.json();
-        if (data.success) newImages.push(data.url);
+        // 413 da Vercel devolve texto/HTML, não JSON — tratar antes do .json()
+        const contentType = res.headers.get('content-type') || '';
+        const data = contentType.includes('application/json')
+          ? await res.json()
+          : {
+              success: false,
+              error:
+                res.status === 413
+                  ? 'Ficheiro demasiado grande'
+                  : `Erro ${res.status}`,
+            };
+        if (res.ok && data.success && data.url) {
+          newImages.push(data.url);
+        } else {
+          toast.error(`${original.name}: ${data.error || 'falha no upload'}`);
+        }
       } catch {
-        toast.error(`Erro ao enviar ${file.name}`);
+        toast.error(`Erro ao enviar ${original.name}`);
       }
     }
     setForm(prev => ({
@@ -672,6 +689,8 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
       thumbnail: prev.thumbnail || newImages[0] || '',
     }));
     setUploading(false);
+    // Permite voltar a escolher o mesmo ficheiro após um erro
+    input.value = '';
     if (newImages.length > 0) {
       toast.success(
         `${newImages.length} imagem${newImages.length > 1 ? 'ns' : ''} enviada${newImages.length > 1 ? 's' : ''}!`,
@@ -1660,7 +1679,7 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
               </span>
               <input
                 type='file'
-                accept='image/*'
+                accept='image/*,.heic,.heif,.avif,.jfif'
                 multiple
                 onChange={handleImageUpload}
                 disabled={uploading}
