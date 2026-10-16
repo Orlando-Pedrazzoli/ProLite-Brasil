@@ -13,6 +13,7 @@ import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import HeroBanner from '@/components/home/HeroBanner';
 import ShopByCategory from '@/components/home/ShopByCategory';
+import CategoryBento from '@/components/home/CategoryBento';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
 import ImageBanner from '@/components/home/ImageBanner';
 import PromoBanners from '@/components/home/PromoBanners';
@@ -30,7 +31,9 @@ export default function Home() {
       <main>
         <HeroBanner />
         <ShopByCategory />
+        <CategoryBento />
         <FeaturedProducts
+          eyebrow='Acabou de chegar'
           title='Novidades'
           fetchUrl='/api/products?limit=8&sort=-createdAt&isActive=true&isNewArrival=true'
         />
@@ -40,6 +43,7 @@ export default function Home() {
 
         <PromoBanners />
         <FeaturedProducts
+          eyebrow='Encaixe FCS II e Futures'
           title='Quilhas'
           fetchUrl='/api/products?limit=10&sort=-createdAt&isActive=true&categorySlug=quilhas'
         />

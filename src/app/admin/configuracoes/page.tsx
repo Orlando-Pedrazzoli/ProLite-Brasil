@@ -4,29 +4,55 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { Plus, Pencil, Trash2, Image as ImageIcon, Upload } from 'lucide-react';
+import {
+  BENTO_SLOTS,
+  BENTO_SIZE_HINTS,
+  getBentoSlot,
+  type BentoSlot,
+} from '@/lib/config/bentoSlots';
 
 interface BannerItem {
   _id: string;
   title: string;
+  subtitle?: string;
   image: string;
   mobileImage: string;
   link: string;
   position: string;
+  slot?: BentoSlot;
   order: number;
   isActive: boolean;
   startDate?: string;
   endDate?: string;
 }
 
+// A posição 'brand' foi removida — a Pro-Lite é marca única.
 const POSITIONS = [
   { value: 'hero', label: 'Hero Carousel (topo)' },
+  {
+    value: 'bento',
+    label: 'Bento de categorias (5 cards — abaixo de "Compre por categoria")',
+  },
   {
     value: 'mid_promo',
     label: 'Promo (meio da página — 2 banners lado a lado)',
   },
   { value: 'category', label: 'Categoria (3 banners — Deck, Leash, Capa)' },
-  { value: 'brand', label: 'Marca' },
 ];
+
+const EMPTY_FORM = {
+  title: '',
+  subtitle: '',
+  image: '',
+  mobileImage: '',
+  link: '',
+  position: 'hero' as string,
+  slot: '' as string,
+  order: 0,
+  isActive: true,
+  startDate: '',
+  endDate: '',
+};
 
 export default function AdminConfiguracoesPage() {
   const [banners, setBanners] = useState<BannerItem[]>([]);
@@ -36,17 +62,10 @@ export default function AdminConfiguracoesPage() {
   const [uploadingDesktop, setUploadingDesktop] = useState(false);
   const [uploadingMobile, setUploadingMobile] = useState(false);
 
-  const [form, setForm] = useState({
-    title: '',
-    image: '',
-    mobileImage: '',
-    link: '',
-    position: 'hero' as string,
-    order: 0,
-    isActive: true,
-    startDate: '',
-    endDate: '',
-  });
+  const [form, setForm] = useState(EMPTY_FORM);
+
+  const isBento = form.position === 'bento';
+  const activeSlot = getBentoSlot(form.slot);
 
   const fetchBanners = async () => {
     try {
@@ -107,8 +126,19 @@ export default function AdminConfiguracoesPage() {
       return;
     }
 
+    if (isBento && !activeSlot) {
+      toast.error('Escolhe qual card do bento este banner ocupa');
+      return;
+    }
+
     const payload = {
       ...form,
+      // No bento o link e a ordem são fixos pelo slot — o admin não os edita
+      link: isBento && activeSlot ? activeSlot.href : form.link,
+      order: isBento
+        ? BENTO_SLOTS.findIndex(s => s.slot === form.slot)
+        : form.order,
+      slot: isBento ? form.slot : undefined,
       startDate: form.startDate || undefined,
       endDate: form.endDate || undefined,
     };
@@ -141,10 +171,12 @@ export default function AdminConfiguracoesPage() {
     setEditingId(banner._id);
     setForm({
       title: banner.title,
+      subtitle: banner.subtitle || '',
       image: banner.image,
       mobileImage: banner.mobileImage || '',
       link: banner.link || '',
       position: banner.position,
+      slot: banner.slot || '',
       order: banner.order,
       isActive: banner.isActive,
       startDate: banner.startDate
@@ -155,6 +187,7 @@ export default function AdminConfiguracoesPage() {
         : '',
     });
     setShowForm(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleDelete = async (id: string, title: string) => {
@@ -178,17 +211,7 @@ export default function AdminConfiguracoesPage() {
   const resetForm = () => {
     setEditingId(null);
     setShowForm(false);
-    setForm({
-      title: '',
-      image: '',
-      mobileImage: '',
-      link: '',
-      position: 'hero',
-      order: 0,
-      isActive: true,
-      startDate: '',
-      endDate: '',
-    });
+    setForm(EMPTY_FORM);
   };
 
   const groupedBanners = POSITIONS.map(pos => ({
@@ -198,6 +221,16 @@ export default function AdminConfiguracoesPage() {
 
   // ─── Recommended sizes per position ────────────────────────
   const getSizeHints = (position: string) => {
+    if (position === 'bento') {
+      // Medidas dependem do card escolhido (wide vs narrow)
+      if (!activeSlot) {
+        return {
+          desktop: 'escolhe primeiro o card para ver as medidas',
+          mobile: 'escolhe primeiro o card para ver as medidas',
+        };
+      }
+      return BENTO_SIZE_HINTS[activeSlot.size];
+    }
     switch (position) {
       case 'hero':
         return {
@@ -213,11 +246,6 @@ export default function AdminConfiguracoesPage() {
         return {
           desktop: '640×400 px — 1.6:1 (JPG/WebP, ≤150 KB)',
           mobile: '600×400 px — 1.5:1 (JPG/WebP, ≤120 KB)',
-        };
-      case 'brand':
-        return {
-          desktop: '400×200 px — 2:1 (PNG transparente preferido)',
-          mobile: '400×200 px — 2:1 (PNG transparente preferido)',
         };
       default:
         return {
@@ -269,7 +297,12 @@ export default function AdminConfiguracoesPage() {
                   value={form.title}
                   onChange={e => setForm({ ...form, title: e.target.value })}
                   required
-                  placeholder='Ex: Quilhas FCS II Gabriel Medina'
+                  placeholder={
+                    isBento
+                      ? activeSlot?.defaultTitle ||
+                        'Ex: Proteção total para a sua prancha'
+                      : 'Ex: Quilhas FCS II Gabriel Medina'
+                  }
                   className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
                 />
               </div>
@@ -280,7 +313,13 @@ export default function AdminConfiguracoesPage() {
                 </label>
                 <select
                   value={form.position}
-                  onChange={e => setForm({ ...form, position: e.target.value })}
+                  onChange={e =>
+                    setForm({
+                      ...form,
+                      position: e.target.value,
+                      slot: e.target.value === 'bento' ? form.slot : '',
+                    })
+                  }
                   className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
                 >
                   {POSITIONS.map(pos => (
@@ -291,36 +330,108 @@ export default function AdminConfiguracoesPage() {
                 </select>
               </div>
 
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
-                  Link (URL ao clicar)
-                </label>
-                <input
-                  type='text'
-                  value={form.link}
-                  onChange={e => setForm({ ...form, link: e.target.value })}
-                  placeholder='/categoria/quilhas ou URL externa'
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                />
-              </div>
+              {isBento ? (
+                <>
+                  {/* ───── BENTO: card fixo (slot) ───── */}
+                  <div>
+                    <label className='block text-sm font-medium text-gray-700 mb-1'>
+                      Card do bento *
+                    </label>
+                    <select
+                      value={form.slot}
+                      onChange={e => setForm({ ...form, slot: e.target.value })}
+                      required
+                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    >
+                      <option value=''>— escolhe o card —</option>
+                      {BENTO_SLOTS.map((s, i) => (
+                        <option key={s.slot} value={s.slot}>
+                          {i + 1}. {s.label} —{' '}
+                          {s.size === 'wide' ? 'card largo' : 'card estreito'}
+                        </option>
+                      ))}
+                    </select>
+                    <p className='text-xs text-gray-500 mt-1'>
+                      Link fixo:{' '}
+                      <span className='font-mono'>
+                        {activeSlot ? activeSlot.href : '—'}
+                      </span>
+                    </p>
+                  </div>
 
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
-                  Ordem
-                </label>
-                <input
-                  type='number'
-                  value={form.order}
-                  onChange={e =>
-                    setForm({
-                      ...form,
-                      order: parseInt(e.target.value) || 0,
-                    })
-                  }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                />
-              </div>
+                  <div>
+                    <label className='block text-sm font-medium text-gray-700 mb-1'>
+                      Subtítulo{' '}
+                      <span className='text-gray-400 font-normal'>
+                        (opcional — 1 linha curta)
+                      </span>
+                    </label>
+                    <input
+                      type='text'
+                      value={form.subtitle}
+                      onChange={e =>
+                        setForm({ ...form, subtitle: e.target.value })
+                      }
+                      maxLength={110}
+                      placeholder={
+                        activeSlot?.defaultSubtitle ||
+                        'Ex: Capas refletivas, acolchoadas e de viagem'
+                      }
+                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <label className='block text-sm font-medium text-gray-700 mb-1'>
+                      Link (URL ao clicar)
+                    </label>
+                    <input
+                      type='text'
+                      value={form.link}
+                      onChange={e => setForm({ ...form, link: e.target.value })}
+                      placeholder='/categoria/quilhas ou URL externa'
+                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    />
+                  </div>
+
+                  <div>
+                    <label className='block text-sm font-medium text-gray-700 mb-1'>
+                      Ordem
+                    </label>
+                    <input
+                      type='number'
+                      value={form.order}
+                      onChange={e =>
+                        setForm({
+                          ...form,
+                          order: parseInt(e.target.value) || 0,
+                        })
+                      }
+                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    />
+                  </div>
+                </>
+              )}
             </div>
+
+            {isBento && (
+              <div className='rounded-md border border-blue-100 bg-blue-50 px-4 py-3 text-xs text-blue-900 space-y-1'>
+                <p className='font-semibold'>Como funciona o bento</p>
+                <p>
+                  Cada categoria tem um card fixo na grelha. O{' '}
+                  <strong>Título</strong> é a frase grande do card e o{' '}
+                  <strong>Subtítulo</strong> a linha de apoio. O texto fica
+                  no canto inferior esquerdo sobre um gradiente escuro —
+                  deixa essa zona da foto mais limpa.
+                </p>
+                <p>
+                  Cards 1 e 2 (Capas, Leashes) são paisagem (5:4); cards 3,
+                  4 e 5 (Decks, Quilhas, Acessórios) são retrato (5:6).
+                </p>
+              </div>
+            )}
 
             {/* Desktop Image */}
             <div>
@@ -377,6 +488,12 @@ export default function AdminConfiguracoesPage() {
                   <span className='block text-amber-600 mt-1'>
                     ⚠ Sem imagem mobile, a versão desktop será cortada
                     automaticamente — pode ficar mal enquadrada
+                  </span>
+                )}
+                {isBento && (
+                  <span className='block text-gray-400 mt-1'>
+                    Sem imagem mobile, usa-se a desktop recortada ao
+                    centro (cover) — normalmente fica bem.
                   </span>
                 )}
               </p>
@@ -513,9 +630,15 @@ export default function AdminConfiguracoesPage() {
                       <div>
                         <p className='font-medium'>{banner.title}</p>
                         <div className='flex items-center gap-2 mt-1'>
-                          <span className='text-xs text-gray-400'>
-                            Ordem: {banner.order}
-                          </span>
+                          {banner.position === 'bento' ? (
+                            <span className='text-xs font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded'>
+                              Card: {getBentoSlot(banner.slot)?.label ?? '?'}
+                            </span>
+                          ) : (
+                            <span className='text-xs text-gray-400'>
+                              Ordem: {banner.order}
+                            </span>
+                          )}
                           {banner.link && (
                             <span className='text-xs text-gray-400'>
                               → {banner.link}

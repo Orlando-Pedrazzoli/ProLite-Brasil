@@ -80,16 +80,16 @@ export default function StoreShowcase() {
 
   return (
     <section className='py-10 bg-gray-50'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container-home'>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center'>
           {/* ═══ CONTEÚDO ═══ */}
           <div>
-            <p className='text-[11px] font-bold text-brand uppercase tracking-widest mb-2'>
+            <p className='font-mono text-xs font-semibold text-brand-dark uppercase tracking-[0.2em] mb-2'>
               <Store size={12} className='inline -mt-0.5 mr-1.5' />
               Fabricação própria em {company.address.city} -{' '}
               {company.address.state}
             </p>
-            <h2 className='text-3xl md:text-4xl font-black text-gray-900 mb-4'>
+            <h2 className='text-2xl md:text-3xl font-semibold tracking-tight text-gray-900 mb-4'>
               Nós somos a Pro-Lite
             </h2>
             <p className='text-gray-600 leading-relaxed mb-3'>

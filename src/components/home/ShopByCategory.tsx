@@ -5,6 +5,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import SectionHeading, {
+  SECTION_HEADING_INSET,
+} from '@/components/home/SectionHeading';
 
 // ═══════════════════════════════════════════════════════════════
 // COMPRE POR CATEGORIA
@@ -31,6 +34,7 @@ interface CatalogData {
 }
 
 interface ShopByCategoryProps {
+  eyebrow?: string;
   title?: string;
 }
 
@@ -78,6 +82,7 @@ function CategoryCircle({ category }: { category: Category }) {
 }
 
 export default function ShopByCategory({
+  eyebrow = 'Categorias',
   title = 'Compre por categoria',
 }: ShopByCategoryProps) {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -201,10 +206,8 @@ export default function ShopByCategory({
   if (loading) {
     return (
       <section className='py-8'>
-        <div className='max-w-7xl mx-auto px-4'>
-          <h2 className='text-xl font-bold text-gray-900 mb-6 uppercase'>
-            {title}
-          </h2>
+        <div className='container-home'>
+          <SectionHeading eyebrow={eyebrow} title={title} />
           <div className='flex gap-4 sm:gap-6 overflow-hidden'>
             {[...Array(8)].map((_, i) => (
               <div key={i} className='flex flex-col items-center gap-3'>
@@ -223,16 +226,18 @@ export default function ShopByCategory({
 
   return (
     <section className='py-8'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container-home'>
         {/* Header em duas linhas: título à esquerda em cima,
             toggle centrado embaixo. O wrapper interno com mx-auto
             centra os pills quando cabem e ativa scroll horizontal
             (sem cortar) quando há departamentos a mais. */}
         <div className='mb-6'>
-          <h2 className='text-xl font-bold text-gray-900 uppercase'>{title}</h2>
+          <SectionHeading eyebrow={eyebrow} title={title} className='mb-0' />
 
           {tabs.length > 0 && (
-            <div className='mt-4 flex overflow-x-auto scrollbar-none'>
+            <div
+              className={`mt-6 flex overflow-x-auto scrollbar-none ${SECTION_HEADING_INSET}`}
+            >
               <div className='mx-auto inline-flex gap-1 rounded-full bg-gray-100 p-1'>
                 {tabs.map(tab => (
                   <button

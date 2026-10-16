@@ -56,6 +56,19 @@ html {
   scroll-padding-top: 8rem;
 }
 
+/* ============================================================
+   CONTAINER DA HOME — largura única para todas as secções.
+   Padding lateral de 1rem = gap-4 entre cards do bento, limitado a
+   1920px para não esticar em ultra-wide. Para mudar a largura da home
+   inteira, alterar SÓ aqui. (Navbar/Footer continuam em max-w-7xl.)
+   ============================================================ */
+@utility container-home {
+  width: 100%;
+  max-width: 1920px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
 /* Hide scrollbar utility (cross-browser) */
 @utility scrollbar-none {
   scrollbar-width: none;

@@ -37,6 +37,7 @@ export default function LeashesBanner() {
 
       {/* Carousel de produtos da categoria */}
       <FeaturedProducts
+        eyebrow='Essenciais'
         title='Leashes'
         fetchUrl={`/api/products?limit=${PRODUCTS_LIMIT}&sort=-createdAt&isActive=true&categorySlug=${CATEGORY_SLUG}`}
       />

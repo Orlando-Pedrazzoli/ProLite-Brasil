@@ -37,6 +37,7 @@ export default function CapasRefletivasBanner() {
 
       {/* Carousel de produtos da categoria */}
       <FeaturedProducts
+        eyebrow='Capas'
         title='Capas Refletivas'
         fetchUrl={`/api/products?limit=${PRODUCTS_LIMIT}&sort=-createdAt&isActive=true&categorySlug=${CATEGORY_SLUG}`}
       />
