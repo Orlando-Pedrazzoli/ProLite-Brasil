@@ -39,15 +39,7 @@ export default function Home() {
         />
         <CapasRefletivasBanner />
         <LeashesBanner />
-        <ImageBanner alt='Rip Curl — Pro-Lite' />
 
-        <PromoBanners />
-        <FeaturedProducts
-          eyebrow='Encaixe FCS II e Futures'
-          title='Quilhas'
-          fetchUrl='/api/products?limit=10&sort=-createdAt&isActive=true&categorySlug=quilhas'
-        />
-        <CategoryBanners />
         <StoreShowcase />
         <ReviewsCarousel />
       </main>
