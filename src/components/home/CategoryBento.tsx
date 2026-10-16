@@ -80,12 +80,13 @@ function BentoCard({
         aria-label={`Ver ${config.label}`}
         className={cn(
           'relative block focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brand',
-          // Proporção fixa: wide 2:1 e narrow 4:3 dão a MESMA altura de
-          // linha na grelha (3 col vs 2 col). No mobile (1 coluna) são
-          // todos 4:3. Assim as medidas recomendadas no admin batem
-          // certo em qualquer largura de ecrã.
+          // Proporção fixa (como no original do 21st, cards altos):
+          // wide 5:4 e narrow 5:6 dão a MESMA altura de linha na grelha
+          // (3 col vs 2 col). No mobile (1 coluna) são todos 4:3.
+          // Assim as medidas recomendadas no admin batem certo em
+          // qualquer largura de ecrã.
           'aspect-[4/3]',
-          config.size === 'wide' ? 'lg:aspect-[2/1]' : 'lg:aspect-[4/3]',
+          config.size === 'wide' ? 'lg:aspect-[5/4]' : 'lg:aspect-[5/6]',
         )}
       >
         {/* ───── Imagem (desktop + mobile) ───── */}
@@ -129,7 +130,7 @@ function BentoCard({
         <div className='absolute inset-0 bg-gradient-to-t from-chumbo-dark/95 via-chumbo-dark/40 to-transparent' />
 
         {/* ───── Texto ───── */}
-        <div className='absolute inset-x-0 bottom-0 p-6 md:p-8'>
+        <div className='absolute inset-x-0 bottom-0 p-6 md:p-10'>
           <span className='inline-flex items-center rounded-full bg-brand px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-white'>
             {config.label}
           </span>
@@ -162,8 +163,8 @@ function BentoSkeleton() {
           className={cn(
             'aspect-[4/3] animate-pulse rounded-2xl bg-gray-100',
             s.size === 'wide'
-              ? 'lg:col-span-3 lg:aspect-[2/1]'
-              : 'lg:col-span-2 lg:aspect-[4/3]',
+              ? 'lg:col-span-3 lg:aspect-[5/4]'
+              : 'lg:col-span-2 lg:aspect-[5/6]',
           )}
         />
       ))}

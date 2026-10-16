@@ -427,8 +427,8 @@ export default function AdminConfiguracoesPage() {
                   deixa essa zona da foto mais limpa.
                 </p>
                 <p>
-                  Cards 1 e 2 (Capas, Leashes) são largos (2:1); cards 3, 4 e
-                  5 (Decks, Quilhas, Acessórios) são 4:3.
+                  Cards 1 e 2 (Capas, Leashes) são paisagem (5:4); cards 3,
+                  4 e 5 (Decks, Quilhas, Acessórios) são retrato (5:6).
                 </p>
               </div>
             )}

@@ -83,20 +83,20 @@ export function getBentoSlot(slot: string | undefined | null) {
 // ───── Medidas recomendadas por tamanho de card ─────
 // Os cards têm PROPORÇÃO fixa (não altura fixa), por isso as medidas
 // valem em qualquer largura de ecrã:
-//   • wide   (3/6 colunas) → 2:1   (num ecrã 1920 ≈ 936×468 px)
-//   • narrow (2/6 colunas) → 4:3   (num ecrã 1920 ≈ 618×463 px)
-// Enviar ~1.7× o tamanho exibido para ficar nítido em ecrãs retina.
+//   • wide   (3/6 colunas) → 5:4 paisagem  (num ecrã 1920 ≈ 936×749 px)
+//   • narrow (2/6 colunas) → 5:6 retrato   (num ecrã 1920 ≈ 618×742 px)
+// Enviar ~1.6× o tamanho exibido para ficar nítido em ecrãs retina.
 // No mobile todos os cards são 4:3 em largura total (~360px).
 export const BENTO_SIZE_HINTS: Record<
   BentoSize,
   { desktop: string; mobile: string }
 > = {
   wide: {
-    desktop: '1600×800 px — paisagem 2:1 (JPG/WebP, ≤300 KB)',
+    desktop: '1500×1200 px — paisagem 5:4 (JPG/WebP, ≤350 KB)',
     mobile: '800×600 px — 4:3 (JPG/WebP, ≤150 KB) — opcional',
   },
   narrow: {
-    desktop: '1200×900 px — 4:3 (JPG/WebP, ≤250 KB)',
+    desktop: '1000×1200 px — retrato 5:6 (JPG/WebP, ≤300 KB)',
     mobile: '800×600 px — 4:3 (JPG/WebP, ≤150 KB) — opcional',
   },
 };
