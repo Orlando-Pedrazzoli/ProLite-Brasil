@@ -89,7 +89,7 @@ export default function StoreShowcase() {
               Fabricação própria em {company.address.city} -{' '}
               {company.address.state}
             </p>
-            <h2 className='text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-4'>
+            <h2 className='text-2xl md:text-3xl font-semibold tracking-tight text-gray-900 mb-4'>
               Nós somos a Pro-Lite
             </h2>
             <p className='text-gray-600 leading-relaxed mb-3'>

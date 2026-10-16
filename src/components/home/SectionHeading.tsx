@@ -48,7 +48,7 @@ export default function SectionHeading({
         )}
         <h2
           className={cn(
-            'text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl',
+            'text-2xl font-semibold tracking-tight text-gray-900 md:text-3xl',
             eyebrow && 'mt-2',
           )}
         >
