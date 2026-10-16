@@ -1,13 +1,20 @@
 import mongoose, { Schema, Model, Types } from 'mongoose';
-import { BENTO_SLOT_VALUES, type BentoSlot } from '@/lib/config/bentoSlots';
+import {
+  HOME_BANNER_POSITION_VALUES,
+  HOME_BANNER_SLOT_VALUES,
+  getPosition,
+  type BannerPosition,
+} from '@/lib/config/homeBanners';
 
-// Posições da home geridas pelo admin (/admin/configuracoes):
-//   hero       → carrossel do topo
-//   mid_promo  → 2 banners lado a lado
-//   category   → 3 banners (Deck, Leash, Capa)
-//   bento      → grelha "bento" de 5 cards (um por categoria, slot fixo)
-// A posição 'brand' foi removida — a Pro-Lite é marca única.
-export type BannerPosition = 'hero' | 'mid_promo' | 'category' | 'bento';
+// Posições da home geridas pelo admin (/admin/configuracoes).
+// A lista (e os slots de cada posição) vive em src/lib/config/homeBanners.ts:
+//   hero             → carrossel do topo
+//   bento            → grelha de 5 cards (slot fixo por categoria)
+//   category_banner  → banner largo de Capas Refletivas / Leashes (slot fixo)
+//   store            → fotos da loja em "Nós somos a Pro-Lite" (lista livre)
+// As posições antigas 'mid_promo', 'category' e 'brand' foram removidas
+// (componentes retirados da home; Pro-Lite é marca única).
+export type { BannerPosition };
 
 export interface IBanner {
   _id: Types.ObjectId;
@@ -18,8 +25,8 @@ export interface IBanner {
   mobileImage?: string;
   link?: string;
   position: BannerPosition;
-  /** Só para position = 'bento': card fixo que este banner ocupa */
-  slot?: BentoSlot;
+  /** Só nas posições com slots fixos: qual o card/banner que ocupa */
+  slot?: string;
   order: number;
   isActive: boolean;
   startDate?: Date;
@@ -37,15 +44,15 @@ const bannerSchema = new Schema<IBanner>(
     link: { type: String, default: '' },
     position: {
       type: String,
-      enum: ['hero', 'mid_promo', 'category', 'bento'],
+      enum: HOME_BANNER_POSITION_VALUES,
       required: true,
     },
     slot: {
       type: String,
-      enum: BENTO_SLOT_VALUES,
-      // Obrigatório apenas no bento
+      enum: HOME_BANNER_SLOT_VALUES,
+      // Obrigatório apenas nas posições com slots fixos
       required: function (this: IBanner) {
-        return this.position === 'bento';
+        return !!getPosition(this.position)?.slots;
       },
     },
     order: { type: Number, default: 0 },

@@ -1,7 +1,11 @@
 // 📄 src/components/home/StoreShowcase.tsx
 // Seção institucional da homepage: "Nós somos a Pro-Lite" +
-// "Visite nossa loja", com CAROUSEL de 10 fotos da loja física
-// (public/images/loja01.JPG … loja10.JPG — extensão .JPG MAIÚSCULA:
+// "Visite nossa loja", com CAROUSEL de fotos da loja física.
+//
+// FOTOS: geridas no admin (/admin/configuracoes → posição "Fotos da
+// loja", lista livre ordenável; Título = texto alternativo). Enquanto
+// não houver fotos no admin, usa-se o fallback estático
+// public/images/loja01.JPG … loja10.JPG (extensão .JPG MAIÚSCULA:
 // o filesystem da Vercel é case-sensitive).
 //
 // Vantagens sobre a referência (concorrente com foto estática):
@@ -31,8 +35,13 @@ import {
 } from 'lucide-react';
 import { company } from '@/lib/config/company';
 
-// loja01.JPG … loja10.JPG (case-sensitive na Vercel!)
-const STORE_IMAGES = Array.from({ length: 10 }, (_, i) => ({
+interface StoreImage {
+  src: string;
+  alt: string;
+}
+
+// Fallback: loja01.JPG … loja10.JPG (case-sensitive na Vercel!)
+const FALLBACK_IMAGES: StoreImage[] = Array.from({ length: 10 }, (_, i) => ({
   src: `/images/loja${String(i + 1).padStart(2, '0')}.JPG`,
   alt: `Loja física Pro-Lite em ${company.address.city} — foto ${i + 1}`,
 }));
@@ -45,11 +54,34 @@ const mapsQuery = encodeURIComponent(
 const DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
 
 export default function StoreShowcase() {
+  const [images, setImages] = useState<StoreImage[]>(FALLBACK_IMAGES);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
 
-  const total = STORE_IMAGES.length;
+  // Fotos do admin (posição "store"); se não houver, fica o fallback
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const res = await fetch('/api/banners?position=store&active=true');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.banners) && data.banners.length) {
+          setImages(
+            (data.banners as { image: string; title: string }[]).map(b => ({
+              src: b.image,
+              alt: b.title || `Loja física Pro-Lite em ${company.address.city}`,
+            })),
+          );
+          setCurrent(0);
+        }
+      } catch {
+        console.error('Erro ao carregar fotos da loja');
+      }
+    };
+    fetchImages();
+  }, []);
+
+  const total = images.length;
   const goTo = useCallback(
     (index: number) => setCurrent((index + total) % total),
     [total],
@@ -170,7 +202,7 @@ export default function StoreShowcase() {
             aria-label='Fotos da loja física Pro-Lite'
           >
             <div className='relative aspect-[4/3]'>
-              {STORE_IMAGES.map((img, i) => (
+              {images.map((img, i) => (
                 <Image
                   key={img.src}
                   src={img.src}
@@ -212,7 +244,7 @@ export default function StoreShowcase() {
 
             {/* Dots */}
             <div className='absolute inset-x-0 bottom-3 flex items-center justify-center gap-1.5'>
-              {STORE_IMAGES.map((_, i) => (
+              {images.map((_, i) => (
                 <button
                   key={i}
                   type='button'

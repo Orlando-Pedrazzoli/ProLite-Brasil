@@ -5,11 +5,19 @@ import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { Plus, Pencil, Trash2, Image as ImageIcon, Upload } from 'lucide-react';
 import {
-  BENTO_SLOTS,
-  BENTO_SIZE_HINTS,
-  getBentoSlot,
-  type BentoSlot,
-} from '@/lib/config/bentoSlots';
+  HOME_BANNER_POSITIONS,
+  getPosition,
+  getSlot,
+} from '@/lib/config/homeBanners';
+import { getBentoSlot } from '@/lib/config/bentoSlots';
+
+// ═══════════════════════════════════════════════════════════════
+// ADMIN — Banners da home
+// ═══════════════════════════════════════════════════════════════
+// Toda a lógica de "que campos aparecem" e "que medidas recomendar"
+// vem de src/lib/config/homeBanners.ts. Este ficheiro só desenha o
+// formulário e a listagem. Para acrescentar uma secção nova à home,
+// edita-se a config — não este ficheiro.
 
 interface BannerItem {
   _id: string;
@@ -19,26 +27,12 @@ interface BannerItem {
   mobileImage: string;
   link: string;
   position: string;
-  slot?: BentoSlot;
+  slot?: string;
   order: number;
   isActive: boolean;
   startDate?: string;
   endDate?: string;
 }
-
-// A posição 'brand' foi removida — a Pro-Lite é marca única.
-const POSITIONS = [
-  { value: 'hero', label: 'Hero Carousel (topo)' },
-  {
-    value: 'bento',
-    label: 'Bento de categorias (5 cards — abaixo de "Compre por categoria")',
-  },
-  {
-    value: 'mid_promo',
-    label: 'Promo (meio da página — 2 banners lado a lado)',
-  },
-  { value: 'category', label: 'Categoria (3 banners — Deck, Leash, Capa)' },
-];
 
 const EMPTY_FORM = {
   title: '',
@@ -61,11 +55,18 @@ export default function AdminConfiguracoesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [uploadingDesktop, setUploadingDesktop] = useState(false);
   const [uploadingMobile, setUploadingMobile] = useState(false);
-
   const [form, setForm] = useState(EMPTY_FORM);
 
-  const isBento = form.position === 'bento';
-  const activeSlot = getBentoSlot(form.slot);
+  // ───── Derivados da posição escolhida ─────
+  const position = getPosition(form.position);
+  const hasSlots = !!position?.slots;
+  const activeSlot = getSlot(form.position, form.slot);
+  const sizeHints = hasSlots
+    ? activeSlot?.hints
+    : position?.hints;
+  // Placeholders de texto do bento (títulos default do card)
+  const bentoDefaults =
+    form.position === 'bento' ? getBentoSlot(form.slot) : undefined;
 
   const fetchBanners = async () => {
     try {
@@ -109,12 +110,13 @@ export default function AdminConfiguracoesPage() {
         setForm(prev => ({ ...prev, [field]: data.url }));
         toast.success('Imagem enviada!');
       } else {
-        toast.error('Erro no upload');
+        toast.error(data.error || 'Erro no upload');
       }
     } catch {
       toast.error('Erro no upload');
     } finally {
       setUploading(false);
+      e.target.value = '';
     }
   };
 
@@ -126,19 +128,21 @@ export default function AdminConfiguracoesPage() {
       return;
     }
 
-    if (isBento && !activeSlot) {
-      toast.error('Escolhe qual card do bento este banner ocupa');
+    if (hasSlots && !activeSlot) {
+      toast.error('Escolhe qual card/banner este item ocupa');
       return;
     }
 
     const payload = {
       ...form,
-      // No bento o link e a ordem são fixos pelo slot — o admin não os edita
-      link: isBento && activeSlot ? activeSlot.href : form.link,
-      order: isBento
-        ? BENTO_SLOTS.findIndex(s => s.slot === form.slot)
+      // Posições com slot: link e ordem fixos pelo slot
+      link: hasSlots ? activeSlot?.href ?? '' : position?.hasLink ? form.link : '',
+      order: hasSlots
+        ? position!.slots!.findIndex(s => s.value === form.slot)
         : form.order,
-      slot: isBento ? form.slot : undefined,
+      slot: hasSlots ? form.slot : undefined,
+      subtitle: position?.hasSubtitle ? form.subtitle : '',
+      mobileImage: position?.hasMobile ? form.mobileImage : '',
       startDate: form.startDate || undefined,
       endDate: form.endDate || undefined,
     };
@@ -214,48 +218,18 @@ export default function AdminConfiguracoesPage() {
     setForm(EMPTY_FORM);
   };
 
-  const groupedBanners = POSITIONS.map(pos => ({
+  const groupedBanners = HOME_BANNER_POSITIONS.map(pos => ({
     ...pos,
     banners: banners.filter(b => b.position === pos.value),
   }));
 
-  // ─── Recommended sizes per position ────────────────────────
-  const getSizeHints = (position: string) => {
-    if (position === 'bento') {
-      // Medidas dependem do card escolhido (wide vs narrow)
-      if (!activeSlot) {
-        return {
-          desktop: 'escolhe primeiro o card para ver as medidas',
-          mobile: 'escolhe primeiro o card para ver as medidas',
-        };
-      }
-      return BENTO_SIZE_HINTS[activeSlot.size];
-    }
-    switch (position) {
-      case 'hero':
-        return {
-          desktop: '1920×800 px — landscape 12:5 (JPG/WebP, ≤300 KB)',
-          mobile: '1080×1350 px — retrato 4:5 (JPG/WebP, ≤250 KB)',
-        };
-      case 'mid_promo':
-        return {
-          desktop: '960×400 px — 2.4:1 (JPG/WebP, ≤200 KB)',
-          mobile: '720×400 px — 1.8:1 (JPG/WebP, ≤150 KB)',
-        };
-      case 'category':
-        return {
-          desktop: '640×400 px — 1.6:1 (JPG/WebP, ≤150 KB)',
-          mobile: '600×400 px — 1.5:1 (JPG/WebP, ≤120 KB)',
-        };
-      default:
-        return {
-          desktop: '1920×800 px',
-          mobile: '1080×1350 px',
-        };
-    }
-  };
+  // Banners de posições que já não existem (ex.: mid_promo, category,
+  // brand) — mostrados à parte para o admin poder apagá-los.
+  const orphanBanners = banners.filter(b => !getPosition(b.position));
 
-  const sizeHints = getSizeHints(form.position);
+  const inputCls =
+    'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500';
+  const labelCls = 'block text-sm font-medium text-gray-700 mb-1';
 
   if (loading) {
     return (
@@ -268,7 +242,7 @@ export default function AdminConfiguracoesPage() {
   return (
     <div>
       <div className='flex items-center justify-between mb-6'>
-        <h1 className='text-2xl font-bold'>Banners & Configurações</h1>
+        <h1 className='text-2xl font-bold'>Banners da home</h1>
         <button
           onClick={() => {
             resetForm();
@@ -288,41 +262,17 @@ export default function AdminConfiguracoesPage() {
           </h2>
           <form onSubmit={handleSubmit} className='space-y-4'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+              {/* Posição */}
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
-                  Título *
-                </label>
-                <input
-                  type='text'
-                  value={form.title}
-                  onChange={e => setForm({ ...form, title: e.target.value })}
-                  required
-                  placeholder={
-                    isBento
-                      ? activeSlot?.defaultTitle ||
-                        'Ex: Proteção total para a sua prancha'
-                      : 'Ex: Quilhas FCS II Gabriel Medina'
-                  }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                />
-              </div>
-
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
-                  Posição *
-                </label>
+                <label className={labelCls}>Posição *</label>
                 <select
                   value={form.position}
                   onChange={e =>
-                    setForm({
-                      ...form,
-                      position: e.target.value,
-                      slot: e.target.value === 'bento' ? form.slot : '',
-                    })
+                    setForm({ ...form, position: e.target.value, slot: '' })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  className={inputCls}
                 >
-                  {POSITIONS.map(pos => (
+                  {HOME_BANNER_POSITIONS.map(pos => (
                     <option key={pos.value} value={pos.value}>
                       {pos.label}
                     </option>
@@ -330,122 +280,138 @@ export default function AdminConfiguracoesPage() {
                 </select>
               </div>
 
-              {isBento ? (
-                <>
-                  {/* ───── BENTO: card fixo (slot) ───── */}
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-1'>
-                      Card do bento *
-                    </label>
-                    <select
-                      value={form.slot}
-                      onChange={e => setForm({ ...form, slot: e.target.value })}
-                      required
-                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    >
-                      <option value=''>— escolhe o card —</option>
-                      {BENTO_SLOTS.map((s, i) => (
-                        <option key={s.slot} value={s.slot}>
-                          {i + 1}. {s.label} —{' '}
-                          {s.size === 'wide' ? 'card largo' : 'card estreito'}
-                        </option>
-                      ))}
-                    </select>
-                    <p className='text-xs text-gray-500 mt-1'>
-                      Link fixo:{' '}
-                      <span className='font-mono'>
-                        {activeSlot ? activeSlot.href : '—'}
-                      </span>
-                    </p>
-                  </div>
-
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-1'>
-                      Subtítulo{' '}
-                      <span className='text-gray-400 font-normal'>
-                        (opcional — 1 linha curta)
-                      </span>
-                    </label>
-                    <input
-                      type='text'
-                      value={form.subtitle}
-                      onChange={e =>
-                        setForm({ ...form, subtitle: e.target.value })
-                      }
-                      maxLength={110}
-                      placeholder={
-                        activeSlot?.defaultSubtitle ||
-                        'Ex: Capas refletivas, acolchoadas e de viagem'
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                  </div>
-                </>
+              {/* Slot fixo (quando a posição tem) */}
+              {hasSlots ? (
+                <div>
+                  <label className={labelCls}>
+                    {form.position === 'bento' ? 'Card do bento *' : 'Qual banner *'}
+                  </label>
+                  <select
+                    value={form.slot}
+                    onChange={e => setForm({ ...form, slot: e.target.value })}
+                    required
+                    className={inputCls}
+                  >
+                    <option value=''>— escolhe —</option>
+                    {position!.slots!.map(s => (
+                      <option key={s.value} value={s.value}>
+                        {s.label}
+                      </option>
+                    ))}
+                  </select>
+                  <p className='text-xs text-gray-500 mt-1'>
+                    Link fixo:{' '}
+                    <span className='font-mono'>
+                      {activeSlot?.href ?? '—'}
+                    </span>
+                  </p>
+                </div>
               ) : (
-                <>
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-1'>
-                      Link (URL ao clicar)
-                    </label>
-                    <input
-                      type='text'
-                      value={form.link}
-                      onChange={e => setForm({ ...form, link: e.target.value })}
-                      placeholder='/categoria/quilhas ou URL externa'
-                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                  </div>
+                <div>
+                  <label className={labelCls}>Ordem</label>
+                  <input
+                    type='number'
+                    value={form.order}
+                    onChange={e =>
+                      setForm({
+                        ...form,
+                        order: parseInt(e.target.value) || 0,
+                      })
+                    }
+                    className={inputCls}
+                  />
+                  <p className='text-xs text-gray-500 mt-1'>
+                    Menor número aparece primeiro.
+                  </p>
+                </div>
+              )}
 
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 mb-1'>
-                      Ordem
-                    </label>
-                    <input
-                      type='number'
-                      value={form.order}
-                      onChange={e =>
-                        setForm({
-                          ...form,
-                          order: parseInt(e.target.value) || 0,
-                        })
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                  </div>
-                </>
+              {/* Título */}
+              <div>
+                <label className={labelCls}>
+                  Título *{' '}
+                  {form.position === 'store' && (
+                    <span className='text-gray-400 font-normal'>
+                      (texto alternativo da foto)
+                    </span>
+                  )}
+                </label>
+                <input
+                  type='text'
+                  value={form.title}
+                  onChange={e => setForm({ ...form, title: e.target.value })}
+                  required
+                  placeholder={
+                    bentoDefaults?.defaultTitle ||
+                    (form.position === 'store'
+                      ? 'Ex: Fachada da loja na Vila Mariana'
+                      : 'Ex: Capas refletivas — nova coleção')
+                  }
+                  className={inputCls}
+                />
+              </div>
+
+              {/* Subtítulo (bento) */}
+              {position?.hasSubtitle && (
+                <div>
+                  <label className={labelCls}>
+                    Subtítulo{' '}
+                    <span className='text-gray-400 font-normal'>
+                      (opcional — 1 linha curta)
+                    </span>
+                  </label>
+                  <input
+                    type='text'
+                    value={form.subtitle}
+                    onChange={e =>
+                      setForm({ ...form, subtitle: e.target.value })
+                    }
+                    maxLength={110}
+                    placeholder={bentoDefaults?.defaultSubtitle || ''}
+                    className={inputCls}
+                  />
+                </div>
+              )}
+
+              {/* Link editável (hero) */}
+              {position?.hasLink && (
+                <div>
+                  <label className={labelCls}>Link (URL ao clicar)</label>
+                  <input
+                    type='text'
+                    value={form.link}
+                    onChange={e => setForm({ ...form, link: e.target.value })}
+                    placeholder='/categoria/quilhas ou URL externa'
+                    className={inputCls}
+                  />
+                </div>
               )}
             </div>
 
-            {isBento && (
-              <div className='rounded-md border border-blue-100 bg-blue-50 px-4 py-3 text-xs text-blue-900 space-y-1'>
-                <p className='font-semibold'>Como funciona o bento</p>
-                <p>
-                  Cada categoria tem um card fixo na grelha. O{' '}
-                  <strong>Título</strong> é a frase grande do card e o{' '}
-                  <strong>Subtítulo</strong> a linha de apoio. O texto fica
-                  no canto inferior esquerdo sobre um gradiente escuro —
-                  deixa essa zona da foto mais limpa.
-                </p>
-                <p>
-                  Cards 1 e 2 (Capas, Leashes) são paisagem (5:4); cards 3,
-                  4 e 5 (Decks, Quilhas, Acessórios) são retrato (5:6).
-                </p>
+            {position?.help && (
+              <div className='rounded-md border border-blue-100 bg-blue-50 px-4 py-3 text-xs text-blue-900'>
+                <p className='font-semibold mb-1'>{position.label}</p>
+                <p>{position.help}</p>
               </div>
             )}
 
-            {/* Desktop Image */}
+            {/* Imagem Desktop */}
             <div>
-              <label className='block text-sm font-medium text-gray-700 mb-1'>
-                Imagem Desktop *
+              <label className={labelCls}>
+                {position?.hasMobile ? 'Imagem Desktop *' : 'Imagem *'}
               </label>
               <p className='text-xs text-gray-500 mb-2'>
-                Recomendado: {sizeHints.desktop}
+                Recomendado:{' '}
+                {sizeHints?.desktop ??
+                  (hasSlots
+                    ? 'escolhe primeiro o card/banner para ver as medidas'
+                    : '—')}
               </p>
               <div className='flex items-start gap-4'>
                 <label className='flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-colors'>
                   <Upload size={18} className='text-gray-400' />
                   <span className='text-sm text-gray-500'>
-                    {uploadingDesktop ? 'Enviando...' : 'Upload Desktop'}
+                    {uploadingDesktop ? 'Enviando...' : 'Upload'}
                   </span>
                   <input
                     type='file'
@@ -461,7 +427,7 @@ export default function AdminConfiguracoesPage() {
                       src={form.image}
                       alt='Desktop preview'
                       width={320}
-                      height={100}
+                      height={120}
                       className='rounded-lg object-cover border'
                     />
                     <button
@@ -476,87 +442,90 @@ export default function AdminConfiguracoesPage() {
               </div>
             </div>
 
-            {/* Mobile Image */}
-            <div>
-              <label className='block text-sm font-medium text-gray-700 mb-1'>
-                Imagem Mobile{' '}
-                <span className='text-gray-400 font-normal'>(opcional)</span>
-              </label>
-              <p className='text-xs text-gray-500 mb-2'>
-                Recomendado: {sizeHints.mobile}
-                {form.position === 'hero' && (
-                  <span className='block text-amber-600 mt-1'>
-                    ⚠ Sem imagem mobile, a versão desktop será cortada
-                    automaticamente — pode ficar mal enquadrada
-                  </span>
-                )}
-                {isBento && (
-                  <span className='block text-gray-400 mt-1'>
-                    Sem imagem mobile, usa-se a desktop recortada ao
-                    centro (cover) — normalmente fica bem.
-                  </span>
-                )}
-              </p>
-              <div className='flex items-start gap-4'>
-                <label className='flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-colors'>
-                  <Upload size={18} className='text-gray-400' />
-                  <span className='text-sm text-gray-500'>
-                    {uploadingMobile ? 'Enviando...' : 'Upload Mobile'}
-                  </span>
-                  <input
-                    type='file'
-                    accept='image/*'
-                    onChange={e => handleImageUpload(e, 'mobileImage')}
-                    disabled={uploadingMobile}
-                    className='hidden'
-                  />
+            {/* Imagem Mobile */}
+            {position?.hasMobile && (
+              <div>
+                <label className={labelCls}>
+                  Imagem Mobile{' '}
+                  <span className='text-gray-400 font-normal'>(opcional)</span>
                 </label>
-                {form.mobileImage && (
-                  <div className='relative'>
-                    <Image
-                      src={form.mobileImage}
-                      alt='Mobile preview'
-                      width={120}
-                      height={150}
-                      className='rounded-lg object-cover border'
+                <p className='text-xs text-gray-500 mb-2'>
+                  Recomendado:{' '}
+                  {sizeHints?.mobile ??
+                    (hasSlots
+                      ? 'escolhe primeiro o card/banner para ver as medidas'
+                      : '—')}
+                  {(form.position === 'hero' ||
+                    form.position === 'category_banner') && (
+                    <span className='block text-amber-600 mt-1'>
+                      ⚠ Sem imagem mobile, a versão desktop é recortada ao
+                      centro — num banner largo pode ficar mal enquadrada
+                    </span>
+                  )}
+                  {form.position === 'bento' && (
+                    <span className='block text-gray-400 mt-1'>
+                      Sem imagem mobile, usa-se a desktop recortada ao
+                      centro (cover) — normalmente fica bem.
+                    </span>
+                  )}
+                </p>
+                <div className='flex items-start gap-4'>
+                  <label className='flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-colors'>
+                    <Upload size={18} className='text-gray-400' />
+                    <span className='text-sm text-gray-500'>
+                      {uploadingMobile ? 'Enviando...' : 'Upload Mobile'}
+                    </span>
+                    <input
+                      type='file'
+                      accept='image/*'
+                      onChange={e => handleImageUpload(e, 'mobileImage')}
+                      disabled={uploadingMobile}
+                      className='hidden'
                     />
-                    <button
-                      type='button'
-                      onClick={() => setForm({ ...form, mobileImage: '' })}
-                      className='absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600'
-                    >
-                      ×
-                    </button>
-                  </div>
-                )}
+                  </label>
+                  {form.mobileImage && (
+                    <div className='relative'>
+                      <Image
+                        src={form.mobileImage}
+                        alt='Mobile preview'
+                        width={120}
+                        height={150}
+                        className='rounded-lg object-cover border'
+                      />
+                      <button
+                        type='button'
+                        onClick={() => setForm({ ...form, mobileImage: '' })}
+                        className='absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600'
+                      >
+                        ×
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Dates & Flags */}
+            {/* Datas & Ativo */}
             <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
-                  Data Início (opcional)
-                </label>
+                <label className={labelCls}>Data Início (opcional)</label>
                 <input
                   type='date'
                   value={form.startDate}
                   onChange={e =>
                     setForm({ ...form, startDate: e.target.value })
                   }
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  className={inputCls}
                 />
               </div>
 
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-1'>
-                  Data Fim (opcional)
-                </label>
+                <label className={labelCls}>Data Fim (opcional)</label>
                 <input
                   type='date'
                   value={form.endDate}
                   onChange={e => setForm({ ...form, endDate: e.target.value })}
-                  className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  className={inputCls}
                 />
               </div>
 
@@ -593,7 +562,7 @@ export default function AdminConfiguracoesPage() {
         </div>
       )}
 
-      {/* Banners grouped by position */}
+      {/* Listagem por posição */}
       {groupedBanners.map(group => (
         <div key={group.value} className='mb-6'>
           <h2 className='text-lg font-semibold mb-3 text-gray-700'>
@@ -604,80 +573,135 @@ export default function AdminConfiguracoesPage() {
             {group.banners.length === 0 ? (
               <div className='p-8 text-center text-gray-400'>
                 <ImageIcon size={32} className='mx-auto mb-2 opacity-50' />
-                <p className='text-sm'>Nenhum banner nesta posição</p>
+                <p className='text-sm'>
+                  {group.slots
+                    ? 'Nenhum item — o site está a usar as imagens de fallback'
+                    : 'Nenhum banner nesta posição'}
+                </p>
               </div>
             ) : (
               <div className='divide-y'>
-                {group.banners.map(banner => (
-                  <div
-                    key={banner._id}
-                    className='flex items-center justify-between p-4 hover:bg-gray-50'
-                  >
-                    <div className='flex items-center gap-4'>
-                      {banner.image ? (
-                        <Image
-                          src={banner.image}
-                          alt={banner.title}
-                          width={160}
-                          height={50}
-                          className='rounded object-cover border'
-                        />
-                      ) : (
-                        <div className='w-40 h-12 bg-gray-100 rounded flex items-center justify-center'>
-                          <ImageIcon size={16} className='text-gray-400' />
-                        </div>
-                      )}
-                      <div>
-                        <p className='font-medium'>{banner.title}</p>
-                        <div className='flex items-center gap-2 mt-1'>
-                          {banner.position === 'bento' ? (
-                            <span className='text-xs font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded'>
-                              Card: {getBentoSlot(banner.slot)?.label ?? '?'}
-                            </span>
-                          ) : (
-                            <span className='text-xs text-gray-400'>
-                              Ordem: {banner.order}
-                            </span>
-                          )}
-                          {banner.link && (
-                            <span className='text-xs text-gray-400'>
-                              → {banner.link}
-                            </span>
-                          )}
-                          {banner.mobileImage && (
-                            <span className='text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded'>
-                              📱 Mobile
-                            </span>
-                          )}
+                {group.banners.map(banner => {
+                  const slot = getSlot(banner.position, banner.slot);
+                  return (
+                    <div
+                      key={banner._id}
+                      className='flex items-center justify-between p-4 hover:bg-gray-50'
+                    >
+                      <div className='flex items-center gap-4'>
+                        {banner.image ? (
+                          <Image
+                            src={banner.image}
+                            alt={banner.title}
+                            width={160}
+                            height={60}
+                            className='rounded object-cover border'
+                          />
+                        ) : (
+                          <div className='w-40 h-12 bg-gray-100 rounded flex items-center justify-center'>
+                            <ImageIcon size={16} className='text-gray-400' />
+                          </div>
+                        )}
+                        <div>
+                          <p className='font-medium'>{banner.title}</p>
+                          <div className='flex flex-wrap items-center gap-2 mt-1'>
+                            {slot ? (
+                              <span className='text-xs font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded'>
+                                {slot.label}
+                              </span>
+                            ) : (
+                              <span className='text-xs text-gray-400'>
+                                Ordem: {banner.order}
+                              </span>
+                            )}
+                            {banner.link && (
+                              <span className='text-xs text-gray-400'>
+                                → {banner.link}
+                              </span>
+                            )}
+                            {banner.mobileImage && (
+                              <span className='text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded'>
+                                📱 Mobile
+                              </span>
+                            )}
+                            {!banner.isActive && (
+                              <span className='text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded'>
+                                Inativo
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                      {!banner.isActive && (
-                        <span className='text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded'>
-                          Inativo
-                        </span>
-                      )}
+                      <div className='flex items-center gap-2'>
+                        <button
+                          onClick={() => handleEdit(banner)}
+                          aria-label='Editar'
+                          className='p-2 text-gray-400 hover:text-blue-600 transition-colors'
+                        >
+                          <Pencil size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(banner._id, banner.title)}
+                          aria-label='Remover'
+                          className='p-2 text-gray-400 hover:text-red-600 transition-colors'
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     </div>
-                    <div className='flex items-center gap-2'>
-                      <button
-                        onClick={() => handleEdit(banner)}
-                        className='p-2 text-gray-400 hover:text-blue-600 transition-colors'
-                      >
-                        <Pencil size={16} />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(banner._id, banner.title)}
-                        className='p-2 text-gray-400 hover:text-red-600 transition-colors'
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
         </div>
       ))}
+
+      {/* Banners órfãos (posições que já não existem na home) */}
+      {orphanBanners.length > 0 && (
+        <div className='mb-6'>
+          <h2 className='text-lg font-semibold mb-1 text-gray-700'>
+            Posições antigas (já não aparecem no site)
+          </h2>
+          <p className='text-xs text-gray-500 mb-3'>
+            Estes banners ficaram de secções removidas da home. Podes
+            apagá-los com segurança.
+          </p>
+          <div className='bg-white rounded-lg shadow-sm divide-y'>
+            {orphanBanners.map(banner => (
+              <div
+                key={banner._id}
+                className='flex items-center justify-between p-4 hover:bg-gray-50'
+              >
+                <div className='flex items-center gap-4'>
+                  {banner.image && (
+                    <Image
+                      src={banner.image}
+                      alt={banner.title}
+                      width={160}
+                      height={60}
+                      className='rounded object-cover border opacity-60'
+                    />
+                  )}
+                  <div>
+                    <p className='font-medium'>{banner.title}</p>
+                    <span className='text-xs text-gray-400'>
+                      posição: {banner.position}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => handleDelete(banner._id, banner.title)}
+                  aria-label='Remover'
+                  className='p-2 text-gray-400 hover:text-red-600 transition-colors'
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

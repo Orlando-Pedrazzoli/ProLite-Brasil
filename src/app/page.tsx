@@ -15,9 +15,6 @@ import HeroBanner from '@/components/home/HeroBanner';
 import ShopByCategory from '@/components/home/ShopByCategory';
 import CategoryBento from '@/components/home/CategoryBento';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
-import ImageBanner from '@/components/home/ImageBanner';
-import PromoBanners from '@/components/home/PromoBanners';
-import CategoryBanners from '@/components/home/CategoryBanners';
 import ReviewsCarousel from '@/components/home/ReviewsCarousel';
 import StoreShowcase from '@/components/home/StoreShowcase';
 import CapasRefletivasBanner from '@/components/home/CapasRefletivasBanner';
@@ -39,7 +36,6 @@ export default function Home() {
         />
         <CapasRefletivasBanner />
         <LeashesBanner />
-
         <StoreShowcase />
         <ReviewsCarousel />
       </main>
