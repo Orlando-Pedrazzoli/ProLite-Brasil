@@ -12,10 +12,8 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import HeroBanner from '@/components/home/HeroBanner';
-import BrandCarousel from '@/components/home/BrandCarousel';
 import ShopByCategory from '@/components/home/ShopByCategory';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
-import FeaturedWetsuits from '@/components/home/FeaturedWetsuits';
 import ImageBanner from '@/components/home/ImageBanner';
 import PromoBanners from '@/components/home/PromoBanners';
 import CategoryBanners from '@/components/home/CategoryBanners';
@@ -31,7 +29,6 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroBanner />
-        <BrandCarousel />
         <ShopByCategory />
         <FeaturedProducts
           title='Novidades'
@@ -40,7 +37,7 @@ export default function Home() {
         <CapasRefletivasBanner />
         <LeashesBanner />
         <ImageBanner alt='Rip Curl — Pro-Lite' />
-        <FeaturedWetsuits title='Wetsuits' />
+
         <PromoBanners />
         <FeaturedProducts
           title='Quilhas'
