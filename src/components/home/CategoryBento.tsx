@@ -78,7 +78,15 @@ function BentoCard({
       <Link
         href={config.href}
         aria-label={`Ver ${config.label}`}
-        className='relative block h-[18rem] md:h-[22rem] lg:h-[26rem] focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brand'
+        className={cn(
+          'relative block focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brand',
+          // Proporção fixa: wide 2:1 e narrow 4:3 dão a MESMA altura de
+          // linha na grelha (3 col vs 2 col). No mobile (1 coluna) são
+          // todos 4:3. Assim as medidas recomendadas no admin batem
+          // certo em qualquer largura de ecrã.
+          'aspect-[4/3]',
+          config.size === 'wide' ? 'lg:aspect-[2/1]' : 'lg:aspect-[4/3]',
+        )}
       >
         {/* ───── Imagem (desktop + mobile) ───── */}
         {hasImage ? (
@@ -100,8 +108,8 @@ function BentoCard({
                 fill
                 sizes={
                   config.size === 'wide'
-                    ? '(max-width: 1024px) 100vw, 620px'
-                    : '(max-width: 1024px) 100vw, 410px'
+                    ? '(max-width: 1024px) 100vw, 50vw'
+                    : '(max-width: 1024px) 100vw, 33vw'
                 }
                 className='object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100'
                 onError={() => setErrored(true)}
@@ -152,8 +160,10 @@ function BentoSkeleton() {
         <div
           key={s.slot}
           className={cn(
-            'h-[18rem] md:h-[22rem] lg:h-[26rem] animate-pulse rounded-2xl bg-gray-100',
-            s.size === 'wide' ? 'lg:col-span-3' : 'lg:col-span-2',
+            'aspect-[4/3] animate-pulse rounded-2xl bg-gray-100',
+            s.size === 'wide'
+              ? 'lg:col-span-3 lg:aspect-[2/1]'
+              : 'lg:col-span-2 lg:aspect-[4/3]',
           )}
         />
       ))}
@@ -197,9 +207,13 @@ export default function CategoryBento({
 
   return (
     <section className='py-10 md:py-14'>
-      <div className='mx-auto max-w-7xl px-4'>
+      {/* Largura total: o padding lateral (px-4 = 16px) é igual ao gap
+          entre os cards (gap-4), para a grelha "respirar" da mesma forma
+          nas bordas e entre cards. max-w-[1920px] evita cards gigantes
+          em monitores ultra-wide. */}
+      <div className='mx-auto max-w-[1920px] px-4'>
         {/* Cabeçalho */}
-        <div className='mb-8 max-w-3xl'>
+        <div className='mb-6 max-w-3xl'>
           <p className='font-mono text-xs font-semibold uppercase tracking-[0.2em] text-brand-dark'>
             {eyebrow}
           </p>
