@@ -7,6 +7,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import SectionHeading from '@/components/home/SectionHeading';
 
 interface CarouselReview {
   name: string;
@@ -126,12 +127,10 @@ export default function ReviewsCarousel() {
   return (
     <section className='py-10 bg-white'>
       <div className='container-home'>
-        <div className='mb-6'>
-          <h2 className='text-lg font-bold text-gray-900 uppercase tracking-wide'>
-            O que estão falando da Pro-Lite
-          </h2>
-          <div className='w-full h-0.5 bg-chumbo-light mt-2' />
-        </div>
+        <SectionHeading
+          eyebrow='Avaliações'
+          title='O que estão falando da Pro-Lite'
+        />
 
         <div className='relative'>
           {canScrollLeft && (

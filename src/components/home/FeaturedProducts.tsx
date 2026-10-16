@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ProductCard from '@/components/product/ProductCard';
+import SectionHeading from '@/components/home/SectionHeading';
 
 interface Product {
   _id: string;
@@ -28,11 +29,14 @@ interface Product {
 
 interface FeaturedProductsProps {
   title: string;
+  /** Linha pequena acima do título (opcional) */
+  eyebrow?: string;
   fetchUrl: string;
 }
 
 export default function FeaturedProducts({
   title,
+  eyebrow,
   fetchUrl,
 }: FeaturedProductsProps) {
   const [products, setProducts] = useState<Product[]>([]);
@@ -67,9 +71,7 @@ export default function FeaturedProducts({
     return (
       <section className='py-8'>
         <div className='container-home'>
-          <h2 className='text-xl font-bold text-gray-900 mb-6 uppercase'>
-            {title}
-          </h2>
+          <SectionHeading eyebrow={eyebrow} title={title} />
           <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
             {[...Array(4)].map((_, i) => (
               <div
@@ -88,25 +90,30 @@ export default function FeaturedProducts({
   return (
     <section className='py-8'>
       <div className='container-home'>
-        <div className='flex items-center justify-between mb-6'>
-          <h2 className='text-xl font-bold text-gray-900 uppercase'>{title}</h2>
-          {products.length > 4 && (
-            <div className='hidden md:flex gap-2'>
-              <button
-                onClick={() => scroll('left')}
-                className='w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:border-gray-500 transition-colors'
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                onClick={() => scroll('right')}
-                className='w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center hover:border-gray-500 transition-colors'
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          )}
-        </div>
+        <SectionHeading
+          eyebrow={eyebrow}
+          title={title}
+          action={
+            products.length > 4 ? (
+              <div className='hidden md:flex gap-2'>
+                <button
+                  onClick={() => scroll('left')}
+                  aria-label='Anteriores'
+                  className='w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center hover:border-gray-900 transition-colors'
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  onClick={() => scroll('right')}
+                  aria-label='Próximos'
+                  className='w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center hover:border-gray-900 transition-colors'
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            ) : undefined
+          }
+        />
 
         <div
           ref={scrollRef}

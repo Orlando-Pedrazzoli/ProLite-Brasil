@@ -33,6 +33,7 @@ export default function Home() {
         <ShopByCategory />
         <CategoryBento />
         <FeaturedProducts
+          eyebrow='Acabou de chegar'
           title='Novidades'
           fetchUrl='/api/products?limit=8&sort=-createdAt&isActive=true&isNewArrival=true'
         />
@@ -42,6 +43,7 @@ export default function Home() {
 
         <PromoBanners />
         <FeaturedProducts
+          eyebrow='Encaixe FCS II e Futures'
           title='Quilhas'
           fetchUrl='/api/products?limit=10&sort=-createdAt&isActive=true&categorySlug=quilhas'
         />

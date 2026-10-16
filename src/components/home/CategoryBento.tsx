@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
+import SectionHeading from '@/components/home/SectionHeading';
 import {
   BENTO_SLOTS,
   type BentoSlot,
@@ -211,15 +212,7 @@ export default function CategoryBento({
       {/* container-home (globals.css): mesma largura de todas as
           secções da home; padding lateral = gap entre os cards. */}
       <div className='container-home'>
-        {/* Cabeçalho */}
-        <div className='mb-6 max-w-3xl'>
-          <p className='font-mono text-xs font-semibold uppercase tracking-[0.2em] text-brand-dark'>
-            {eyebrow}
-          </p>
-          <h2 className='mt-2 text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl'>
-            {title}
-          </h2>
-        </div>
+        <SectionHeading eyebrow={eyebrow} title={title} />
 
         {loading ? (
           <BentoSkeleton />
