@@ -35,7 +35,7 @@ export default function ImageBanner({
 
   return (
     <section className='py-8'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container-home'>
         {href ? (
           <Link href={href} className='block overflow-hidden rounded-lg'>
             {image}

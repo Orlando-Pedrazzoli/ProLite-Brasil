@@ -66,7 +66,7 @@ export default function FeaturedProducts({
   if (loading) {
     return (
       <section className='py-8'>
-        <div className='max-w-7xl mx-auto px-4'>
+        <div className='container-home'>
           <h2 className='text-xl font-bold text-gray-900 mb-6 uppercase'>
             {title}
           </h2>
@@ -87,7 +87,7 @@ export default function FeaturedProducts({
 
   return (
     <section className='py-8'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container-home'>
         <div className='flex items-center justify-between mb-6'>
           <h2 className='text-xl font-bold text-gray-900 uppercase'>{title}</h2>
           {products.length > 4 && (

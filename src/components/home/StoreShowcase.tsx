@@ -80,7 +80,7 @@ export default function StoreShowcase() {
 
   return (
     <section className='py-10 bg-gray-50'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container-home'>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center'>
           {/* ═══ CONTEÚDO ═══ */}
           <div>

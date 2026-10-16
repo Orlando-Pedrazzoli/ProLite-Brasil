@@ -208,11 +208,9 @@ export default function CategoryBento({
 
   return (
     <section className='py-10 md:py-14'>
-      {/* Largura total: o padding lateral (px-4 = 16px) é igual ao gap
-          entre os cards (gap-4), para a grelha "respirar" da mesma forma
-          nas bordas e entre cards. max-w-[1920px] evita cards gigantes
-          em monitores ultra-wide. */}
-      <div className='mx-auto max-w-[1920px] px-4'>
+      {/* container-home (globals.css): mesma largura de todas as
+          secções da home; padding lateral = gap entre os cards. */}
+      <div className='container-home'>
         {/* Cabeçalho */}
         <div className='mb-6 max-w-3xl'>
           <p className='font-mono text-xs font-semibold uppercase tracking-[0.2em] text-brand-dark'>

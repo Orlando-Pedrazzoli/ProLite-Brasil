@@ -201,7 +201,7 @@ export default function ShopByCategory({
   if (loading) {
     return (
       <section className='py-8'>
-        <div className='max-w-7xl mx-auto px-4'>
+        <div className='container-home'>
           <h2 className='text-xl font-bold text-gray-900 mb-6 uppercase'>
             {title}
           </h2>
@@ -223,7 +223,7 @@ export default function ShopByCategory({
 
   return (
     <section className='py-8'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container-home'>
         {/* Header em duas linhas: título à esquerda em cima,
             toggle centrado embaixo. O wrapper interno com mx-auto
             centra os pills quando cabem e ativa scroll horizontal

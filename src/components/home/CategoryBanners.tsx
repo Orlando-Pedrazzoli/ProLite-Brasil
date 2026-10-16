@@ -32,7 +32,7 @@ const categories: CategoryBanner[] = [
 export default function CategoryBanners() {
   return (
     <section className='py-8'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container-home'>
         <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
           {categories.map(cat => (
             <Link

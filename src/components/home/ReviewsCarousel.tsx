@@ -125,7 +125,7 @@ export default function ReviewsCarousel() {
 
   return (
     <section className='py-10 bg-white'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container-home'>
         <div className='mb-6'>
           <h2 className='text-lg font-bold text-gray-900 uppercase tracking-wide'>
             O que estão falando da Pro-Lite

@@ -28,7 +28,7 @@ const banners: PromoBanner[] = [
 export default function PromoBanners() {
   return (
     <section className='py-8'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container-home'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           {banners.map((banner, index) => (
             <Link
