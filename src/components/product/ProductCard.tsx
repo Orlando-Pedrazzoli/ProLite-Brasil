@@ -207,7 +207,13 @@ export default function ProductCard({
       href={`/produtos/${displayed.slug}`}
       className='group block bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow'
     >
-      <div className='relative aspect-square bg-gray-50 overflow-hidden'>
+      {/* Área da imagem: 4:5, SEM padding interno e object-cover —
+          a foto preenche o card todo (como as lojas de referência).
+          O `p-4` + object-contain anterior comia ~20% da área no grid
+          de 2 colunas do mobile e deixava o produto minúsculo.
+          Nota: as fotos de produto já vêm em fundo branco/neutro, por
+          isso o cover não corta nada relevante. */}
+      <div className='relative aspect-[4/5] bg-gray-50 overflow-hidden'>
         {images.length > 0 ? (
           <Image
             src={images[currentImage]}
@@ -218,7 +224,7 @@ export default function ProductCard({
                 ? '(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw'
                 : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'
             }
-            className='object-contain p-4 group-hover:scale-105 transition-transform duration-300'
+            className='object-cover object-center group-hover:scale-105 transition-transform duration-500'
           />
         ) : (
           <div className='flex items-center justify-center h-full text-gray-300 text-sm'>
@@ -314,7 +320,7 @@ export default function ProductCard({
         )}
       </div>
 
-      <div className={`${expanded ? 'p-5' : 'p-3'} text-center`}>
+      <div className={`${expanded ? 'p-5' : 'px-2.5 py-3 sm:p-3'} text-center`}>
         <h3
           className={`text-gray-800 font-medium line-clamp-2 mb-2 ${expanded ? 'text-base min-h-[3rem]' : 'text-sm min-h-[2.5rem]'}`}
         >

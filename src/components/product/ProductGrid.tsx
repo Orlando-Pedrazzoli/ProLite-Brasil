@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
 import ProductCard from '@/components/product/ProductCard';
 import {
   ChevronLeft,
@@ -47,7 +47,32 @@ interface ProductGridProps {
 }
 
 type MobileViewMode = '1' | '2';
-const VIEW_MODE_KEY = 'sp-mobile-view-mode';
+// Chave nova (v2): o default passou a 2 colunas; a chave antiga
+// ('sp-mobile-view-mode') guardava '1' para quem já tinha visitado e
+// ficaria presa no layout antigo.
+const VIEW_MODE_KEY = 'prolite-mobile-view-mode-v2';
+
+// ───── store mínimo sobre o localStorage (para useSyncExternalStore) ─────
+const viewModeListeners = new Set<() => void>();
+function subscribeViewMode(listener: () => void) {
+  viewModeListeners.add(listener);
+  const onStorage = (e: StorageEvent) => {
+    if (e.key === VIEW_MODE_KEY) listener();
+  };
+  window.addEventListener('storage', onStorage);
+  return () => {
+    viewModeListeners.delete(listener);
+    window.removeEventListener('storage', onStorage);
+  };
+}
+function getViewModeSnapshot(): MobileViewMode {
+  try {
+    const saved = localStorage.getItem(VIEW_MODE_KEY);
+    return saved === '1' ? '1' : '2';
+  } catch {
+    return '2';
+  }
+}
 
 export default function ProductGrid({
   products,
@@ -56,43 +81,25 @@ export default function ProductGrid({
   onPageChange,
   showViewToggle = true,
 }: ProductGridProps) {
-  // Default: 1 column on mobile (per Orlando's request)
-  const [mobileView, setMobileView] = useState<MobileViewMode>('1');
-
-  // Hydrate from localStorage on mount (avoids SSR mismatch)
-  useEffect(() => {
+  // Default: 2 colunas no mobile (padrão das lojas de surf de referência);
+  // o toggle continua disponível para quem preferir 1 coluna.
+  // A preferência vive no localStorage e é lida via useSyncExternalStore
+  // (sem setState em effect e sem mismatch de hidratação: no servidor
+  // e no primeiro render do cliente usa-se sempre o default '2').
+  const mobileView = useSyncExternalStore(
+    subscribeViewMode,
+    getViewModeSnapshot,
+    () => '2' as MobileViewMode,
+  );
+  const setMobileView = (mode: MobileViewMode) => {
     try {
-      const saved = localStorage.getItem(VIEW_MODE_KEY);
-      if (saved === '1' || saved === '2') {
-        setMobileView(saved);
-      }
+      localStorage.setItem(VIEW_MODE_KEY, mode);
     } catch {
-      // localStorage may be unavailable (private mode, etc.) — ignore
+      // localStorage indisponível (modo privado, etc.) — ignora
     }
-  }, []);
-
-  // Persist on change + cross-tab sync
-  useEffect(() => {
-    try {
-      localStorage.setItem(VIEW_MODE_KEY, mobileView);
-    } catch {
-      // ignore
-    }
-  }, [mobileView]);
-
-  // Listen for changes from other tabs
-  useEffect(() => {
-    const handleStorage = (e: StorageEvent) => {
-      if (
-        e.key === VIEW_MODE_KEY &&
-        (e.newValue === '1' || e.newValue === '2')
-      ) {
-        setMobileView(e.newValue);
-      }
-    };
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
-  }, []);
+    // storage event não dispara na própria aba — notifica à mão
+    viewModeListeners.forEach(l => l());
+  };
 
   // Grid classes: mobile uses view mode; desktop always 3-4 cols
   const gridClasses =
