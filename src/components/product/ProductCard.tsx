@@ -207,13 +207,12 @@ export default function ProductCard({
       href={`/produtos/${displayed.slug}`}
       className='group block bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow'
     >
-      {/* Área da imagem: 4:5, SEM padding interno e object-cover —
-          a foto preenche o card todo (como as lojas de referência).
-          O `p-4` + object-contain anterior comia ~20% da área no grid
-          de 2 colunas do mobile e deixava o produto minúsculo.
-          Nota: as fotos de produto já vêm em fundo branco/neutro, por
-          isso o cover não corta nada relevante. */}
-      <div className='relative aspect-[4/5] bg-gray-50 overflow-hidden'>
+      {/* Área da imagem: 4:5, SEM padding interno, object-contain —
+          a foto usa 100% da largura do card mas nunca é cortada
+          (object-cover cortava as pontas de produtos largos, como
+          capas de prancha). O `p-4` anterior comia ~20% da área no
+          grid de 2 colunas do mobile e deixava o produto minúsculo. */}
+      <div className='relative aspect-[4/5] bg-white overflow-hidden'>
         {images.length > 0 ? (
           <Image
             src={images[currentImage]}
@@ -224,7 +223,7 @@ export default function ProductCard({
                 ? '(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw'
                 : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'
             }
-            className='object-cover object-center group-hover:scale-105 transition-transform duration-500'
+            className='object-contain object-center group-hover:scale-105 transition-transform duration-500'
           />
         ) : (
           <div className='flex items-center justify-center h-full text-gray-300 text-sm'>
