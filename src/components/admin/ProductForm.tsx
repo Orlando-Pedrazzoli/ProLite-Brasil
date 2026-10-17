@@ -19,6 +19,7 @@ import {
 import QuickBrandModal from './QuickBrandModal';
 import QuickCategoryModal from './QuickCategoryModal';
 import { prepareImageUpload } from '@/lib/utils/prepareImageUpload';
+import ProductCardPreview from './ProductCardPreview';
 
 // ═══════════════════════════════════════════════════════════════
 // CONSTANTES GERAIS
@@ -1741,6 +1742,13 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
               ))}
             </Reorder.Group>
           )}
+
+          {/* Pré-visualização do card com a imagem principal */}
+          <ProductCardPreview
+            src={form.images[0]}
+            name={form.name}
+            price={form.price}
+          />
         </div>
 
         {/* ESTOQUE & ENVIO */}

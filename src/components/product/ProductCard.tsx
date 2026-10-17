@@ -16,6 +16,7 @@ import {
   X,
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils/formatCurrency';
+import { cardImage } from '@/lib/utils/cardImage';
 import {
   calculateInstallments,
   calculatePixPrice,
@@ -207,15 +208,15 @@ export default function ProductCard({
       href={`/produtos/${displayed.slug}`}
       className='group block bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow'
     >
-      {/* Área da imagem: 4:5, SEM padding interno, object-contain —
-          a foto usa 100% da largura do card mas nunca é cortada
-          (object-cover cortava as pontas de produtos largos, como
-          capas de prancha). O `p-4` anterior comia ~20% da área no
-          grid de 2 colunas do mobile e deixava o produto minúsculo. */}
+      {/* Área da imagem: moldura 4:5. A foto passa por cardImage()
+          (Cloudinary: trim da margem branca + pad para 4:5), por isso
+          chega já enquadrada e preenche a moldura sem cortar nada;
+          object-contain é só rede de segurança para imagens fora do
+          Cloudinary. O p-2 dá um respiro mínimo nas bordas. */}
       <div className='relative aspect-[4/5] bg-white overflow-hidden'>
         {images.length > 0 ? (
           <Image
-            src={images[currentImage]}
+            src={cardImage(images[currentImage])}
             alt={displayed.name}
             fill
             sizes={
@@ -223,7 +224,7 @@ export default function ProductCard({
                 ? '(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw'
                 : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'
             }
-            className='object-contain object-center group-hover:scale-105 transition-transform duration-500'
+            className='object-contain object-center p-2 group-hover:scale-105 transition-transform duration-500'
           />
         ) : (
           <div className='flex items-center justify-center h-full text-gray-300 text-sm'>
