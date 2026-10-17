@@ -17,7 +17,8 @@ import {
 // ═══════════════════════════════════════════════════════════════
 // BENTO DE CATEGORIAS — home, logo abaixo de <ShopByCategory />
 // ═══════════════════════════════════════════════════════════════
-// Grelha "bento" de 5 cards, um por categoria-raiz. Cada card tem
+// Grelha "bento" de 6 cards, um por categoria-raiz: um card hero
+// (2×2) + cinco cards padrão, em 3 colunas no desktop. Cada card tem
 // um SLOT fixo (link + posição na grelha definidos em
 // src/lib/config/bentoSlots.ts). O admin troca a imagem, o título e
 // o subtítulo em /admin/configuracoes (posição "Bento de categorias").
@@ -29,9 +30,8 @@ import {
 // fallback (gradiente chumbo → brand + nome da categoria). Nunca
 // mostra imagem partida nem "buraco" na grelha.
 //
-// Baseado no "Bento Grid" do 21st.dev (FUIBentoGridDark), reescrito
-// para next/image, next/link, tokens de cor da Pro-Lite e sem o
-// painel com backdrop-blur de altura fixa do original.
+// Layout baseado no "Feature Bento" do 21st.dev (hero 2×2 + cards),
+// reescrito para next/image, next/link e tokens de cor da Pro-Lite.
 
 interface BentoBanner {
   _id: string;
@@ -63,6 +63,7 @@ function BentoCard({
 
   const title = banner?.title?.trim() || config.defaultTitle;
   const subtitle = banner?.subtitle?.trim() || config.defaultSubtitle;
+  const isHero = config.size === 'hero';
 
   return (
     <motion.div
@@ -73,7 +74,8 @@ function BentoCard({
         'group relative flex flex-col overflow-hidden rounded-2xl',
         'bg-chumbo text-white ring-1 ring-black/5 shadow-sm',
         'transform-gpu transition-shadow duration-300 hover:shadow-xl hover:shadow-brand/10',
-        config.size === 'wide' ? 'lg:col-span-3' : 'lg:col-span-2',
+        // Hero: largura total no tablet, 2 colunas × 2 linhas no desktop
+        isHero && 'md:col-span-2 lg:row-span-2',
       )}
     >
       <Link
@@ -81,13 +83,12 @@ function BentoCard({
         aria-label={`Ver ${config.label}`}
         className={cn(
           'relative block focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brand',
-          // Proporção fixa (como no original do 21st, cards altos):
-          // wide 5:4 e narrow 5:6 dão a MESMA altura de linha na grelha
-          // (3 col vs 2 col). No mobile (1 coluna) são todos 4:3.
-          // Assim as medidas recomendadas no admin batem certo em
-          // qualquer largura de ecrã.
-          'aspect-[4/3]',
-          config.size === 'wide' ? 'lg:aspect-[5/4]' : 'lg:aspect-[5/6]',
+          // Proporção fixa 3:2 nos cards padrão (mobile 4:3). O hero não
+          // tem aspect no desktop: estica pelas 2 linhas da grelha
+          // (h-full), o que dá ≈3:2 também — as medidas do admin batem
+          // certo em qualquer largura de ecrã.
+          'aspect-[4/3] md:aspect-[3/2]',
+          isHero && 'lg:aspect-auto lg:h-full lg:min-h-[32rem]',
         )}
       >
         {/* ───── Imagem (desktop + mobile) ───── */}
@@ -109,9 +110,9 @@ function BentoCard({
                 alt={banner?.title || config.label}
                 fill
                 sizes={
-                  config.size === 'wide'
-                    ? '(max-width: 1024px) 100vw, 50vw'
-                    : '(max-width: 1024px) 100vw, 33vw'
+                  isHero
+                    ? '(max-width: 1024px) 100vw, 66vw'
+                    : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                 }
                 className='object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100'
                 onError={() => setErrored(true)}
@@ -135,10 +136,22 @@ function BentoCard({
           <span className='inline-flex items-center rounded-full bg-brand px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-white'>
             {config.label}
           </span>
-          <h3 className='mt-3 text-2xl/8 font-semibold tracking-tight text-white md:text-[1.7rem] md:leading-9'>
+          <h3
+            className={cn(
+              'mt-3 font-semibold tracking-tight text-white',
+              isHero
+                ? 'text-2xl/8 md:text-4xl md:leading-[1.1] lg:text-5xl'
+                : 'text-xl/7 md:text-2xl/8',
+            )}
+          >
             {title}
           </h3>
-          <p className='mt-2 max-w-[34rem] text-sm/6 text-white/75'>
+          <p
+            className={cn(
+              'mt-2 text-white/75',
+              isHero ? 'max-w-md text-sm/6 md:text-base/7' : 'max-w-[34rem] text-sm/6',
+            )}
+          >
             {subtitle}
           </p>
           <span className='mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300 transition-colors group-hover:text-white'>
@@ -157,15 +170,14 @@ function BentoCard({
 // ───── Skeleton ─────
 function BentoSkeleton() {
   return (
-    <div className='grid grid-cols-1 gap-4 lg:grid-cols-6'>
+    <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
       {BENTO_SLOTS.map(s => (
         <div
           key={s.slot}
           className={cn(
-            'aspect-[4/3] animate-pulse rounded-2xl bg-gray-100',
-            s.size === 'wide'
-              ? 'lg:col-span-3 lg:aspect-[5/4]'
-              : 'lg:col-span-2 lg:aspect-[5/6]',
+            'aspect-[4/3] md:aspect-[3/2] animate-pulse rounded-2xl bg-gray-100',
+            s.size === 'hero' &&
+              'md:col-span-2 lg:row-span-2 lg:aspect-auto lg:h-full lg:min-h-[32rem]',
           )}
         />
       ))}
@@ -217,7 +229,7 @@ export default function CategoryBento({
         {loading ? (
           <BentoSkeleton />
         ) : (
-          <div className='grid grid-cols-1 gap-4 lg:grid-cols-6'>
+          <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
             {BENTO_SLOTS.map(config => (
               <BentoCard
                 key={config.slot}

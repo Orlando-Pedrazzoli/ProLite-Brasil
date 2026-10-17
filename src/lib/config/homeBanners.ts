@@ -12,7 +12,11 @@
 // Para acrescentar uma secção com imagem gerida no admin, basta
 // adicionar uma entrada aqui + o componente que a lê.
 
-import { BENTO_SLOTS, BENTO_SIZE_HINTS } from '@/lib/config/bentoSlots';
+import {
+  BENTO_SLOTS,
+  BENTO_SIZE_HINTS,
+  BENTO_SIZE_LABEL,
+} from '@/lib/config/bentoSlots';
 
 export type BannerPosition = 'hero' | 'bento' | 'category_banner' | 'store';
 
@@ -61,14 +65,14 @@ export const HOME_BANNER_POSITIONS: PositionConfig[] = [
   },
   {
     value: 'bento',
-    label: 'Bento de categorias (5 cards — abaixo de "Compre por categoria")',
-    help: 'Cada categoria tem um card fixo. O Título é a frase grande do card e o Subtítulo a linha de apoio; o texto fica no canto inferior esquerdo sobre um gradiente escuro — deixa essa zona da foto mais limpa. Cards 1 e 2 (Capas, Leashes) são paisagem 5:4; cards 3, 4 e 5 são retrato 5:6.',
+    label: 'Bento de categorias (6 cards — abaixo de "Compre por categoria")',
+    help: 'Cada categoria tem um card fixo. O Título é a frase grande do card e o Subtítulo a linha de apoio; o texto fica no canto inferior esquerdo sobre um gradiente escuro — deixa essa zona da foto mais limpa. O card 1 (Capas) é o grande, 2×2; os outros cinco são padrão. Todos em paisagem 3:2.',
     hasSubtitle: true,
     hasLink: false,
     hasMobile: true,
     slots: BENTO_SLOTS.map((s, i) => ({
       value: s.slot,
-      label: `${i + 1}. ${s.label} — ${s.size === 'wide' ? 'card largo' : 'card estreito'}`,
+      label: `${i + 1}. ${s.label} — ${BENTO_SIZE_LABEL[s.size]}`,
       href: s.href,
       hints: BENTO_SIZE_HINTS[s.size],
     })),
