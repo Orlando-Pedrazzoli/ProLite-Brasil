@@ -133,12 +133,9 @@ function BentoCard({
 
         {/* ───── Texto ───── */}
         <div className='absolute inset-x-0 bottom-0 p-6 md:p-10'>
-          <span className='inline-flex items-center rounded-full bg-brand px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-white'>
-            {config.label}
-          </span>
           <h3
             className={cn(
-              'mt-3 font-semibold tracking-tight text-white',
+              'font-semibold tracking-tight text-white',
               isHero
                 ? 'text-2xl/8 md:text-4xl md:leading-[1.1] lg:text-5xl'
                 : 'text-xl/7 md:text-2xl/8',
