@@ -8,6 +8,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import {
@@ -111,6 +112,18 @@ const DEFAULT_MENU_WIDTH = 560;
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const pathname = usePathname();
+
+  // v3: clicar no logo leva sempre ao topo. Fora da home, o Link navega
+  // para "/" (nova página já abre no topo). Na própria home, o Next não
+  // faz scroll porque a rota não muda — forçamos o scroll suave ao topo.
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setMobileMenuOpen(false);
+    if (pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -236,6 +249,7 @@ export default function Navbar() {
 
             <Link
               href='/'
+              onClick={handleLogoClick}
               className='flex-shrink-0'
               aria-label='Pro-Lite — página inicial'
             >
