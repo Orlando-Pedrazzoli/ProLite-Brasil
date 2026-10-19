@@ -1,4 +1,6 @@
 // 📄 src/components/product/ProductCard.tsx
+// v3: hover no card mostra a 2ª imagem do produto (crossfade) em vez de
+//     zoom na capa — padrão de e-commerce. Ao sair, volta à capa.
 // v2: handleQuickAdd abre a CartSidebar após adicionar (padrão e-commerce).
 //     Toast removido — a sidebar é a confirmação visual.
 //     e.preventDefault() continua essencial: o card inteiro é um <Link>,
@@ -81,6 +83,8 @@ export default function ProductCard({
   // não persistia nem refletia em outros componentes)
   const { isInWishlist, toggleWishlist } = useWishlist();
   const [currentImage, setCurrentImage] = useState(0);
+  // v3: hover troca para a 2ª foto (padrão e-commerce) em vez de zoom.
+  const [hovered, setHovered] = useState(false);
   const [familySiblings, setFamilySiblings] = useState<FamilySibling[]>([]);
   const [activeVariant, setActiveVariant] = useState<FamilySibling | null>(
     null,
@@ -100,6 +104,15 @@ export default function ProductCard({
   const pixPrice = calculatePixPrice(displayed.price);
   const installment = calculateInstallments(displayed.price);
   const images = displayed.images.length > 0 ? displayed.images : [];
+  // Índice efetivamente exibido: com o cursor sobre o card e ainda na capa,
+  // mostra a 2ª imagem; se o user já navegou pelas setas, respeita a escolha.
+  const shownImage =
+    hovered && currentImage === 0 && images.length > 1 ? 1 : currentImage;
+  // Só renderizamos as imagens que podem aparecer (capa, 2ª e a atual),
+  // em vez de carregar a galeria inteira de cada card.
+  const renderedIndexes = Array.from(
+    new Set([0, 1, shownImage].filter(i => i < images.length)),
+  );
   const hasDiscount = !!(
     displayed.compareAtPrice &&
     displayed.compareAtPrice > 0 &&
@@ -166,12 +179,17 @@ export default function ProductCard({
   const prevImage = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentImage(prev => (prev - 1 + images.length) % images.length);
+    setCurrentImage((shownImage - 1 + images.length) % images.length);
   };
   const nextImage = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentImage(prev => (prev + 1) % images.length);
+    setCurrentImage((shownImage + 1) % images.length);
+  };
+  const handleMouseLeave = () => {
+    // Ao sair do card volta sempre à capa (comportamento padrão de e-commerce)
+    setHovered(false);
+    setCurrentImage(0);
   };
   const isFavorite = isInWishlist(product._id);
   const toggleFavorite = (e: React.MouseEvent) => {
@@ -207,25 +225,36 @@ export default function ProductCard({
     <Link
       href={`/produtos/${displayed.slug}`}
       className='group block bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow'
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Área da imagem: moldura 4:5. A foto passa por cardImage()
           (Cloudinary: trim da margem branca + pad para 4:5), por isso
           chega já enquadrada e preenche a moldura sem cortar nada;
           object-contain é só rede de segurança para imagens fora do
-          Cloudinary. O p-2 dá um respiro mínimo nas bordas. */}
+          Cloudinary. O p-2 dá um respiro mínimo nas bordas.
+          v3: sem zoom. As imagens ficam empilhadas e a visível é
+          controlada por opacidade (crossfade), para a troca capa → 2ª
+          foto no hover ser suave em vez de "piscar". */}
       <div className='relative aspect-[4/5] bg-white overflow-hidden'>
         {images.length > 0 ? (
-          <Image
-            src={cardImage(images[currentImage])}
-            alt={displayed.name}
-            fill
-            sizes={
-              expanded
-                ? '(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw'
-                : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'
-            }
-            className='object-contain object-center p-2 group-hover:scale-105 transition-transform duration-500'
-          />
+          renderedIndexes.map(i => (
+            <Image
+              key={images[i]}
+              src={cardImage(images[i])}
+              alt={displayed.name}
+              fill
+              sizes={
+                expanded
+                  ? '(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw'
+                  : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw'
+              }
+              className={`object-contain object-center p-2 transition-opacity duration-300 ease-out ${
+                i === shownImage ? 'opacity-100' : 'opacity-0'
+              }`}
+              aria-hidden={i !== shownImage}
+            />
+          ))
         ) : (
           <div className='flex items-center justify-center h-full text-gray-300 text-sm'>
             Sem imagem
@@ -313,7 +342,7 @@ export default function ProductCard({
             {images.map((_, i) => (
               <span
                 key={i}
-                className={`${expanded ? 'w-2 h-2' : 'w-1.5 h-1.5'} rounded-full ${i === currentImage ? 'bg-brand' : 'bg-gray-300'}`}
+                className={`${expanded ? 'w-2 h-2' : 'w-1.5 h-1.5'} rounded-full ${i === shownImage ? 'bg-brand' : 'bg-gray-300'}`}
               />
             ))}
           </div>
