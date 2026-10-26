@@ -1,7 +1,7 @@
 // src/components/admin/ProductForm.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Reorder } from 'framer-motion';
 import Image from 'next/image';
@@ -451,6 +451,9 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
   const [suppliers, setSuppliers] = useState<SupplierOption[]>([]);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragCounter = useRef(0);
+  const uploadingRef = useRef(false);
 
   const [showBrandModal, setShowBrandModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -648,13 +651,25 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
     });
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target;
-    const files = input.files;
-    if (!files || files.length === 0) return;
+  // Upload de uma lista de ficheiros — usado pelo input, pelo drag & drop e pelo colar (Ctrl+V)
+  const uploadFiles = useCallback(async (fileList: File[]) => {
+    const files = fileList.filter(f => {
+      // Alguns formatos (HEIC/HEIF) chegam sem MIME no Windows — aceitar pela extensão
+      if (f.type.startsWith('image/')) return true;
+      return /\.(heic|heif|avif|jfif)$/i.test(f.name);
+    });
+    if (files.length === 0) {
+      toast.error('Nenhuma imagem válida encontrada');
+      return;
+    }
+    if (uploadingRef.current) {
+      toast.error('Aguarde o upload atual terminar');
+      return;
+    }
+    uploadingRef.current = true;
     setUploading(true);
     const newImages: string[] = [];
-    for (const original of Array.from(files)) {
+    for (const original of files) {
       try {
         const file = await prepareImageUpload(original);
         const formData = new FormData();
@@ -690,14 +705,84 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
       thumbnail: prev.thumbnail || newImages[0] || '',
     }));
     setUploading(false);
-    // Permite voltar a escolher o mesmo ficheiro após um erro
-    input.value = '';
+    uploadingRef.current = false;
     if (newImages.length > 0) {
       toast.success(
         `${newImages.length} imagem${newImages.length > 1 ? 'ns' : ''} enviada${newImages.length > 1 ? 's' : ''}!`,
       );
     }
+  }, []);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target;
+    const files = input.files;
+    if (!files || files.length === 0) return;
+    await uploadFiles(Array.from(files));
+    // Permite voltar a escolher o mesmo ficheiro após um erro
+    input.value = '';
   };
+
+  // ---- Drag & drop na zona de upload ----
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!e.dataTransfer.types.includes('Files')) return;
+    dragCounter.current += 1;
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current -= 1;
+    if (dragCounter.current <= 0) {
+      dragCounter.current = 0;
+      setIsDragging(false);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.dataTransfer.dropEffect = 'copy';
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current = 0;
+    setIsDragging(false);
+    const files = Array.from(e.dataTransfer.files || []);
+    if (files.length === 0) return;
+    await uploadFiles(files);
+  };
+
+  // ---- Colar imagem (Ctrl+V / Cmd+V) em qualquer ponto da página ----
+  useEffect(() => {
+    const onPaste = (e: ClipboardEvent) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      const files: File[] = [];
+      for (const item of Array.from(items)) {
+        if (item.kind === 'file' && item.type.startsWith('image/')) {
+          const file = item.getAsFile();
+          if (!file) continue;
+          // Imagens coladas chegam sempre como "image.png" — dar nome único
+          const ext = file.type.split('/')[1] || 'png';
+          files.push(
+            new File([file], `colada-${Date.now()}-${files.length + 1}.${ext}`, {
+              type: file.type,
+            }),
+          );
+        }
+      }
+      if (files.length === 0) return; // texto normal → deixa colar nos inputs
+      e.preventDefault();
+      void uploadFiles(files);
+    };
+    window.addEventListener('paste', onPaste);
+    return () => window.removeEventListener('paste', onPaste);
+  }, [uploadFiles]);
 
   const removeImage = (index: number) => {
     setForm(prev => {
@@ -1673,10 +1758,34 @@ export default function ProductForm({ mode, initialData }: ProductFormProps) {
             Arraste para reordenar. A primeira imagem será a thumbnail.
           </p>
           <div className='mb-4'>
-            <label className='flex items-center justify-center gap-2 px-4 py-8 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-brand hover:bg-brand-50 transition-colors'>
-              <Upload size={20} className='text-gray-400' />
-              <span className='text-sm text-gray-500'>
-                {uploading ? 'Enviando...' : 'Clique para enviar imagens'}
+            <label
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              className={`flex flex-col items-center justify-center gap-1 px-4 py-8 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
+                isDragging
+                  ? 'border-brand bg-brand-50 ring-2 ring-brand/30'
+                  : 'border-gray-300 hover:border-brand hover:bg-brand-50'
+              }`}
+            >
+              <div className='flex items-center gap-2'>
+                <Upload
+                  size={20}
+                  className={isDragging ? 'text-brand' : 'text-gray-400'}
+                />
+                <span
+                  className={`text-sm ${isDragging ? 'text-brand font-medium' : 'text-gray-500'}`}
+                >
+                  {uploading
+                    ? 'Enviando...'
+                    : isDragging
+                      ? 'Solte as imagens aqui'
+                      : 'Clique, arraste ou cole (Ctrl+V) imagens'}
+                </span>
+              </div>
+              <span className='text-xs text-gray-400'>
+                JPG, PNG, WEBP, HEIC, AVIF · várias de uma vez
               </span>
               <input
                 type='file'
