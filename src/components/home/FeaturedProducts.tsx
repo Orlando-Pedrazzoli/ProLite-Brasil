@@ -13,7 +13,11 @@
 //     ecrã (IntersectionObserver), a aba está em segundo plano, ou após
 //     clicar nas setas — e RETOMA alguns segundos depois da interação;
 //   • respeita prefers-reduced-motion (fica estático, sem autoplay);
-//   • com poucos produtos (tudo cabe no ecrã) não duplica nem anima.
+//   • com poucos produtos (tudo cabe no ecrã) não duplica nem anima;
+//   • v2.1: se a busca principal devolver menos de `minItems` produtos
+//     (ex.: só 2 marcados como "Novidade"), COMPLETA a fila com os
+//     produtos publicados mais recentes (fallbackUrl) até `minItems` —
+//     assim o carrossel tem sempre matéria para andar.
 //
 // Removido o snap-mandatory: com o movimento contínuo o snap "prendia"
 // o scroll a cada cartão.
@@ -55,10 +59,14 @@ interface FeaturedProductsProps {
   speed?: number;
   /** Segundos de pausa após uma interação (setas, toque, arrasto) */
   resumeAfter?: number;
+  /** Se a busca principal devolver menos de `minItems`, completa com estes */
+  fallbackUrl?: string;
+  /** Quantidade mínima de produtos desejada no carrossel (padrão 8) */
+  minItems?: number;
 }
 
 const COPIES = 3; // conjuntos renderizados para o loop (mínimo 3)
-const MIN_PRODUCTS_TO_LOOP = 3;
+const MIN_PRODUCTS_TO_LOOP = 2;
 
 export default function FeaturedProducts({
   title,
@@ -66,6 +74,8 @@ export default function FeaturedProducts({
   fetchUrl,
   speed = 38,
   resumeAfter = 3,
+  fallbackUrl,
+  minItems = 8,
 }: FeaturedProductsProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -86,7 +96,29 @@ export default function FeaturedProducts({
       try {
         const res = await fetch(fetchUrl);
         const data = await res.json();
-        if (data.success) setProducts(data.products);
+        let list: Product[] = data.success ? data.products : [];
+
+        // Poucos resultados (ex.: só 2 "novidades")? Completa com os mais
+        // recentes publicados, sem repetir os que já estão na lista.
+        if (fallbackUrl && list.length < minItems) {
+          try {
+            const r2 = await fetch(fallbackUrl);
+            const d2 = await r2.json();
+            if (d2.success) {
+              const seen = new Set(list.map(p => p._id));
+              for (const p of d2.products as Product[]) {
+                if (list.length >= minItems) break;
+                if (!seen.has(p._id)) {
+                  seen.add(p._id);
+                  list = [...list, p];
+                }
+              }
+            }
+          } catch {
+            /* fallback é best-effort */
+          }
+        }
+        setProducts(list);
       } catch {
         console.error('Erro ao carregar produtos');
       } finally {
@@ -94,7 +126,7 @@ export default function FeaturedProducts({
       }
     };
     fetchProducts();
-  }, [fetchUrl]);
+  }, [fetchUrl, fallbackUrl, minItems]);
 
   // Loop só quando há produtos suficientes E um conjunto é mais largo que
   // o contentor (medido com ResizeObserver — muda com o tamanho do ecrã).
