@@ -1,9 +1,13 @@
 // src/components/layout/Navbar.tsx
-// v2: CTA "Fale Conosco" — botão laranja preenchido no extremo direito da
-//     barra de categorias (desktop): cor contrastante sobre o fundo escuro,
-//     no caminho natural do olhar, visualmente distinto dos links de
-//     navegação (best practice de CTA). No mobile, entrada destacada no
-//     fim do menu lateral. Rota: /contato.
+// v4 (pedido do Maurício): o CTA da barra de categorias passou a ser
+//     "SEJA UM REVENDEDOR" (→ /revendedores, formulário de lojista). O
+//     "Fale Conosco" subiu para a barra superior, ao lado do bloco
+//     "Olá, seja bem vindo! / ENTRAR | CADASTRE-SE" (desktop), e no mobile
+//     fica como link simples no fim do menu lateral, abaixo do CTA de
+//     revenda.
+// v2: CTA preenchido no extremo direito da barra de categorias (desktop):
+//     cor contrastante sobre o fundo escuro, no caminho natural do olhar,
+//     visualmente distinto dos links de navegação (best practice de CTA).
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -19,6 +23,7 @@ import {
   ChevronDown,
   ArrowRight,
   MessageCircle,
+  Store,
 } from 'lucide-react';
 import { specialNavItems, fallbackCategories } from '@/lib/config/navigation';
 import CartIcon from '@/components/layout/CartIcon';
@@ -287,6 +292,18 @@ export default function Navbar() {
             </form>
 
             <div className='flex items-center gap-3 sm:gap-5'>
+              {/* v4: Fale Conosco na barra superior (desktop) */}
+              <Link
+                href='/contato'
+                className='hidden md:flex items-center gap-2 text-sm text-gray-600 hover:text-brand transition-colors'
+              >
+                <MessageCircle size={20} />
+                <div className='hidden lg:block'>
+                  <p className='text-xs text-gray-400'>Precisa de ajuda?</p>
+                  <p className='font-medium text-xs'>FALE CONOSCO</p>
+                </div>
+              </Link>
+
               {isLoggedIn ? (
                 <Link
                   href='/minha-conta'
@@ -346,7 +363,7 @@ export default function Navbar() {
               {/* Espaçador espelhando o CTA — mantém as categorias
                   visualmente centradas em ecrãs largos */}
               <div
-                className='hidden xl:block w-[150px] shrink-0'
+                className='hidden xl:block w-[190px] shrink-0'
                 aria-hidden='true'
               />
               <ul className='flex items-center justify-center gap-0 flex-1 min-w-0'>
@@ -414,15 +431,15 @@ export default function Navbar() {
                 })}
               </ul>
 
-              {/* v2: CTA Fale Conosco — botão contrastante, destacado dos
-                  links de navegação, no extremo direito (caminho do olhar) */}
+              {/* v4: CTA Seja um Revendedor — botão contrastante, destacado
+                  dos links de navegação, no extremo direito (caminho do olhar) */}
               <Link
-                href='/contato'
+                href='/revendedores'
                 className='shrink-0 inline-flex items-center gap-1.5 bg-brand text-white text-xs font-bold uppercase tracking-wide px-3.5 py-2 my-1 rounded-md hover:bg-brand-dark transition-colors'
               >
-                <MessageCircle size={14} />
-                <span className='hidden lg:inline'>Fale Conosco</span>
-                <span className='lg:hidden'>Contato</span>
+                <Store size={14} />
+                <span className='hidden lg:inline'>Seja um Revendedor</span>
+                <span className='lg:hidden'>Revenda</span>
               </Link>
             </div>
           </div>
@@ -519,14 +536,22 @@ export default function Navbar() {
                   </div>
                 );
               })}
-              {/* v2: CTA Fale Conosco no menu mobile */}
+              {/* v4: CTA Seja um Revendedor + Fale Conosco no menu mobile */}
               <div className='border-t border-gray-200 mt-2 pt-2'>
                 <Link
-                  href='/contato'
+                  href='/revendedores'
                   onClick={() => setMobileMenuOpen(false)}
                   className='flex items-center gap-2 mx-4 my-2 px-4 py-3 text-sm font-bold text-white bg-brand rounded-md hover:bg-brand-dark transition-colors'
                 >
-                  <MessageCircle size={16} />
+                  <Store size={16} />
+                  Seja um Revendedor
+                </Link>
+                <Link
+                  href='/contato'
+                  onClick={() => setMobileMenuOpen(false)}
+                  className='flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50'
+                >
+                  <MessageCircle size={16} className='text-gray-400' />
                   Fale Conosco
                 </Link>
               </div>

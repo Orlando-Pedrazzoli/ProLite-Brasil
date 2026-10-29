@@ -1,3 +1,4 @@
+// src/components/admin/AdminSidebar.tsx
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,6 +15,7 @@ import {
   Truck,
   Ticket,
   Image as ImageIcon,
+  Store,
   LogOut,
   ExternalLink,
 } from 'lucide-react';
@@ -30,6 +32,7 @@ const menuItems = [
   { label: 'Marcas', href: '/admin/marcas', icon: Tags },
   { label: 'Fornecedores', href: '/admin/fornecedores', icon: Truck },
   { label: 'Cupons', href: '/admin/cupons', icon: Ticket },
+  { label: 'Revendedores', href: '/admin/revendedores', icon: Store },
   { label: 'Banners', href: '/admin/configuracoes', icon: ImageIcon },
 ];
 export default function AdminSidebar() {

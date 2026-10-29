@@ -1,5 +1,5 @@
 {
-  "_comment": "Gerado a partir da Tabela Pro-Lite 2026 (folha Plan1). price = preço de lojista x 2,2 (coluna MARK-UP), sem arredondamento. Não contém preços de atacado nem estoque.",
+  "source": "Tabela_Pro-Lite_2026.xls (aba Plan1, gravada em 27/10/2026). price = coluna MARK-UP 2,2 (venda no site); costPrice = coluna PREÇO (preço que o revendedor paga)",
   "brand": {
     "name": "Pro-Lite",
     "slug": "pro-lite"
@@ -131,13 +131,16 @@
       "slug": "bone-surf",
       "category": "Lifestyle",
       "subcategory": "Vestuário",
-      "price": 98.78,
+      "price": 87.78,
       "ncm": "6505.00.19",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 39.9
     },
     {
       "sku": "17411",
@@ -145,13 +148,16 @@
       "slug": "bone-surf-extensivo",
       "category": "Lifestyle",
       "subcategory": "Vestuário",
-      "price": 107.58,
+      "price": 87.78,
       "ncm": "6505.00.19",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 39.9
     },
     {
       "sku": "17802",
@@ -165,7 +171,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 4.5
     },
     {
       "sku": "17601",
@@ -179,35 +186,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
-    },
-    {
-      "sku": "17602",
-      "name": "Wet Suit Bag Roll",
-      "slug": "wet-suit-bag-roll",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 219.78,
-      "ncm": "9506.29.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "14142",
-      "name": "Raspador P",
-      "slug": "raspador-p",
-      "category": "Acessórios",
-      "subcategory": "Manutenção",
-      "price": 8.58,
-      "ncm": "9506.29.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 45.0
     },
     {
       "sku": "14146",
@@ -221,7 +203,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 5.9
     },
     {
       "sku": "17207",
@@ -229,13 +212,14 @@
       "slug": "copinho-para-bodyboard",
       "category": "Acessórios",
       "subcategory": "Diversos",
-      "price": 49.94,
+      "price": 33.0,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 15.0
     },
     {
       "sku": "16111",
@@ -249,7 +233,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 29.9
     },
     {
       "sku": "14132",
@@ -263,7 +248,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 4.5
     },
     {
       "sku": "14133",
@@ -271,125 +257,14 @@
       "slug": "quick-vest",
       "category": "Acessórios",
       "subcategory": "Diversos",
-      "price": 19.8,
+      "price": 15.18,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "15703",
-      "name": "Capa para Banco Nylon",
-      "slug": "capa-para-banco-nylon",
-      "category": "Acessórios",
-      "subcategory": "Diversos",
-      "price": 87.78,
-      "ncm": "8708.29.99",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "17763",
-      "name": "Capa para Mochila",
-      "slug": "capa-para-mochila",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 43.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "17415",
-      "name": "Pá de Remo",
-      "slug": "pa-de-remo",
-      "category": "Acessórios",
-      "subcategory": "Diversos",
-      "price": 43.78,
-      "ncm": "3926.90.90",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "17762",
-      "name": "Kit Surfista",
-      "slug": "kit-surfista",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 109.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "17765",
-      "name": "Porta Ferramentas",
-      "slug": "porta-ferramentas",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 109.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "17764",
-      "name": "Sicurezza",
-      "slug": "sicurezza",
-      "category": "Acessórios",
-      "subcategory": "Diversos",
-      "price": 10.78,
-      "ncm": "4007.00.20",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "19109",
-      "name": "Rede de Descanso 110 kilos",
-      "slug": "rede-de-descanso-110-kilos",
-      "category": "Lifestyle",
-      "subcategory": "Casa e descanso",
-      "price": 165.0,
-      "ncm": "5608.90.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "19117",
-      "name": "Kit para Rede Corda + Gancho",
-      "slug": "kit-para-rede-corda-gancho",
-      "category": "Lifestyle",
-      "subcategory": "Casa e descanso",
-      "price": 99.0,
-      "ncm": "5608.90.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 6.9
     },
     {
       "sku": "17901",
@@ -397,13 +272,14 @@
       "slug": "leash-nadadeira",
       "category": "Leashes",
       "subcategory": "Leashes Bodyboard",
-      "price": 21.78,
+      "price": 29.7,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 13.5
     },
     {
       "sku": "10109",
@@ -422,7 +298,8 @@
           "value": "Nó tradicional"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 15.9
     },
     {
       "sku": "10100",
@@ -430,7 +307,7 @@
       "slug": "leash-pl-5-4-mm-supercomp",
       "category": "Leashes",
       "subcategory": "Leashes PL",
-      "price": 65.78,
+      "price": 56.98,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -441,12 +318,37 @@
           "value": "Nó tradicional"
         }
       ],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 25.9
     },
     {
       "sku": "10102",
       "name": "Leash PL 6 / 5 mm / Comp",
       "slug": "leash-pl-6-5-mm-comp",
+      "category": "Leashes",
+      "subcategory": "Leashes PL",
+      "price": 78.98,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [
+        {
+          "key": "Construção",
+          "value": "Nó tradicional"
+        }
+      ],
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 35.9
+    },
+    {
+      "sku": "10103",
+      "name": "Leash PL 6 / 6,5 mm / Regular",
+      "slug": "leash-pl-6-6-5-mm-regular",
       "category": "Leashes",
       "subcategory": "Leashes PL",
       "price": 87.78,
@@ -460,26 +362,10 @@
           "value": "Nó tradicional"
         }
       ],
-      "tags": ["ja-no-mercado-livre"]
-    },
-    {
-      "sku": "10103",
-      "name": "Leash PL 6 / 6,5 mm / Regular",
-      "slug": "leash-pl-6-6-5-mm-regular",
-      "category": "Leashes",
-      "subcategory": "Leashes PL",
-      "price": 98.78,
-      "ncm": "9506.29.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [
-        {
-          "key": "Construção",
-          "value": "Nó tradicional"
-        }
+      "tags": [
+        "ja-no-mercado-livre"
       ],
-      "tags": ["ja-no-mercado-livre"]
+      "costPrice": 39.9
     },
     {
       "sku": "10110",
@@ -487,7 +373,7 @@
       "slug": "leash-pl-6-6-5-mm-regular-bodyboard-coil",
       "category": "Leashes",
       "subcategory": "Leashes Bodyboard",
-      "price": 153.78,
+      "price": 131.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -498,7 +384,8 @@
           "value": "Nó tradicional"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 59.9
     },
     {
       "sku": "10104",
@@ -506,7 +393,7 @@
       "slug": "leash-pl-8-7-0-mm",
       "category": "Leashes",
       "subcategory": "Leashes PL",
-      "price": 129.8,
+      "price": 109.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -517,7 +404,10 @@
           "value": "Nó tradicional"
         }
       ],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 49.9
     },
     {
       "sku": "10105",
@@ -525,7 +415,7 @@
       "slug": "leash-pl-9-6-5-mm-long-regular",
       "category": "Leashes",
       "subcategory": "Leashes PL",
-      "price": 175.78,
+      "price": 109.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -536,7 +426,10 @@
           "value": "Nó tradicional"
         }
       ],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 49.9
     },
     {
       "sku": "10106",
@@ -544,7 +437,7 @@
       "slug": "leash-pl-9-7-mm-long-knee",
       "category": "Leashes",
       "subcategory": "Leashes PL",
-      "price": 175.78,
+      "price": 109.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -555,7 +448,10 @@
           "value": "Nó tradicional"
         }
       ],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 49.9
     },
     {
       "sku": "10107",
@@ -563,7 +459,7 @@
       "slug": "leash-pl-10-8-0-mm",
       "category": "Leashes",
       "subcategory": "Leashes PL",
-      "price": 175.78,
+      "price": 131.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -574,7 +470,10 @@
           "value": "Nó tradicional"
         }
       ],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 59.9
     },
     {
       "sku": "12102",
@@ -582,7 +481,7 @@
       "slug": "leash-comp-mds-6-5-mm",
       "category": "Leashes",
       "subcategory": "Leashes MDS",
-      "price": 195.8,
+      "price": 197.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -593,7 +492,8 @@
           "value": "Injetado com duplo girador"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 89.9
     },
     {
       "sku": "12112",
@@ -601,7 +501,7 @@
       "slug": "leash-freesurf-mds-6-7-mm",
       "category": "Leashes",
       "subcategory": "Leashes MDS",
-      "price": 195.8,
+      "price": 197.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -612,7 +512,8 @@
           "value": "Injetado com duplo girador"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 89.9
     },
     {
       "sku": "12113",
@@ -620,7 +521,7 @@
       "slug": "leash-pro-long-mds-9-7-mm",
       "category": "Leashes",
       "subcategory": "Leashes MDS",
-      "price": 195.8,
+      "price": 219.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -631,7 +532,10 @@
           "value": "Injetado com duplo girador"
         }
       ],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 99.9
     },
     {
       "sku": "12114",
@@ -639,7 +543,7 @@
       "slug": "leash-survivor-mds-8-7-mm",
       "category": "Leashes",
       "subcategory": "Leashes MDS",
-      "price": 195.8,
+      "price": 197.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -650,7 +554,8 @@
           "value": "Injetado com duplo girador"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 89.9
     },
     {
       "sku": "12115",
@@ -658,7 +563,7 @@
       "slug": "leash-pro-long-knee-mds-9-7-mm",
       "category": "Leashes",
       "subcategory": "Leashes MDS",
-      "price": 195.8,
+      "price": 219.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -669,7 +574,8 @@
           "value": "Injetado com duplo girador"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 99.9
     },
     {
       "sku": "12202",
@@ -688,7 +594,8 @@
           "value": "Injetado com duplo girador"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 125.9
     },
     {
       "sku": "14101",
@@ -696,13 +603,14 @@
       "slug": "wax-tropical-80-g",
       "category": "Parafinas",
       "subcategory": "",
-      "price": 8.78,
+      "price": 7.33,
       "ncm": "2712.20.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 3.33
     },
     {
       "sku": "14102",
@@ -710,13 +618,16 @@
       "slug": "wax-warm-80-g",
       "category": "Parafinas",
       "subcategory": "",
-      "price": 8.78,
+      "price": 7.33,
       "ncm": "2712.20.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 3.33
     },
     {
       "sku": "14103",
@@ -724,13 +635,16 @@
       "slug": "wax-cool-80-g",
       "category": "Parafinas",
       "subcategory": "",
-      "price": 8.78,
+      "price": 7.33,
       "ncm": "2712.20.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 3.33
     },
     {
       "sku": "14104",
@@ -738,13 +652,14 @@
       "slug": "wax-cold-80-g",
       "category": "Parafinas",
       "subcategory": "",
-      "price": 8.78,
+      "price": 7.33,
       "ncm": "2712.20.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 3.33
     },
     {
       "sku": "14400",
@@ -752,13 +667,14 @@
       "slug": "wax-20-g",
       "category": "Parafinas",
       "subcategory": "",
-      "price": 1.98,
+      "price": 2.42,
       "ncm": "2712.20.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 1.1
     },
     {
       "sku": "14105",
@@ -772,7 +688,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 6.8
     },
     {
       "sku": "17101",
@@ -780,13 +699,16 @@
       "slug": "fita-extensora-5-0-m-2-fitas",
       "category": "Acessórios",
       "subcategory": "Racks e transporte",
-      "price": 153.78,
+      "price": 129.8,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 59.0
     },
     {
       "sku": "17102",
@@ -794,13 +716,14 @@
       "slug": "fita-extensora-3-3-m-2-fitas",
       "category": "Acessórios",
       "subcategory": "Racks e transporte",
-      "price": 109.78,
+      "price": 99.0,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 45.0
     },
     {
       "sku": "17114",
@@ -808,13 +731,14 @@
       "slug": "fita-extensora-7-0-m-1-fita",
       "category": "Acessórios",
       "subcategory": "Racks e transporte",
-      "price": 85.8,
+      "price": 81.4,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 37.0
     },
     {
       "sku": "17112",
@@ -828,7 +752,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 59.0
     },
     {
       "sku": "10160",
@@ -842,7 +767,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 49.9
     },
     {
       "sku": "10161",
@@ -856,7 +782,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 65.0
     },
     {
       "sku": "10162",
@@ -870,7 +797,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 150.0
     },
     {
       "sku": "17201",
@@ -884,7 +814,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 29.0
     },
     {
       "sku": "17202",
@@ -898,7 +829,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 29.0
     },
     {
       "sku": "17203",
@@ -912,7 +844,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 29.0
     },
     {
       "sku": "16104",
@@ -926,35 +859,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
-    },
-    {
-      "sku": "16124",
-      "name": "Mochila Dreams",
-      "slug": "mochila-dreams",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 109.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "16129",
-      "name": "Carteira Pro-Lite",
-      "slug": "carteira-pro-lite",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 34.98,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 39.9
     },
     {
       "sku": "16117",
@@ -968,105 +876,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "16126",
-      "name": "Pochete Nylon",
-      "slug": "pochete-nylon",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 54.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "16127",
-      "name": "Shoulder Bag",
-      "slug": "shoulder-bag",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 54.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "16128",
-      "name": "Shoulder Bag Back 2 Zíperes",
-      "slug": "shoulder-bag-back-2-ziperes",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 54.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "16130",
-      "name": "Shoulder Bag Back 3 Zíperes",
-      "slug": "shoulder-bag-back-3-ziperes",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 54.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "10169",
-      "name": "Shoulder Bag Bill",
-      "slug": "shoulder-bag-bill",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 54.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "10180",
-      "name": "Shoulder Bag Mond",
-      "slug": "shoulder-bag-mond",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 54.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "10167",
-      "name": "Shoulder Bag Ment",
-      "slug": "shoulder-bag-ment",
-      "category": "Lifestyle",
-      "subcategory": "Mochilas e bolsas",
-      "price": 54.78,
-      "ncm": "4202.92.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 49.9
     },
     {
       "sku": "16101",
@@ -1080,7 +891,23 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 50.0
+    },
+    {
+      "sku": "19109",
+      "name": "Rede de Descanso 110 kilos",
+      "slug": "rede-de-descanso-110-kilos",
+      "category": "Lifestyle",
+      "subcategory": "Casa e descanso",
+      "price": 165.0,
+      "ncm": "5608.90.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": [],
+      "costPrice": 75.0
     },
     {
       "sku": "19110",
@@ -1094,7 +921,8 @@
       "productFamily": "wave-check-jacket",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 68.0
     },
     {
       "sku": "19111",
@@ -1108,7 +936,8 @@
       "productFamily": "wave-check-jacket",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 68.0
     },
     {
       "sku": "19112",
@@ -1122,7 +951,8 @@
       "productFamily": "wave-check-jacket",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 68.0
     },
     {
       "sku": "19113",
@@ -1130,13 +960,16 @@
       "slug": "lycra-pro-lite-cores-diversas",
       "category": "Lifestyle",
       "subcategory": "Vestuário",
-      "price": 175.78,
+      "price": 110.0,
       "ncm": "6109.90.00",
       "size": "P",
       "productFamily": "lycra-pro-lite-cores-diversas",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 50.0
     },
     {
       "sku": "19114",
@@ -1144,13 +977,14 @@
       "slug": "lycra-pro-lite-cores-diversas-m",
       "category": "Lifestyle",
       "subcategory": "Vestuário",
-      "price": 175.78,
+      "price": 110.0,
       "ncm": "6109.90.00",
       "size": "M",
       "productFamily": "lycra-pro-lite-cores-diversas",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 50.0
     },
     {
       "sku": "19115",
@@ -1158,13 +992,14 @@
       "slug": "lycra-pro-lite-cores-diversas-g",
       "category": "Lifestyle",
       "subcategory": "Vestuário",
-      "price": 175.78,
+      "price": 110.0,
       "ncm": "6109.90.00",
       "size": "G",
       "productFamily": "lycra-pro-lite-cores-diversas",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 50.0
     },
     {
       "sku": "19116",
@@ -1172,13 +1007,59 @@
       "slug": "lycra-pro-lite-cores-diversas-gg",
       "category": "Lifestyle",
       "subcategory": "Vestuário",
-      "price": 175.78,
+      "price": 110.0,
       "ncm": "6109.90.00",
       "size": "GG",
       "productFamily": "lycra-pro-lite-cores-diversas",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 50.0
+    },
+    {
+      "sku": "19167",
+      "name": "Lycra Pro-Lite Infantil (cores diversas)",
+      "slug": "lycra-pro-lite-infantil-cores-diversas",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 110.0,
+      "ncm": "6109.90.00",
+      "size": "P",
+      "productFamily": "lycra-pro-lite-infantil-cores-diversas",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": [],
+      "costPrice": 50.0
+    },
+    {
+      "sku": "19168",
+      "name": "Lycra Pro-Lite Infantil (cores diversas) M",
+      "slug": "lycra-pro-lite-infantil-cores-diversas-m",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 110.0,
+      "ncm": "6109.90.00",
+      "size": "M",
+      "productFamily": "lycra-pro-lite-infantil-cores-diversas",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": [],
+      "costPrice": 50.0
+    },
+    {
+      "sku": "19169",
+      "name": "Lycra Pro-Lite Infantil (cores diversas) G",
+      "slug": "lycra-pro-lite-infantil-cores-diversas-g",
+      "category": "Lifestyle",
+      "subcategory": "Vestuário",
+      "price": 110.0,
+      "ncm": "6109.90.00",
+      "size": "G",
+      "productFamily": "lycra-pro-lite-infantil-cores-diversas",
+      "isMainVariant": false,
+      "specifications": [],
+      "tags": [],
+      "costPrice": 50.0
     },
     {
       "sku": "10000",
@@ -1192,7 +1073,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 49.9
     },
     {
       "sku": "10101",
@@ -1206,7 +1088,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 49.9
     },
     {
       "sku": "10301",
@@ -1220,21 +1105,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
-    },
-    {
-      "sku": "10302",
-      "name": "Quilha PL10 Caixa Quilha",
-      "slug": "quilha-pl10-caixa-quilha",
-      "category": "Quilhas",
-      "subcategory": "Quilhas PL",
-      "price": 122.98,
-      "ncm": "9506.29.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 69.9
     },
     {
       "sku": "10225",
@@ -1248,7 +1122,25 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 99.0
+    },
+    {
+      "sku": "10226",
+      "name": "Quilha PL10 Caixa de Quilha",
+      "slug": "quilha-pl10-caixa-de-quilha",
+      "category": "Quilhas",
+      "subcategory": "Quilhas PL",
+      "price": 122.98,
+      "ncm": "9506.29.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": [],
+      "costPrice": 55.9
     },
     {
       "sku": "10228",
@@ -1262,7 +1154,10 @@
       "productFamily": "quilha-de-fibra-compativel-com-fcs-ii",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10229",
@@ -1276,7 +1171,11 @@
       "productFamily": "quilha-de-fibra-compativel-com-fcs-ii",
       "isMainVariant": false,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre", "rever-nome"]
+      "tags": [
+        "ja-no-mercado-livre",
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10230",
@@ -1290,7 +1189,11 @@
       "productFamily": "quilha-de-fibra-compativel-com-fcs-ii",
       "isMainVariant": false,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre", "rever-nome"]
+      "tags": [
+        "ja-no-mercado-livre",
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10231",
@@ -1304,7 +1207,10 @@
       "productFamily": "quilha-de-fibra-compativel-com-futures",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10232",
@@ -1318,7 +1224,10 @@
       "productFamily": "quilha-de-fibra-compativel-com-futures",
       "isMainVariant": false,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10233",
@@ -1332,7 +1241,10 @@
       "productFamily": "quilha-de-fibra-compativel-com-futures",
       "isMainVariant": false,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10333",
@@ -1346,7 +1258,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10241",
@@ -1360,7 +1275,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10239",
@@ -1374,7 +1292,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10238",
@@ -1388,7 +1309,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10242",
@@ -1402,7 +1326,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10234",
@@ -1416,7 +1343,10 @@
       "productFamily": "quilhao-de-fibra-para-caixa-de-quilha",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10235",
@@ -1430,7 +1360,10 @@
       "productFamily": "quilhao-de-fibra-para-caixa-de-quilha",
       "isMainVariant": false,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "10236",
@@ -1444,7 +1377,10 @@
       "productFamily": "quilhao-de-fibra-para-caixa-de-quilha",
       "isMainVariant": false,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 227.0
     },
     {
       "sku": "13109",
@@ -1452,7 +1388,7 @@
       "slug": "deck-armor",
       "category": "Decks",
       "subcategory": "",
-      "price": 189.2,
+      "price": 175.78,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -1463,7 +1399,8 @@
           "value": "Tail pad"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 79.9
     },
     {
       "sku": "13111",
@@ -1471,7 +1408,7 @@
       "slug": "deck-blade",
       "category": "Decks",
       "subcategory": "",
-      "price": 189.2,
+      "price": 184.8,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -1482,7 +1419,8 @@
           "value": "Tail pad"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 84.0
     },
     {
       "sku": "13119",
@@ -1490,7 +1428,7 @@
       "slug": "deck-quad-attack",
       "category": "Decks",
       "subcategory": "",
-      "price": 189.2,
+      "price": 184.8,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -1501,7 +1439,8 @@
           "value": "Tail pad"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 84.0
     },
     {
       "sku": "13170",
@@ -1509,7 +1448,7 @@
       "slug": "deck-combat",
       "category": "Decks",
       "subcategory": "",
-      "price": 189.2,
+      "price": 184.8,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -1520,7 +1459,8 @@
           "value": "Tail pad"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 84.0
     },
     {
       "sku": "13180",
@@ -1528,7 +1468,7 @@
       "slug": "deck-shield",
       "category": "Decks",
       "subcategory": "",
-      "price": 189.2,
+      "price": 184.8,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -1539,7 +1479,8 @@
           "value": "Tail pad"
         }
       ],
-      "tags": []
+      "tags": [],
+      "costPrice": 84.0
     },
     {
       "sku": "13122",
@@ -1547,7 +1488,7 @@
       "slug": "deck-lombok",
       "category": "Decks",
       "subcategory": "",
-      "price": 189.2,
+      "price": 184.8,
       "ncm": "9506.29.00",
       "size": "",
       "productFamily": "",
@@ -1558,64 +1499,8 @@
           "value": "Tail pad"
         }
       ],
-      "tags": []
-    },
-    {
-      "sku": "13123",
-      "name": "Deck Long",
-      "slug": "deck-long",
-      "category": "Decks",
-      "subcategory": "",
-      "price": 189.2,
-      "ncm": "9506.29.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [
-        {
-          "key": "Tipo",
-          "value": "Tail pad"
-        }
-      ],
-      "tags": []
-    },
-    {
-      "sku": "13124",
-      "name": "Deck Fish",
-      "slug": "deck-fish",
-      "category": "Decks",
-      "subcategory": "",
-      "price": 189.2,
-      "ncm": "9506.29.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [
-        {
-          "key": "Tipo",
-          "value": "Tail pad"
-        }
-      ],
-      "tags": []
-    },
-    {
-      "sku": "13125",
-      "name": "Deck Stand Up",
-      "slug": "deck-stand-up",
-      "category": "Decks",
-      "subcategory": "",
-      "price": 189.2,
-      "ncm": "9506.29.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [
-        {
-          "key": "Tipo",
-          "value": "Tail pad"
-        }
-      ],
-      "tags": []
+      "tags": [],
+      "costPrice": 84.0
     },
     {
       "sku": "15325",
@@ -1629,7 +1514,8 @@
       "productFamily": "capa-refletiva-day-use-short-board",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15326",
@@ -1643,7 +1529,8 @@
       "productFamily": "capa-refletiva-day-use-short-board",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15327",
@@ -1657,7 +1544,8 @@
       "productFamily": "capa-refletiva-day-use-short-board",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15338",
@@ -1671,7 +1559,8 @@
       "productFamily": "capa-refletiva-day-use-fish-tail",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15339",
@@ -1685,7 +1574,8 @@
       "productFamily": "capa-refletiva-day-use-fish-tail",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15340",
@@ -1699,7 +1589,8 @@
       "productFamily": "capa-refletiva-day-use-evolution",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15341",
@@ -1713,7 +1604,8 @@
       "productFamily": "capa-refletiva-day-use-evolution",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15141",
@@ -1721,13 +1613,14 @@
       "slug": "capa-refletiva-hardcore-short-board-6-0",
       "category": "Capas",
       "subcategory": "Capas refletivas",
-      "price": 659.78,
+      "price": 329.78,
       "ncm": "6304.99.00",
       "size": "6'0\"",
       "productFamily": "capa-refletiva-hardcore-short-board",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15142",
@@ -1735,13 +1628,14 @@
       "slug": "capa-refletiva-hardcore-short-board-6-3",
       "category": "Capas",
       "subcategory": "Capas refletivas",
-      "price": 659.78,
+      "price": 329.78,
       "ncm": "6304.99.00",
       "size": "6'3\"",
       "productFamily": "capa-refletiva-hardcore-short-board",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15143",
@@ -1749,69 +1643,14 @@
       "slug": "capa-refletiva-hardcore-short-board-6-6",
       "category": "Capas",
       "subcategory": "Capas refletivas",
-      "price": 659.78,
+      "price": 329.78,
       "ncm": "6304.99.00",
       "size": "6'6\"",
       "productFamily": "capa-refletiva-hardcore-short-board",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "15329",
-      "name": "Capa Refletiva Round Line Fun Board 7'5\"",
-      "slug": "capa-refletiva-round-line-fun-board-7-5",
-      "category": "Capas",
-      "subcategory": "Capas refletivas",
-      "price": 877.8,
-      "ncm": "6304.99.00",
-      "size": "7'5\"",
-      "productFamily": "capa-refletiva-round-line-fun-board",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "15330",
-      "name": "Capa Refletiva Round Line Fun Board 8'2\"",
-      "slug": "capa-refletiva-round-line-fun-board-8-2",
-      "category": "Capas",
-      "subcategory": "Capas refletivas",
-      "price": 877.8,
-      "ncm": "6304.99.00",
-      "size": "8'2\"",
-      "productFamily": "capa-refletiva-round-line-fun-board",
-      "isMainVariant": false,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "15331",
-      "name": "Capa Refletiva Round Line Long Board 9'3\"",
-      "slug": "capa-refletiva-round-line-long-board-9-3",
-      "category": "Capas",
-      "subcategory": "Capas refletivas",
-      "price": 943.8,
-      "ncm": "6304.99.00",
-      "size": "9'3\"",
-      "productFamily": "capa-refletiva-round-line-long-board",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "15332",
-      "name": "Capa Refletiva Round Line Long Board 9'8\"",
-      "slug": "capa-refletiva-round-line-long-board-9-8",
-      "category": "Capas",
-      "subcategory": "Capas refletivas",
-      "price": 943.8,
-      "ncm": "6304.99.00",
-      "size": "9'8\"",
-      "productFamily": "capa-refletiva-round-line-long-board",
-      "isMainVariant": false,
-      "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 149.9
     },
     {
       "sku": "15211",
@@ -1825,7 +1664,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 68.0
     },
     {
       "sku": "15164",
@@ -1839,7 +1681,8 @@
       "productFamily": "capa-boardsock",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 69.9
     },
     {
       "sku": "15165",
@@ -1853,7 +1696,8 @@
       "productFamily": "capa-boardsock",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 69.9
     },
     {
       "sku": "15166",
@@ -1867,7 +1711,8 @@
       "productFamily": "capa-boardsock",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 69.9
     },
     {
       "sku": "15167",
@@ -1881,7 +1726,8 @@
       "productFamily": "capa-funsock",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 79.9
     },
     {
       "sku": "15168",
@@ -1895,7 +1741,8 @@
       "productFamily": "capa-funsock",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 78.0
     },
     {
       "sku": "15169",
@@ -1909,7 +1756,8 @@
       "productFamily": "capa-longsock",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 88.0
     },
     {
       "sku": "15170",
@@ -1923,7 +1771,8 @@
       "productFamily": "capa-longsock",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 88.0
     },
     {
       "sku": "15171",
@@ -1937,7 +1786,8 @@
       "productFamily": "capa-toalha-mini-tanque",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 69.9
     },
     {
       "sku": "15172",
@@ -1951,7 +1801,8 @@
       "productFamily": "capa-toalha-mini-tanque",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 69.9
     },
     {
       "sku": "15173",
@@ -1965,7 +1816,8 @@
       "productFamily": "capa-toalha-micro-tanque",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 69.9
     },
     {
       "sku": "15174",
@@ -1979,7 +1831,8 @@
       "productFamily": "capa-toalha-micro-tanque",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 69.9
     },
     {
       "sku": "15175",
@@ -1993,7 +1846,8 @@
       "productFamily": "capa-toalha-fish-tail",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 69.9
     },
     {
       "sku": "15176",
@@ -2007,7 +1861,8 @@
       "productFamily": "capa-toalha-fish-tail",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 69.9
     },
     {
       "sku": "15177",
@@ -2021,7 +1876,8 @@
       "productFamily": "capa-toalha-evolution",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 74.9
     },
     {
       "sku": "15178",
@@ -2035,7 +1891,8 @@
       "productFamily": "capa-toalha-evolution",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 74.9
     },
     {
       "sku": "15231",
@@ -2049,7 +1906,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["rever-nome"]
+      "tags": [
+        "rever-nome"
+      ],
+      "costPrice": 49.9
     },
     {
       "sku": "10108",
@@ -2063,7 +1923,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 80.0
     },
     {
       "sku": "10112",
@@ -2077,7 +1940,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 90.0
     },
     {
       "sku": "12117",
@@ -2091,7 +1957,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 90.0
     },
     {
       "sku": "15353",
@@ -2105,7 +1972,10 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": ["ja-no-mercado-livre"]
+      "tags": [
+        "ja-no-mercado-livre"
+      ],
+      "costPrice": 25.0
     },
     {
       "sku": "10164",
@@ -2119,7 +1989,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 99.0
     },
     {
       "sku": "15311",
@@ -2133,7 +2004,8 @@
       "productFamily": "capa-refletiva-sup-round",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 298.0
     },
     {
       "sku": "15317",
@@ -2147,7 +2019,8 @@
       "productFamily": "capa-refletiva-sup-round",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 298.0
     },
     {
       "sku": "15312",
@@ -2161,7 +2034,8 @@
       "productFamily": "capa-refletiva-sup-round",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 298.0
     },
     {
       "sku": "15700",
@@ -2169,13 +2043,14 @@
       "slug": "capa-refletiva-simple-short-board-6-0",
       "category": "Capas",
       "subcategory": "Capas refletivas",
-      "price": 187.0,
+      "price": 132.0,
       "ncm": "6304.99.00",
       "size": "6'0\"",
       "productFamily": "capa-refletiva-simple-short-board",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 60.0
     },
     {
       "sku": "15701",
@@ -2183,13 +2058,14 @@
       "slug": "capa-refletiva-simple-short-board-6-3",
       "category": "Capas",
       "subcategory": "Capas refletivas",
-      "price": 187.0,
+      "price": 132.0,
       "ncm": "6304.99.00",
       "size": "6'3\"",
       "productFamily": "capa-refletiva-simple-short-board",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 60.0
     },
     {
       "sku": "15702",
@@ -2197,13 +2073,14 @@
       "slug": "capa-refletiva-simple-short-board-6-6",
       "category": "Capas",
       "subcategory": "Capas refletivas",
-      "price": 187.0,
+      "price": 132.0,
       "ncm": "6304.99.00",
       "size": "6'6\"",
       "productFamily": "capa-refletiva-simple-short-board",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 60.0
     },
     {
       "sku": "15705",
@@ -2211,13 +2088,14 @@
       "slug": "capa-refletiva-simple-short-board-fun-7-5",
       "category": "Capas",
       "subcategory": "Capas refletivas",
-      "price": 198.0,
+      "price": 176.0,
       "ncm": "6304.99.00",
       "size": "7'5\"",
       "productFamily": "capa-refletiva-simple-short-board-fun",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 80.0
     },
     {
       "sku": "15708",
@@ -2225,60 +2103,19 @@
       "slug": "capa-refletiva-simple-short-board-fun-8-0",
       "category": "Capas",
       "subcategory": "Capas refletivas",
-      "price": 198.0,
+      "price": 176.0,
       "ncm": "6304.99.00",
       "size": "8'0\"",
       "productFamily": "capa-refletiva-simple-short-board-fun",
       "isMainVariant": false,
       "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "15149",
-      "name": "Capa Refletiva Dupla Simples 6'6\"",
-      "slug": "capa-refletiva-dupla-simples-6-6",
-      "category": "Capas",
-      "subcategory": "Capas de viagem",
-      "price": 737.0,
-      "ncm": "6304.99.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 80.0
     },
     {
       "sku": "19200",
       "name": "Sarcófago para até 3 pranchas 6'6\" HiProt",
       "slug": "sarcofago-para-ate-3-pranchas-6-6-hiprot",
-      "category": "Capas",
-      "subcategory": "Capas de viagem",
-      "price": 2970.0,
-      "ncm": "6304.99.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "19210",
-      "name": "Capa Dupla com Rodas 6'6\"",
-      "slug": "capa-dupla-com-rodas-6-6",
-      "category": "Capas",
-      "subcategory": "Capas de viagem",
-      "price": 1537.8,
-      "ncm": "6304.99.00",
-      "size": "",
-      "productFamily": "",
-      "isMainVariant": true,
-      "specifications": [],
-      "tags": []
-    },
-    {
-      "sku": "19220",
-      "name": "Capa Tripla com Rodas 7'0\"",
-      "slug": "capa-tripla-com-rodas-7-0",
       "category": "Capas",
       "subcategory": "Capas de viagem",
       "price": 1757.8,
@@ -2287,7 +2124,38 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 799.0
+    },
+    {
+      "sku": "19210",
+      "name": "Capa Dupla com Rodas 6'6\"",
+      "slug": "capa-dupla-com-rodas-6-6",
+      "category": "Capas",
+      "subcategory": "Capas de viagem",
+      "price": 1317.8,
+      "ncm": "6304.99.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": [],
+      "costPrice": 599.0
+    },
+    {
+      "sku": "19220",
+      "name": "Capa Tripla com Rodas 7'0\"",
+      "slug": "capa-tripla-com-rodas-7-0",
+      "category": "Capas",
+      "subcategory": "Capas de viagem",
+      "price": 1537.8,
+      "ncm": "6304.99.00",
+      "size": "",
+      "productFamily": "",
+      "isMainVariant": true,
+      "specifications": [],
+      "tags": [],
+      "costPrice": 699.0
     },
     {
       "sku": "20102",
@@ -2301,7 +2169,8 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 15.0
     },
     {
       "sku": "20103",
@@ -2315,15 +2184,159 @@
       "productFamily": "",
       "isMainVariant": true,
       "specifications": [],
-      "tags": []
+      "tags": [],
+      "costPrice": 15.0
+    }
+  ],
+  "deactivate": [
+    {
+      "sku": "15329",
+      "name": "Capa Refletiva Round Line Fun Board 7'5\"",
+      "reason": "sem preço na tabela 2026 (zerado)"
+    },
+    {
+      "sku": "15330",
+      "name": "Capa Refletiva Round Line Fun Board 8'2\"",
+      "reason": "sem preço na tabela 2026 (zerado)"
+    },
+    {
+      "sku": "15331",
+      "name": "Capa Refletiva Round Line Long Board 9'3\"",
+      "reason": "sem preço na tabela 2026 (zerado)"
+    },
+    {
+      "sku": "15332",
+      "name": "Capa Refletiva Round Line Long Board 9'8\"",
+      "reason": "sem preço na tabela 2026 (zerado)"
+    },
+    {
+      "sku": "15149",
+      "name": "Capa Refletiva Dupla Simples 6'6\"",
+      "reason": "sem preço na tabela 2026 (zerado)"
+    },
+    {
+      "sku": "17602",
+      "name": "Wet Suit Bag Roll",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "14142",
+      "name": "Raspador P",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "15703",
+      "name": "Capa para Banco Nylon",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "17763",
+      "name": "Capa para Mochila",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "17415",
+      "name": "Pá de Remo",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "17762",
+      "name": "Kit Surfista",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "17765",
+      "name": "Porta Ferramentas",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "17764",
+      "name": "Sicurezza",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "19117",
+      "name": "Kit para Rede Corda + Gancho",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "16124",
+      "name": "Mochila Dreams",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "16129",
+      "name": "Carteira Pro-Lite",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "16126",
+      "name": "Pochete Nylon",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "16127",
+      "name": "Shoulder Bag",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "16128",
+      "name": "Shoulder Bag Back 2 Zíperes",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "16130",
+      "name": "Shoulder Bag Back 3 Zíperes",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "10169",
+      "name": "Shoulder Bag Bill",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "10180",
+      "name": "Shoulder Bag Mond",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "10167",
+      "name": "Shoulder Bag Ment",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "10302",
+      "name": "Quilha PL10 Caixa Quilha",
+      "reason": "fora da tabela 2026 (substituído pelo cód. 10226)"
+    },
+    {
+      "sku": "13123",
+      "name": "Deck Long",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "13124",
+      "name": "Deck Fish",
+      "reason": "fora da tabela 2026"
+    },
+    {
+      "sku": "13125",
+      "name": "Deck Stand Up",
+      "reason": "fora da tabela 2026"
     }
   ],
   "skipped": [
     {
-      "sku": "15149/2",
-      "name": "Capa Refletiva Dupla",
-      "model": "6'6\"",
-      "reason": "código não numérico: definir SKU próprio"
+      "sku": "",
+      "name": "Wax bag modelo antigo",
+      "model": "",
+      "reason": "sem código na tabela (modelo antigo)"
+    },
+    {
+      "sku": "10240",
+      "name": "(sem descrição)",
+      "model": "",
+      "reason": "sem descrição na tabela"
     },
     {
       "sku": "15333",
@@ -2350,64 +2363,40 @@
       "reason": "sem descrição na tabela"
     },
     {
-      "sku": "15704",
-      "name": "Capa Refletiva Simple Bodyboard",
-      "model": "",
-      "reason": "sem preço"
-    },
-    {
-      "sku": "15706",
-      "name": "Capa Refletiva Simple Short Board Long",
-      "model": "9'3\"",
-      "reason": "sem preço"
-    },
-    {
       "sku": "15139",
       "name": "(sem descrição)",
       "model": "10'/11'",
-      "reason": "sem descrição e sem preço"
+      "reason": "sem preço na tabela e sem descrição"
     },
     {
       "sku": "15707",
       "name": "Capa Refletiva Simple SUP",
       "model": "10'6",
-      "reason": "sem preço"
+      "reason": "sem preço na tabela"
     },
     {
       "sku": "15709",
       "name": "Capa Refletiva Simple SUP",
       "model": "11'6",
-      "reason": "sem preço"
+      "reason": "sem preço na tabela"
     },
     {
-      "sku": "16131",
-      "name": "Sacola Branca PL para Premiação",
+      "sku": "15706",
+      "name": "Capa Refletiva Simple Short Board Long",
+      "model": "9'3\"",
+      "reason": "sem preço na tabela"
+    },
+    {
+      "sku": "15704",
+      "name": "Capa Refletiva Simple Bodyboard",
       "model": "",
-      "reason": "item de premiação, sem preço"
+      "reason": "sem preço na tabela"
     },
     {
-      "sku": "19167",
-      "name": "Lycra Pro-Lite Infantil (cores diversas)",
-      "model": "TAM P",
-      "reason": "linha inconsistente (sem preço)"
-    },
-    {
-      "sku": "19168",
-      "name": "Lycra Pro-Lite Infantil (cores diversas)",
-      "model": "TAM M",
-      "reason": "linha inconsistente (preço 50,00 diverge dos outros tamanhos)"
-    },
-    {
-      "sku": "19169",
-      "name": "Lycra Pro-Lite Infantil (cores diversas)",
-      "model": "TAM G",
-      "reason": "linha inconsistente (colunas trocadas)"
-    },
-    {
-      "sku": "14135",
-      "name": "Wax bag Modelo Antigo",
-      "model": "",
-      "reason": "modelo antigo, sem preço"
+      "sku": "15150",
+      "name": "Capa Refletiva Tripla Simples",
+      "model": "6'6\"",
+      "reason": "sem preço na tabela"
     }
   ]
 }

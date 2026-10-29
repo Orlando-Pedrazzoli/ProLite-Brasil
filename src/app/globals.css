@@ -77,3 +77,30 @@ html {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Tabela de preços do revendedor (/revendedor/tabela-de-precos)
+   Impressão / "salvar como PDF": A4, fundo branco, cabeçalhos de
+   secção com cor, linhas e cartões sem quebrar a meio da página.
+   ═══════════════════════════════════════════════════════════════ */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  body {
+    background: #fff !important;
+  }
+  .break-inside-avoid-page {
+    break-inside: avoid-page;
+  }
+  tr,
+  .print-card {
+    break-inside: avoid;
+  }
+  h2,
+  h3 {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

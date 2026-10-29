@@ -1,3 +1,4 @@
+// src/lib/utils/validators.ts
 export function isValidCPF(cpf: string): boolean {
   const cleaned = cpf.replace(/\D/g, '');
   if (cleaned.length !== 11 || /^(\d)\1+$/.test(cleaned)) return false;
@@ -11,6 +12,27 @@ export function isValidCPF(cpf: string): boolean {
   check = 11 - (sum % 11);
   if (check >= 10) check = 0;
   return parseInt(cleaned[10]) === check;
+}
+
+export function isValidCNPJ(cnpj: string): boolean {
+  const c = cnpj.replace(/\D/g, '');
+  if (c.length !== 14 || /^(\d)\1+$/.test(c)) return false;
+  const calc = (len: number) => {
+    const weights =
+      len === 12
+        ? [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+        : [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    let sum = 0;
+    for (let i = 0; i < len; i++) sum += parseInt(c[i]) * weights[i];
+    const r = sum % 11;
+    return r < 2 ? 0 : 11 - r;
+  };
+  return calc(12) === parseInt(c[12]) && calc(13) === parseInt(c[13]);
+}
+
+export function formatCNPJ(cnpj: string): string {
+  const c = cnpj.replace(/\D/g, '');
+  return c.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
 }
 
 export function isValidCEP(cep: string): boolean {

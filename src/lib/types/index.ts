@@ -1,3 +1,4 @@
+// src/lib/types/index.ts
 export * from './product';
 export * from './category';
 export * from './brand';
@@ -9,3 +10,4 @@ export * from './shipping';
 export * from './payment';
 export * from './supplier';
 export * from './inboundInvoice';
+export * from './reseller';

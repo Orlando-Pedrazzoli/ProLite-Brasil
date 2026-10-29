@@ -24,6 +24,8 @@
 // v7 (retirada na loja): pedidos com shipping.carrier === 'Retirada na Loja'
 //     mostram "Retirada na loja" + endereço da loja + instrução, e a linha
 //     de frete vira "Grátis (retirada na loja)".
+// v9: REVENDEDORES — candidatura (loja + lojista), aprovação com link da
+//     tabela de preços e reprovação. Destino da loja: company.email.
 // v8: FORMULÁRIO DE CONTATO — sendContactMessage (mensagem do site para a
 //     loja, com replyTo = e-mail do cliente para responder direto) e
 //     sendContactAutoReply (confirmação ao cliente com expectativa de
@@ -33,6 +35,8 @@ import { Resend } from 'resend';
 import { company } from '@/lib/config/company';
 import connectDB from '@/lib/db/connect';
 import Order from '@/lib/models/Order';
+import type { IReseller } from '@/lib/types/reseller';
+import { formatCNPJ, formatPhone } from '@/lib/utils/validators';
 
 interface EmailParams {
   to: string;
@@ -575,6 +579,188 @@ export async function sendNewsletterWelcome(
             Comprar agora
           </a>
         </div>
+      </div>`),
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// v9: REVENDEDORES (lojistas) — candidatura, aprovação e reprovação
+// ═══════════════════════════════════════════════════════════════
+// Notificações da loja vão para company.email
+// (atendimento@maosacessorios.com.br) — ou RESELLER_NOTIFY_EMAIL, se
+// definido na Vercel. NÃO usa ADMIN_EMAIL: esse é o login do admin.
+
+const RESELLER_TO = process.env.RESELLER_NOTIFY_EMAIL || company.email;
+
+const STORE_TYPE_LABEL: Record<string, string> = {
+  fisica: 'Loja física',
+  online: 'Loja online',
+  ambas: 'Loja física + online',
+};
+
+function resellerRowsHtml(r: IReseller): string {
+  const a = r.address || ({} as IReseller['address']);
+  const address = a.street
+    ? `${a.street}, ${a.number}${a.complement ? ` - ${a.complement}` : ''} · ${a.neighborhood} · ${a.city} - ${a.state} · CEP ${a.cep}`
+    : [a.city, a.state].filter(Boolean).join(' - ');
+
+  const rows: [string, string][] = [
+    ['Razão social', r.companyName],
+    ['Nome fantasia', r.tradeName],
+    ['CNPJ', formatCNPJ(r.cnpj)],
+    ['Inscr. estadual', r.stateRegistration || '—'],
+    ['Tipo de loja', STORE_TYPE_LABEL[r.storeType] || r.storeType],
+    ['Site / Instagram', r.website || '—'],
+    ['Endereço', address || '—'],
+    ['Responsável', r.contactName],
+    ['E-mail', r.email],
+    ['WhatsApp', formatPhone(r.phone)],
+  ];
+
+  return rows
+    .map(
+      ([k, v]) => `
+      <tr>
+        <td style="padding:6px 12px 6px 0;color:#6b7280;font-size:13px;white-space:nowrap;vertical-align:top;"><strong style="color:#374151;">${k}</strong></td>
+        <td style="padding:6px 0;color:#374151;font-size:13px;">${esc(v)}</td>
+      </tr>`,
+    )
+    .join('');
+}
+
+/**
+ * Nova candidatura → LOJA (Maurício). Reply-To = e-mail do lojista.
+ * Botão abre a candidatura no painel para aprovar/reprovar.
+ */
+export async function sendResellerApplicationNotification(
+  r: IReseller,
+): Promise<boolean> {
+  const adminUrl = `${company.url}/admin/revendedores?id=${String(r._id)}`;
+  return sendEmail({
+    to: RESELLER_TO,
+    replyTo: r.email,
+    subject: `🏪 Novo pedido de revenda · ${r.tradeName} (${formatCNPJ(r.cnpj)})`,
+    html: shell(`
+      <div style="padding:32px 28px;">
+        <h2 style="margin:0 0 6px;color:#111827;font-size:20px;">Novo pedido para ser revendedor</h2>
+        <p style="margin:0 0 18px;color:#6b7280;font-size:13px;">
+          Recebido em ${new Date(r.createdAt ?? Date.now()).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
+        </p>
+        <table style="border-collapse:collapse;margin:0 0 16px;">${resellerRowsHtml(r)}</table>
+        ${
+          r.message
+            ? `<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px;">
+                 <p style="margin:0 0 4px;color:#6b7280;font-size:12px;">Mensagem do lojista</p>
+                 <p style="margin:0;color:#374151;font-size:14px;line-height:1.7;white-space:pre-wrap;">${esc(r.message)}</p>
+               </div>`
+            : ''
+        }
+        <div style="text-align:center;margin:28px 0 0;">
+          <a href="${adminUrl}" style="display:inline-block;background:#2D2F34;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
+            Aprovar ou reprovar no painel
+          </a>
+        </div>
+        <p style="margin:16px 0 0;color:#9ca3af;font-size:12px;text-align:center;">
+          Responda este e-mail para falar diretamente com ${esc(r.contactName)}.
+        </p>
+      </div>`),
+  });
+}
+
+/** Confirmação ao LOJISTA de que a candidatura foi recebida. */
+export async function sendResellerApplicationReceived(
+  r: IReseller,
+): Promise<boolean> {
+  const firstName = r.contactName.trim().split(' ')[0] || '';
+  return sendEmail({
+    to: r.email,
+    subject: 'Recebemos seu pedido de revenda - Pro-Lite',
+    html: shell(`
+      <div style="padding:32px 28px;">
+        <h2 style="margin:0 0 12px;color:#111827;font-size:20px;">Pedido recebido${firstName ? `, ${esc(firstName)}` : ''}! 🤙</h2>
+        <p style="margin:0 0 16px;color:#4b5563;font-size:15px;line-height:1.6;">
+          Recebemos o cadastro da <strong>${esc(r.tradeName)}</strong> para revender os
+          produtos Pro-Lite. Nossa equipe comercial vai analisar os dados e você
+          recebe a resposta por e-mail em até <strong>2 dias úteis</strong>.
+        </p>
+        <p style="margin:0 0 20px;color:#4b5563;font-size:15px;line-height:1.6;">
+          Assim que for aprovado, enviamos o link da <strong>tabela de preços para
+          revendedores</strong>, com fotos e códigos de todos os produtos.
+        </p>
+        <p style="margin:0 0 20px;color:#4b5563;font-size:15px;line-height:1.6;">
+          Alguma dúvida? Chama a gente no WhatsApp:
+        </p>
+        <div style="text-align:center;">
+          <a href="https://wa.me/${company.whatsapp}" style="display:inline-block;background:#25D366;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
+            WhatsApp ${company.whatsappDisplay}
+          </a>
+        </div>
+      </div>`),
+  });
+}
+
+/** APROVADO → e-mail com o link de acesso à tabela de preços. */
+export async function sendResellerApproved(
+  r: IReseller,
+  accessUrl: string,
+): Promise<boolean> {
+  const firstName = r.contactName.trim().split(' ')[0] || '';
+  return sendEmail({
+    to: r.email,
+    replyTo: RESELLER_TO,
+    subject: '✅ Cadastro aprovado! Sua tabela de preços Pro-Lite',
+    html: shell(`
+      <div style="padding:32px 28px;">
+        <h2 style="margin:0 0 12px;color:#111827;font-size:20px;">Bem-vindo à rede Pro-Lite${firstName ? `, ${esc(firstName)}` : ''}! 🤙</h2>
+        <p style="margin:0 0 16px;color:#4b5563;font-size:15px;line-height:1.6;">
+          O cadastro da <strong>${esc(r.tradeName)}</strong> foi aprovado. A partir de
+          agora você tem acesso à nossa tabela de preços para revendedores, com
+          fotos, códigos e preços de todos os produtos — sempre atualizada.
+        </p>
+        <div style="text-align:center;margin:28px 0;">
+          <a href="${accessUrl}" style="display:inline-block;background:#1E90FF;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;">
+            Abrir tabela de preços
+          </a>
+        </div>
+        <p style="margin:0 0 8px;color:#6b7280;font-size:13px;line-height:1.6;">
+          O link é pessoal e intransferível: ao abrir, fica guardado no seu
+          navegador por 90 dias. Guarde este e-mail para voltar à tabela quando
+          precisar, ou peça um novo link respondendo a esta mensagem.
+        </p>
+        <p style="margin:16px 0 0;color:#4b5563;font-size:15px;line-height:1.6;">
+          Para fazer pedidos, fale com nossa equipe comercial:
+          <a href="mailto:${RESELLER_TO}" style="color:#1E90FF;">${RESELLER_TO}</a>
+          ou WhatsApp <a href="https://wa.me/${company.whatsapp}" style="color:#1E90FF;">${company.whatsappDisplay}</a>.
+        </p>
+      </div>`),
+  });
+}
+
+/** REPROVADO → e-mail curto e educado, com motivo opcional. */
+export async function sendResellerRejected(r: IReseller): Promise<boolean> {
+  const firstName = r.contactName.trim().split(' ')[0] || '';
+  return sendEmail({
+    to: r.email,
+    replyTo: RESELLER_TO,
+    subject: 'Sobre seu pedido de revenda - Pro-Lite',
+    html: shell(`
+      <div style="padding:32px 28px;">
+        <h2 style="margin:0 0 12px;color:#111827;font-size:20px;">Olá${firstName ? `, ${esc(firstName)}` : ''}</h2>
+        <p style="margin:0 0 16px;color:#4b5563;font-size:15px;line-height:1.6;">
+          Obrigado pelo interesse em revender os produtos Pro-Lite. Neste momento
+          não conseguimos aprovar o cadastro da <strong>${esc(r.tradeName)}</strong>.
+        </p>
+        ${
+          r.rejectionReason
+            ? `<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin:0 0 16px;">
+                 <p style="margin:0;color:#374151;font-size:14px;line-height:1.7;white-space:pre-wrap;">${esc(r.rejectionReason)}</p>
+               </div>`
+            : ''
+        }
+        <p style="margin:0;color:#4b5563;font-size:15px;line-height:1.6;">
+          Se quiser conversar sobre isso, responda a este e-mail ou chame no
+          WhatsApp <a href="https://wa.me/${company.whatsapp}" style="color:#1E90FF;">${company.whatsappDisplay}</a>.
+        </p>
       </div>`),
   });
 }
