@@ -10,7 +10,7 @@ import ResellerPageClient from './ResellerPageClient';
 export const metadata: Metadata = {
   title: 'Seja um Revendedor Pro-Lite — Cadastro de Lojistas',
   description:
-    'Revenda os produtos Pro-Lite na sua loja: capas, leashes, decks, quilhas e acessórios de surf fabricados no Brasil há 40 anos. Cadastre-se e receba a tabela de preços para lojistas.',
+    'Seja um revendedor Pro-Lite: capas, leashes, decks, quilhas, parafinas, racks e acessórios de surf fabricados no Brasil há 40 anos. Cadastre a sua loja e conheça as condições comerciais para lojistas.',
   alternates: { canonical: '/revendedores' },
 };
 

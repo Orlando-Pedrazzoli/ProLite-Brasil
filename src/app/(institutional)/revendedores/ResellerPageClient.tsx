@@ -2,6 +2,11 @@
 // "Seja um Revendedor" — landing curta (por que revender Pro-Lite + como
 // funciona) e formulário de cadastro do lojista.
 //
+// Copy (v2): tom profissional, foco no lojista. NÃO promete margem,
+// exclusividade territorial, desconto, frete ou pedido mínimo — condições
+// comerciais são apresentadas pela equipe após o cadastro. Estrutura:
+// hero → benefícios → como funciona → chamada + formulário → encerramento.
+//
 // • CNPJ com máscara e AUTOPREENCHIMENTO via BrasilAPI (razão social, nome
 //   fantasia, endereço, telefone/e-mail quando existirem) — o lojista só
 //   confere e completa;
@@ -20,8 +25,8 @@ import { useSearchParams } from 'next/navigation';
 import {
   Store,
   BadgeCheck,
-  Truck,
-  Percent,
+  Waves,
+  Handshake,
   ClipboardList,
   Mail,
   FileSpreadsheet,
@@ -89,31 +94,26 @@ const labelCls = 'block text-sm font-medium text-gray-700 mb-1';
 
 const BENEFITS = [
   {
+    icon: Waves,
+    title: 'Produtos desenvolvidos para quem vive o surf',
+    text: 'Capas, leashes, decks, quilhas, parafinas, racks e acessórios para atender às necessidades de surfistas de diferentes níveis.',
+  },
+  {
     icon: BadgeCheck,
-    title: '40 anos de marca',
-    text: 'Produtos fabricados no Brasil desde 1984, com reconhecimento nas principais praias do país.',
+    title: 'Qualidade e confiança',
+    text: 'Produtos pensados para acompanhar a rotina dos surfistas, com atenção à funcionalidade, à durabilidade e aos detalhes. Fabricação própria em São Paulo.',
   },
   {
-    icon: Percent,
-    title: 'Margem saudável',
-    text: 'Tabela exclusiva para lojistas, com preço sugerido de venda alinhado ao do nosso site.',
-  },
-  {
-    icon: Truck,
-    title: 'Envio para todo o Brasil',
-    text: 'Despachamos de São Paulo para qualquer região, com pedidos mínimos acessíveis.',
-  },
-  {
-    icon: Store,
-    title: 'Linha completa',
-    text: 'Capas, leashes, decks, quilhas, parafinas, racks e acessórios — tudo de uma só marca.',
+    icon: Handshake,
+    title: 'Uma parceria para crescer',
+    text: 'Tenha acesso às informações sobre nossa linha de produtos e às condições para revendedores.',
   },
 ];
 
 const STEPS = [
   { icon: ClipboardList, text: 'Preencha o cadastro com os dados da sua loja' },
-  { icon: Mail, text: 'Nossa equipe analisa e responde em até 2 dias úteis' },
-  { icon: FileSpreadsheet, text: 'Aprovado? Você recebe o link da tabela de preços com fotos' },
+  { icon: Mail, text: 'Nossa equipe analisa o cadastro e entra em contato' },
+  { icon: FileSpreadsheet, text: 'Aprovado, você recebe acesso à tabela de preços para lojistas' },
 ];
 
 export default function ResellerPageClient() {
@@ -269,11 +269,12 @@ export default function ResellerPageClient() {
             Programa de revendedores
           </p>
           <h1 className='text-3xl md:text-5xl font-black leading-tight max-w-3xl'>
-            Leve a Pro-Lite para a sua loja
+            Seja um Revendedor Pro-Lite
           </h1>
           <p className='text-gray-300 mt-4 max-w-2xl text-base md:text-lg'>
-            {company.slogan}. Cadastre a sua loja e receba a nossa tabela de
-            preços exclusiva para lojistas, com fotos e códigos de toda a linha.
+            Faça parte de uma marca com tradição no surf e leve produtos de
+            qualidade para a sua loja. Cadastre-se para conhecer nossas
+            condições comerciais e ampliar seu mix de produtos.
           </p>
           <div className='mt-8 flex flex-wrap gap-3'>
             <a
@@ -313,16 +314,21 @@ export default function ResellerPageClient() {
         )}
 
         {/* ═══ BENEFÍCIOS ═══ */}
-        <section className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12'>
-          {BENEFITS.map(b => (
-            <div key={b.title} className='bg-white rounded-lg p-5 shadow-sm'>
-              <div className='w-10 h-10 rounded-md bg-brand-50 text-brand flex items-center justify-center mb-3'>
-                <b.icon size={20} />
+        <section className='mb-12'>
+          <h2 className='text-xl md:text-2xl font-black text-gray-900 mb-5'>
+            Sua loja conectada ao universo do surf
+          </h2>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+            {BENEFITS.map(b => (
+              <div key={b.title} className='bg-white rounded-lg p-5 shadow-sm'>
+                <div className='w-10 h-10 rounded-md bg-brand-50 text-brand flex items-center justify-center mb-3'>
+                  <b.icon size={20} />
+                </div>
+                <h3 className='font-bold text-gray-900 mb-1'>{b.title}</h3>
+                <p className='text-sm text-gray-500 leading-relaxed'>{b.text}</p>
               </div>
-              <h3 className='font-bold text-gray-900 mb-1'>{b.title}</h3>
-              <p className='text-sm text-gray-500 leading-relaxed'>{b.text}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </section>
 
         {/* ═══ COMO FUNCIONA ═══ */}
@@ -346,8 +352,20 @@ export default function ResellerPageClient() {
           </ol>
         </section>
 
-        {/* ═══ FORMULÁRIO / SUCESSO ═══ */}
+        {/* ═══ CHAMADA + FORMULÁRIO / SUCESSO ═══ */}
         <section id='cadastro' className='scroll-mt-28'>
+          {!sent && (
+            <div className='mb-6 max-w-3xl'>
+              <h2 className='text-2xl md:text-3xl font-black text-gray-900'>
+                Quer vender Pro-Lite na sua loja?
+              </h2>
+              <p className='text-gray-600 mt-2'>
+                Preencha o formulário de cadastro. Nossa equipe entrará em
+                contato para apresentar os próximos passos para se tornar um
+                revendedor.
+              </p>
+            </div>
+          )}
           {sent ? (
             <div className='bg-white rounded-lg shadow-sm p-8 md:p-12 text-center max-w-2xl mx-auto'>
               <CheckCircle2 size={56} className='text-green-500 mx-auto mb-4' />
@@ -356,9 +374,9 @@ export default function ResellerPageClient() {
               </h2>
               <p className='text-gray-600 mb-6'>
                 Recebemos os dados da <strong>{form.tradeName || form.companyName}</strong>.
-                Nossa equipe comercial analisa e responde por e-mail em até{' '}
-                <strong>2 dias úteis</strong>. Assim que aprovado, você recebe o
-                link da tabela de preços para revendedores.
+                Nossa equipe comercial vai analisar o cadastro e entrar em
+                contato por e-mail com os próximos passos. Assim que aprovado,
+                você recebe o link da tabela de preços para revendedores.
               </p>
               <a
                 href={whatsappUrl}
@@ -667,7 +685,7 @@ export default function ResellerPageClient() {
                     ) : (
                       <Send size={18} />
                     )}
-                    {sending ? 'Enviando…' : 'Enviar cadastro'}
+                    {sending ? 'Enviando…' : 'Quero ser revendedor'}
                   </button>
                   <p className='text-xs text-gray-400'>
                     Ao enviar, você concorda com a nossa{' '}
@@ -724,6 +742,19 @@ export default function ResellerPageClient() {
           )}
         </section>
       </div>
+
+      {/* ═══ ENCERRAMENTO ═══ */}
+      <section className='bg-chumbo text-white'>
+        <div className='max-w-6xl mx-auto px-4 py-12 md:py-16 text-center'>
+          <p className='text-2xl md:text-3xl font-black'>
+            Pro-Lite. Há 40 anos no universo do surf.
+          </p>
+          <p className='text-gray-300 mt-3 max-w-2xl mx-auto'>
+            Equipamentos e acessórios desenvolvidos para acompanhar cada
+            sessão, da preparação ao retorno da água.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

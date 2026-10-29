@@ -680,8 +680,8 @@ export async function sendResellerApplicationReceived(
         <h2 style="margin:0 0 12px;color:#111827;font-size:20px;">Pedido recebido${firstName ? `, ${esc(firstName)}` : ''}! 🤙</h2>
         <p style="margin:0 0 16px;color:#4b5563;font-size:15px;line-height:1.6;">
           Recebemos o cadastro da <strong>${esc(r.tradeName)}</strong> para revender os
-          produtos Pro-Lite. Nossa equipe comercial vai analisar os dados e você
-          recebe a resposta por e-mail em até <strong>2 dias úteis</strong>.
+          produtos Pro-Lite. Nossa equipe comercial vai analisar os dados e
+          entrar em contato por e-mail com os <strong>próximos passos</strong>.
         </p>
         <p style="margin:0 0 20px;color:#4b5563;font-size:15px;line-height:1.6;">
           Assim que for aprovado, enviamos o link da <strong>tabela de preços para
