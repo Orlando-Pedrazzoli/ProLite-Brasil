@@ -13,7 +13,9 @@
 //     ecrã (IntersectionObserver), a aba está em segundo plano, ou após
 //     clicar nas setas — e RETOMA alguns segundos depois da interação;
 //   • respeita prefers-reduced-motion (fica estático, sem autoplay);
-//   • com poucos produtos (tudo cabe no ecrã) não duplica nem anima;
+//   • o número de cópias é calculado para encher pelo menos 2 larguras do
+//     contentor (mínimo 3) — assim o loop funciona mesmo com 2 produtos;
+//     com 1 produto não há carrossel;
 //   • v2.1: se a busca principal devolver menos de `minItems` produtos
 //     (ex.: só 2 marcados como "Novidade"), COMPLETA a fila com os
 //     produtos publicados mais recentes (fallbackUrl) até `minItems` —
@@ -65,7 +67,7 @@ interface FeaturedProductsProps {
   minItems?: number;
 }
 
-const COPIES = 3; // conjuntos renderizados para o loop (mínimo 3)
+const MIN_COPIES = 3; // conjuntos renderizados para o loop (mínimo 3)
 const MIN_PRODUCTS_TO_LOOP = 2;
 
 export default function FeaturedProducts({
@@ -128,10 +130,11 @@ export default function FeaturedProducts({
     fetchProducts();
   }, [fetchUrl, fallbackUrl, minItems]);
 
-  // Loop só quando há produtos suficientes E um conjunto é mais largo que
-  // o contentor (medido com ResizeObserver — muda com o tamanho do ecrã).
-  const [overflows, setOverflows] = useState(false);
-  const shouldLoop = products.length >= MIN_PRODUCTS_TO_LOOP && overflows;
+  // Loop sempre que há 2+ produtos. O nº de cópias é medido com
+  // ResizeObserver para que o conteúdo total encha ≥ 2 larguras do
+  // contentor — com poucos produtos repete-se mais vezes.
+  const [copies, setCopies] = useState(MIN_COPIES);
+  const shouldLoop = products.length >= MIN_PRODUCTS_TO_LOOP;
 
   /** Pausa o autoplay por `resumeAfter` segundos (interação do utilizador). */
   const holdAutoplay = useCallback(() => {
@@ -147,19 +150,21 @@ export default function FeaturedProducts({
     else if (el.scrollLeft < setWidth) el.scrollLeft += setWidth;
   }, []);
 
-  // ── Mede se um conjunto transborda o contentor ──
+  // ── Quantas cópias são precisas para encher ≥ 2 larguras do contentor ──
   useEffect(() => {
     const el = scrollRef.current;
-    if (!el || loading || products.length < MIN_PRODUCTS_TO_LOOP) return;
+    if (!el || loading || !shouldLoop) return;
     const measure = () => {
       const setWidth = setRef.current?.offsetWidth ?? 0;
-      setOverflows(setWidth > el.clientWidth + 1);
+      if (!setWidth) return;
+      const needed = Math.ceil((el.clientWidth * 2) / setWidth) + 1;
+      setCopies(Math.max(MIN_COPIES, Math.min(needed, 12)));
     };
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [loading, products.length]);
+  }, [loading, shouldLoop, products.length]);
 
   // ── Posição inicial no conjunto do meio (permite andar para trás) ──
   useEffect(() => {
@@ -204,8 +209,6 @@ export default function FeaturedProducts({
       const dt = Math.min(now - last, 100) / 1000; // s (limita saltos após aba inativa)
       last = now;
 
-      const setWidth = setRef.current?.offsetWidth ?? 0;
-      const fits = setWidth <= el.clientWidth + 1; // tudo cabe: não anda
       const paused =
         reducedMotionRef.current ||
         hoverRef.current ||
@@ -213,8 +216,7 @@ export default function FeaturedProducts({
         focusRef.current ||
         !visibleRef.current ||
         document.hidden ||
-        now < resumeAtRef.current ||
-        fits;
+        now < resumeAtRef.current;
 
       if (!paused) {
         acc += speed * dt;
@@ -270,7 +272,7 @@ export default function FeaturedProducts({
 
   if (products.length === 0) return null;
 
-  const copies = shouldLoop ? COPIES : 1;
+  const copyCount = shouldLoop ? copies : 1;
 
   return (
     <section className='py-8'>
@@ -344,7 +346,7 @@ export default function FeaturedProducts({
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           aria-label={title}
         >
-          {Array.from({ length: copies }).map((_, copy) => (
+          {Array.from({ length: copyCount }).map((_, copy) => (
             <div
               key={copy}
               ref={copy === 0 ? setRef : undefined}
