@@ -16,6 +16,7 @@ import {
   Ticket,
   Image as ImageIcon,
   Store,
+  Mail,
   LogOut,
   ExternalLink,
 } from 'lucide-react';
@@ -33,6 +34,7 @@ const menuItems = [
   { label: 'Fornecedores', href: '/admin/fornecedores', icon: Truck },
   { label: 'Cupons', href: '/admin/cupons', icon: Ticket },
   { label: 'Revendedores', href: '/admin/revendedores', icon: Store },
+  { label: 'Newsletter', href: '/admin/newsletter', icon: Mail },
   { label: 'Banners', href: '/admin/configuracoes', icon: ImageIcon },
 ];
 export default function AdminSidebar() {

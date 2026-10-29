@@ -1,5 +1,7 @@
+// src/components/layout/Footer.tsx
 import Link from 'next/link';
 import Image from 'next/image';
+import NewsletterBar from '@/components/marketing/NewsletterBar';
 import {
   company,
   getFormattedAddress,
@@ -49,24 +51,8 @@ export default function Footer() {
 
   return (
     <footer className='bg-chumbo text-gray-300'>
-      {/* Newsletter */}
-      <div className='bg-brand'>
-        <div className='max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6'>
-          <p className='text-white font-bold text-sm md:text-base text-center whitespace-nowrap'>
-            CADASTRE-SE EM NOSSA NEWSLETTER E RECEBA NOVIDADES EXCLUSIVAS!
-          </p>
-          <div className='flex w-full max-w-lg'>
-            <input
-              type='email'
-              placeholder='Insira seu e-mail aqui'
-              className='flex-1 px-5 py-3 text-sm text-gray-900 bg-white rounded-l-md focus:outline-none min-w-0'
-            />
-            <button className='px-8 py-3 bg-chumbo text-white text-sm font-bold rounded-r-md hover:bg-chumbo-light transition-colors whitespace-nowrap'>
-              CADASTRAR
-            </button>
-          </div>
-        </div>
-      </div>
+      {/* Newsletter — componente funcional (POST /api/newsletter) */}
+      <NewsletterBar />
 
       {/* Footer Links */}
       <div className='max-w-7xl mx-auto px-4 py-10'>

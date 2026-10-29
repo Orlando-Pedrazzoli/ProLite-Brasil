@@ -1,3 +1,7 @@
+// 📄 src/components/marketing/NewsletterModal.tsx
+// v2 (mobile): o cartão passa a caber no ecrã — altura máxima com scroll
+//     interno (100dvh − margens), imagem inferior menor em telemóvel e
+//     paddings reduzidos; overlay alinhado ao fim em ecrãs baixos.
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -69,7 +73,13 @@ export default function NewsletterModal({
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, birthday, consent }),
+        body: JSON.stringify({
+          name,
+          email,
+          birthday,
+          consent,
+          source: 'newsletter_modal',
+        }),
       });
       const data = await res.json();
 
@@ -108,12 +118,12 @@ export default function NewsletterModal({
     <div
       ref={overlayRef}
       onClick={e => e.target === overlayRef.current && onClose()}
-      className='fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4'
+      className='fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/60 p-3 sm:p-4'
       role='dialog'
       aria-modal='true'
       aria-labelledby='newsletter-title'
     >
-      <div className='relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl'>
+      <div className='relative w-full max-w-md max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-white shadow-2xl'>
         {/* Fechar */}
         <button
           onClick={onClose}
@@ -123,7 +133,7 @@ export default function NewsletterModal({
           <X size={18} />
         </button>
 
-        <div className='px-6 pt-8 pb-6'>
+        <div className='px-5 pt-7 pb-5 sm:px-6 sm:pt-8 sm:pb-6'>
           {/* Logo / marca */}
           <p className='mb-4 text-center text-lg font-black tracking-wide text-chumbo'>
             PRO-LITE
@@ -140,8 +150,8 @@ export default function NewsletterModal({
               </h2>
               <p className='mb-5 text-sm text-gray-500'>
                 Use o cupom abaixo no carrinho e ganhe{' '}
-                <strong className='text-brand'>10% OFF</strong> na sua
-                primeira compra.
+                <strong className='text-brand'>10% OFF</strong> na sua primeira
+                compra.
               </p>
 
               <button
@@ -173,8 +183,8 @@ export default function NewsletterModal({
                 Assine nossa newsletter e ganhe
               </h2>
               <p className='mb-5 text-center text-sm text-gray-600'>
-                <strong className='text-brand'>10% OFF</strong> na sua
-                primeira compra
+                <strong className='text-brand'>10% OFF</strong> na sua primeira
+                compra
               </p>
 
               <div className='space-y-3'>
@@ -249,7 +259,7 @@ export default function NewsletterModal({
         </div>
 
         {/* Imagem inferior (com fallback em degradê se o arquivo não existir) */}
-        <div className='relative h-40 w-full bg-gradient-to-br from-brand to-chumbo'>
+        <div className='relative h-24 sm:h-40 w-full bg-gradient-to-br from-brand to-chumbo'>
           <Image
             src={imageSrc}
             alt=''
