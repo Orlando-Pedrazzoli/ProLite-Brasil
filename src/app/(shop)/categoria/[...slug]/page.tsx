@@ -8,7 +8,12 @@ import CategoryPageClient from './CategoryPageClient';
 import JsonLd from '@/components/seo/JsonLd';
 import { getCategoryForSeo } from '@/lib/seo/queries';
 import { collectionPageJsonLd, breadcrumbJsonLd } from '@/lib/seo/jsonld';
-import { toMetaDescription, absoluteUrl, SITE_NAME } from '@/lib/seo/config';
+import {
+  toMetaDescription,
+  absoluteUrl,
+  SITE_NAME,
+  DEFAULT_OG_IMAGE,
+} from '@/lib/seo/config';
 
 interface PageProps {
   params: Promise<{ slug: string[] }>;
@@ -45,7 +50,10 @@ export async function generateMetadata({
       url: absoluteUrl(canonical),
       title,
       description,
+      // openGraph aninhado SUBSTITUI o do layout — sem isto a página fica sem imagem
+      images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: title }],
     },
+    twitter: { card: 'summary_large_image', title, description },
   };
 }
 

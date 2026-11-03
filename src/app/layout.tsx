@@ -18,6 +18,7 @@ import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
   DEFAULT_OG_IMAGE,
+  GOOGLE_SITE_VERIFICATION,
 } from '@/lib/seo/config';
 
 const geistSans = Geist({
@@ -78,10 +79,13 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
     },
   },
-  // Google Search Console: a verificação da propriedade prolite.com.br
-  // deve ser feita por registo TXT no DNS. Se for preciso a meta tag,
-  // acrescentar aqui `verification: { google: '<token da Pro-Lite>' }`.
-  // (O token que existia pertencia à conta do projeto de origem.)
+  // Google Search Console: preferir verificação por registo TXT no DNS
+  // (propriedade de domínio, cobre www + apex + http/https). Se for preciso
+  // a meta tag, definir NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION na Vercel —
+  // nunca hardcoded (o token antigo pertencia ao projeto de origem).
+  ...(GOOGLE_SITE_VERIFICATION && {
+    verification: { google: GOOGLE_SITE_VERIFICATION },
+  }),
 
   // ÍCONES E MANIFEST: geridos por convenção de ficheiros do App Router,
   // NÃO por configuração. O Next gera as tags <link> sozinho a partir de:

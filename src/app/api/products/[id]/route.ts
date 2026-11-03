@@ -4,6 +4,7 @@ import Product from '@/lib/models/Product';
 import Category from '@/lib/models/Category';
 import Brand from '@/lib/models/Brand';
 import Supplier from '@/lib/models/Supplier';
+import { indexNow } from '@/lib/seo/indexnow';
 
 const _deps = [Category, Brand, Supplier];
 void _deps;
@@ -122,8 +123,22 @@ async function updateProduct(
     );
   }
 
+  const wasPublic = doc.isActive && doc.isPublishedOnline;
+  const previousSlug = doc.slug;
+
   Object.assign(doc, body);
   await doc.save();
+
+  // IndexNow (Bing & co.) — notifica a URL atual e, se o slug mudou ou o
+  // produto foi despublicado, também a URL antiga (para ser re-rastreada
+  // e removida). Fire-and-forget: nunca atrasa nem falha o save.
+  const isPublic = doc.isActive && doc.isPublishedOnline;
+  if (isPublic || wasPublic) {
+    const slugs = new Set<string>();
+    if (isPublic && doc.slug) slugs.add(doc.slug);
+    if (wasPublic && previousSlug) slugs.add(previousSlug);
+    for (const slug of slugs) void indexNow.product(slug);
+  }
 
   return NextResponse.json({ success: true, product: doc.toObject() });
 }

@@ -1,18 +1,22 @@
 // src/lib/seo/jsonld.ts
 // 🧩 Builders de dados estruturados (schema.org / JSON-LD).
 // Renderizar com <JsonLd data={...} /> em server components.
-// Schemas priorizados: Organization, WebSite+SearchAction, Product+Offer,
-// BreadcrumbList, BlogPosting, CollectionPage — os que geram rich results.
+// Schemas priorizados: Store+OnlineStore (LocalBusiness), WebSite+SearchAction,
+// Product+Offer(+AggregateRating), BreadcrumbList, BlogPosting, CollectionPage,
+// FAQPage — os que geram rich results no Google.
 
 import {
   SITE_URL,
   SITE_NAME,
   SITE_DESCRIPTION,
   DEFAULT_OG_IMAGE,
+  LOGO_URL,
+  CONTACT,
   SOCIAL_LINKS,
   absoluteUrl,
   toMetaDescription,
 } from './config';
+import { company } from '@/lib/config/company';
 
 type JsonLdObject = Record<string, unknown>;
 
@@ -20,16 +24,72 @@ type JsonLdObject = Record<string, unknown>;
 // Site-wide (root layout)
 // ---------------------------------------------------------------------------
 
+/**
+ * Organização = loja física (Store ⊂ LocalBusiness) + loja online (OnlineStore).
+ * Usar os dois tipos no mesmo nó permite ao Google ligar o Knowledge Panel,
+ * o Google Business Profile e o e-commerce à mesma entidade (#organization),
+ * referenciada por `seller`/`publisher` nos outros schemas.
+ */
 export function organizationJsonLd(): JsonLdObject {
   return {
     '@context': 'https://schema.org',
-    '@type': 'OnlineStore',
+    '@type': ['Store', 'OnlineStore'],
     '@id': `${SITE_URL}/#organization`,
     name: SITE_NAME,
+    alternateName: company.tradeName,
+    legalName: company.legalName,
     url: SITE_URL,
-    logo: `${SITE_URL}/android-chrome-512x512.png`,
+    logo: {
+      '@type': 'ImageObject',
+      url: LOGO_URL,
+      width: 512,
+      height: 512,
+    },
     image: DEFAULT_OG_IMAGE,
     description: SITE_DESCRIPTION,
+    slogan: company.slogan,
+    email: CONTACT.email,
+    telephone: CONTACT.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: CONTACT.streetAddress,
+      addressLocality: CONTACT.addressLocality,
+      addressRegion: CONTACT.addressRegion,
+      postalCode: CONTACT.postalCode,
+      addressCountry: CONTACT.addressCountry,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: CONTACT.geo.latitude,
+      longitude: CONTACT.geo.longitude,
+    },
+    hasMap: `https://www.google.com/maps?q=${CONTACT.geo.latitude},${CONTACT.geo.longitude}`,
+    openingHoursSpecification: CONTACT.openingHours.map(h => ({
+      '@type': 'OpeningHoursSpecification',
+      ...h,
+    })),
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        telephone: CONTACT.phone,
+        email: CONTACT.email,
+        availableLanguage: 'Portuguese',
+        areaServed: 'BR',
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        telephone: CONTACT.whatsapp,
+        url: `https://wa.me/${company.whatsapp}`,
+        availableLanguage: 'Portuguese',
+        areaServed: 'BR',
+      },
+    ],
+    currenciesAccepted: 'BRL',
+    paymentAccepted: 'Cartão de crédito, Pix, Boleto',
+    priceRange: '$$',
+    areaServed: { '@type': 'Country', name: 'Brazil' },
     ...(SOCIAL_LINKS.length > 0 && { sameAs: SOCIAL_LINKS }),
   };
 }
@@ -64,6 +124,7 @@ export interface ProductForJsonLd {
   slug: string;
   description?: string;
   richDescription?: string;
+  seoDescription?: string;
   sku?: string;
   price: number;
   images?: string[];
@@ -71,6 +132,8 @@ export interface ProductForJsonLd {
   stock?: number;
   brand?: { name: string } | null;
   category?: { name: string; slug: string } | null;
+  averageRating?: number;
+  reviewCount?: number;
   updatedAt?: Date | string;
 }
 
@@ -81,6 +144,14 @@ export function productJsonLd(product: ProductForJsonLd): JsonLdObject {
     ...(product.images || []),
   ].filter(Boolean);
 
+  // AggregateRating só com dados reais (avaliações aprovadas) — dados
+  // inventados violam as diretrizes do Google e podem gerar ação manual.
+  const hasRating =
+    typeof product.reviewCount === 'number' &&
+    product.reviewCount > 0 &&
+    typeof product.averageRating === 'number' &&
+    product.averageRating > 0;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -89,11 +160,21 @@ export function productJsonLd(product: ProductForJsonLd): JsonLdObject {
     url,
     ...(images.length > 0 && { image: images }),
     description: toMetaDescription(
-      product.description || product.richDescription,
+      product.seoDescription || product.description || product.richDescription,
     ),
-    ...(product.sku && { sku: product.sku }),
+    ...(product.sku && { sku: product.sku, mpn: product.sku }),
     ...(product.brand?.name && {
       brand: { '@type': 'Brand', name: product.brand.name },
+    }),
+    ...(product.category?.name && { category: product.category.name }),
+    ...(hasRating && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: product.averageRating,
+        reviewCount: product.reviewCount,
+        bestRating: 5,
+        worstRating: 1,
+      },
     }),
     offers: {
       '@type': 'Offer',
@@ -106,6 +187,29 @@ export function productJsonLd(product: ProductForJsonLd): JsonLdObject {
           ? 'https://schema.org/InStock'
           : 'https://schema.org/OutOfStock',
       seller: { '@id': `${SITE_URL}/#organization` },
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'BR',
+        returnPolicyCategory:
+          'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 7, // CDC art. 49 — direito de arrependimento
+        returnMethod: 'https://schema.org/ReturnByMail',
+        returnFees: 'https://schema.org/FreeReturn',
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'BR',
+        },
+        ...(product.price >= company.shipping.freeShippingMinValue && {
+          shippingRate: {
+            '@type': 'MonetaryAmount',
+            value: 0,
+            currency: 'BRL',
+          },
+        }),
+      },
     },
   };
 }
@@ -191,5 +295,29 @@ export function blogPostingJsonLd(post: BlogPostForJsonLd): JsonLdObject {
     },
     publisher: { '@id': `${SITE_URL}/#organization` },
     inLanguage: 'pt-BR',
+  };
+}
+
+// ---------------------------------------------------------------------------
+// FAQ
+// ---------------------------------------------------------------------------
+
+export interface FaqEntry {
+  question: string;
+  answer: string;
+}
+
+export function faqPageJsonLd(entries: FaqEntry[]): JsonLdObject {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: entries.map(e => ({
+      '@type': 'Question',
+      name: e.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: e.answer,
+      },
+    })),
   };
 }

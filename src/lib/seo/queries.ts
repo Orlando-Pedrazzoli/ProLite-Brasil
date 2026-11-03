@@ -23,6 +23,10 @@ export interface SeoProduct {
   stock?: number;
   brand?: { name: string; slug: string } | null;
   category?: { name: string; slug: string } | null;
+  seoTitle?: string;
+  seoDescription?: string;
+  averageRating?: number;
+  reviewCount?: number;
   updatedAt?: Date;
 }
 
@@ -33,7 +37,7 @@ export async function getProductForSeo(
     await connectDB();
     const product = await Product.findOne({ slug, ...PUBLIC_PRODUCT_FILTER })
       .select(
-        'name slug description richDescription sku price images thumbnail stock brand category updatedAt',
+        'name slug description richDescription sku price images thumbnail stock brand category seoTitle seoDescription averageRating reviewCount updatedAt',
       )
       .populate('brand', 'name slug')
       .populate('category', 'name slug')
