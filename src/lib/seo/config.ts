@@ -1,8 +1,8 @@
 // src/lib/seo/config.ts
 // ⚙️ Configuração SEO central — fonte única de verdade para domínio, nome,
+// descrições e imagens padrão. Usado por layout, sitemap, robots e JSON-LD.
 // Domínio canónico = www.prolite.com.br (Production na Vercel; o apex faz
 // 308 → www). NEXT_PUBLIC_SITE_URL na Vercel tem de ser o www.
-// descrições e imagens padrão. Usado por layout, sitemap, robots e JSON-LD.
 // Dados de empresa (endereço, telefone, redes) vêm de src/lib/config/company.ts
 // para não haver duas fontes a divergir.
 
