@@ -1,5 +1,7 @@
 // src/app/page.tsx
 // Home — canonical explícito + title otimizado para a keyword principal.
+// O único <h1> da página está em HomeIntro (server component, logo abaixo
+// do hero); todas as secções seguintes usam <h2> via SectionHeading.
 
 import type { Metadata } from 'next';
 
@@ -12,6 +14,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import HeroBanner from '@/components/home/HeroBanner';
+import HomeIntro from '@/components/home/HomeIntro';
 import ShopByCategory from '@/components/home/ShopByCategory';
 import CategoryBento from '@/components/home/CategoryBento';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
@@ -27,6 +30,7 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroBanner />
+        <HomeIntro />
         <ShopByCategory />
         <CategoryBento />
         <FeaturedProducts

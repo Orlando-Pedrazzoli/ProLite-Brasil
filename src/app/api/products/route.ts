@@ -4,6 +4,7 @@ import Product from '@/lib/models/Product';
 import Category from '@/lib/models/Category';
 import Brand from '@/lib/models/Brand';
 import Supplier from '@/lib/models/Supplier';
+import { indexNow } from '@/lib/seo/indexnow';
 
 const _deps = [Category, Brand, Supplier];
 void _deps;
@@ -231,6 +232,12 @@ export async function POST(request: NextRequest) {
     }
 
     const product = await Product.create(body);
+
+    // IndexNow (Bing & co.) — só para produtos visíveis na loja; fire-and-forget
+    if (product.isActive && product.isPublishedOnline && product.slug) {
+      void indexNow.product(product.slug);
+    }
+
     return NextResponse.json({ success: true, product }, { status: 201 });
   } catch (error) {
     console.error('POST product error:', error);
