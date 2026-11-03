@@ -1,9 +1,13 @@
 // src/app/page.tsx
 // Home — canonical explícito + title otimizado para a keyword principal.
-// O único <h1> da página está em HomeIntro (server component, logo abaixo
-// do hero); todas as secções seguintes usam <h2> via SectionHeading.
+// O único <h1> da página é server-rendered no topo do <main>, visualmente
+// oculto (sr-only): o hero é um carrossel de imagens carregado no cliente,
+// sem texto, por isso o H1 fica aqui — no HTML inicial, para crawlers e
+// leitores de ecrã, sem interferir no layout. Todas as secções seguintes
+// usam <h2> via SectionHeading.
 
 import type { Metadata } from 'next';
+import { HOME_H1 } from '@/lib/seo/config';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
@@ -14,7 +18,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import HeroBanner from '@/components/home/HeroBanner';
-import HomeIntro from '@/components/home/HomeIntro';
 import ShopByCategory from '@/components/home/ShopByCategory';
 import CategoryBento from '@/components/home/CategoryBento';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
@@ -29,8 +32,8 @@ export default function Home() {
       <AnnouncementBar />
       <Navbar />
       <main>
+        <h1 className='sr-only'>{HOME_H1}</h1>
         <HeroBanner />
-        <HomeIntro />
         <ShopByCategory />
         <CategoryBento />
         <FeaturedProducts
