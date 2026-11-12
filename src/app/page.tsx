@@ -50,7 +50,7 @@ export default async function Home() {
           eyebrow='Acabou de chegar'
           title='Novidades'
           initialProducts={newArrivals}
-          fetchUrl='/api/products?limit=8&sort=-createdAt&isActive=true&isNewArrival=true'
+          fetchUrl='/api/products?limit=8&sort=home&isActive=true&isNewArrival=true'
           // Completa com os publicados mais recentes quando há poucas
           // "novidades" marcadas — o carrossel em loop precisa de matéria
           fallbackUrl='/api/products?limit=12&sort=-createdAt&isActive=true'

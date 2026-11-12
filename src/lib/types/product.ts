@@ -146,6 +146,12 @@ export interface IProduct {
   size?: string;
   isMainVariant: boolean;
 
+  // Ordenação manual (admin → Produtos → Ordenar)
+  // sortOrder: posição nas listagens da loja (categorias, /produtos)
+  // homeOrder: posição no carrossel "Novidades" da home
+  sortOrder?: number | null;
+  homeOrder?: number | null;
+
   // Atributos de Quilhas (categoria: Quilhas)
   setup?: FinSetup;
   construction?: string;

@@ -53,7 +53,7 @@ export default function ProdutosPage() {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const page = searchParams.get('page') || '1';
-  const sort = searchParams.get('sort') || '-createdAt';
+  const sort = searchParams.get('sort') || 'manual';
   const category = searchParams.get('category') || '';
   const brand = searchParams.get('brand') || '';
   const minPrice = searchParams.get('minPrice') || '';

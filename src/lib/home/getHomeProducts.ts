@@ -3,6 +3,7 @@
 
 import connectDB from '@/lib/db/connect';
 import Product from '@/lib/models/Product';
+import { HOME_SORT } from '@/lib/products/order';
 
 export interface HomeProductCard {
   _id: string;
@@ -90,7 +91,7 @@ function toCard(product: LeanCard): HomeProductCard {
 }
 
 /**
- * Novidades da home. Se houver menos de `minItems` marcados como
+ * Novidades da home, na ordem definida no admin. Se houver menos de `minItems` marcados como
  * novidade, completa com os publicados mais recentes — a mesma regra
  * do carrossel no cliente.
  */
@@ -102,7 +103,8 @@ export async function getHomeNewArrivals(
 
   const fresh = await Product.find({ ...PUBLIC_FILTER, isNewArrival: true })
     .select(CARD_FIELDS)
-    .sort({ createdAt: -1 })
+    // Ordem manual do carrossel (admin → Produtos → Ordenar → Home)
+    .sort(HOME_SORT)
     .limit(limit)
     .lean<LeanCard[]>();
 

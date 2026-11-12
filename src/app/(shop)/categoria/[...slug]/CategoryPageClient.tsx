@@ -91,7 +91,7 @@ export default function CategoriaPage({
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const page = searchParams.get('page') || '1';
-  const sort = searchParams.get('sort') || '-createdAt';
+  const sort = searchParams.get('sort') || 'manual';
   const brand = searchParams.get('brand') || '';
   const subcategory = searchParams.get('subcategory') || '';
 
