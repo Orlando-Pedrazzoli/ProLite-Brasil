@@ -127,6 +127,13 @@ const productSchema = new Schema<IProduct>(
     size: { type: String, default: '' },
     isMainVariant: { type: Boolean, default: true },
 
+    // ═══ ORDENAÇÃO MANUAL (admin → Produtos → Ordenar) ═══
+    // sortOrder: posição nas listagens da loja. Produto novo recebe
+    // max+1 no hook pre('save') → entra no fim da fila.
+    // homeOrder: posição no carrossel "Novidades" da home.
+    sortOrder: { type: Number, default: null },
+    homeOrder: { type: Number, default: null },
+
     // ═══ ATRIBUTOS DE QUILHAS (Categoria: Quilhas) ═══
     // Note: índices destes campos declarados em productSchema.index() abaixo,
     // NÃO usar `index: true` no campo.
@@ -228,6 +235,9 @@ productSchema.index({ tags: 1 });
 // Family system
 productSchema.index({ productFamily: 1, isMainVariant: 1 });
 
+// Ordenação manual
+productSchema.index({ sortOrder: 1 });
+
 // Full-text search
 productSchema.index({ name: 'text', tags: 'text', description: 'text' });
 
@@ -249,6 +259,16 @@ productSchema.index({ category: 1, zipperType: 1 });
 
 // HOOK pre('save') — Mongoose 9 async syntax
 productSchema.pre('save', async function () {
+  // Produto novo entra no fim da ordem manual da loja
+  if (this.isNew && (this.sortOrder === null || this.sortOrder === undefined)) {
+    const ProductModel = this.constructor as Model<IProduct>;
+    const last = await ProductModel.findOne({ sortOrder: { $ne: null } })
+      .sort({ sortOrder: -1 })
+      .select('sortOrder')
+      .lean();
+    this.sortOrder = (last?.sortOrder ?? 0) + 1;
+  }
+
   const hasName = !!this.name && this.name.trim().length > 0;
   const hasSku = !!this.sku && this.sku.trim().length > 0;
   const hasPrice = this.price > 0;

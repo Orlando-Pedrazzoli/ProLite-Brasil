@@ -5,6 +5,7 @@ import Category from '@/lib/models/Category';
 import Brand from '@/lib/models/Brand';
 import Supplier from '@/lib/models/Supplier';
 import { indexNow } from '@/lib/seo/indexnow';
+import { resolveProductSort } from '@/lib/products/order';
 
 const _deps = [Category, Brand, Supplier];
 void _deps;
@@ -41,7 +42,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
 
     const search = searchParams.get('search') || '';
-    const sort = searchParams.get('sort') || '-createdAt';
+    const sortParam = searchParams.get('sort') || '';
 
     const category = searchParams.get('category') || '';
     const categorySlug = searchParams.get('categorySlug') || '';
@@ -74,6 +75,12 @@ export async function GET(request: NextRequest) {
     const completionStatus = searchParams.get('completionStatus');
     const lowStock = searchParams.get('lowStock') === 'true';
     const outOfStock = searchParams.get('outOfStock') === 'true';
+
+    // Loja (online) sem sort explícito → ordem manual definida no admin.
+    // Admin e POS mantêm "mais recentes" por omissão.
+    const sort = resolveProductSort(
+      sortParam || (context === 'online' ? 'manual' : '-createdAt'),
+    );
 
     const filter: Record<string, unknown> = {};
 

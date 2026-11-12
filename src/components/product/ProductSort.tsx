@@ -7,6 +7,8 @@ interface ProductSortProps {
 }
 
 const sortOptions = [
+  // Ordem definida no admin (Produtos → Ordenar)
+  { label: 'Destaques', value: 'manual' },
   { label: 'Mais recentes', value: '-createdAt' },
   { label: 'Menor preço', value: 'price' },
   { label: 'Maior preço', value: '-price' },

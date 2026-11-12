@@ -24,6 +24,7 @@ import {
   Circle,
   Eye,
   EyeOff,
+  ArrowUpDown,
 } from 'lucide-react';
 
 interface ProductItem {
@@ -390,13 +391,22 @@ export default function AdminProdutosPage() {
             </p>
           )}
         </div>
-        <Link
-          href='/admin/produtos/novo'
-          className='flex items-center gap-2 px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors'
-        >
-          <Plus size={18} />
-          Novo Produto
-        </Link>
+        <div className='flex items-center gap-2'>
+          <Link
+            href='/admin/produtos/ordenar'
+            className='flex items-center gap-2 px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-md hover:bg-gray-50 transition-colors'
+          >
+            <ArrowUpDown size={18} />
+            Ordenar
+          </Link>
+          <Link
+            href='/admin/produtos/novo'
+            className='flex items-center gap-2 px-4 py-2 bg-brand text-white rounded-md hover:bg-brand-dark transition-colors'
+          >
+            <Plus size={18} />
+            Novo Produto
+          </Link>
+        </div>
       </div>
 
       {/* SEARCH + ACTIVE FILTERS */}

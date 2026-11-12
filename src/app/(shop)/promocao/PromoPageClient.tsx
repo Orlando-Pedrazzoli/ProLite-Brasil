@@ -40,7 +40,7 @@ export default function PromocaoPage() {
         // Contexto 'online' (default) → só produtos ativos, publicados e
         // variante principal. isOnSale=true = marcados como "Em Promoção".
         const res = await fetch(
-          '/api/products?isOnSale=true&limit=60&sort=-createdAt',
+          '/api/products?isOnSale=true&limit=60&sort=manual',
           { cache: 'no-store' },
         );
         const data = await res.json();
