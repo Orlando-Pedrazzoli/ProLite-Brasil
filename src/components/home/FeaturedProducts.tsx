@@ -1,27 +1,30 @@
 // src/components/home/FeaturedProducts.tsx
-// v2: CARROSSEL CONTÍNUO EM LOOP INFINITO (pedido do Maurício).
+// v3: CARROSSEL CONTÍNUO EM LOOP INFINITO — motor por `transform`.
+//
+// Porquê v3: a v2 avançava o carrossel escrevendo em `scrollLeft` a cada
+// frame. No iOS (Safari/Chrome de iPhone) o scroll de um contentor é gerido
+// fora da thread da página e essas escritas de 1px por frame são ignoradas
+// ou revertidas — o autoplay simplesmente não andava no telemóvel. Agora a
+// posição é UMA variável (xRef) aplicada com translate3d, igual em todos
+// os browsers; não há scroll nativo envolvido.
 //
 // Como funciona:
 //   • a lista é renderizada uma vez. Cópias extras (loop infinito) só existem
-//     quando essa fila é mais larga que o ecrã — senão os produtos aparecem
+//     quando a fila é mais larga que o ecrã — senão os produtos aparecem
 //     uma vez, parados, sem duplicar para encher o carrossel;
-//   • o avanço é feito por requestAnimationFrame com velocidade em px/s
-//     (independente do refresh rate), diretamente em scrollLeft — por isso
-//     o utilizador continua a poder arrastar com o dedo/trackpad;
-//   • PAUSA enquanto o cursor está por cima do carrossel, durante um
-//     toque/arrasto, com foco por teclado, fora do ecrã, com a aba em
-//     segundo plano, ou uns segundos depois das setas. Ao sair o cursor,
-//     a animação RETOMA logo — sem ficar presa em hover;
-//   • respeita prefers-reduced-motion (fica estático, sem autoplay);
-//   • o autoplay só liga se os cards não couberem na largura visível. O nº
-//     de cópias, aí sim, enche pelo menos 2 larguras do contentor;
-//   • v2.1: se a busca principal devolver menos de `minItems` produtos
-//     (ex.: só 2 marcados como "Novidade"), COMPLETA a fila com os
-//     produtos publicados mais recentes (fallbackUrl) até `minItems` —
-//     assim o carrossel tem sempre matéria para andar.
-//
-// Removido o snap-mandatory: com o movimento contínuo o snap "prendia"
-// o scroll a cada cartão.
+//   • autoplay por requestAnimationFrame, velocidade em px/s (independente
+//     do refresh rate; no modo de pouca bateria do iOS o rAF vai a 30fps e
+//     a velocidade mantém-se);
+//   • ARRASTAR com o dedo ou o rato move a fila (com inércia ao largar);
+//     `touch-action: pan-y` deixa o scroll vertical da página intacto.
+//     Trackpad/roda horizontal também movem a fila;
+//   • PAUSA enquanto o cursor está por cima, durante um toque/arrasto, com
+//     foco por teclado, fora do ecrã, com a aba em segundo plano, e uns
+//     segundos depois de uma interação;
+//   • respeita prefers-reduced-motion ("Reduzir movimento" do telemóvel):
+//     sem autoplay, mas continua a dar para arrastar;
+//   • se a busca principal devolver menos de `minItems` produtos, COMPLETA
+//     a fila com os publicados mais recentes (fallbackUrl).
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -72,7 +75,8 @@ interface FeaturedProductsProps {
   minItems?: number;
 }
 
-const MIN_COPIES = 3; // conjuntos do loop, só quando a fila não cabe no ecrã
+const SET_GAP = 16; // pr-4 no fim de cada conjunto (= gap-4 entre cartões)
+const DRAG_THRESHOLD = 6; // px de movimento horizontal até virar arrasto
 
 export default function FeaturedProducts({
   title,
@@ -88,19 +92,41 @@ export default function FeaturedProducts({
   const [products, setProducts] = useState<Product[]>(initialProducts ?? []);
   const [loading, setLoading] = useState(!hasInitial);
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const setRef = useRef<HTMLDivElement>(null); // 1.º conjunto (mede a largura de um ciclo)
+  const viewportRef = useRef<HTMLDivElement>(null); // janela visível (overflow hidden)
+  const trackRef = useRef<HTMLDivElement>(null); // fila que desliza por transform
+  const setRef = useRef<HTMLDivElement>(null); // 1.º conjunto (mede o período do loop)
 
-  // Estado de autoplay em refs (não re-renderiza a cada frame)
+  // Estado do motor em refs (não re-renderiza a cada frame)
+  const xRef = useRef(0); // deslocamento atual, em px, dentro de [0, período)
+  const periodRef = useRef(0); // largura de um ciclo (conjunto + gap)
+  const velocityRef = useRef(0); // inércia após arrasto (px/ms)
+  const glideRef = useRef<{
+    from: number;
+    last: number;
+    to: number;
+    start: number;
+    duration: number;
+  } | null>(null);
+  const dragRef = useRef({
+    pointerId: -1,
+    active: false,
+    startX: 0,
+    startY: 0,
+    startOffset: 0,
+    lastX: 0,
+    lastT: 0,
+    velocity: 0,
+  });
+  const draggedRef = useRef(false); // houve arrasto → engole o click seguinte
+
   const hoverRef = useRef(false);
-  const touchRef = useRef(false);
   const focusRef = useRef(false);
   const visibleRef = useRef(true);
   const resumeAtRef = useRef(0);
   const reducedMotionRef = useRef(false);
-  // Última posição do cursor. O mouseleave perde-se quando o scroll ou um
-  // re-render mexe no DOM debaixo do ponteiro — daí a animação parar e não
-  // voltar. No tick comparamos esta posição com o retângulo do carrossel.
+  // Última posição do cursor. O mouseleave perde-se quando um re-render
+  // mexe no DOM debaixo do ponteiro; no tick comparamos esta posição com
+  // o retângulo do carrossel.
   const pointerRef = useRef({ x: 0, y: 0, type: '', seen: false });
 
   useEffect(() => {
@@ -142,16 +168,26 @@ export default function FeaturedProducts({
     fetchProducts();
   }, [fetchUrl, fallbackUrl, minItems, hasInitial]);
 
-  // Loop só quando a fila real não cabe no ecrã. Até medir, 1 cópia —
-  // senão 3 capas aparecem repetidas só para encher o carrossel.
+  // ═══ MOTOR DO CARROSSEL ═══════════════════════════════════════
+  // Loop só quando a fila real não cabe no ecrã. Até medir, 1 cópia.
   const [copies, setCopies] = useState(1);
   const [overflows, setOverflows] = useState(false);
   const shouldLoop = overflows && products.length > 0;
 
-  /** Pausa o autoplay por `resumeAfter` segundos (setas ou toque). */
+  /** Pausa o autoplay por `resumeAfter` segundos (setas, toque, arrasto). */
   const holdAutoplay = useCallback(() => {
     resumeAtRef.current = performance.now() + resumeAfter * 1000;
   }, [resumeAfter]);
+
+  /** Aplica a posição: x sempre em [0, período) — o loop é só um módulo. */
+  const applyX = useCallback((next: number) => {
+    const period = periodRef.current;
+    const track = trackRef.current;
+    if (!track || !period) return;
+    const wrapped = ((next % period) + period) % period;
+    xRef.current = wrapped;
+    track.style.transform = `translate3d(${-wrapped}px,0,0)`;
+  }, []);
 
   // Posição do cursor, mesmo quando o evento não cai no carrossel.
   useEffect(() => {
@@ -165,45 +201,36 @@ export default function FeaturedProducts({
     return () => window.removeEventListener('pointermove', onMove);
   }, []);
 
-  /** Mantém scrollLeft dentro do conjunto central — salto invisível. */
-  const normalize = useCallback(() => {
-    const el = scrollRef.current;
-    const setWidth = setRef.current?.offsetWidth ?? 0;
-    if (!el || !setWidth) return;
-    if (el.scrollLeft >= setWidth * 2) el.scrollLeft -= setWidth;
-    else if (el.scrollLeft < setWidth) el.scrollLeft += setWidth;
-  }, []);
-
   // ── Mede a fila real. Só duplica e anima se passar da largura visível. ──
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el || loading || products.length === 0) return;
+    const viewport = viewportRef.current;
+    const set = setRef.current;
+    if (!viewport || !set || loading || products.length === 0) return;
     const measure = () => {
-      const setWidth = setRef.current?.offsetWidth ?? 0;
-      if (!setWidth) return;
-      const over = setWidth > el.clientWidth + 1;
+      // período = 1 conjunto + o seu gap final (pr-4 = SET_GAP)
+      const period = set.offsetWidth;
+      if (!period) return;
+      const over = period - SET_GAP > viewport.clientWidth + 1;
       setOverflows(over);
       if (!over) {
+        periodRef.current = 0;
+        xRef.current = 0;
+        if (trackRef.current) trackRef.current.style.transform = '';
         setCopies(1);
-        if (el.scrollLeft !== 0) el.scrollLeft = 0;
         return;
       }
-      const needed = Math.ceil((el.clientWidth * 2) / setWidth) + 1;
-      setCopies(Math.max(MIN_COPIES, Math.min(needed, 12)));
+      periodRef.current = period;
+      // x ∈ [0, período) → é preciso cobrir período + largura visível
+      const needed = Math.ceil(viewport.clientWidth / period) + 1;
+      setCopies(Math.max(2, Math.min(needed, 12)));
+      applyX(xRef.current);
     };
     measure();
     const ro = new ResizeObserver(measure);
-    ro.observe(el);
+    ro.observe(viewport);
+    ro.observe(set);
     return () => ro.disconnect();
-  }, [loading, products.length]);
-
-  // ── Posição inicial no conjunto do meio (permite andar para trás) ──
-  useEffect(() => {
-    if (!shouldLoop || loading) return;
-    const el = scrollRef.current;
-    const setWidth = setRef.current?.offsetWidth ?? 0;
-    if (el && setWidth && el.scrollLeft < setWidth) el.scrollLeft = setWidth;
-  }, [shouldLoop, loading]);
+  }, [loading, products.length, applyX]);
 
   // ── prefers-reduced-motion ──
   useEffect(() => {
@@ -216,7 +243,7 @@ export default function FeaturedProducts({
 
   // ── Só anima quando a secção está no ecrã ──
   useEffect(() => {
-    const el = scrollRef.current;
+    const el = viewportRef.current;
     if (!el || !shouldLoop) return;
     const io = new IntersectionObserver(
       ([entry]) => (visibleRef.current = entry.isIntersecting),
@@ -226,22 +253,22 @@ export default function FeaturedProducts({
     return () => io.disconnect();
   }, [shouldLoop, loading]);
 
-  // ── Loop de animação ──
+  // ── Loop de animação: autoplay + inércia do arrasto + setas ──
   useEffect(() => {
     if (!shouldLoop || loading) return;
-    const el = scrollRef.current;
+    const el = viewportRef.current;
     if (!el) return;
 
     let raf = 0;
     let last = performance.now();
-    let acc = 0; // acumula frações de pixel (scrollLeft é inteiro em alguns browsers)
 
     const tick = (now: number) => {
-      const dt = Math.min(now - last, 100) / 1000; // s (limita saltos após aba inativa)
+      const elapsed = Math.min(now - last, 100); // ms (limita saltos após aba inativa)
+      const dt = elapsed / 1000;
       last = now;
 
       const point = pointerRef.current;
-      if (point.seen && point.type === 'mouse') {
+      if (point.seen && point.type === 'mouse' && !dragRef.current.active) {
         const rect = el.getBoundingClientRect();
         const over =
           point.x >= rect.left &&
@@ -249,56 +276,167 @@ export default function FeaturedProducts({
           point.y >= rect.top &&
           point.y <= rect.bottom;
         if (!over) {
-          // Saiu: não deixar hover, clique ou foco de rato segurarem o loop.
+          // Saiu: não deixar hover ou foco de rato segurarem o loop.
           if (hoverRef.current) focusRef.current = false;
           hoverRef.current = false;
-          touchRef.current = false;
         } else {
           hoverRef.current = true;
         }
       }
 
-      const paused =
-        reducedMotionRef.current ||
-        hoverRef.current ||
-        touchRef.current ||
-        focusRef.current ||
-        !visibleRef.current ||
-        document.hidden ||
-        now < resumeAtRef.current;
-
-      if (!paused) {
-        acc += speed * dt;
-        const step = Math.floor(acc);
-        if (step >= 1) {
-          el.scrollLeft += step;
-          acc -= step;
-          normalize();
-        }
+      const glide = glideRef.current;
+      if (dragRef.current.active) {
+        // o dedo/rato manda — nada a fazer aqui
+      } else if (glide) {
+        // Setas: desliza ~1 cartão com easing
+        const t = Math.min(1, (now - glide.start) / glide.duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        glide.last = glide.from + (glide.to - glide.from) * eased;
+        applyX(glide.last);
+        if (t >= 1) glideRef.current = null;
+      } else if (Math.abs(velocityRef.current) > 0.02) {
+        // Inércia depois de largar (px/ms, decai ~95% por frame de 60fps)
+        applyX(xRef.current + velocityRef.current * elapsed);
+        velocityRef.current *= Math.pow(0.95, elapsed / 16.67);
+      } else {
+        velocityRef.current = 0;
+        const paused =
+          reducedMotionRef.current ||
+          hoverRef.current ||
+          focusRef.current ||
+          !visibleRef.current ||
+          document.hidden ||
+          now < resumeAtRef.current;
+        if (!paused) applyX(xRef.current + speed * dt);
       }
       raf = requestAnimationFrame(tick);
     };
 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [shouldLoop, loading, speed, normalize]);
+  }, [shouldLoop, loading, speed, applyX]);
+
+  // ── Trackpad / roda horizontal (listener não-passivo para preventDefault) ──
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el || !shouldLoop) return;
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; // scroll vertical: página
+      e.preventDefault();
+      glideRef.current = null;
+      velocityRef.current = 0;
+      applyX(xRef.current + e.deltaX);
+      holdAutoplay();
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [shouldLoop, loading, applyX, holdAutoplay]);
 
   // ── Setas: deslocam ~1 cartão e seguram o autoplay uns segundos ──
   const scroll = (direction: 'left' | 'right') => {
-    const el = scrollRef.current;
+    const el = viewportRef.current;
     if (!el) return;
     holdAutoplay();
+    velocityRef.current = 0;
     const card = el.querySelector<HTMLElement>('[data-card]');
     const amount = card ? card.offsetWidth + 16 : 300; // 16 = gap-4
-    el.scrollBy({
-      left: direction === 'left' ? -amount : amount,
-      behavior: 'smooth',
-    });
+    // clique repetido: soma ao que ainda faltava percorrer
+    const pending = glideRef.current
+      ? glideRef.current.to - glideRef.current.last
+      : 0;
+    glideRef.current = {
+      from: xRef.current,
+      last: xRef.current,
+      to: xRef.current + pending + (direction === 'left' ? -amount : amount),
+      start: performance.now(),
+      duration: 450,
+    };
   };
 
-  // Arrasto manual (dedo/trackpad): normaliza para o loop continuar sem fim
-  const onScroll = () => {
-    if (shouldLoop) normalize();
+  // ── Arrasto (dedo ou rato) ──
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>, cancelled: boolean) => {
+    const drag = dragRef.current;
+    if (drag.pointerId !== e.pointerId) return;
+    drag.pointerId = -1;
+    if (drag.active) {
+      drag.active = false;
+      // velocidade do dedo → inércia (px/ms; x cresce para a esquerda)
+      const dt = performance.now() - drag.lastT;
+      velocityRef.current =
+        cancelled || dt > 80 ? 0 : Math.max(-3, Math.min(3, drag.velocity));
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch {
+        /* captura já libertada */
+      }
+    }
+    holdAutoplay();
+  };
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!shouldLoop) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    glideRef.current = null;
+    velocityRef.current = 0;
+    draggedRef.current = false;
+    dragRef.current = {
+      pointerId: e.pointerId,
+      active: false,
+      startX: e.clientX,
+      startY: e.clientY,
+      startOffset: xRef.current,
+      lastX: e.clientX,
+      lastT: performance.now(),
+      velocity: 0,
+    };
+    // segura o autoplay já no toque (mesmo antes de virar arrasto)
+    holdAutoplay();
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (drag.pointerId !== e.pointerId) return;
+    const dx = e.clientX - drag.startX;
+    const dy = e.clientY - drag.startY;
+    if (!drag.active) {
+      // só vira arrasto com movimento claramente horizontal
+      if (Math.abs(dx) < DRAG_THRESHOLD || Math.abs(dx) <= Math.abs(dy)) return;
+      drag.active = true;
+      draggedRef.current = true;
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      } catch {
+        /* sem captura: continua a funcionar dentro do carrossel */
+      }
+    }
+    const now = performance.now();
+    const step = e.clientX - drag.lastX;
+    const dt = now - drag.lastT;
+    if (dt > 0) {
+      // média móvel para a inércia não depender de um único evento
+      drag.velocity = drag.velocity * 0.6 + (-step / dt) * 0.4;
+    }
+    drag.lastX = e.clientX;
+    drag.lastT = now;
+    applyX(drag.startOffset - dx);
+    holdAutoplay();
+  };
+
+  // Teclado: o cartão focado pode estar fora da área visível (transform
+  // não faz scroll-into-view sozinho) — traz para dentro.
+  const onFocusCapture = (e: React.FocusEvent<HTMLDivElement>) => {
+    focusRef.current = true;
+    if (!shouldLoop) return;
+    const viewport = viewportRef.current;
+    const card = (e.target as HTMLElement).closest<HTMLElement>('[data-card]');
+    if (!viewport || !card) return;
+    const view = viewport.getBoundingClientRect();
+    const rect = card.getBoundingClientRect();
+    glideRef.current = null;
+    velocityRef.current = 0;
+    if (rect.left < view.left) applyX(xRef.current - (view.left - rect.left));
+    else if (rect.right > view.right)
+      applyX(xRef.current + (rect.right - view.right));
   };
 
   if (loading) {
@@ -352,10 +490,13 @@ export default function FeaturedProducts({
         />
 
         <div
-          ref={scrollRef}
-          onScroll={onScroll}
+          ref={viewportRef}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={e => endDrag(e, false)}
+          onPointerCancel={e => endDrag(e, true)}
           onPointerEnter={e => {
-            if (e.pointerType === 'touch') return;
+            if (e.pointerType !== 'mouse') return;
             hoverRef.current = true;
             pointerRef.current.x = e.clientX;
             pointerRef.current.y = e.clientY;
@@ -363,70 +504,65 @@ export default function FeaturedProducts({
             pointerRef.current.seen = true;
           }}
           onPointerLeave={e => {
-            touchRef.current = false;
-            if (e.pointerType === 'touch') return;
-            // Retoma já. Não usar holdAutoplay aqui — isso deixava o loop
-            // parado vários segundos (e, com o mouseleave perdido, para sempre).
+            if (e.pointerType !== 'mouse') return;
+            if (dragRef.current.active) return; // arrasto capturado continua
+            // Retoma já ao sair o cursor.
             hoverRef.current = false;
             focusRef.current = false;
             resumeAtRef.current = 0;
-            // Fora do rect, mesmo que o browser reporte o leave ainda dentro.
             pointerRef.current.x = -1;
             pointerRef.current.y = -1;
             pointerRef.current.type = e.pointerType;
             pointerRef.current.seen = true;
           }}
-          onTouchStart={() => (touchRef.current = true)}
-          onTouchEnd={() => {
-            touchRef.current = false;
-            holdAutoplay();
+          // Depois de arrastar, o "click" que o browser dispara ao largar
+          // não pode abrir o produto.
+          onClickCapture={e => {
+            if (!draggedRef.current) return;
+            draggedRef.current = false;
+            e.preventDefault();
+            e.stopPropagation();
           }}
-          onTouchCancel={() => {
-            touchRef.current = false;
-            holdAutoplay();
-          }}
-          onPointerDown={e => {
-            if (e.pointerType === 'touch') touchRef.current = true;
-          }}
-          onPointerUp={e => {
-            touchRef.current = false;
-            if (e.pointerType === 'touch') holdAutoplay();
-          }}
-          onPointerCancel={() => {
-            touchRef.current = false;
-          }}
-          onFocusCapture={() => (focusRef.current = true)}
+          // Sem o arrasto nativo de links/imagens (roubava o gesto ao rato)
+          onDragStart={e => e.preventDefault()}
+          onFocusCapture={onFocusCapture}
           onBlurCapture={e => {
             // só retoma quando o foco sai de TODO o carrossel
             if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
               focusRef.current = false;
             }
           }}
-          className={`flex gap-4 overflow-x-auto scrollbar-hide pb-2 ${
-            shouldLoop ? '' : 'snap-x snap-mandatory'
-          }`}
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          className='overflow-hidden pb-2'
+          // pan-y: o browser trata do scroll vertical da página; o gesto
+          // horizontal fica para o carrossel.
+          style={{ touchAction: shouldLoop ? 'pan-y' : undefined }}
           aria-label={title}
         >
-          {Array.from({ length: copyCount }).map((_, copy) => (
-            <div
-              key={copy}
-              ref={copy === 0 ? setRef : undefined}
-              className='flex gap-4 flex-shrink-0'
-            >
-              {products.map(product => (
-                <div
-                  key={`${copy}-${product._id}`}
-                  data-card
-                  className={`flex-shrink-0 w-[42vw] sm:w-[31vw] md:w-[23.5vw] max-w-[300px] ${
-                    shouldLoop ? '' : 'snap-start'
-                  }`}
-                >
-                  <ProductCard product={product} />
-                </div>
-              ))}
-            </div>
-          ))}
+          <div
+            ref={trackRef}
+            className='flex w-max'
+            style={{ willChange: shouldLoop ? 'transform' : undefined }}
+          >
+            {Array.from({ length: copyCount }).map((_, copy) => (
+              <div
+                key={copy}
+                ref={copy === 0 ? setRef : undefined}
+                // pr-4 = gap entre o último cartão e a cópia seguinte; faz
+                // parte da largura do conjunto → período exato do loop
+                className='flex gap-4 pr-4 flex-shrink-0'
+              >
+                {products.map(product => (
+                  <div
+                    key={`${copy}-${product._id}`}
+                    data-card
+                    className='flex-shrink-0 w-[42vw] sm:w-[31vw] md:w-[23.5vw] max-w-[300px]'
+                  >
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

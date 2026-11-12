@@ -19,6 +19,14 @@ import SectionHeading, {
 //
 // Dados via /api/catalog (mesmo endpoint usado na Navbar).
 //   → categories: { _id, name, slug, parent }
+//
+// MOBILE: tanto a fila de departamentos (pills) como a de círculos
+// transbordam para o lado. Para o cliente perceber que dá para deslizar:
+//   • desvanecimento na borda + seta sempre que há mais conteúdo desse lado;
+//   • as setas dos círculos aparecem também no telemóvel (antes só desktop);
+//   • na 1.ª vez que a secção entra no ecrã, a fila de pills dá um pequeno
+//     "empurrão" para o lado e volta (não acontece com "Reduzir movimento");
+//   • o pill escolhido desliza para o centro.
 
 interface Category {
   _id: string;
@@ -93,6 +101,12 @@ export default function ShopByCategory({
   const [pageCount, setPageCount] = useState(1);
   const [activePage, setActivePage] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  // Fila de departamentos (pills)
+  const sectionRef = useRef<HTMLElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const nudgedRef = useRef(false);
+  const [tabsLeft, setTabsLeft] = useState(false);
+  const [tabsRight, setTabsRight] = useState(false);
 
   // Busca do catálogo
   useEffect(() => {
@@ -177,6 +191,68 @@ export default function ShopByCategory({
     };
   }, [updateScrollState, loading]);
 
+  // ───── Pills: há mais departamentos à esquerda / direita? ─────
+  const updateTabsState = useCallback(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    setTabsLeft(el.scrollLeft > 4);
+    setTabsRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    updateTabsState();
+    el.addEventListener('scroll', updateTabsState, { passive: true });
+    const ro = new ResizeObserver(updateTabsState);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener('scroll', updateTabsState);
+      ro.disconnect();
+    };
+  }, [updateTabsState, loading, tabs.length]);
+
+  const scrollTabs = (direction: 'left' | 'right') => {
+    const el = tabsRef.current;
+    if (!el) return;
+    const amount = el.clientWidth * 0.7;
+    el.scrollBy({
+      left: direction === 'left' ? -amount : amount,
+      behavior: 'smooth',
+    });
+  };
+
+  // "Empurrão" único: quando a secção aparece e os pills não cabem, a
+  // fila desliza um pouco e volta — mostra que há mais para o lado.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || loading) return;
+    let back: ReturnType<typeof setTimeout> | undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || nudgedRef.current) return;
+        const el = tabsRef.current;
+        if (!el || el.scrollWidth <= el.clientWidth + 4) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          nudgedRef.current = true;
+          return;
+        }
+        nudgedRef.current = true;
+        el.scrollBy({ left: 72, behavior: 'smooth' });
+        back = setTimeout(() => {
+          // só volta se o cliente não tiver mexido entretanto
+          if (el.scrollLeft <= 80) el.scrollTo({ left: 0, behavior: 'smooth' });
+        }, 900);
+      },
+      { threshold: 0.6 },
+    );
+    io.observe(section);
+    return () => {
+      io.disconnect();
+      if (back) clearTimeout(back);
+    };
+  }, [loading, tabs.length]);
+
   // Ao trocar de tab (ou quando a lista muda), volta ao início
   useEffect(() => {
     const el = scrollRef.current;
@@ -225,7 +301,7 @@ export default function ShopByCategory({
   if (items.length === 0 && roots.length === 0) return null;
 
   return (
-    <section className='py-8'>
+    <section ref={sectionRef} className='py-8'>
       <div className='container-home'>
         {/* Header em duas linhas: título à esquerda em cima,
             toggle centrado embaixo. O wrapper interno com mx-auto
@@ -235,23 +311,85 @@ export default function ShopByCategory({
           <SectionHeading eyebrow={eyebrow} title={title} className='mb-0' />
 
           {tabs.length > 0 && (
-            <div
-              className={`mt-6 flex overflow-x-auto scrollbar-none ${SECTION_HEADING_INSET}`}
-            >
-              <div className='mx-auto inline-flex gap-1 rounded-full bg-gray-100 p-1'>
-                {tabs.map(tab => (
-                  <button
-                    key={tab._id}
-                    onClick={() => setActiveTab(tab._id)}
-                    className={`shrink-0 whitespace-nowrap px-5 py-2 text-sm font-bold uppercase rounded-full transition-colors ${
-                      activeTab === tab._id
-                        ? 'bg-brand text-white shadow'
-                        : 'text-gray-500 hover:text-gray-800'
-                    }`}
-                  >
-                    {tab.name}
-                  </button>
-                ))}
+            <div className={`relative mt-6 ${SECTION_HEADING_INSET}`}>
+              <div
+                ref={tabsRef}
+                className='flex overflow-x-auto scrollbar-none'
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                <div className='mx-auto inline-flex gap-1 rounded-full bg-gray-100 p-1'>
+                  {tabs.map(tab => (
+                    <button
+                      key={tab._id}
+                      onClick={e => {
+                        setActiveTab(tab._id);
+                        // traz o pill escolhido para o centro da fila
+                        e.currentTarget.scrollIntoView({
+                          behavior: 'smooth',
+                          inline: 'center',
+                          block: 'nearest',
+                        });
+                      }}
+                      className={`shrink-0 whitespace-nowrap px-5 py-2 text-sm font-bold uppercase rounded-full transition-colors ${
+                        activeTab === tab._id
+                          ? 'bg-brand text-white shadow'
+                          : 'text-gray-500 hover:text-gray-800'
+                      }`}
+                    >
+                      {tab.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Há mais departamentos à ESQUERDA: desvanecimento + seta */}
+              <div
+                aria-hidden={!tabsLeft}
+                className={`absolute inset-y-0 left-6 md:left-10 flex items-center transition-opacity duration-200 ${
+                  tabsLeft ? 'opacity-100' : 'pointer-events-none opacity-0'
+                }`}
+              >
+                <div
+                  className='pointer-events-none absolute inset-y-0 left-0 w-16'
+                  style={{
+                    background:
+                      'linear-gradient(to right, #fff 35%, rgba(255,255,255,0))',
+                  }}
+                />
+                <button
+                  type='button'
+                  tabIndex={tabsLeft ? 0 : -1}
+                  onClick={() => scrollTabs('left')}
+                  aria-label='Departamentos anteriores'
+                  className='relative flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.18)] ring-1 ring-black/5'
+                >
+                  <ChevronLeft size={18} />
+                </button>
+              </div>
+
+              {/* Há mais departamentos à DIREITA: desvanecimento + seta */}
+              <div
+                aria-hidden={!tabsRight}
+                className={`absolute inset-y-0 right-6 md:right-10 flex items-center justify-end transition-opacity duration-200 ${
+                  tabsRight ? 'opacity-100' : 'pointer-events-none opacity-0'
+                }`}
+              >
+                <div
+                  className='pointer-events-none absolute inset-y-0 right-0 w-16'
+                  style={{
+                    background:
+                      'linear-gradient(to left, #fff 35%, rgba(255,255,255,0))',
+                  }}
+                />
+                <button
+                  type='button'
+                  tabIndex={tabsRight ? 0 : -1}
+                  onClick={() => scrollTabs('right')}
+                  aria-label='Mais departamentos'
+                  className='relative flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.18)] ring-1 ring-black/5'
+                >
+                  <ChevronRight size={18} />
+                </button>
               </div>
             </div>
           )}
@@ -280,22 +418,44 @@ export default function ShopByCategory({
                 </div>
               </div>
 
-              {/* Seta circular ESQUERDA (desktop) — alinhada ao centro do círculo */}
+              {/* Mobile: desvanecimento na borda onde há mais círculos */}
+              <div
+                aria-hidden
+                className={`sm:hidden pointer-events-none absolute inset-y-0 left-0 w-10 transition-opacity duration-200 ${
+                  canLeft ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{
+                  background:
+                    'linear-gradient(to right, #fff, rgba(255,255,255,0))',
+                }}
+              />
+              <div
+                aria-hidden
+                className={`sm:hidden pointer-events-none absolute inset-y-0 right-0 w-10 transition-opacity duration-200 ${
+                  canRight ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{
+                  background:
+                    'linear-gradient(to left, #fff, rgba(255,255,255,0))',
+                }}
+              />
+
+              {/* Seta circular ESQUERDA — alinhada ao centro do círculo */}
               <button
                 onClick={() => scroll('left')}
                 aria-label='Anteriores'
-                className={`hidden sm:flex absolute left-1 top-14 md:top-16 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.15)] ring-1 ring-black/5 transition hover:bg-gray-50 ${
+                className={`flex absolute left-1 top-[52px] sm:top-14 md:top-16 -translate-y-1/2 z-10 h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.15)] ring-1 ring-black/5 transition hover:bg-gray-50 ${
                   canLeft ? 'opacity-100' : 'pointer-events-none opacity-0'
                 }`}
               >
                 <ChevronLeft size={20} />
               </button>
 
-              {/* Seta circular DIREITA (desktop) */}
+              {/* Seta circular DIREITA */}
               <button
                 onClick={() => scroll('right')}
                 aria-label='Próximos'
-                className={`hidden sm:flex absolute right-1 top-14 md:top-16 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.15)] ring-1 ring-black/5 transition hover:bg-gray-50 ${
+                className={`flex absolute right-1 top-[52px] sm:top-14 md:top-16 -translate-y-1/2 z-10 h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.15)] ring-1 ring-black/5 transition hover:bg-gray-50 ${
                   canRight ? 'opacity-100' : 'pointer-events-none opacity-0'
                 }`}
               >
