@@ -309,7 +309,7 @@ export default function CategoriaPage({
   };
 
   return (
-    <div className='max-w-7xl mx-auto px-4 py-6'>
+    <div className='container-home py-6'>
       <nav className='text-sm text-gray-500 mb-6'>
         <Link href='/' className='hover:text-brand'>
           Início
@@ -377,6 +377,7 @@ export default function CategoriaPage({
             loading={loading}
             pagination={pagination}
             onPageChange={handlePageChange}
+            wide
           />
         </div>
       </div>
