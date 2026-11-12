@@ -16,14 +16,22 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getBlogPostForSeo(slug);
+  const result = await getBlogPostForSeo(slug);
 
-  if (!post) {
+  // Falha temporária da base de dados: devolver só a canonical e herdar o
+  // resto do layout (index: true). NUNCA noindex aqui — o URL é válido.
+  if (result.status === 'error') {
+    return { alternates: { canonical: `/blog/${slug}` } };
+  }
+
+  if (result.status === 'missing') {
     return {
       title: 'Artigo não encontrado',
       robots: { index: false, follow: false },
     };
   }
+
+  const post = result.data;
 
   const canonical = `/blog/${post.slug}`;
   const description = toMetaDescription(post.excerpt);
@@ -47,7 +55,8 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
-  const post = await getBlogPostForSeo(slug);
+  const result = await getBlogPostForSeo(slug);
+  const post = result.status === 'found' ? result.data : null;
 
   return (
     <div className='max-w-3xl mx-auto px-4 py-8'>

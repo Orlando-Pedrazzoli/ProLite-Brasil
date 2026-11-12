@@ -25,14 +25,22 @@ export async function generateMetadata({
   const { slug } = await params;
   // O último segmento do catch-all é a categoria/subcategoria efetiva
   const categorySlug = slug[slug.length - 1];
-  const category = await getCategoryForSeo(categorySlug);
+  const result = await getCategoryForSeo(categorySlug);
 
-  if (!category) {
+  // Falha temporária da base de dados: devolver só a canonical e herdar o
+  // resto do layout (index: true). NUNCA noindex aqui — o URL é válido.
+  if (result.status === 'error') {
+    return { alternates: { canonical: `/categoria/${slug.join('/')}` } };
+  }
+
+  if (result.status === 'missing') {
     return {
       title: 'Categoria não encontrada',
       robots: { index: false, follow: false },
     };
   }
+
+  const category = result.data;
 
   const title = category.seoTitle || `${category.name} — Equipamentos de Surf`;
   const description = toMetaDescription(
@@ -60,7 +68,8 @@ export async function generateMetadata({
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;
   const categorySlug = slug[slug.length - 1];
-  const category = await getCategoryForSeo(categorySlug);
+  const result = await getCategoryForSeo(categorySlug);
+  const category = result.status === 'found' ? result.data : null;
   const path = `/categoria/${slug.join('/')}`;
 
   return (
