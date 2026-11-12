@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connect';
 import Category from '@/lib/models/Category';
+import {
+  CategoryInputError,
+  findFreeSlug,
+  isDuplicateKeyError,
+  normalizeCategoryInput,
+} from '@/lib/categories/payload';
 
 // GET — list all categories
 export async function GET() {
@@ -23,11 +29,31 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     await connectDB();
-    const body = await request.json();
+    const body = (await request.json()) as Record<string, unknown>;
 
-    const category = await Category.create(body);
+    const { data, parentSlug } = await normalizeCategoryInput(body);
+    // slug repetido deixou de ser erro: o servidor escolhe um livre
+    data.slug = await findFreeSlug(data.slug, parentSlug);
+
+    const category = await Category.create(data);
     return NextResponse.json({ success: true, category }, { status: 201 });
   } catch (error) {
+    if (error instanceof CategoryInputError) {
+      return NextResponse.json(
+        { success: false, error: error.message },
+        { status: error.status },
+      );
+    }
+    if (isDuplicateKeyError(error)) {
+      // corrida rara: outro pedido ocupou o slug entre a verificação e o insert
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Já existe uma categoria com esse endereço. Tente de novo.',
+        },
+        { status: 409 },
+      );
+    }
     console.error('POST category error:', error);
     return NextResponse.json(
       { success: false, error: 'Erro ao criar categoria' },

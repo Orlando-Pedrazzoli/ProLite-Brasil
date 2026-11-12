@@ -181,9 +181,17 @@ export default function AdminCategoriasPage() {
       const data = await res.json();
 
       if (data.success) {
-        toast.success(
-          editingId ? 'Categoria atualizada!' : 'Categoria criada!',
-        );
+        const finalSlug: string | undefined = data.category?.slug;
+        if (!editingId && finalSlug && finalSlug !== form.slug) {
+          // o slug pedido já existia → o servidor escolheu um livre
+          toast.success(`Categoria criada! Endereço: /${finalSlug}`, {
+            duration: 6000,
+          });
+        } else {
+          toast.success(
+            editingId ? 'Categoria atualizada!' : 'Categoria criada!',
+          );
+        }
         resetForm();
         fetchCategories();
       } else {
