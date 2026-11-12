@@ -8,11 +8,7 @@
 
 import type { Metadata } from 'next';
 import { HOME_H1 } from '@/lib/seo/config';
-
-export const metadata: Metadata = {
-  alternates: { canonical: '/' },
-};
-
+import { getHomeNewArrivals } from '@/lib/home/getHomeProducts';
 import AnnouncementBar from '@/components/layout/AnnouncementBar';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -26,7 +22,21 @@ import StoreShowcase from '@/components/home/StoreShowcase';
 import CapasRefletivasBanner from '@/components/home/CapasRefletivasBanner';
 import LeashesBanner from '@/components/home/LeashesBanner';
 
-export default function Home() {
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
+
+// A vitrine lê o Mongo em cada request para o HTML já sair com os cards.
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  let newArrivals: Awaited<ReturnType<typeof getHomeNewArrivals>> = [];
+  try {
+    newArrivals = await getHomeNewArrivals();
+  } catch (error) {
+    console.error('Erro ao carregar novidades da home:', error);
+  }
+
   return (
     <>
       <AnnouncementBar />
@@ -39,6 +49,7 @@ export default function Home() {
         <FeaturedProducts
           eyebrow='Acabou de chegar'
           title='Novidades'
+          initialProducts={newArrivals}
           fetchUrl='/api/products?limit=8&sort=-createdAt&isActive=true&isNewArrival=true'
           // Completa com os publicados mais recentes quando há poucas
           // "novidades" marcadas — o carrossel em loop precisa de matéria
