@@ -129,6 +129,15 @@ export default function FeaturedProducts({
   // o retângulo do carrossel.
   const pointerRef = useRef({ x: 0, y: 0, type: '', seen: false });
 
+  // Diagnóstico no próprio telemóvel: abrir a home com ?carrossel-debug
+  // mostra, por baixo do carrossel, porque é que o autoplay está parado.
+  const [debug, setDebug] = useState<string | null>(null);
+  const debugOnRef = useRef(false);
+  useEffect(() => {
+    debugOnRef.current = window.location.search.includes('carrossel-debug');
+    if (debugOnRef.current) setDebug('a medir…');
+  }, []);
+
   useEffect(() => {
     if (hasInitial) return;
 
@@ -261,8 +270,17 @@ export default function FeaturedProducts({
 
     let raf = 0;
     let last = performance.now();
+    let frames = 0;
+    let debugAt = 0;
 
     const tick = (now: number) => {
+      frames += 1;
+      if (debugOnRef.current && now > debugAt) {
+        debugAt = now + 500;
+        setDebug(
+          `movimento-reduzido:${reducedMotionRef.current ? 'SIM' : 'nao'} visivel:${visibleRef.current ? 'sim' : 'NAO'} hover:${hoverRef.current ? 'SIM' : 'nao'} foco:${focusRef.current ? 'SIM' : 'nao'} espera:${now < resumeAtRef.current ? 'SIM' : 'nao'} x:${Math.round(xRef.current)} periodo:${Math.round(periodRef.current)} frames:${frames}`,
+        );
+      }
       const elapsed = Math.min(now - last, 100); // ms (limita saltos após aba inativa)
       const dt = elapsed / 1000;
       last = now;
@@ -555,7 +573,9 @@ export default function FeaturedProducts({
                   <div
                     key={`${copy}-${product._id}`}
                     data-card
-                    className='flex-shrink-0 w-[42vw] sm:w-[31vw] md:w-[23.5vw] max-w-[300px]'
+                    // 38vw no telemóvel: cabem 2 cartões e sobra ~30px do 3.º à
+                    // vista — sinal de que há mais produtos para o lado
+                    className='flex-shrink-0 w-[38vw] sm:w-[31vw] md:w-[23.5vw] max-w-[300px]'
                   >
                     <ProductCard product={product} />
                   </div>
@@ -564,6 +584,11 @@ export default function FeaturedProducts({
             ))}
           </div>
         </div>
+        {debug !== null && (
+          <p className='mt-2 px-2 font-mono text-[11px] leading-snug text-red-600 break-words'>
+            {shouldLoop ? debug : 'sem loop: os produtos cabem no ecrã'}
+          </p>
+        )}
       </div>
     </section>
   );
