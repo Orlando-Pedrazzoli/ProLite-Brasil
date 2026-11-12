@@ -8,10 +8,10 @@
 //   • o avanço é feito por requestAnimationFrame com velocidade em px/s
 //     (independente do refresh rate), diretamente em scrollLeft — por isso
 //     o utilizador continua a poder arrastar com o dedo/trackpad;
-//   • PAUSA quando: o cursor está em cima (hover), há toque/arrasto em
-//     curso, um elemento dentro tem foco (teclado), a secção está fora do
-//     ecrã (IntersectionObserver), a aba está em segundo plano, ou após
-//     clicar nas setas — e RETOMA alguns segundos depois da interação;
+//   • PAUSA enquanto o cursor está por cima do carrossel, durante um
+//     toque/arrasto, com foco por teclado, fora do ecrã, com a aba em
+//     segundo plano, ou uns segundos depois das setas. Ao sair o cursor,
+//     a animação RETOMA logo — sem ficar presa em hover;
 //   • respeita prefers-reduced-motion (fica estático, sem autoplay);
 //   • o número de cópias é calculado para encher pelo menos 2 larguras do
 //     contentor (mínimo 3) — assim o loop funciona mesmo com 2 produtos;
@@ -100,6 +100,10 @@ export default function FeaturedProducts({
   const visibleRef = useRef(true);
   const resumeAtRef = useRef(0);
   const reducedMotionRef = useRef(false);
+  // Última posição do cursor. O mouseleave perde-se quando o scroll ou um
+  // re-render mexe no DOM debaixo do ponteiro — daí a animação parar e não
+  // voltar. No tick comparamos esta posição com o retângulo do carrossel.
+  const pointerRef = useRef({ x: 0, y: 0, type: '', seen: false });
 
   useEffect(() => {
     if (hasInitial) return;
@@ -146,10 +150,22 @@ export default function FeaturedProducts({
   const [copies, setCopies] = useState(MIN_COPIES);
   const shouldLoop = products.length >= MIN_PRODUCTS_TO_LOOP;
 
-  /** Pausa o autoplay por `resumeAfter` segundos (interação do utilizador). */
+  /** Pausa o autoplay por `resumeAfter` segundos (setas ou toque). */
   const holdAutoplay = useCallback(() => {
     resumeAtRef.current = performance.now() + resumeAfter * 1000;
   }, [resumeAfter]);
+
+  // Posição do cursor, mesmo quando o evento não cai no carrossel.
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      pointerRef.current.x = e.clientX;
+      pointerRef.current.y = e.clientY;
+      pointerRef.current.type = e.pointerType;
+      pointerRef.current.seen = true;
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
+  }, []);
 
   /** Mantém scrollLeft dentro do conjunto central — salto invisível. */
   const normalize = useCallback(() => {
@@ -218,6 +234,24 @@ export default function FeaturedProducts({
     const tick = (now: number) => {
       const dt = Math.min(now - last, 100) / 1000; // s (limita saltos após aba inativa)
       last = now;
+
+      const point = pointerRef.current;
+      if (point.seen && point.type === 'mouse') {
+        const rect = el.getBoundingClientRect();
+        const over =
+          point.x >= rect.left &&
+          point.x <= rect.right &&
+          point.y >= rect.top &&
+          point.y <= rect.bottom;
+        if (!over) {
+          // Saiu: não deixar hover, clique ou foco de rato segurarem o loop.
+          if (hoverRef.current) focusRef.current = false;
+          hoverRef.current = false;
+          touchRef.current = false;
+        } else {
+          hoverRef.current = true;
+        }
+      }
 
       const paused =
         reducedMotionRef.current ||
@@ -315,10 +349,27 @@ export default function FeaturedProducts({
         <div
           ref={scrollRef}
           onScroll={onScroll}
-          onMouseEnter={() => (hoverRef.current = true)}
-          onMouseLeave={() => {
+          onPointerEnter={e => {
+            if (e.pointerType === 'touch') return;
+            hoverRef.current = true;
+            pointerRef.current.x = e.clientX;
+            pointerRef.current.y = e.clientY;
+            pointerRef.current.type = e.pointerType;
+            pointerRef.current.seen = true;
+          }}
+          onPointerLeave={e => {
+            touchRef.current = false;
+            if (e.pointerType === 'touch') return;
+            // Retoma já. Não usar holdAutoplay aqui — isso deixava o loop
+            // parado vários segundos (e, com o mouseleave perdido, para sempre).
             hoverRef.current = false;
-            holdAutoplay();
+            focusRef.current = false;
+            resumeAtRef.current = 0;
+            // Fora do rect, mesmo que o browser reporte o leave ainda dentro.
+            pointerRef.current.x = -1;
+            pointerRef.current.y = -1;
+            pointerRef.current.type = e.pointerType;
+            pointerRef.current.seen = true;
           }}
           onTouchStart={() => (touchRef.current = true)}
           onTouchEnd={() => {
@@ -329,17 +380,14 @@ export default function FeaturedProducts({
             touchRef.current = false;
             holdAutoplay();
           }}
-          onPointerDown={() => (touchRef.current = true)}
-          onPointerUp={() => {
+          onPointerDown={e => {
+            if (e.pointerType === 'touch') touchRef.current = true;
+          }}
+          onPointerUp={e => {
             touchRef.current = false;
-            holdAutoplay();
+            if (e.pointerType === 'touch') holdAutoplay();
           }}
           onPointerCancel={() => {
-            touchRef.current = false;
-            holdAutoplay();
-          }}
-          onPointerLeave={() => {
-            // o botão pode ser largado fora do carrossel — nunca ficar "preso" em pausa
             touchRef.current = false;
           }}
           onFocusCapture={() => (focusRef.current = true)}
@@ -347,7 +395,6 @@ export default function FeaturedProducts({
             // só retoma quando o foco sai de TODO o carrossel
             if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
               focusRef.current = false;
-              holdAutoplay();
             }
           }}
           className={`flex gap-4 overflow-x-auto scrollbar-hide pb-2 ${
