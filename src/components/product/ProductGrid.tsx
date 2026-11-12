@@ -44,6 +44,8 @@ interface ProductGridProps {
   pagination?: Pagination;
   onPageChange?: (page: number) => void;
   showViewToggle?: boolean;
+  /** Listagem larga (página de categoria): mais gap e 5 colunas em ecrãs grandes. */
+  wide?: boolean;
 }
 
 type MobileViewMode = '1' | '2';
@@ -80,6 +82,7 @@ export default function ProductGrid({
   pagination,
   onPageChange,
   showViewToggle = true,
+  wide = false,
 }: ProductGridProps) {
   // Default: 2 colunas no mobile (padrão das lojas de surf de referência);
   // o toggle continua disponível para quem preferir 1 coluna.
@@ -101,11 +104,21 @@ export default function ProductGrid({
     viewModeListeners.forEach(l => l());
   };
 
-  // Grid classes: mobile uses view mode; desktop always 3-4 cols
+  // Grid: 2 colunas no mobile (ou 1, se o user escolher). Em listagem larga
+  // o gap sobe e, a partir de 1536px, entra a 5.ª coluna para usar a largura
+  // sem transformar cada card num poster.
+  const cols = wide
+    ? 'md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5'
+    : 'md:grid-cols-3 lg:grid-cols-4';
+  const gap = wide
+    ? 'gap-4 md:gap-6'
+    : mobileView === '1'
+      ? 'gap-4'
+      : 'gap-3 md:gap-4';
   const gridClasses =
     mobileView === '1'
-      ? 'grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-4'
-      : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4';
+      ? `grid grid-cols-1 ${cols} ${gap}`
+      : `grid grid-cols-2 ${cols} ${gap}`;
 
   if (loading) {
     return (
@@ -118,13 +131,7 @@ export default function ProductGrid({
             </div>
           </div>
         )}
-        <div
-          className={
-            mobileView === '1'
-              ? 'grid grid-cols-1 md:grid-cols-3 gap-4'
-              : 'grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4'
-          }
-        >
+        <div className={gridClasses}>
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
