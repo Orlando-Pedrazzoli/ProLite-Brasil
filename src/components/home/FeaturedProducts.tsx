@@ -2,9 +2,9 @@
 // v2: CARROSSEL CONTÍNUO EM LOOP INFINITO (pedido do Maurício).
 //
 // Como funciona:
-//   • a lista de produtos é renderizada 3× seguidas; quando o scroll passa
-//     a largura de UM conjunto, subtraímos essa largura — o salto é
-//     invisível e o loop nunca acaba (nos dois sentidos);
+//   • a lista é renderizada uma vez. Cópias extras (loop infinito) só existem
+//     quando essa fila é mais larga que o ecrã — senão os produtos aparecem
+//     uma vez, parados, sem duplicar para encher o carrossel;
 //   • o avanço é feito por requestAnimationFrame com velocidade em px/s
 //     (independente do refresh rate), diretamente em scrollLeft — por isso
 //     o utilizador continua a poder arrastar com o dedo/trackpad;
@@ -13,9 +13,8 @@
 //     segundo plano, ou uns segundos depois das setas. Ao sair o cursor,
 //     a animação RETOMA logo — sem ficar presa em hover;
 //   • respeita prefers-reduced-motion (fica estático, sem autoplay);
-//   • o número de cópias é calculado para encher pelo menos 2 larguras do
-//     contentor (mínimo 3) — assim o loop funciona mesmo com 2 produtos;
-//     com 1 produto não há carrossel;
+//   • o autoplay só liga se os cards não couberem na largura visível. O nº
+//     de cópias, aí sim, enche pelo menos 2 larguras do contentor;
 //   • v2.1: se a busca principal devolver menos de `minItems` produtos
 //     (ex.: só 2 marcados como "Novidade"), COMPLETA a fila com os
 //     produtos publicados mais recentes (fallbackUrl) até `minItems` —
@@ -73,8 +72,7 @@ interface FeaturedProductsProps {
   minItems?: number;
 }
 
-const MIN_COPIES = 3; // conjuntos renderizados para o loop (mínimo 3)
-const MIN_PRODUCTS_TO_LOOP = 2;
+const MIN_COPIES = 3; // conjuntos do loop, só quando a fila não cabe no ecrã
 
 export default function FeaturedProducts({
   title,
@@ -144,11 +142,11 @@ export default function FeaturedProducts({
     fetchProducts();
   }, [fetchUrl, fallbackUrl, minItems, hasInitial]);
 
-  // Loop sempre que há 2+ produtos. O nº de cópias é medido com
-  // ResizeObserver para que o conteúdo total encha ≥ 2 larguras do
-  // contentor — com poucos produtos repete-se mais vezes.
-  const [copies, setCopies] = useState(MIN_COPIES);
-  const shouldLoop = products.length >= MIN_PRODUCTS_TO_LOOP;
+  // Loop só quando a fila real não cabe no ecrã. Até medir, 1 cópia —
+  // senão 3 capas aparecem repetidas só para encher o carrossel.
+  const [copies, setCopies] = useState(1);
+  const [overflows, setOverflows] = useState(false);
+  const shouldLoop = overflows && products.length > 0;
 
   /** Pausa o autoplay por `resumeAfter` segundos (setas ou toque). */
   const holdAutoplay = useCallback(() => {
@@ -176,13 +174,20 @@ export default function FeaturedProducts({
     else if (el.scrollLeft < setWidth) el.scrollLeft += setWidth;
   }, []);
 
-  // ── Quantas cópias são precisas para encher ≥ 2 larguras do contentor ──
+  // ── Mede a fila real. Só duplica e anima se passar da largura visível. ──
   useEffect(() => {
     const el = scrollRef.current;
-    if (!el || loading || !shouldLoop) return;
+    if (!el || loading || products.length === 0) return;
     const measure = () => {
       const setWidth = setRef.current?.offsetWidth ?? 0;
       if (!setWidth) return;
+      const over = setWidth > el.clientWidth + 1;
+      setOverflows(over);
+      if (!over) {
+        setCopies(1);
+        if (el.scrollLeft !== 0) el.scrollLeft = 0;
+        return;
+      }
       const needed = Math.ceil((el.clientWidth * 2) / setWidth) + 1;
       setCopies(Math.max(MIN_COPIES, Math.min(needed, 12)));
     };
@@ -190,7 +195,7 @@ export default function FeaturedProducts({
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [loading, shouldLoop, products.length]);
+  }, [loading, products.length]);
 
   // ── Posição inicial no conjunto do meio (permite andar para trás) ──
   useEffect(() => {
