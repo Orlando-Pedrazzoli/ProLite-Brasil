@@ -1,6 +1,7 @@
 // src/components/layout/Footer.tsx
 import Link from 'next/link';
 import Image from 'next/image';
+import { ShieldCheck } from 'lucide-react';
 import NewsletterBar from '@/components/marketing/NewsletterBar';
 import {
   company,
@@ -43,6 +44,50 @@ function GoldSealIcon({ className = '' }: { className?: string }) {
         fill='#FFF6D5'
       />
     </svg>
+  );
+}
+
+/** Bandeiras que o checkout realmente aceita (CreditCardForm + Pix + boleto). */
+const PAYMENT_BADGES: { name: string; className: string }[] = [
+  { name: 'Visa', className: 'text-[#1A1F71]' },
+  { name: 'Mastercard', className: 'text-[#EB001B]' },
+  { name: 'Elo', className: 'text-gray-900' },
+  { name: 'Amex', className: 'bg-[#2E77BC] text-white border-[#2E77BC]' },
+  { name: 'Hipercard', className: 'text-[#B91C1C]' },
+  { name: 'Pix', className: 'text-[#0F766E]' },
+  { name: 'Boleto', className: 'text-gray-700' },
+];
+
+function PaymentTrust() {
+  return (
+    <div className='flex flex-col items-center md:items-start gap-2.5 max-w-sm'>
+      <div className='flex items-center gap-2 text-gray-900'>
+        <ShieldCheck size={18} className='text-brand shrink-0' aria-hidden='true' />
+        <p className='text-sm font-semibold leading-tight'>
+          Pagamento seguro via Mercado Pago
+        </p>
+      </div>
+      <p className='text-[11px] leading-relaxed text-gray-500 text-center md:text-left'>
+        Cartão, Pix e boleto. O número do cartão é processado pelo Mercado
+        Pago e não fica armazenado neste site.
+      </p>
+      <ul className='flex flex-wrap justify-center md:justify-start gap-1.5' aria-label='Formas de pagamento'>
+        {PAYMENT_BADGES.map(badge => (
+          <li
+            key={badge.name}
+            className={`inline-flex h-7 items-center rounded-md border border-gray-200 bg-white px-2 text-[11px] font-bold tracking-wide ${badge.className}`}
+          >
+            {badge.name}
+          </li>
+        ))}
+      </ul>
+      <Link
+        href='/formas-pagamento'
+        className='text-[11px] font-medium text-brand hover:underline'
+      >
+        Ver formas de pagamento
+      </Link>
+    </div>
   );
 }
 
@@ -372,16 +417,7 @@ export default function Footer() {
       {/* Payment Cards + Logo + Dev Credit — White Background */}
       <div className='bg-white'>
         <div className='max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-6'>
-          {/* Payment Methods */}
-          <div className='flex-shrink-0'>
-            <Image
-              src='/images/cartoes-footer.jpg'
-              alt='Formas de pagamento: Amex, Aura, Diners, Discover, Elo, Hipercard, JCB, Visa, Mastercard, Boleto, PIX'
-              width={500}
-              height={80}
-              className='h-16 w-auto object-contain'
-            />
-          </div>
+          <PaymentTrust />
 
           {/* Logo + Info — Center */}
           <div className='flex flex-col items-center text-center'>
