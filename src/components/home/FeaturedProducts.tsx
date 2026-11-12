@@ -57,6 +57,12 @@ interface FeaturedProductsProps {
   /** Linha pequena acima do título (opcional) */
   eyebrow?: string;
   fetchUrl: string;
+  /**
+   * Produtos já lidos no servidor. Quando presentes, o HTML inicial
+   * renderiza os cards (nome, foto, Pix, parcelas) e o fetch no
+   * cliente é dispensado.
+   */
+  initialProducts?: Product[];
   /** Velocidade do loop em px/segundo (padrão 38 — calmo, dá para ler o preço) */
   speed?: number;
   /** Segundos de pausa após uma interação (setas, toque, arrasto) */
@@ -74,13 +80,15 @@ export default function FeaturedProducts({
   title,
   eyebrow,
   fetchUrl,
+  initialProducts,
   speed = 38,
   resumeAfter = 3,
   fallbackUrl,
   minItems = 8,
 }: FeaturedProductsProps) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const hasInitial = !!initialProducts && initialProducts.length > 0;
+  const [products, setProducts] = useState<Product[]>(initialProducts ?? []);
+  const [loading, setLoading] = useState(!hasInitial);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const setRef = useRef<HTMLDivElement>(null); // 1.º conjunto (mede a largura de um ciclo)
@@ -94,6 +102,8 @@ export default function FeaturedProducts({
   const reducedMotionRef = useRef(false);
 
   useEffect(() => {
+    if (hasInitial) return;
+
     const fetchProducts = async () => {
       try {
         const res = await fetch(fetchUrl);
@@ -128,7 +138,7 @@ export default function FeaturedProducts({
       }
     };
     fetchProducts();
-  }, [fetchUrl, fallbackUrl, minItems]);
+  }, [fetchUrl, fallbackUrl, minItems, hasInitial]);
 
   // Loop sempre que há 2+ produtos. O nº de cópias é medido com
   // ResizeObserver para que o conteúdo total encha ≥ 2 larguras do
