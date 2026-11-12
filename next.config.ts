@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
     return [
       // Alias EN da página de contato (canonical: /contato)
       { source: '/contact', destination: '/contato', permanent: true },
+      // Variante retirada da loja → produto principal (o Google ainda tinha
+      // o URL antigo). Remover esta regra se a variante voltar a ser publicada.
+      {
+        source: '/produtos/leash-freesurf-mds-6-7-mm-laranja',
+        destination: '/produtos/leash-freesurf-mds-6-7-mm',
+        permanent: true,
+      },
     ];
   },
   images: {

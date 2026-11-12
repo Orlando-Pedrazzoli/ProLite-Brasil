@@ -25,14 +25,22 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductForSeo(slug);
+  const result = await getProductForSeo(slug);
 
-  if (!product) {
+  // Falha temporária da base de dados: devolver só a canonical e herdar o
+  // resto do layout (index: true). NUNCA noindex aqui — o URL é válido.
+  if (result.status === 'error') {
+    return { alternates: { canonical: `/produtos/${slug}` } };
+  }
+
+  if (result.status === 'missing') {
     return {
       title: 'Produto não encontrado',
       robots: { index: false, follow: false },
     };
   }
+
+  const product = result.data;
 
   // 1º seoTitle do admin; senão "Nome — Marca" (o template do layout junta "| Pro-Lite")
   const title =
@@ -72,7 +80,8 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
-  const product = await getProductForSeo(slug);
+  const result = await getProductForSeo(slug);
+  const product = result.status === 'found' ? result.data : null;
 
   return (
     <>

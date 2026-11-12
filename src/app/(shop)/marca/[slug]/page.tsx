@@ -22,14 +22,22 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const brand = await getBrandForSeo(slug);
+  const result = await getBrandForSeo(slug);
 
-  if (!brand) {
+  // Falha temporária da base de dados: devolver só a canonical e herdar o
+  // resto do layout (index: true). NUNCA noindex aqui — o URL é válido.
+  if (result.status === 'error') {
+    return { alternates: { canonical: `/marca/${slug}` } };
+  }
+
+  if (result.status === 'missing') {
     return {
       title: 'Marca não encontrada',
       robots: { index: false, follow: false },
     };
   }
+
+  const brand = result.data;
 
   const title = `${brand.name} — Produtos Originais`;
   const description = toMetaDescription(
@@ -56,7 +64,8 @@ export async function generateMetadata({
 
 export default async function BrandPage({ params }: PageProps) {
   const { slug } = await params;
-  const brand = await getBrandForSeo(slug);
+  const result = await getBrandForSeo(slug);
+  const brand = result.status === 'found' ? result.data : null;
   const path = `/marca/${slug}`;
 
   return (
