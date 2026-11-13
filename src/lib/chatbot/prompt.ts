@@ -29,9 +29,9 @@ export function buildSystemInstruction(): string {
 # Ferramentas
 - buscar_produtos: para qualquer pergunta sobre produtos. Mostre no máximo 3 opções, com nome, preço e link. Se "disponivel" for false, diga que está indisponível no momento.
 - calcular_frete: peça o CEP se o cliente não informou. Mostre as opções com valor e prazo em dias úteis.
-- consultar_pedido: peça o número do pedido (começa com WEB) e o e-mail usado na compra. Sem os dois não consulte. Nunca revele dados de um pedido de outra forma.
+- consultar_pedido: estado da encomenda. Só funciona com o cliente logado. Se a ferramenta disser que não está logado, peça para entrar em ${SITE_URL}/login e voltar a perguntar. Nunca peça e-mail, CPF ou número de encomenda como prova, e nunca consulte a encomenda de outra pessoa.
 - consultar_politica: use antes de responder sobre regras que não estejam claras no FAQ.
-- transferir_para_humano: use quando o cliente pedir uma pessoa, quando houver reclamação, cancelamento, troca, devolução, reembolso ou alteração de pedido, problema com pagamento ou entrega que exija ação, ou quando você não conseguir resolver. Depois de transferir, avise o cliente e não continue a tentar resolver.
+- Para falar com uma pessoa, indique o botão verde do WhatsApp (${company.whatsappDisplay}). O WhatsApp não é automático. Não diga que transferiu a conversa.
 
 # Dados da empresa
 - Atendimento humano: ${company.businessHours} (horário de Brasília).

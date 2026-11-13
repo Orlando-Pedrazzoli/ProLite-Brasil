@@ -9,7 +9,7 @@ import AppProvider from '@/lib/context/AppProvider';
 import CartSidebar from '@/components/layout/CartSidebar';
 // import NewsletterModalTrigger from '@/components/marketing/NewsletterModalTrigger'; // desativado temporariamente a pedido do cliente
 import CookieConsent from '@/components/shared/CookieConsent';
-import ChatwootWidget from '@/components/shared/ChatwootWidget';
+import SiteAssistant from '@/components/shared/SiteAssistant';
 import JsonLd from '@/components/seo/JsonLd';
 import { organizationJsonLd, webSiteJsonLd } from '@/lib/seo/jsonld';
 import {
@@ -117,7 +117,7 @@ export default function RootLayout({
           {/* <NewsletterModalTrigger /> */}
           {/* desativado temporariamente a pedido do cliente */}
           <CookieConsent />
-          <ChatwootWidget />
+          <SiteAssistant />
         </AppProvider>
       </body>
     </html>

@@ -2,10 +2,6 @@
 import { MessageCircle } from 'lucide-react';
 import { company } from '@/lib/config/company';
 
-// Com o chat do Chatwoot ativo, o balão dele ocupa o canto inferior direito
-// (64px, a 20px das bordas): o WhatsApp sobe para ficar empilhado por cima.
-const hasChat = Boolean(company.chatwoot.websiteToken);
-
 export default function WhatsAppButton() {
   const message = encodeURIComponent(
     'Olá! Gostaria de saber mais sobre os produtos da Pro-Lite.',
@@ -16,7 +12,7 @@ export default function WhatsAppButton() {
       href={url}
       target='_blank'
       rel='noopener noreferrer'
-      className={`fixed ${hasChat ? 'bottom-24' : 'bottom-6'} right-6 z-50 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 transition-all`}
+      className='fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 transition-all'
       aria-label='Fale conosco pelo WhatsApp'
     >
       <MessageCircle size={28} />

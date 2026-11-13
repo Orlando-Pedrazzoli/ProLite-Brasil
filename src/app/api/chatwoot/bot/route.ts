@@ -59,7 +59,7 @@ async function handleMessage(
   messageId: number | undefined,
   content: string,
 ) {
-  const ctx: ToolContext = { conversationId, handedOff: false };
+  const ctx: ToolContext = { conversationId, handedOff: false, userId: null };
   try {
     await setTyping(conversationId, true);
 
