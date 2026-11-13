@@ -6,7 +6,6 @@ import connectDB from '@/lib/db/connect';
 import Product from '@/lib/models/Product';
 import Category from '@/lib/models/Category';
 import Order from '@/lib/models/Order';
-import User from '@/lib/models/User';
 import { company } from '@/lib/config/company';
 import { SITE_URL } from '@/lib/seo/config';
 import {
@@ -76,20 +75,16 @@ export const TOOLS: FunctionTool[] = [
     type: 'function',
     name: 'consultar_pedido',
     description:
-      'Consulta o estado de um pedido. Exige o número do pedido E o e-mail usado na compra; só devolve dados se os dois conferirem.',
+      'Lista as encomendas da conta que está logada no site. Não aceita e-mail nem número de pedido como prova. Se o cliente não estiver logado, a ferramenta recusa.',
     parameters: {
       type: 'object',
       properties: {
         numero_pedido: {
           type: 'string',
-          description: 'Número do pedido, ex.: WEB261113-1234.',
-        },
-        email: {
-          type: 'string',
-          description: 'E-mail usado na compra.',
+          description:
+            'Opcional. Número de uma encomenda desta conta, se o cliente citou um.',
         },
       },
-      required: ['numero_pedido', 'email'],
     },
   },
   {
@@ -122,6 +117,10 @@ export const TOOLS: FunctionTool[] = [
     },
   },
 ];
+
+export const SITE_TOOLS: FunctionTool[] = TOOLS.filter(
+  tool => tool.name !== 'transferir_para_humano',
+);
 
 const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const str = (v: unknown) => (typeof v === 'string' ? v.trim() : '');
@@ -327,69 +326,79 @@ const dateBR = (d?: Date) =>
       }).format(new Date(d))
     : undefined;
 
-async function consultarPedido(args: Record<string, unknown>) {
+async function consultarPedido(
+  userId: string | null,
+  args: Record<string, unknown>,
+) {
+  if (!userId) {
+    return {
+      logado: false,
+      erro: 'O visitante não está logado.',
+      instrucao: `Diga para entrar na conta em ${SITE_URL}/login e perguntar de novo. Não peça e-mail nem número de encomenda para consultar.`,
+    };
+  }
+
   const numero = str(args.numero_pedido).replace(/^#/, '').toUpperCase();
-  const email = str(args.email).toLowerCase();
-  // Resposta única para "não existe" e "e-mail não confere": não revela
-  // a terceiros se um número de pedido é válido.
-  const notFound = {
-    erro: 'Não encontrei um pedido com esse número e esse e-mail. Peça ao cliente para conferir os dois dados.',
-  };
-  if (!numero || !email.includes('@')) return notFound;
+  const filter: Record<string, unknown> = { user: userId };
+  if (numero) filter.orderNumber = numero;
 
   await connectDB();
-  const order = await Order.findOne({ orderNumber: numero }).lean();
-  if (!order) return notFound;
+  const orders = await Order.find(filter)
+    .sort({ createdAt: -1 })
+    .limit(numero ? 1 : 5)
+    .lean();
 
-  const emails = new Set<string>();
-  if (order.customerSnapshot?.email) emails.add(order.customerSnapshot.email);
-  if (order.guestEmail) emails.add(order.guestEmail);
-  if (order.user) {
-    const user = await User.findById(order.user).select('email').lean();
-    if (user?.email) emails.add(user.email);
+  if (orders.length === 0) {
+    return {
+      logado: true,
+      erro: numero
+        ? 'Não há uma encomenda com esse número nesta conta.'
+        : 'Esta conta ainda não tem encomendas.',
+    };
   }
-  const matches = [...emails].some(e => e.trim().toLowerCase() === email);
-  if (!matches) return notFound;
 
   return {
-    numero: order.orderNumber,
-    data: dateBR(order.createdAt),
-    estado: ORDER_STATUS[order.status] ?? order.status,
-    pagamento: {
-      forma: PAYMENT_METHOD[order.payment.method] ?? order.payment.method,
-      estado: PAYMENT_STATUS[order.payment.status] ?? order.payment.status,
-    },
-    itens: order.items.map(i => ({
-      nome: i.name,
-      ...(i.variant ? { variante: i.variant } : {}),
-      quantidade: i.quantity,
+    logado: true,
+    encomendas: orders.map(order => ({
+      numero: order.orderNumber,
+      data: dateBR(order.createdAt),
+      estado: ORDER_STATUS[order.status] ?? order.status,
+      pagamento: {
+        forma: PAYMENT_METHOD[order.payment.method] ?? order.payment.method,
+        estado: PAYMENT_STATUS[order.payment.status] ?? order.payment.status,
+      },
+      itens: order.items.map(i => ({
+        nome: i.name,
+        ...(i.variant ? { variante: i.variant } : {}),
+        quantidade: i.quantity,
+      })),
+      total: money(order.total),
+      ...(order.shipping
+        ? {
+            envio: {
+              ...(order.shipping.carrier || order.shipping.method
+                ? {
+                    servico: [order.shipping.carrier, order.shipping.method]
+                      .filter(Boolean)
+                      .join(' '),
+                  }
+                : {}),
+              ...(order.shipping.trackingCode
+                ? { codigo_rastreio: order.shipping.trackingCode }
+                : {}),
+              ...(order.shipping.shippedAt
+                ? { enviado_em: dateBR(order.shipping.shippedAt) }
+                : {}),
+              ...(order.shipping.deliveredAt
+                ? { entregue_em: dateBR(order.shipping.deliveredAt) }
+                : {}),
+            },
+          }
+        : {}),
+      ...(order.status === 'cancelled' && order.cancelledAt
+        ? { cancelado_em: dateBR(order.cancelledAt) }
+        : {}),
     })),
-    total: money(order.total),
-    ...(order.shipping
-      ? {
-          envio: {
-            ...(order.shipping.carrier || order.shipping.method
-              ? {
-                  servico: [order.shipping.carrier, order.shipping.method]
-                    .filter(Boolean)
-                    .join(' '),
-                }
-              : {}),
-            ...(order.shipping.trackingCode
-              ? { codigo_rastreio: order.shipping.trackingCode }
-              : {}),
-            ...(order.shipping.shippedAt
-              ? { enviado_em: dateBR(order.shipping.shippedAt) }
-              : {}),
-            ...(order.shipping.deliveredAt
-              ? { entregue_em: dateBR(order.shipping.deliveredAt) }
-              : {}),
-          },
-        }
-      : {}),
-    ...(order.status === 'cancelled' && order.cancelledAt
-      ? { cancelado_em: dateBR(order.cancelledAt) }
-      : {}),
   };
 }
 
@@ -441,9 +450,11 @@ async function consultarPolitica(args: Record<string, unknown>) {
 // ─────────────────────────────────────────────
 
 export interface ToolContext {
-  conversationId: number;
+  conversationId?: number;
   /** Fica true quando a conversa foi passada para a equipe humana. */
   handedOff: boolean;
+  /** Conta logada no site. Sem isto, encomenda não é consultada. */
+  userId: string | null;
 }
 
 export async function executeTool(
@@ -457,10 +468,16 @@ export async function executeTool(
     case 'calcular_frete':
       return calcularFrete(args);
     case 'consultar_pedido':
-      return consultarPedido(args);
+      return consultarPedido(ctx.userId, args);
     case 'consultar_politica':
       return consultarPolitica(args);
     case 'transferir_para_humano':
+      if (!ctx.conversationId) {
+        return {
+          ok: false,
+          instrucao: `Não transfira a conversa. Indique o WhatsApp ${company.whatsappDisplay}.`,
+        };
+      }
       await handoffToHuman(ctx.conversationId);
       ctx.handedOff = true;
       return {
