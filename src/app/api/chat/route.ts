@@ -70,11 +70,9 @@ export async function POST(request: Request) {
     }
     return NextResponse.json({ reply, loggedIn: Boolean(userId) });
   } catch (err) {
-    const raw = err instanceof Error ? err.message : 'erro';
-    const detail = raw.replace(/AIza[0-9A-Za-z_-]+/g, '[key]').slice(0, 280);
-    console.error('[Chat] falha:', detail);
+    console.error('[Chat] falha:', err);
     return NextResponse.json(
-      { error: 'Não consegui responder agora. Tente de novo em instantes.', detail },
+      { error: 'Não consegui responder agora. Tente de novo em instantes.' },
       { status: 502 },
     );
   }

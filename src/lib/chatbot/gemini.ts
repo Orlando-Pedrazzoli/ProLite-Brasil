@@ -4,9 +4,10 @@
 //
 // Envs (só no servidor):
 //   GEMINI_API_KEY  chave criada no Google AI Studio
-//   GEMINI_MODEL    opcional; por omissão gemini-3.8-flash
+//   GEMINI_MODEL    opcional; por omissão gemini-flash-latest
 const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/interactions';
-const DEFAULT_MODEL = 'gemini-3.8-flash';
+const DEFAULT_MODEL = 'gemini-flash-latest';
+const FALLBACK_MODEL = 'gemini-2.5-flash';
 
 // Máximo de idas e voltas modelo ↔ ferramentas por mensagem do cliente
 const MAX_TOOL_ROUNDS = 5;
@@ -48,17 +49,32 @@ async function createInteraction(
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY não configurada');
 
-  const res = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
-    body: JSON.stringify(body),
-    cache: 'no-store',
-  });
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(`Gemini → ${res.status} ${text.slice(0, 400)}`);
+  const preferred = String(body.model || DEFAULT_MODEL);
+  const models = body.previous_interaction_id
+    ? [preferred]
+    : [...new Set([preferred, FALLBACK_MODEL])];
+
+  let lastError = 'Gemini indisponível';
+  for (const model of models) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': apiKey,
+        },
+        body: JSON.stringify({ ...body, model }),
+        cache: 'no-store',
+      });
+      if (res.ok) return (await res.json()) as Interaction;
+      const text = await res.text().catch(() => '');
+      lastError = `Gemini → ${res.status} ${text.slice(0, 400)}`;
+      const busy = res.status === 503 || res.status === 429;
+      if (!busy) throw new Error(lastError);
+      await new Promise(r => setTimeout(r, 600 * (attempt + 1)));
+    }
   }
-  return (await res.json()) as Interaction;
+  throw new Error(lastError);
 }
 
 function outputText(interaction: Interaction): string {
