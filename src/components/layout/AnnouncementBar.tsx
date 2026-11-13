@@ -39,8 +39,8 @@ export default function AnnouncementBar() {
   return (
     <div className='bg-chumbo text-white py-2 px-4 text-xs sm:text-sm font-medium'>
       <div className='max-w-7xl mx-auto flex items-center justify-between'>
-        {/* Spacer for centering on desktop */}
-        <div className='hidden md:block w-16' />
+        {/* Espaçador com a mesma largura dos ícones, para a mensagem ficar ao centro */}
+        <div className='hidden md:block w-[4.75rem]' aria-hidden='true' />
 
         {/* Messages carousel */}
         <div
@@ -100,6 +100,25 @@ export default function AnnouncementBar() {
                   strokeWidth='2'
                 />
                 <circle cx='18' cy='6' r='1.5' fill='currentColor' />
+              </svg>
+            </Link>
+          )}
+          {company.social.youtube && (
+            <Link
+              href={company.social.youtube}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='w-7 h-7 rounded-full bg-white/15 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 group'
+              aria-label='YouTube'
+            >
+              <svg
+                width='14'
+                height='14'
+                viewBox='0 0 24 24'
+                fill='currentColor'
+                className='text-white group-hover:text-brand transition-colors duration-300'
+              >
+                <path d='M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.8 15.5v-7l6.2 3.5-6.2 3.5z' />
               </svg>
             </Link>
           )}
