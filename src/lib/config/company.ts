@@ -26,12 +26,10 @@ export const company = {
     state: 'SP',
     cep: '03084-020',
   },
-  // Deixar vazio enquanto não houver perfil oficial confirmado:
-  // os componentes escondem o ícone quando a URL está vazia.
   social: {
-    instagram: '',
+    instagram: 'https://www.instagram.com/prolitebrasil/',
     facebook: '',
-    youtube: '',
+    youtube: 'https://www.youtube.com/@pro-litedobrasil3701/videos',
   },
   // ⚠️ CONFIRMAR COM O MAURÍCIO o horário de atendimento/retirada.
   businessHours: 'Seg a Sex: 9h às 18h | Sáb e Dom: Fechado',
