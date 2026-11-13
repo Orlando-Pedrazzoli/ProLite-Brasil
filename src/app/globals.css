@@ -78,6 +78,28 @@ html {
   display: none;
 }
 
+/* Avaliações da home: faixa contínua. Pausa com o cursor em cima. */
+@keyframes reviews-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.reviews-marquee {
+  animation: reviews-marquee 70s linear infinite;
+}
+.reviews-marquee:hover,
+.reviews-marquee:focus-within {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reviews-marquee {
+    animation: none;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════
    Tabela de preços do revendedor (/revendedor/tabela-de-precos)
    Impressão / "salvar como PDF": A4, fundo branco, cabeçalhos de
