@@ -5,7 +5,7 @@
 // Envs (só no servidor):
 //   GEMINI_API_KEY  chave criada no Google AI Studio
 //   GEMINI_MODEL    opcional; por omissão gemini-2.5-flash
-const MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash-lite'];
+const MODELS = ['gemini-3.5-flash', 'gemini-3.5-flash-lite'];
 
 const MAX_TOOL_ROUNDS = 4;
 
@@ -70,7 +70,7 @@ export async function runAssistant(params: {
   executeTool: ToolExecutor;
 }): Promise<string> {
   const preferred = process.env.GEMINI_MODEL;
-  const models = [...new Set([...(preferred ? [preferred] : []), ...MODELS])];
+  const models = [...new Set([...MODELS, ...(preferred ? [preferred] : [])])];
   const declarations = params.tools.map(tool => ({
     name: tool.name,
     description: tool.description,
@@ -79,7 +79,7 @@ export async function runAssistant(params: {
   let contents: Content[] = [
     { role: 'user', parts: [{ text: params.userInput }] },
   ];
-  let lastError = 'Gemini indisponível';
+  const errors: string[] = [];
 
   for (const model of models) {
     try {
@@ -123,11 +123,11 @@ export async function runAssistant(params: {
           },
         ];
       }
-      lastError = `Gemini ${model} excedeu as ferramentas`;
+      errors.push(`Gemini ${model} excedeu as ferramentas`);
     } catch (err) {
-      lastError = err instanceof Error ? err.message : 'erro';
+      errors.push(err instanceof Error ? err.message : 'erro');
       contents = [{ role: 'user', parts: [{ text: params.userInput }] }];
     }
   }
-  throw new Error(lastError);
+  throw new Error(errors.join(' | ').slice(0, 500));
 }
