@@ -60,9 +60,13 @@ export const company = {
   // O websiteToken é público por natureza (vai no HTML do widget).
   // Deixar websiteToken vazio desliga o chat no site.
   // O segredo da validação de identidade NÃO fica aqui: env CHATWOOT_HMAC_TOKEN.
+  // O assistente virtual (src/lib/chatbot) usa accountId para chamar a API;
+  // os segredos dele ficam em env: GEMINI_API_KEY, CHATWOOT_BOT_TOKEN e
+  // CHATWOOT_BOT_WEBHOOK_SECRET.
   chatwoot: {
     baseUrl: 'https://app.chatwoot.com',
     websiteToken: 'QogjmPYEB1cQSk3oFxoFKoTd',
+    accountId: 197046,
   },
 } as const;
 
