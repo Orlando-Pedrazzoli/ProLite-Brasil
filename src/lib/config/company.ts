@@ -56,6 +56,14 @@ export const company = {
     freeShippingMinValue: 399,
     originCep: '03084-020',
   },
+  // Chat de atendimento (Chatwoot Cloud, conta "Pro-Lite Brasil").
+  // O websiteToken é público por natureza (vai no HTML do widget).
+  // Deixar websiteToken vazio desliga o chat no site.
+  // O segredo da validação de identidade NÃO fica aqui: env CHATWOOT_HMAC_TOKEN.
+  chatwoot: {
+    baseUrl: 'https://app.chatwoot.com',
+    websiteToken: 'QogjmPYEB1cQSk3oFxoFKoTd',
+  },
 } as const;
 
 /** Número de WhatsApp formatado para exibição. */
