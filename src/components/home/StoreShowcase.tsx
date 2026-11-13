@@ -113,9 +113,9 @@ export default function StoreShowcase() {
   return (
     <section className='py-10 bg-gray-50'>
       <div className='container-home'>
-        {/* A home chega a 1920px. Este bloco é texto + foto: nessa largura
-            a coluna fica desproporcional. O miolo fica em 72rem, centrado. */}
-        <div className='mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center'>
+        {/* Meio-termo: a home vai a 1920px e 72rem ficou curto.
+            96rem (1536px) centra o texto e a foto sem espremer. */}
+        <div className='mx-auto max-w-screen-2xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center'>
           {/* ═══ CONTEÚDO ═══ */}
           <div>
             <p className='font-mono text-xs font-semibold text-brand-dark uppercase tracking-[0.2em] mb-2'>
@@ -210,7 +210,7 @@ export default function StoreShowcase() {
                   src={img.src}
                   alt={img.alt}
                   fill
-                  sizes='(max-width: 1024px) 100vw, 560px'
+                  sizes='(max-width: 1024px) 100vw, 720px'
                   priority={i === 0}
                   className={`object-cover transition-opacity duration-700 ${
                     i === current ? 'opacity-100' : 'opacity-0'
