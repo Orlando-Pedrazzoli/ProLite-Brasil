@@ -1,16 +1,13 @@
 // 📄 src/lib/chatbot/gemini.ts
-// Ciclo de conversa com o Gemini (Interactions API) com chamada de funções.
-// Docs: https://ai.google.dev/gemini-api/docs/interactions-overview
+// Ciclo de conversa com o Gemini (generateContent) e chamada de funções.
+// A Interactions API estava a devolver 503 em vários modelos.
 //
 // Envs (só no servidor):
 //   GEMINI_API_KEY  chave criada no Google AI Studio
-//   GEMINI_MODEL    opcional; por omissão gemini-flash-latest
-const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/interactions';
-const DEFAULT_MODEL = 'gemini-2.5-flash';
-const EXTRA_MODELS = ['gemini-3.5-flash', 'gemini-flash-latest'];
+//   GEMINI_MODEL    opcional; por omissão gemini-2.5-flash
+const MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.5-flash-lite'];
 
-// Máximo de idas e voltas modelo ↔ ferramentas por mensagem do cliente
-const MAX_TOOL_ROUNDS = 5;
+const MAX_TOOL_ROUNDS = 4;
 
 export interface FunctionTool {
   type: 'function';
@@ -24,135 +21,113 @@ export type ToolExecutor = (
   args: Record<string, unknown>,
 ) => Promise<unknown>;
 
-interface ContentItem {
-  type: string;
+interface Part {
   text?: string;
+  functionCall?: { name: string; args?: Record<string, unknown> };
+  functionResponse?: { name: string; response: unknown };
 }
 
-interface Step {
-  type: string;
-  id?: string;
-  name?: string;
-  arguments?: Record<string, unknown>;
-  content?: ContentItem[];
+interface Content {
+  role: 'user' | 'model';
+  parts: Part[];
 }
 
-interface Interaction {
-  id: string;
-  status: string;
-  steps?: Step[];
-}
-
-async function createInteraction(
-  body: Record<string, unknown>,
-): Promise<Interaction> {
+async function generate(model: string, body: Record<string, unknown>) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY não configurada');
-
-  const preferred = String(body.model || DEFAULT_MODEL);
-  const models = body.previous_interaction_id
-    ? [preferred]
-    : [...new Set([DEFAULT_MODEL, ...EXTRA_MODELS, preferred])];
-
-  let lastError = 'Gemini indisponível';
-  for (const model of models) {
-    const res = await fetch(ENDPOINT, {
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+    {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-goog-api-key': apiKey,
       },
-      body: JSON.stringify({ ...body, model }),
+      body: JSON.stringify(body),
       cache: 'no-store',
-    });
-    if (res.ok) return (await res.json()) as Interaction;
-    const text = await res.text().catch(() => '');
-    lastError = `Gemini → ${res.status} ${text.slice(0, 220)}`;
-    if (res.status !== 503 && res.status !== 429) continue;
-    await new Promise(r => setTimeout(r, 700));
-    const retry = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': apiKey,
-      },
-      body: JSON.stringify({ ...body, model }),
-      cache: 'no-store',
-    });
-    if (retry.ok) return (await retry.json()) as Interaction;
-    const retryText = await retry.text().catch(() => '');
-    lastError = `Gemini → ${retry.status} ${retryText.slice(0, 220)}`;
+    },
+  );
+  const text = await res.text();
+  if (!res.ok) {
+    throw new Error(`Gemini ${model} → ${res.status} ${text.slice(0, 220)}`);
   }
-  throw new Error(lastError);
+  return JSON.parse(text) as {
+    candidates?: { content?: { parts?: Part[] } }[];
+  };
 }
 
-function outputText(interaction: Interaction): string {
-  return (interaction.steps ?? [])
-    .filter(s => s.type === 'model_output')
-    .flatMap(s => s.content ?? [])
-    .filter(c => c.type === 'text' && c.text)
-    .map(c => c.text)
+function texts(parts: Part[]): string {
+  return parts
+    .map(p => p.text ?? '')
     .join('')
     .trim();
 }
 
-/**
- * Envia a mensagem ao modelo e executa as funções que ele pedir, até ele
- * devolver texto. Devolve '' se o modelo terminar sem texto.
- */
 export async function runAssistant(params: {
   systemInstruction: string;
   userInput: string;
   tools: FunctionTool[];
   executeTool: ToolExecutor;
 }): Promise<string> {
-  const base = {
-    model: process.env.GEMINI_MODEL || DEFAULT_MODEL,
-    system_instruction: params.systemInstruction,
-    tools: params.tools,
-    generation_config: { thinking_level: 'low', max_output_tokens: 1200 },
-  };
+  const preferred = process.env.GEMINI_MODEL;
+  const models = [...new Set([...(preferred ? [preferred] : []), ...MODELS])];
+  const declarations = params.tools.map(tool => ({
+    name: tool.name,
+    description: tool.description,
+    parameters: tool.parameters,
+  }));
+  let contents: Content[] = [
+    { role: 'user', parts: [{ text: params.userInput }] },
+  ];
+  let lastError = 'Gemini indisponível';
 
-  let interaction = await createInteraction({
-    ...base,
-    input: params.userInput,
-  });
-
-  for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
-    const calls = (interaction.steps ?? []).filter(
-      s => s.type === 'function_call' && s.id && s.name,
-    );
-    if (interaction.status !== 'requires_action' || calls.length === 0) break;
-
-    const results = await Promise.all(
-      calls.map(async call => {
-        let result: unknown;
-        try {
-          result = await params.executeTool(
-            call.name as string,
-            call.arguments ?? {},
-          );
-        } catch (err) {
-          console.error(`[Chatbot] ferramenta ${call.name} falhou:`, err);
-          result = {
-            erro: 'Não foi possível consultar esta informação agora.',
-          };
+  for (const model of models) {
+    try {
+      for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
+        const data = await generate(model, {
+          systemInstruction: { parts: [{ text: params.systemInstruction }] },
+          contents,
+          tools: [{ functionDeclarations: declarations }],
+          generationConfig: { maxOutputTokens: 800, temperature: 0.3 },
+        });
+        const parts = data.candidates?.[0]?.content?.parts ?? [];
+        const calls = parts.filter(p => p.functionCall?.name);
+        if (calls.length === 0) {
+          const reply = texts(parts);
+          if (reply) return reply;
+          throw new Error(`Gemini ${model} terminou sem texto`);
         }
-        return {
-          type: 'function_result',
-          name: call.name,
-          call_id: call.id,
-          result: JSON.stringify(result),
-        };
-      }),
-    );
-
-    interaction = await createInteraction({
-      ...base,
-      previous_interaction_id: interaction.id,
-      input: results,
-    });
+        contents = [
+          ...contents,
+          { role: 'model', parts },
+          {
+            role: 'user',
+            parts: await Promise.all(
+              calls.map(async part => {
+                const call = part.functionCall!;
+                let result: unknown;
+                try {
+                  result = await params.executeTool(call.name, call.args ?? {});
+                } catch (err) {
+                  console.error(`[Chatbot] ferramenta ${call.name} falhou:`, err);
+                  result = { erro: 'Não foi possível consultar esta informação agora.' };
+                }
+                return {
+                  functionResponse: {
+                    name: call.name,
+                    response: { resultado: result },
+                  },
+                };
+              }),
+            ),
+          },
+        ];
+      }
+      lastError = `Gemini ${model} excedeu as ferramentas`;
+    } catch (err) {
+      lastError = err instanceof Error ? err.message : 'erro';
+      contents = [{ role: 'user', parts: [{ text: params.userInput }] }];
+    }
   }
-
-  return outputText(interaction);
+  throw new Error(lastError);
 }
