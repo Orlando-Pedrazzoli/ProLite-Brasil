@@ -49,18 +49,27 @@ export interface PositionConfig {
   hasMobile: boolean;
   /** Medidas quando a posição não tem slots */
   hints?: SizeHint;
+  /** Campos de vídeo (desktop + mobile). A imagem passa a ser a capa. */
+  hasVideo?: boolean;
+  /** Medidas recomendadas dos vídeos */
+  videoHints?: SizeHint;
 }
 
 export const HOME_BANNER_POSITIONS: PositionConfig[] = [
   {
     value: 'hero',
     label: 'Hero Carousel (topo)',
-    help: 'Vários banners em rotação (10 s). A ordem define a sequência.',
+    help: 'Vários banners em rotação (10 s). A ordem define a sequência. Um banner pode ter vídeo: toca sem som e o carrossel só avança quando o vídeo termina; as imagens ficam como capa enquanto ele carrega.',
     hasLink: true,
     hasMobile: true,
     hints: {
       desktop: '1920×800 px — paisagem 12:5 (JPG/WebP, ≤300 KB)',
       mobile: '1080×1350 px — retrato 4:5 (JPG/WebP, ≤250 KB)',
+    },
+    hasVideo: true,
+    videoHints: {
+      desktop: '1920×800 px — paisagem 12:5 (MP4 H.264, sem áudio, até ~30 s, ≤6 MB)',
+      mobile: '1080×1350 px — retrato 4:5 (MP4 H.264, sem áudio, até ~30 s, ≤5 MB)',
     },
   },
   {

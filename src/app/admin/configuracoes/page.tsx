@@ -25,6 +25,8 @@ interface BannerItem {
   subtitle?: string;
   image: string;
   mobileImage: string;
+  video?: string;
+  mobileVideo?: string;
   link: string;
   position: string;
   slot?: string;
@@ -34,11 +36,21 @@ interface BannerItem {
   endDate?: string;
 }
 
+// Vídeos vão direto do browser para o Cloudinary (upload assinado), por
+// isso não passam pelo limite de 4.5 MB da Vercel. Este teto é só para
+// travar ficheiros que deixariam a home pesada.
+const MAX_VIDEO_MB = 15;
+const VIDEO_TYPES = ['video/mp4', 'video/webm'];
+
+type VideoField = 'video' | 'mobileVideo';
+
 const EMPTY_FORM = {
   title: '',
   subtitle: '',
   image: '',
   mobileImage: '',
+  video: '',
+  mobileVideo: '',
   link: '',
   position: 'hero' as string,
   slot: '' as string,
@@ -55,6 +67,7 @@ export default function AdminConfiguracoesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [uploadingDesktop, setUploadingDesktop] = useState(false);
   const [uploadingMobile, setUploadingMobile] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState<VideoField | null>(null);
   const [form, setForm] = useState(EMPTY_FORM);
 
   // ───── Derivados da posição escolhida ─────
@@ -120,6 +133,65 @@ export default function AdminConfiguracoesPage() {
     }
   };
 
+  const handleVideoUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: VideoField,
+  ) => {
+    const input = e.target;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    if (!VIDEO_TYPES.includes(file.type)) {
+      toast.error('Formato não suportado. Usa MP4 (H.264) ou WebM.');
+      input.value = '';
+      return;
+    }
+    if (file.size > MAX_VIDEO_MB * 1024 * 1024) {
+      toast.error(
+        `Vídeo demasiado grande (${(file.size / 1024 / 1024).toFixed(1)} MB). Máximo ${MAX_VIDEO_MB} MB.`,
+      );
+      input.value = '';
+      return;
+    }
+
+    setUploadingVideo(field);
+    try {
+      // 1) O servidor (só admin) assina o pedido
+      const signRes = await fetch('/api/upload/signature', { method: 'POST' });
+      const sign = await signRes.json();
+      if (!sign.success) {
+        toast.error(sign.error || 'Erro ao preparar o upload');
+        return;
+      }
+
+      // 2) O ficheiro segue direto para o Cloudinary
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('api_key', sign.apiKey);
+      formData.append('timestamp', String(sign.timestamp));
+      formData.append('folder', sign.folder);
+      formData.append('signature', sign.signature);
+
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${sign.cloudName}/video/upload`,
+        { method: 'POST', body: formData },
+      );
+      const data = await res.json();
+
+      if (res.ok && data.secure_url) {
+        setForm(prev => ({ ...prev, [field]: data.secure_url }));
+        toast.success('Vídeo enviado!');
+      } else {
+        toast.error(data?.error?.message || 'Erro no upload do vídeo');
+      }
+    } catch {
+      toast.error('Erro no upload do vídeo');
+    } finally {
+      setUploadingVideo(null);
+      input.value = '';
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -143,6 +215,8 @@ export default function AdminConfiguracoesPage() {
       slot: hasSlots ? form.slot : undefined,
       subtitle: position?.hasSubtitle ? form.subtitle : '',
       mobileImage: position?.hasMobile ? form.mobileImage : '',
+      video: position?.hasVideo ? form.video : '',
+      mobileVideo: position?.hasVideo ? form.mobileVideo : '',
       startDate: form.startDate || undefined,
       endDate: form.endDate || undefined,
     };
@@ -178,6 +252,8 @@ export default function AdminConfiguracoesPage() {
       subtitle: banner.subtitle || '',
       image: banner.image,
       mobileImage: banner.mobileImage || '',
+      video: banner.video || '',
+      mobileVideo: banner.mobileVideo || '',
       link: banner.link || '',
       position: banner.position,
       slot: banner.slot || '',
@@ -505,6 +581,91 @@ export default function AdminConfiguracoesPage() {
               </div>
             )}
 
+            {/* Vídeo (posições com hasVideo — hero) */}
+            {position?.hasVideo && (
+              <div className='rounded-lg border border-gray-200 p-4 space-y-4'>
+                <div>
+                  <p className='text-sm font-medium text-gray-700'>
+                    Vídeo{' '}
+                    <span className='text-gray-400 font-normal'>(opcional)</span>
+                  </p>
+                  <p className='text-xs text-gray-500 mt-1'>
+                    Toca automaticamente, sem som. As imagens acima continuam
+                    obrigatórias: servem de capa enquanto o vídeo carrega e
+                    para quem tem as animações desativadas.
+                  </p>
+                </div>
+
+                {(
+                  [
+                    {
+                      field: 'video',
+                      label: 'Vídeo Desktop',
+                      hint: position.videoHints?.desktop,
+                      previewCls: 'w-64 aspect-[12/5]',
+                    },
+                    {
+                      field: 'mobileVideo',
+                      label: 'Vídeo Mobile',
+                      hint: position.videoHints?.mobile,
+                      previewCls: 'w-28 aspect-[4/5]',
+                    },
+                  ] as const
+                ).map(({ field, label, hint, previewCls }) => (
+                  <div key={field}>
+                    <label className={labelCls}>{label}</label>
+                    <p className='text-xs text-gray-500 mb-2'>
+                      Recomendado: {hint ?? '—'}
+                      {field === 'mobileVideo' && (
+                        <span className='block text-amber-600 mt-1'>
+                          ⚠ Sem vídeo mobile, o vídeo desktop é recortado ao
+                          centro no telemóvel
+                        </span>
+                      )}
+                    </p>
+                    <div className='flex items-start gap-4'>
+                      <label className='flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-colors'>
+                        <Upload size={18} className='text-gray-400' />
+                        <span className='text-sm text-gray-500'>
+                          {uploadingVideo === field
+                            ? 'Enviando...'
+                            : `Upload ${label}`}
+                        </span>
+                        <input
+                          type='file'
+                          accept='video/mp4,video/webm'
+                          onChange={e => handleVideoUpload(e, field)}
+                          disabled={uploadingVideo !== null}
+                          className='hidden'
+                        />
+                      </label>
+                      {form[field] && (
+                        <div className='relative'>
+                          <video
+                            src={form[field]}
+                            muted
+                            loop
+                            playsInline
+                            controls
+                            preload='metadata'
+                            className={`${previewCls} rounded-lg object-cover border bg-black`}
+                          />
+                          <button
+                            type='button'
+                            onClick={() => setForm({ ...form, [field]: '' })}
+                            aria-label={`Remover ${label}`}
+                            className='absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600'
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Datas & Ativo */}
             <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
               <div>
@@ -622,6 +783,11 @@ export default function AdminConfiguracoesPage() {
                             {banner.mobileImage && (
                               <span className='text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded'>
                                 📱 Mobile
+                              </span>
+                            )}
+                            {(banner.video || banner.mobileVideo) && (
+                              <span className='text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded'>
+                                🎬 Vídeo
                               </span>
                             )}
                             {!banner.isActive && (
