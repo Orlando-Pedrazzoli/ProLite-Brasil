@@ -67,17 +67,49 @@ export default function SiteAssistant() {
           messages: next.filter(m => m.content !== WELCOME),
         }),
       });
-      const data = (await res.json()) as { reply?: string; error?: string };
-      setMessages(curr => [
-        ...curr,
-        {
-          role: 'assistant',
-          content:
-            data.reply ||
-            data.error ||
-            'Não consegui responder agora. Use o botão verde do WhatsApp.',
-        },
-      ]);
+      const type = res.headers.get('content-type') || '';
+      if (type.includes('text/plain') && res.body) {
+        setMessages(curr => [...curr, { role: 'assistant', content: '' }]);
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let acc = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          acc += decoder.decode(value, { stream: true });
+          const text = acc;
+          setMessages(curr => {
+            const copy = [...curr];
+            const lastMsg = copy[copy.length - 1];
+            if (lastMsg?.role === 'assistant') {
+              copy[copy.length - 1] = { role: 'assistant', content: text };
+            }
+            return copy;
+          });
+        }
+        if (!acc.trim()) {
+          setMessages(curr => {
+            const copy = [...curr];
+            copy[copy.length - 1] = {
+              role: 'assistant',
+              content: 'Não consegui responder agora. Use o botão verde do WhatsApp.',
+            };
+            return copy;
+          });
+        }
+      } else {
+        const data = (await res.json()) as { reply?: string; error?: string };
+        setMessages(curr => [
+          ...curr,
+          {
+            role: 'assistant',
+            content:
+              data.reply ||
+              data.error ||
+              'Não consegui responder agora. Use o botão verde do WhatsApp.',
+          },
+        ]);
+      }
     } catch {
       setMessages(curr => [
         ...curr,
@@ -142,8 +174,8 @@ export default function SiteAssistant() {
                 <MessageText text={m.content} />
               </p>
             ))}
-            {pending && (
-              <p className='text-xs text-gray-400'>A consultar o site…</p>
+            {pending && messages[messages.length - 1]?.role === 'user' && (
+              <p className='text-xs text-gray-400'>A responder…</p>
             )}
             <div ref={endRef} />
           </div>
