@@ -23,6 +23,9 @@ export interface IBanner {
   subtitle?: string;
   image: string;
   mobileImage?: string;
+  /** Vídeo (só nas posições com hasVideo). `image` fica como capa. */
+  video?: string;
+  mobileVideo?: string;
   link?: string;
   position: BannerPosition;
   /** Só nas posições com slots fixos: qual o card/banner que ocupa */
@@ -41,6 +44,8 @@ const bannerSchema = new Schema<IBanner>(
     subtitle: { type: String, default: '', trim: true },
     image: { type: String, required: true },
     mobileImage: { type: String, default: '' },
+    video: { type: String, default: '' },
+    mobileVideo: { type: String, default: '' },
     link: { type: String, default: '' },
     position: {
       type: String,

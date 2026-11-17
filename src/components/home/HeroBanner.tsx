@@ -1,6 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useSyncExternalStore,
+} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -10,13 +16,91 @@ interface Banner {
   title: string;
   image: string;
   mobileImage?: string;
+  video?: string;
+  mobileVideo?: string;
   link?: string;
+}
+
+/** Tempo de cada slide de imagem (e fallback se o vídeo não arrancar) */
+const SLIDE_MS = 10000;
+
+function useMediaQuery(query: string) {
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const mql = window.matchMedia(query);
+      mql.addEventListener('change', onChange);
+      return () => mql.removeEventListener('change', onChange);
+    },
+    [query],
+  );
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(query).matches,
+    () => false,
+  );
+}
+
+// Vídeo de fundo de um slide. Fica por cima da imagem (capa): enquanto
+// não há frames para mostrar o elemento é transparente e vê-se a imagem.
+// Só o slide ativo carrega e toca; os outros ficam com preload="none".
+function HeroVideo({
+  src,
+  active,
+  loop,
+  onPlaying,
+  onStopped,
+  onEnded,
+}: {
+  src: string;
+  active: boolean;
+  loop: boolean;
+  onPlaying: () => void;
+  onStopped: () => void;
+  onEnded: () => void;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    if (active) {
+      video.muted = true; // exigido para autoplay (iOS/Chrome)
+      video.currentTime = 0;
+      // Autoplay pode ser recusado (ex.: modo de poupança do iPhone):
+      // fica a capa e o carrossel avança pelo temporizador normal.
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }, [active, src]);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      playsInline
+      loop={loop}
+      preload={active ? 'auto' : 'none'}
+      onPlaying={onPlaying}
+      onPause={onStopped}
+      onEnded={onEnded}
+      aria-hidden='true'
+      tabIndex={-1}
+      className='absolute inset-0 h-full w-full object-cover'
+    />
+  );
 }
 
 export default function HeroBanner() {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(true);
+  // _id do banner cujo vídeo está efetivamente a tocar
+  const [playingId, setPlayingId] = useState<string | null>(null);
+
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
   useEffect(() => {
     const fetchBanners = async () => {
@@ -41,11 +125,16 @@ export default function HeroBanner() {
     setCurrent(prev => (prev - 1 + banners.length) % banners.length);
   };
 
+  const videoPlaying =
+    playingId !== null && playingId === banners[current]?._id;
+
+  // Avanço automático. Recomeça a contar a cada troca de slide. Enquanto
+  // um vídeo toca não há temporizador: quem avança é o fim do vídeo.
   useEffect(() => {
-    if (banners.length <= 1) return;
-    const interval = setInterval(next, 10000);
-    return () => clearInterval(interval);
-  }, [banners.length, next]);
+    if (banners.length <= 1 || videoPlaying) return;
+    const timeout = setTimeout(next, SLIDE_MS);
+    return () => clearTimeout(timeout);
+  }, [banners.length, current, videoPlaying, next]);
 
   if (loading) {
     return (
@@ -65,6 +154,16 @@ export default function HeroBanner() {
           const mobileSrc = banner.mobileImage?.trim()
             ? banner.mobileImage
             : banner.image;
+
+          // Um único <video> por slide, com a versão certa para o ecrã
+          // (assim o telemóvel nunca descarrega o ficheiro de desktop).
+          const desktopVideo = banner.video?.trim() || '';
+          const mobileVideo = banner.mobileVideo?.trim() || desktopVideo;
+          const videoSrc = reducedMotion
+            ? ''
+            : isDesktop
+              ? desktopVideo || mobileVideo
+              : mobileVideo;
 
           const Slide = (
             <div className='relative w-full aspect-[4/5] md:aspect-[2.5/1]'>
@@ -90,6 +189,21 @@ export default function HeroBanner() {
                   className='object-cover'
                 />
               </div>
+              {videoSrc && (
+                <HeroVideo
+                  src={videoSrc}
+                  active={idx === current}
+                  loop={banners.length === 1}
+                  onPlaying={() => setPlayingId(banner._id)}
+                  onStopped={() =>
+                    setPlayingId(id => (id === banner._id ? null : id))
+                  }
+                  onEnded={() => {
+                    setPlayingId(null);
+                    next();
+                  }}
+                />
+              )}
             </div>
           );
 
