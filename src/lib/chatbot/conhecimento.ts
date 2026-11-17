@@ -91,9 +91,14 @@ export const conhecimento: { pergunta: string; resposta: string }[] = [
       'Vem um patch repair: um pedaço de cada tecido da capa, para um rasgo. Basta seguir as instruções que estão na capa.',
   },
   {
+    pergunta: 'O que é a alça da capa?',
+    resposta:
+      'A alça é a pega da própria capa, para a mão ou para o ombro, e serve para transportar a capa. Não é o leash da prancha. As alças são reguláveis e, nos pontos de costura, levam travetes para não soltarem.',
+  },
+  {
     pergunta: 'A capa tem bolsos?',
     resposta:
-      'Sim. Tem um bolso para a alça, outro para a parafina e outro para as quilhas.',
+      'Sim. Tem um bolso para guardar a alça de transporte, outro para a parafina e outro para as quilhas.',
   },
   {
     pergunta: 'A capa é à prova de água?',
