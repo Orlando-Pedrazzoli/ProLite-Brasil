@@ -59,7 +59,7 @@ export const HOME_BANNER_POSITIONS: PositionConfig[] = [
   {
     value: 'hero',
     label: 'Hero Carousel (topo)',
-    help: 'Vários banners em rotação (10 s). A ordem define a sequência. Um banner pode ter vídeo: toca sem som e o carrossel só avança quando o vídeo termina; as imagens ficam como capa enquanto ele carrega.',
+    help: 'Vários banners em rotação (10 s) quando são só imagem. Um banner com vídeo toca em loop, sem som, e não avança sozinho — as setas continuam a mudar de slide. A imagem fica como capa enquanto o vídeo carrega.',
     hasLink: true,
     hasMobile: true,
     hints: {
