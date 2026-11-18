@@ -10,6 +10,14 @@
 //   flutuantes), e some sozinho. Depois disso só volta com o rato por cima.
 // - Só se animam transform e opacity (não mexe no layout nem pesa no
 //   scroll), e quem tem "reduzir movimento" ligado vê tudo sem animação.
+//
+// Telemóvel (< 768px) — um único botão de atendimento:
+// - Dois botões flutuantes tapavam o conteúdo nos dois cantos. No mobile
+//   fica um só, à direita (zona do polegar), que abre um mini-menu com
+//   "Assistente virtual" e "WhatsApp". O WhatsAppButton esconde-se no mobile.
+// - O botão não aparece por cima do hero (`[data-hero]`) e some enquanto
+//   o visitante desce a página; volta ao subir ou ao parar.
+// - No desktop nada muda: assistente à esquerda, WhatsApp à direita.
 'use client';
 
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
@@ -17,9 +25,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { X } from 'lucide-react';
+import { MessageCircle, X } from 'lucide-react';
 import AssistantAvatar from '@/components/shared/AssistantAvatar';
 import { getCookieConsent } from '@/components/shared/CookieConsent';
+import { getWhatsAppUrl } from '@/lib/config/company';
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -28,6 +38,8 @@ interface ChatMessage {
 
 /** Quanto tempo depois de a página estar livre o balão aparece */
 const TEASER_DELAY_MS = 3500;
+/** No mobile o botão só aparece com a página parada: espera menor */
+const TEASER_DELAY_MOBILE_MS = 1500;
 /** Quanto tempo o balão fica antes de sumir sozinho */
 const TEASER_VISIBLE_MS = 9000;
 /** Marca na sessão: o balão já apareceu, não repetir a cada página */
@@ -37,6 +49,125 @@ function subscribeConsent(onChange: () => void) {
   window.addEventListener('cookie-consent-updated', onChange);
   return () =>
     window.removeEventListener('cookie-consent-updated', onChange);
+}
+
+/** Páginas de compra: o botão continua lá, mas sem balão a distrair */
+const NO_TEASER_PREFIXES = [
+  '/carrinho',
+  '/checkout',
+  '/pagamento',
+  '/pedido-confirmado',
+];
+
+const WHATSAPP_URL = getWhatsAppUrl(
+  'Olá! Gostaria de saber mais sobre os produtos da Pro-Lite.',
+);
+
+/** Faixa do fundo do ecrã que o botão ocupa (botão + margens) */
+const LAUNCHER_ZONE_PX = 88;
+/** Parado este tempo, o botão volta a aparecer */
+const SCROLL_IDLE_MS = 450;
+
+// Botão único do mobile: livre do hero e sem scroll para baixo em curso.
+// Um único listener passivo, medido no máximo uma vez por frame.
+function useMobileLauncherVisible(pathname: string) {
+  const [clearOfHero, setClearOfHero] = useState(false);
+  const [scrollingDown, setScrollingDown] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let frame = 0;
+    let idle: ReturnType<typeof setTimeout> | undefined;
+
+    const measure = () => {
+      frame = 0;
+      const hero = document.querySelector('[data-hero]');
+      setClearOfHero(
+        !hero ||
+          hero.getBoundingClientRect().bottom <
+            window.innerHeight - LAUNCHER_ZONE_PX,
+      );
+      const y = window.scrollY;
+      if (Math.abs(y - lastY) > 6) {
+        setScrollingDown(y > lastY);
+        lastY = y;
+      }
+      clearTimeout(idle);
+      idle = setTimeout(() => setScrollingDown(false), SCROLL_IDLE_MS);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+
+    schedule();
+    // A página nova pode ainda não estar no DOM quando a rota muda
+    const late = setTimeout(schedule, 400);
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(idle);
+      clearTimeout(late);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [pathname]);
+
+  return clearOfHero && !scrollingDown;
+}
+
+// Cara do botão: avatar que entra a subir, sobe e desce enquanto o balão
+// está visível e desce para fora quando passa a ser o botão de fechar (X).
+function LauncherFace({
+  showClose,
+  bobbing,
+  reduceMotion,
+}: {
+  showClose: boolean;
+  bobbing: boolean;
+  reduceMotion: boolean;
+}) {
+  const bob = bobbing && !showClose && !reduceMotion;
+  return (
+    <span
+      className={`absolute inset-0 overflow-hidden rounded-full ring-2 ring-white transition-colors duration-200 ${
+        showClose ? 'bg-chumbo' : 'bg-brand-100'
+      }`}
+    >
+      <motion.span
+        className='absolute inset-0'
+        initial={reduceMotion ? false : { y: '110%' }}
+        animate={
+          showClose
+            ? { y: '110%' }
+            : bob
+              ? { y: ['7%', '-5%', '7%'] }
+              : { y: reduceMotion ? '0%' : '7%' }
+        }
+        transition={
+          reduceMotion
+            ? { duration: 0 }
+            : bob
+              ? { duration: 1.8, ease: 'easeInOut', repeat: Infinity }
+              : { type: 'spring', stiffness: 320, damping: 24 }
+        }
+      >
+        <AssistantAvatar className='h-full w-full scale-[1.15]' />
+      </motion.span>
+      <motion.span
+        className='absolute inset-0 flex items-center justify-center text-white'
+        initial={false}
+        animate={
+          showClose
+            ? { opacity: 1, scale: 1, rotate: 0 }
+            : { opacity: 0, scale: 0.6, rotate: -45 }
+        }
+        transition={{ duration: reduceMotion ? 0 : 0.2 }}
+      >
+        <X size={24} />
+      </motion.span>
+    </span>
+  );
 }
 
 function markTeaserSeen() {
@@ -81,7 +212,11 @@ export default function SiteAssistant() {
   // Balão "Posso ajudar?": automático (teaser) ou com o rato por cima
   const [teaser, setTeaser] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const reduceMotion = useReducedMotion();
+  // Mini-menu do botão único (só mobile)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const reduceMotion = !!useReducedMotion();
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const mobileClear = useMobileLauncherVisible(pathname);
   const consentDecided = useSyncExternalStore(
     subscribeConsent,
     () => getCookieConsent() !== null,
@@ -91,9 +226,20 @@ export default function SiteAssistant() {
   const hidden =
     pathname.startsWith('/admin') || pathname.startsWith('/pos');
 
+  const mobileVisible = open || menuOpen || mobileClear;
+  const noTeaser = NO_TEASER_PREFIXES.some(p => pathname.startsWith(p));
+  // No mobile o balão só faz sentido com o botão à vista
+  const canTease =
+    !hidden &&
+    !open &&
+    !menuOpen &&
+    !noTeaser &&
+    consentDecided &&
+    (isDesktop || mobileVisible);
+
   // Mostra o balão uma vez por sessão, com a página já livre do banner
   useEffect(() => {
-    if (hidden || open || !consentDecided) return;
+    if (!canTease) return;
     try {
       if (sessionStorage.getItem(TEASER_KEY) === '1') return;
     } catch {
@@ -102,9 +248,9 @@ export default function SiteAssistant() {
     const timer = setTimeout(() => {
       setTeaser(true);
       markTeaserSeen();
-    }, TEASER_DELAY_MS);
+    }, isDesktop ? TEASER_DELAY_MS : TEASER_DELAY_MOBILE_MS);
     return () => clearTimeout(timer);
-  }, [hidden, open, consentDecided]);
+  }, [canTease, isDesktop]);
 
   // …e esconde-o sozinho ao fim de uns segundos
   useEffect(() => {
@@ -124,9 +270,23 @@ export default function SiteAssistant() {
   const openChat = () => {
     setTeaser(false);
     setHovered(false);
+    setMenuOpen(false);
     markTeaserSeen();
     setOpen(true);
   };
+
+  // Botão único do mobile: fecha o chat se estiver aberto, senão abre/fecha
+  // o mini-menu com as duas formas de atendimento.
+  const toggleMobile = () => {
+    if (open) {
+      setOpen(false);
+      return;
+    }
+    setTeaser(false);
+    markTeaserSeen();
+    setMenuOpen(v => !v);
+  };
+  const mobileBubble = teaser && !open && !menuOpen;
 
   const toggleChat = () => {
     if (open) setOpen(false);
@@ -208,7 +368,7 @@ export default function SiteAssistant() {
     <>
       {open && (
         <section
-          className='fixed bottom-24 left-4 z-50 flex h-[min(32rem,calc(100vh-8rem))] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl'
+          className='fixed bottom-20 left-4 z-50 flex h-[min(32rem,calc(100dvh-7rem))] w-[min(22rem,calc(100vw-2rem))] md:bottom-24 md:h-[min(32rem,calc(100dvh-8rem))] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl'
           aria-label='Assistente da Pro-Lite'
         >
           <header className='flex items-center justify-between bg-chumbo px-4 py-3 text-white'>
@@ -291,14 +451,14 @@ export default function SiteAssistant() {
         </section>
       )}
 
+      {/* ───────── Desktop: assistente à esquerda (WhatsApp à direita) ───────── */}
       <div
-        className='fixed bottom-6 left-6 z-50'
+        className='fixed bottom-6 left-6 z-50 hidden md:block'
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {/* Balão "Posso ajudar?" — fica por cima do botão para não chegar
-            ao botão do WhatsApp em ecrãs estreitos. O pb-3 (em vez de
-            margem) mantém o rato "dentro" ao passar do botão para o balão. */}
+        {/* O pb-3 (em vez de margem) mantém o rato "dentro" ao passar do
+            botão para o balão. */}
         <AnimatePresence>
           {bubbleVisible && (
             <motion.div
@@ -363,51 +523,213 @@ export default function SiteAssistant() {
           }
           aria-expanded={open}
         >
-          <span
-            className={`absolute inset-0 overflow-hidden rounded-full ring-2 ring-white transition-colors duration-200 ${
-              open ? 'bg-chumbo' : 'bg-brand-100'
-            }`}
-          >
-            {/* Avatar: entra a subir, sobe e desce enquanto o balão está
-                visível e desce para fora quando o chat abre. */}
-            <motion.span
-              className='absolute inset-0'
-              initial={reduceMotion ? false : { y: '110%' }}
-              animate={
-                open
-                  ? { y: '110%' }
-                  : bubbleVisible && !reduceMotion
-                    ? { y: ['7%', '-5%', '7%'] }
-                    : { y: reduceMotion ? '0%' : '7%' }
-              }
-              transition={
-                reduceMotion
-                  ? { duration: 0 }
-                  : bubbleVisible && !open
-                    ? { duration: 1.8, ease: 'easeInOut', repeat: Infinity }
-                    : { type: 'spring', stiffness: 320, damping: 24 }
-              }
-            >
-              <AssistantAvatar className='h-full w-full scale-[1.15]' />
-            </motion.span>
-            <motion.span
-              className='absolute inset-0 flex items-center justify-center text-white'
-              initial={false}
-              animate={
-                open
-                  ? { opacity: 1, scale: 1, rotate: 0 }
-                  : { opacity: 0, scale: 0.6, rotate: -45 }
-              }
-              transition={{ duration: reduceMotion ? 0 : 0.2 }}
-            >
-              <X size={26} />
-            </motion.span>
-          </span>
+          <LauncherFace
+            showClose={open}
+            bobbing={bubbleVisible}
+            reduceMotion={reduceMotion}
+          />
           {/* Ponto verde: o assistente responde a qualquer hora */}
           {!open && (
             <span className='absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full bg-green-500 ring-2 ring-white' />
           )}
         </motion.button>
+      </div>
+
+      {/* ───────── Mobile: botão único de atendimento, à direita ───────── */}
+      <div className='md:hidden'>
+        {/* Toque fora fecha o mini-menu */}
+        {menuOpen && (
+          <button
+            type='button'
+            tabIndex={-1}
+            aria-hidden='true'
+            onClick={() => setMenuOpen(false)}
+            className='fixed inset-0 z-40 cursor-default'
+          />
+        )}
+
+        <motion.div
+          className='fixed right-4 z-50'
+          style={{
+            bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))',
+            pointerEvents: mobileVisible ? 'auto' : 'none',
+          }}
+          inert={!mobileVisible}
+          initial={false}
+          animate={
+            mobileVisible
+              ? { opacity: 1, y: 0, scale: 1 }
+              : reduceMotion
+                ? { opacity: 0, y: 0, scale: 1 }
+                : { opacity: 0, y: 20, scale: 0.85 }
+          }
+          transition={
+            reduceMotion
+              ? { duration: 0.15 }
+              : { type: 'spring', stiffness: 380, damping: 30 }
+          }
+        >
+          <AnimatePresence>
+            {mobileBubble && (
+              <motion.div
+                key='assistant-bubble-mobile'
+                className='absolute bottom-full right-0 pb-2.5'
+                style={{ transformOrigin: 'calc(100% - 1.5rem) 100%' }}
+                initial={
+                  reduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, y: 10, scale: 0.85 }
+                }
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={
+                  reduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, y: 6, scale: 0.95 }
+                }
+                transition={
+                  reduceMotion
+                    ? { duration: 0.15 }
+                    : { type: 'spring', stiffness: 420, damping: 26 }
+                }
+              >
+                <div className='flex items-center gap-0.5 whitespace-nowrap rounded-2xl rounded-br-md border border-gray-100 bg-white py-1 pl-3.5 pr-1 shadow-lg'>
+                  <button
+                    type='button'
+                    onClick={toggleMobile}
+                    className='py-1.5 text-sm font-semibold text-chumbo'
+                  >
+                    Posso ajudar?
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => setTeaser(false)}
+                    className='flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-gray-400'
+                    aria-label='Dispensar mensagem'
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.ul
+                key='atendimento-menu'
+                id='atendimento-menu'
+                className='absolute bottom-full right-0 flex flex-col items-end gap-2 pb-3'
+                initial='closed'
+                animate='open'
+                exit='closed'
+                variants={{
+                  open: {
+                    transition: {
+                      staggerChildren: reduceMotion ? 0 : 0.05,
+                      staggerDirection: -1,
+                    },
+                  },
+                  closed: {},
+                }}
+              >
+                {[
+                  {
+                    key: 'assistant',
+                    title: 'Assistente virtual',
+                    hint: 'Resposta na hora',
+                  },
+                  {
+                    key: 'whatsapp',
+                    title: 'WhatsApp',
+                    hint: 'Fale com a nossa equipe',
+                  },
+                ].map(item => {
+                  const content = (
+                    <>
+                      <span className='text-right'>
+                        <span className='block text-sm font-semibold text-chumbo'>
+                          {item.title}
+                        </span>
+                        <span className='block text-[11px] text-gray-500'>
+                          {item.hint}
+                        </span>
+                      </span>
+                      {item.key === 'assistant' ? (
+                        <span className='h-10 w-10 shrink-0 overflow-hidden rounded-full bg-brand-100'>
+                          <AssistantAvatar className='h-full w-full scale-[1.15]' />
+                        </span>
+                      ) : (
+                        <span className='flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-500 text-white'>
+                          <MessageCircle size={20} />
+                        </span>
+                      )}
+                    </>
+                  );
+                  const cls =
+                    'flex items-center gap-3 whitespace-nowrap rounded-full border border-gray-100 bg-white py-1.5 pl-4 pr-1.5 shadow-lg active:bg-gray-50';
+                  return (
+                    <motion.li
+                      key={item.key}
+                      variants={{
+                        open: { opacity: 1, y: 0, scale: 1 },
+                        closed: reduceMotion
+                          ? { opacity: 0 }
+                          : { opacity: 0, y: 12, scale: 0.9 },
+                      }}
+                      transition={
+                        reduceMotion
+                          ? { duration: 0.12 }
+                          : { type: 'spring', stiffness: 460, damping: 30 }
+                      }
+                      style={{ transformOrigin: '100% 100%' }}
+                    >
+                      {item.key === 'assistant' ? (
+                        <button type='button' onClick={openChat} className={cls}>
+                          {content}
+                        </button>
+                      ) : (
+                        <a
+                          href={WHATSAPP_URL}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          onClick={() => setMenuOpen(false)}
+                          className={cls}
+                        >
+                          {content}
+                        </a>
+                      )}
+                    </motion.li>
+                  );
+                })}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+
+          <motion.button
+            type='button'
+            onClick={toggleMobile}
+            whileTap={reduceMotion ? undefined : { scale: 0.92 }}
+            className='relative block h-12 w-12 rounded-full shadow-lg outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2'
+            aria-label={
+              open
+                ? 'Fechar assistente'
+                : menuOpen
+                  ? 'Fechar opções de atendimento'
+                  : 'Atendimento: assistente virtual ou WhatsApp'
+            }
+            aria-expanded={open || menuOpen}
+            aria-controls={menuOpen ? 'atendimento-menu' : undefined}
+          >
+            <LauncherFace
+              showClose={open || menuOpen}
+              bobbing={mobileBubble}
+              reduceMotion={reduceMotion}
+            />
+            {!open && !menuOpen && (
+              <span className='absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 ring-2 ring-white' />
+            )}
+          </motion.button>
+        </motion.div>
       </div>
     </>
   );
