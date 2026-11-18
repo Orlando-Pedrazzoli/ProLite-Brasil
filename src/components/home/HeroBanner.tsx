@@ -24,6 +24,17 @@ interface Banner {
 /** Tempo de cada slide de imagem (e fallback se o vídeo não arrancar) */
 const SLIDE_MS = 10000;
 
+function slideVideoSrc(
+  banner: Banner | undefined,
+  isDesktop: boolean,
+  reducedMotion: boolean,
+) {
+  if (!banner || reducedMotion) return '';
+  const desktopVideo = banner.video?.trim() || '';
+  const mobileVideo = banner.mobileVideo?.trim() || desktopVideo;
+  return isDesktop ? desktopVideo || mobileVideo : mobileVideo;
+}
+
 function useMediaQuery(query: string) {
   const subscribe = useCallback(
     (onChange: () => void) => {
@@ -43,20 +54,15 @@ function useMediaQuery(query: string) {
 // Vídeo de fundo de um slide. Fica por cima da imagem (capa): enquanto
 // não há frames para mostrar o elemento é transparente e vê-se a imagem.
 // Só o slide ativo carrega e toca; os outros ficam com preload="none".
+// O vídeo fica em loop — não avança o carrossel sozinho.
 function HeroVideo({
   src,
   active,
-  loop,
   onPlaying,
-  onStopped,
-  onEnded,
 }: {
   src: string;
   active: boolean;
-  loop: boolean;
   onPlaying: () => void;
-  onStopped: () => void;
-  onEnded: () => void;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
 
@@ -65,9 +71,14 @@ function HeroVideo({
     if (!video) return;
     if (active) {
       video.muted = true; // exigido para autoplay (iOS/Chrome)
-      video.currentTime = 0;
-      // Autoplay pode ser recusado (ex.: modo de poupança do iPhone):
-      // fica a capa e o carrossel avança pelo temporizador normal.
+      // currentTime antes do metadata pode lançar e impedir o play().
+      if (video.readyState >= 1) {
+        try {
+          video.currentTime = 0;
+        } catch {
+          /* ainda não dá para seek */
+        }
+      }
       video.play().catch(() => {});
     } else {
       video.pause();
@@ -80,14 +91,21 @@ function HeroVideo({
       src={src}
       muted
       playsInline
-      loop={loop}
+      autoPlay
+      loop
       preload={active ? 'auto' : 'none'}
       onPlaying={onPlaying}
-      onPause={onStopped}
-      onEnded={onEnded}
+      onEnded={() => {
+        // Se o browser ignorar o atributo loop, recomeça em vez de
+        // deixar o carrossel saltar para o banner seguinte.
+        const video = ref.current;
+        if (!video) return;
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }}
       aria-hidden='true'
       tabIndex={-1}
-      className='absolute inset-0 h-full w-full object-cover'
+      className='absolute inset-0 z-10 h-full w-full object-cover'
     />
   );
 }
@@ -128,13 +146,14 @@ export default function HeroBanner() {
   const videoPlaying =
     playingId !== null && playingId === banners[current]?._id;
 
-  // Avanço automático. Recomeça a contar a cada troca de slide. Enquanto
-  // um vídeo toca não há temporizador: quem avança é o fim do vídeo.
+  // Avanço automático dos slides só de imagem. Um slide com vídeo fica
+  // em loop e não cede o lugar sozinho (as setas continuam a funcionar).
   useEffect(() => {
     if (banners.length <= 1 || videoPlaying) return;
+    if (slideVideoSrc(banners[current], isDesktop, reducedMotion)) return;
     const timeout = setTimeout(next, SLIDE_MS);
     return () => clearTimeout(timeout);
-  }, [banners.length, current, videoPlaying, next]);
+  }, [banners, current, videoPlaying, next, isDesktop, reducedMotion]);
 
   if (loading) {
     return (
@@ -157,13 +176,7 @@ export default function HeroBanner() {
 
           // Um único <video> por slide, com a versão certa para o ecrã
           // (assim o telemóvel nunca descarrega o ficheiro de desktop).
-          const desktopVideo = banner.video?.trim() || '';
-          const mobileVideo = banner.mobileVideo?.trim() || desktopVideo;
-          const videoSrc = reducedMotion
-            ? ''
-            : isDesktop
-              ? desktopVideo || mobileVideo
-              : mobileVideo;
+          const videoSrc = slideVideoSrc(banner, isDesktop, reducedMotion);
 
           const Slide = (
             <div className='relative w-full aspect-[4/5] md:aspect-[2.5/1]'>
@@ -193,15 +206,7 @@ export default function HeroBanner() {
                 <HeroVideo
                   src={videoSrc}
                   active={idx === current}
-                  loop={banners.length === 1}
                   onPlaying={() => setPlayingId(banner._id)}
-                  onStopped={() =>
-                    setPlayingId(id => (id === banner._id ? null : id))
-                  }
-                  onEnded={() => {
-                    setPlayingId(null);
-                    next();
-                  }}
                 />
               )}
             </div>
