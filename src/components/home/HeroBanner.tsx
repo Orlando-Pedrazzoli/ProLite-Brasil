@@ -51,10 +51,11 @@ function useMediaQuery(query: string) {
   );
 }
 
-// Vídeo de fundo de um slide. Fica por cima da imagem (capa): enquanto
-// não há frames para mostrar o elemento é transparente e vê-se a imagem.
-// Só o slide ativo carrega e toca; os outros ficam com preload="none".
-// O vídeo fica em loop — não avança o carrossel sozinho.
+// Vídeo de fundo do slide ativo. Fica fora do carrossel (que usa
+// translateX): no iPhone/Safari um <video> dentro de um ancestral com
+// transform não mostra frames e só se vê a imagem da capa.
+// O muted tem de estar no elemento antes do play(), senão o iOS recusa
+// o autoplay e a capa fica por baixo para sempre.
 function HeroVideo({
   src,
   active,
@@ -69,20 +70,35 @@ function HeroVideo({
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
-    if (active) {
-      video.muted = true; // exigido para autoplay (iOS/Chrome)
-      // currentTime antes do metadata pode lançar e impedir o play().
-      if (video.readyState >= 1) {
-        try {
-          video.currentTime = 0;
-        } catch {
-          /* ainda não dá para seek */
-        }
-      }
-      video.play().catch(() => {});
-    } else {
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', 'true');
+
+    if (!active) {
       video.pause();
+      return;
     }
+
+    const play = () => {
+      video.play().catch(() => {});
+    };
+    play();
+    video.addEventListener('loadeddata', play);
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') play();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    // Modo de poupança do iPhone só larga o autoplay depois de um toque.
+    window.addEventListener('pointerdown', play, { passive: true });
+
+    return () => {
+      video.removeEventListener('loadeddata', play);
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('pointerdown', play);
+    };
   }, [active, src]);
 
   return (
@@ -93,19 +109,22 @@ function HeroVideo({
       playsInline
       autoPlay
       loop
-      preload={active ? 'auto' : 'none'}
+      preload='auto'
       onPlaying={onPlaying}
       onEnded={() => {
-        // Se o browser ignorar o atributo loop, recomeça em vez de
-        // deixar o carrossel saltar para o banner seguinte.
         const video = ref.current;
         if (!video) return;
-        video.currentTime = 0;
+        try {
+          video.currentTime = 0;
+        } catch {
+          /* ainda não dá para seek */
+        }
         video.play().catch(() => {});
       }}
       aria-hidden='true'
       tabIndex={-1}
-      className='absolute inset-0 z-10 h-full w-full object-cover'
+      className='pointer-events-none absolute inset-0 z-10 h-full w-full object-cover'
+      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
     />
   );
 }
@@ -163,6 +182,12 @@ export default function HeroBanner() {
 
   if (banners.length === 0) return null;
 
+  const currentVideo = slideVideoSrc(
+    banners[current],
+    isDesktop,
+    reducedMotion,
+  );
+
   return (
     <div className='relative w-full overflow-hidden'>
       <div
@@ -173,10 +198,6 @@ export default function HeroBanner() {
           const mobileSrc = banner.mobileImage?.trim()
             ? banner.mobileImage
             : banner.image;
-
-          // Um único <video> por slide, com a versão certa para o ecrã
-          // (assim o telemóvel nunca descarrega o ficheiro de desktop).
-          const videoSrc = slideVideoSrc(banner, isDesktop, reducedMotion);
 
           const Slide = (
             <div className='relative w-full aspect-[4/5] md:aspect-[2.5/1]'>
@@ -202,13 +223,6 @@ export default function HeroBanner() {
                   className='object-cover'
                 />
               </div>
-              {videoSrc && (
-                <HeroVideo
-                  src={videoSrc}
-                  active={idx === current}
-                  onPlaying={() => setPlayingId(banner._id)}
-                />
-              )}
             </div>
           );
 
@@ -226,18 +240,27 @@ export default function HeroBanner() {
         })}
       </div>
 
+      {currentVideo && (
+        <HeroVideo
+          key={currentVideo}
+          src={currentVideo}
+          active
+          onPlaying={() => setPlayingId(banners[current]._id)}
+        />
+      )}
+
       {banners.length > 1 && (
         <>
           <button
             onClick={prev}
-            className='absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 text-white rounded-full flex items-center justify-center hover:bg-black/50 transition-colors'
+            className='absolute left-4 top-1/2 z-20 -translate-y-1/2 w-10 h-10 bg-black/30 text-white rounded-full flex items-center justify-center hover:bg-black/50 transition-colors'
             aria-label='Banner anterior'
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={next}
-            className='absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 text-white rounded-full flex items-center justify-center hover:bg-black/50 transition-colors'
+            className='absolute right-4 top-1/2 z-20 -translate-y-1/2 w-10 h-10 bg-black/30 text-white rounded-full flex items-center justify-center hover:bg-black/50 transition-colors'
             aria-label='Próximo banner'
           >
             <ChevronRight size={24} />
@@ -246,7 +269,7 @@ export default function HeroBanner() {
       )}
 
       {banners.length > 1 && (
-        <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2'>
+        <div className='absolute bottom-4 left-1/2 z-20 -translate-x-1/2 flex gap-2'>
           {banners.map((_, i) => (
             <button
               key={i}
